@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import "./Sidebar.scss";
 
 const Sidebar = (props) => {
   return (

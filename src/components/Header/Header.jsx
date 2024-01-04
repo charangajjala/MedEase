@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { FaUser, FaSignOutAlt } from "react-icons/fa";
+import "./Header.scss";
 
 const Header = (props) => {
   return (
