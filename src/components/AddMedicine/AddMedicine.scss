@@ -2,11 +2,11 @@
 
 .add-product-form {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   font-family: "Roboto", sans-serif;
 
   &__main {
-    width: 100%; 
+    width: 100%;
     background-color: $body-bg;
     color: $text-light;
     padding: 30px;
@@ -14,9 +14,69 @@
     flex-direction: column;
     gap: 20px;
     justify-content: start;
+  }
 
-    @media (max-width: 768px) {
-      width: calc(100vw - 15vw); 
+  &__content {
+    background-color: $white;
+    color: $text-color;
+    border-radius: 5px;
+    padding: 20px;
+
+    .form {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-button {
+      button {
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        background-color: $button-bg;
+        color: $button-text;
+        cursor: pointer;
+        
+        &:hover {
+          background-color: $button-hover;
+        }
+      }
+    }
+
+    .grid-item {
+      display: flex;
+      flex-direction: column;
+
+      label {
+        margin-bottom: 0.5em;
+      }
+
+      input,
+      select {
+        padding: 10px;
+        border: 1px solid $form-label;
+        border-radius: 4px;
+        margin-bottom: 1em;
+      }
+
+      input[type="file"] {
+        border: none;
+      }
+
+      textarea {
+        padding: 40px;
+        border: 1px solid $form-label;
+        border-radius: 4px;
+        margin-bottom: 1em;
+
+      }
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
     }
   }
 }
