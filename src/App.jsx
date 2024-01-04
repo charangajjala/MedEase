@@ -1,6 +1,6 @@
 import "./App.scss";
 
-import { Login, AdminDashboard } from "./components/index.js";
+import { Login, AdminDashboard, AddMedicine } from "./components/index.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -9,6 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<AdminDashboard />} />
+        <Route path="/medicine" element={<AddMedicine />} />
       </Routes>
     </Router>
   );

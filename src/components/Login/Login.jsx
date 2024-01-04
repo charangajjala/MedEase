@@ -3,9 +3,11 @@ import { useRef, useState, useEffect, useContext } from "react";
 import AuthContext from "../../context/AuthProvider";
 import axios from "../../api/axios";
 import "./Login.scss";
-import Button from "../Button/Button";
 import store from "../../assets/store.jpg";
 import { useNavigate } from "react-router-dom";
+
+import Button from "../Button/Button";
+import Footer from "../Footer/Footer";
 
 const LOGIN_URL = "";
 
@@ -84,6 +86,7 @@ const Login = () => {
   };
 
   return (
+    <>
     <div className="login-layout">
       <div className="login-layout__container">
         <div className="login-layout__container-left">
@@ -128,6 +131,8 @@ const Login = () => {
         </div>
       </div>
     </div>
+    <Footer />
+    </>
   );
 };
 
