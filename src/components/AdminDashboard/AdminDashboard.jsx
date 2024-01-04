@@ -42,9 +42,9 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard">
-      <button onClick={toggleSidebar} className="admin-dashboard__toggle-btn">
+      <header onClick={toggleSidebar} className="admin-dashboard__toggle-btn admin-dashboard__header">
         {isSidebarVisible ? <FaTimes /> : <FaBars />}
-      </button>
+      </header>
 
       <aside
         className={`admin-dashboard__sidebar ${
