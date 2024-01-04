@@ -2,6 +2,7 @@ import "./AdminDashboard.scss";
 import store from "../../assets/store.jpg";
 import logo from "../../assets/logo.png";
 import { useState, useRef, useEffect } from "react";
+import { FaBars, FaTimes, FaUser, FaSignOutAlt } from "react-icons/fa";
 
 const links = [
   "Dashboard",
@@ -16,7 +17,12 @@ const links = [
 
 const AdminDashboard = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
   const dropdownRef = useRef(null);
+
+  const toggleSidebar = () => {
+    setIsSidebarVisible(!isSidebarVisible);
+  };
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -36,7 +42,15 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard">
-      <aside className="admin-dashboard__sidebar">
+      <button onClick={toggleSidebar} className="admin-dashboard__toggle-btn">
+        {isSidebarVisible ? <FaTimes /> : <FaBars />}
+      </button>
+
+      <aside
+        className={`admin-dashboard__sidebar ${
+          isSidebarVisible ? "" : "admin-dashboard__sidebar--hidden"
+        }`}
+      >
         <div className="admin-dashboard__logo">
           <img src={logo} alt="Medical Store" />
         </div>
@@ -48,7 +62,6 @@ const AdminDashboard = () => {
           ))}
         </nav>
       </aside>
-
       <main className="admin-dashboard__main">
         <header className="admin-dashboard__header">
           <h1>Medical Store Management System Admin Dashboard</h1>
@@ -57,15 +70,18 @@ const AdminDashboard = () => {
               onClick={toggleDropdown}
               className="admin-dashboard__user-info-button"
             >
-              Admin
+              Admin <FaUser />
             </button>
             {isDropdownOpen && (
               <ul className="admin-dashboard__user-info__dropdown-menu">
                 <li className="admin-dashboard__user-info__dropdown-menu-item">
-                  <a href="/">Profile</a>
+                  <a href="/profile">Profile</a>
                 </li>
                 <li className="admin-dashboard__user-info__dropdown-menu-item">
-                  <a href="/">Logout</a>
+                  <a href="/logout">
+                    Logout <FaSignOutAlt />
+                  </a>{" "}
+                  {/* Example icon */}
                 </li>
               </ul>
             )}

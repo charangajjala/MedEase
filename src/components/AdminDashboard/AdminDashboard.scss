@@ -15,6 +15,10 @@
     background-color: $sidebar-bg;
     transition: transform 0.3s ease-in-out;
 
+    &--hidden {
+      display: none;
+    }
+
     @media (max-width: 768px) {
       width: 15vw;
       min-width: 200px; 
@@ -117,12 +121,13 @@
   }
 
   &__main {
-    width: calc(100vw - 250px); 
+    width: 100%; 
     background-color: $body-bg;
     color: $text-light;
     padding: 30px;
     display: flex;
     flex-direction: column;
+    gap: 20px;
     justify-content: space-between;
 
     @media (max-width: 768px) {
