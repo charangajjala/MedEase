@@ -2,9 +2,10 @@ import "./AdminDashboard.scss";
 import store from "../../assets/store.jpg";
 import logo from "../../assets/logo.png";
 import { useState, useRef, useEffect } from "react";
-import { FaUser, FaSignOutAlt } from "react-icons/fa";
 
 import ToggleButton from "../ToggleButton/ToggleButton";
+import Sidebar from "../Sidebar/Sidebar";
+import Header from "../Header/Header";
 
 const links = [
   "Dashboard",
@@ -44,12 +45,29 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard">
-      <ToggleButton 
+      {/* <aside
+      className={`admin-dashboard__sidebar ${
+        props.isSidebarVisible ? "" : "admin-dashboard__sidebar--hidden"
+      }`}
+    >
+      <div className="admin-dashboard__logo">
+        <img src={props.logo} alt="Medical Store" />
+      </div>
+      <nav className="admin-dashboard__nav">
+        {props.links.map((link, index) => (
+          <a href="/" key={index} className="admin-dashboard__nav-link">
+            {link}
+          </a>
+        ))}
+      </nav>
+    </aside> */}
+
+      <ToggleButton
         toggleSidebar={toggleSidebar}
         isSidebarVisible={isSidebarVisible}
       />
 
-      <aside
+      {/* <aside
         className={`admin-dashboard__sidebar ${
           isSidebarVisible ? "" : "admin-dashboard__sidebar--hidden"
         }`}
@@ -64,9 +82,12 @@ const AdminDashboard = () => {
             </a>
           ))}
         </nav>
-      </aside>
+      </aside> */}
+
+      <Sidebar logo={logo} links={links} isSidebarVisible={isSidebarVisible} />
+
       <main className="admin-dashboard__main">
-        <header className="admin-dashboard__header">
+        {/* <header className="admin-dashboard__header">
           <h1>Medical Store Management System Admin Dashboard</h1>
           <div className="admin-dashboard__user-info" ref={dropdownRef}>
             <button
@@ -84,12 +105,29 @@ const AdminDashboard = () => {
                   <a href="/logout">
                     Logout <FaSignOutAlt />
                   </a>{" "}
-                  {/* Example icon */}
                 </li>
               </ul>
             )}
           </div>
-        </header>
+        </header> */}
+
+        <Header
+          dropdownRef={dropdownRef}
+          toggleDropdown={toggleDropdown}
+          isDropdownOpen={isDropdownOpen}
+          userName={"Admin"}
+          dropdownMenu={[
+            {
+              name: "Profile",
+              link: "/profile",
+            },
+            {
+              name: "Logout",
+              link: "/logout",
+            },
+          ]}
+          heading={"Medical Store Management System Admin Dashboard"}
+        />
 
         <div className="admin-dashboard__content">
           <div className="admin-dashboard__content-right">
