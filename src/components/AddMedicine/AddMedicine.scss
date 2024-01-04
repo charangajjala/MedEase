@@ -9,39 +9,52 @@
     width: 100%;
     background-color: $body-bg;
     color: $text-light;
-    padding: 30px;
+    padding: 2em;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 1.5em;
     justify-content: start;
   }
 
   &__content {
     background-color: $white;
     color: $text-color;
-    border-radius: 5px;
-    padding: 20px;
+    border-radius: 8px;
+    padding: 2em;
+    box-shadow: 0 4px 8px rgba($black, 0.1);
 
     .form {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
+      gap: 1.5em;
+
       @media (max-width: 768px) {
         grid-template-columns: 1fr;
       }
     }
 
     .form-button {
+      display: flex;
+      margin-top: 1em;
+
       button {
-        padding: 10px;
+        padding: 0.75em 1.5em;
         border: none;
         border-radius: 4px;
         background-color: $button-bg;
         color: $button-text;
         cursor: pointer;
-        
+        font-weight: 600; 
+        transition: all 0.3s ease-in-out;
+
         &:hover {
           background-color: $button-hover;
+          box-shadow: 0 4px 12px rgba($black, 0.2);
+        }
+
+        &:active {
+          transform: translateY(2px);
+          box-shadow: 0 2px 8px rgba($black, 0.2);
         }
       }
     }
@@ -52,26 +65,29 @@
 
       label {
         margin-bottom: 0.5em;
+        font-weight: 500;
       }
 
       input,
-      select {
+      select,
+      textarea {
         padding: 10px;
-        border: 1px solid $form-label;
+        border: 1px solid $form-input-border;
         border-radius: 4px;
         margin-bottom: 1em;
-      }
+        font-size: 1em;
+        transition: border-color 0.3s ease-in-out;
 
-      input[type="file"] {
-        border: none;
+        &:focus {
+          border-color: darken($button-bg, 20%);
+          box-shadow: 0 0 0 2px rgba($button-bg, 0.2);
+          outline: none;
+        }
       }
 
       textarea {
-        padding: 40px;
-        border: 1px solid $form-label;
-        border-radius: 4px;
-        margin-bottom: 1em;
-
+        height: 150px; 
+        resize: vertical; 
       }
     }
 
