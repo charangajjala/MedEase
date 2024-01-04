@@ -35,7 +35,7 @@ Header.propTypes = {
   toggleDropdown: PropTypes.func.isRequired,
   isDropdownOpen: PropTypes.bool.isRequired,
   userName: PropTypes.string.isRequired,
-  dropdownMenu: PropTypes.arrayOf(PropTypes.string).isRequired,
+  dropdownMenu: PropTypes.arrayOf(PropTypes.object).isRequired,
   heading: PropTypes.string.isRequired,
 };
 

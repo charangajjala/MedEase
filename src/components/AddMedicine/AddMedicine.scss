@@ -1,0 +1,22 @@
+@import "../../styles/colors/colors.scss";
+
+.add-product-form {
+  display: flex;
+  height: 100vh;
+  font-family: "Roboto", sans-serif;
+
+  &__main {
+    width: 100%; 
+    background-color: $body-bg;
+    color: $text-light;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: start;
+
+    @media (max-width: 768px) {
+      width: calc(100vw - 15vw); 
+    }
+  }
+}
