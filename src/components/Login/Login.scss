@@ -1,0 +1,116 @@
+@import "../../styles/colors/colors.scss";
+
+.login-layout {
+  background-color: $body-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+
+  &__container {
+    display: flex;
+    max-width: 80%;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 80vh;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    &-left {
+      flex: 1;
+      padding: 20px;
+      background-color: $white;
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+
+      h1 {
+        color: $text-color;
+        text-decoration: underline;
+        margin-bottom: 20px;
+      }
+
+      &__form {
+        max-width: 400px;
+
+        &__input {
+          margin-bottom: 20px;
+
+          label {
+            color: $form-label;
+            display: block;
+            margin-bottom: 5px;
+          }
+
+          input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid $form-input-border;
+            background-color: $form-input-bg-active;
+            color: $text-color;
+            border-radius: 5px;
+
+            &:focus {
+              outline: none;
+              box-shadow: 0 0 5px rgba(11, 21, 83, 0.5);
+            }
+          }
+        }
+
+        button {
+          background-color: $button-bg;
+          color: $button-text;
+          padding: 12px 40px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s ease-in-out;
+
+          &:hover {
+            background-color: $button-hover;
+          }
+        }
+
+        &__buttons {
+          display: flex;
+          justify-content: flex-end;
+          gap: 10px;
+        }
+      }
+
+      .error-message {
+        color: $error-color;
+        margin-bottom: 10px;
+      }
+
+      .success-message {
+        color: $success-color;
+        margin-bottom: 10px;
+      }
+    }
+
+    &-right {
+      flex: 2;
+      padding: 20px;
+      background: $white;
+      display: flex;
+
+      img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    &__container {
+      flex-direction: column;
+
+      &-left,
+      &-right {
+        flex: 1;
+      }
+    }
+  }
+}
