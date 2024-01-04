@@ -1,0 +1,10 @@
+@import '../../styles/colors/colors.scss';
+
+.admin-dashboard {
+  &__toggle-btn {
+    padding: 5px;
+    border: none;
+    border-radius: 3px;
+    height: 100vh;
+  }
+}
