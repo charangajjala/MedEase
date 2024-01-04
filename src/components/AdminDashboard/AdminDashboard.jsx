@@ -2,7 +2,9 @@ import "./AdminDashboard.scss";
 import store from "../../assets/store.jpg";
 import logo from "../../assets/logo.png";
 import { useState, useRef, useEffect } from "react";
-import { FaBars, FaTimes, FaUser, FaSignOutAlt } from "react-icons/fa";
+import { FaUser, FaSignOutAlt } from "react-icons/fa";
+
+import ToggleButton from "../ToggleButton/ToggleButton";
 
 const links = [
   "Dashboard",
@@ -42,9 +44,10 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard">
-      <header onClick={toggleSidebar} className="admin-dashboard__toggle-btn admin-dashboard__header">
-        {isSidebarVisible ? <FaTimes /> : <FaBars />}
-      </header>
+      <ToggleButton 
+        toggleSidebar={toggleSidebar}
+        isSidebarVisible={isSidebarVisible}
+      />
 
       <aside
         className={`admin-dashboard__sidebar ${
