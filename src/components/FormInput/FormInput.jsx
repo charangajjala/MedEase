@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import './FormInput.scss';
 
 const FormInput = ({
   label,
@@ -31,7 +32,7 @@ FormInput.propTypes = {
   type: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   required: PropTypes.bool.isRequired,
 };

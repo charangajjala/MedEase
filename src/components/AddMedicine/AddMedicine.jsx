@@ -37,6 +37,14 @@ const AddMedicine = () => {
     setSelectedCompany(e.target.value);
   }
 
+  // Once the backend is done convert it to async for post request
+  // Upon successful submit clear the form
+  // else display error message
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Submitted");
+  };
+
   return (
     <>
       <div className="add-product-form">
@@ -142,7 +150,7 @@ const AddMedicine = () => {
                   required
                 />
               </div>
-              <div className="form-button">
+              <div className="form-button" onClick={handleSubmit}>
                 <button type="submit">Submit</button>
               </div>
             </form>
