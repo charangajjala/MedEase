@@ -9,9 +9,8 @@ import {
   Header,
 } from "../../components/index.js";
 
-import {links} from '../../constants/links.js';
+import { links } from "../../constants/links.js";
 import useVisibilityToggle from "../../hooks/useVisibilityToggle.jsx";
-
 
 const AdminDashboard = () => {
   const {
@@ -57,13 +56,13 @@ const AdminDashboard = () => {
 
           <div className="admin-dashboard__content">
             <div className="admin-dashboard__content-right">
-              {links.map((link, index) => (
+              {Object.values(links).map((link, index) => (
                 <a
-                  href="/"
+                  href={link.href}
                   key={index}
-                  className="admin-dashboard__content-right__link"
+                  className="admin-dashboard__nav-link"
                 >
-                  {link}
+                  {link.name}
                 </a>
               ))}
             </div>
