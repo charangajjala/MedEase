@@ -1,6 +1,6 @@
 import "./App.scss";
 
-import { Login, AdminDashboard, AddMedicine } from "./components/index.js";
+import { Login, AdminDashboard, AddMedicine } from "./containers/index.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {

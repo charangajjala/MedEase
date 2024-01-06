@@ -3,10 +3,13 @@ import store from "../../assets/store.jpg";
 import logo from "../../assets/logo.png";
 import { useState, useRef, useEffect } from "react";
 
-import ToggleButton from "../ToggleButton/ToggleButton";
-import Sidebar from "../Sidebar/Sidebar";
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
+import {
+  Sidebar,
+  ToggleButton,
+  Footer,
+  Header,
+} from "../../components/index.js";
+
 import {links} from '../../constants/links.js';
 
 

@@ -36,7 +36,6 @@
           margin-bottom: 20px;
 
           label {
-            color: $form-label;
             display: block;
             margin-bottom: 5px;
           }
@@ -50,8 +49,9 @@
             border-radius: 5px;
 
             &:focus {
+              border-color: darken($button-bg, 20%);
+              box-shadow: 0 0 0 2px rgba($button-bg, 0.2);
               outline: none;
-              box-shadow: 0 0 5px rgba(11, 21, 83, 0.5);
             }
           }
         }

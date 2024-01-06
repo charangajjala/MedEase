@@ -2,12 +2,14 @@ import "./AddMedicine.scss";
 import logo from "../../assets/logo.png";
 import { useState, useRef } from "react";
 
-import Sidebar from "../Sidebar/Sidebar";
-import ToggleButton from "../ToggleButton/ToggleButton";
-import Footer from "../Footer/Footer";
-import Header from "../Header/Header";
-import FormInput from "../FormInput/FormInput.jsx";
-import SelectField from "../SelectField/SelectField.jsx";
+import {
+  Sidebar,
+  ToggleButton,
+  Footer,
+  Header,
+  FormInput,
+  SelectField,
+} from "../../components/index.js";
 
 import { links } from "../../constants/links.js";
 import { productTypes } from "../../constants/productTypes.js";
@@ -35,7 +37,7 @@ const AddMedicine = () => {
 
   const handleSelectCompany = (e) => {
     setSelectedCompany(e.target.value);
-  }
+  };
 
   // Once the backend is done convert it to async for post request
   // Upon successful submit clear the form

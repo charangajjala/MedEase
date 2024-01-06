@@ -6,8 +6,10 @@ import "./Login.scss";
 import store from "../../assets/store.jpg";
 import { useNavigate } from "react-router-dom";
 
-import Button from "../Button/Button";
-import Footer from "../Footer/Footer";
+import {
+  Button, 
+  Footer,
+} from "../../components/index.js";
 
 const LOGIN_URL = "";
 
@@ -52,7 +54,6 @@ const Login = () => {
       setPwd("");
       setErrMsg("");
       navigate("/dashboard");
-      
     } catch (e) {
       if (!e?.response) {
         setErrMsg("No Server Response");
@@ -87,51 +88,51 @@ const Login = () => {
 
   return (
     <>
-    <div className="login-layout">
-      <div className="login-layout__container">
-        <div className="login-layout__container-left">
-          <h1>Medical Store Admin</h1>
-          <form className="login-layout__container-left__form">
-            <div className="login-layout__container-left__form__input">
-              <label htmlFor="username">Username</label>
-              <input
-                type="text"
-                name="username"
-                placeholder=""
-                id="username"
-                ref={userRef}
-                autoComplete="off"
-                onChange={(e) => setUser(e.target.value)}
-                value={user}
-                required
-              />
-            </div>
-            <div className="login-layout__container-left__form__input">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                name="password"
-                placeholder=""
-                id="password"
-                onChange={(e) => setPwd(e.target.value)}
-                value={pwd}
-                required
-              />
-            </div>
-            <div className="login-layout__container-left__form__buttons">
-              <Button name="Login" type="submit" function={handleLogin} />
-              <Button name="Reset" type="button" function={handleReset} />
-            </div>
-          </form>
-          {errMsg && <p className="error-message">{errMsg}</p>}
-          {success && <p className="success-message">Login successful!</p>}
-        </div>
-        <div className="login-layout__container-right">
-          <img src={store} alt="" />
+      <div className="login-layout">
+        <div className="login-layout__container">
+          <div className="login-layout__container-left">
+            <h1>Medical Store Admin</h1>
+            <form className="login-layout__container-left__form">
+              <div className="login-layout__container-left__form__input">
+                <label htmlFor="username">Username</label>
+                <input
+                  type="text"
+                  name="username"
+                  placeholder=""
+                  id="username"
+                  ref={userRef}
+                  autoComplete="off"
+                  onChange={(e) => setUser(e.target.value)}
+                  value={user}
+                  required
+                />
+              </div>
+              <div className="login-layout__container-left__form__input">
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder=""
+                  id="password"
+                  onChange={(e) => setPwd(e.target.value)}
+                  value={pwd}
+                  required
+                />
+              </div>
+              <div className="login-layout__container-left__form__buttons">
+                <Button name="Login" type="submit" function={handleLogin} />
+                <Button name="Reset" type="button" function={handleReset} />
+              </div>
+            </form>
+            {errMsg && <p className="error-message">{errMsg}</p>}
+            {success && <p className="success-message">Login successful!</p>}
+          </div>
+          <div className="login-layout__container-right">
+            <img src={store} alt="" />
+          </div>
         </div>
       </div>
-    </div>
-    <Footer />
+      <Footer />
     </>
   );
 };
