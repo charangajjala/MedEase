@@ -1,4 +1,5 @@
 import Protypes from "prop-types";
+import "./OrderTable.scss";
 
 const OrderTable = ({ orders }) => (
   <table>
