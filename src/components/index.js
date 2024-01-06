@@ -5,6 +5,8 @@ import { default as Header } from "./Header/Header.jsx";
 import { default as Sidebar } from "./Sidebar/Sidebar.jsx";
 import { default as ToggleButton } from "./ToggleButton/ToggleButton.jsx";
 import { default as SelectField } from "./SelectField/SelectField.jsx";
+import { default as CompanyReportTable } from "./CompanyReportTable/CompanyReportTable.jsx";
+import { default as OrderTable } from "./OrderTable/OrderTable.jsx";
 
 export {
   Button,
@@ -14,4 +16,6 @@ export {
   Sidebar,
   ToggleButton,
   SelectField,
+  CompanyReportTable,
+  OrderTable,
 };

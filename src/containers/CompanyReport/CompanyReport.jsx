@@ -3,16 +3,16 @@ import {
   ToggleButton,
   Footer,
   Header,
-  OrderTable,
+  CompanyReportTable,
 } from "../../components/index.js";
 import useVisibilityToggle from "../../hooks/useVisibilityToggle";
 
 import { links } from "../../constants/links.js";
-import orders from "../../constants/orders.js";
+import companies from "../../constants/companies.js";
 import logo from "../../assets/logo.png";
-import "./OrderReport.scss";
+import "./CompanyReport.scss";
 
-const OrderReport = () => {
+const CompanyReport = () => {
   const {
     isSidebarVisible,
     toggleSidebar,
@@ -23,7 +23,7 @@ const OrderReport = () => {
 
   return (
     <>
-      <div className="order-report">
+      <div className="company-report">
         <ToggleButton
           toggleSidebar={toggleSidebar}
           isSidebarVisible={isSidebarVisible}
@@ -35,8 +35,8 @@ const OrderReport = () => {
           isSidebarVisible={isSidebarVisible}
         />
 
-        <main className="order-report__main">
-          <div className="order-report__main__header">
+        <main className="company-report__main">
+          <div className="company-report__main__header">
             <Header
               dropdownRef={dropdownRef}
               toggleDropdown={toggleDropdown}
@@ -52,17 +52,17 @@ const OrderReport = () => {
                   link: "/logout",
                 },
               ]}
-              heading={"All Orders Report"}
+              heading={"All Companies Report"}
             />
           </div>
-          <div className="order-report__content">
-            <OrderTable orders={orders} />
+          <div className="company-report__content">
+            <CompanyReportTable companies={companies} />
           </div>
         </main>
       </div>
       <Footer />
     </>
   );
-};
+}
 
-export default OrderReport;
+export default CompanyReport;
