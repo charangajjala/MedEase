@@ -42,7 +42,6 @@ const SellsDashboard = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(state);
-    // Further handling...
   };
 
   return (
