@@ -29,6 +29,8 @@
       &:hover {
         background-color: $button-bg;
         border-radius: 5px;
+        transform: scale(1.01);
+        transition: transform 0.3s ease-in-out;
       }
     }
   }

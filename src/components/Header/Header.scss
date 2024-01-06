@@ -1,4 +1,5 @@
 @import '../../styles/colors/colors.scss';
+@import '../../styles/fonts/fonts.scss';
 
 .admin-dashboard {
   &__header {
@@ -21,11 +22,11 @@
       border: none;
       color: inherit;
       cursor: pointer;
-      font-size: large;
+      font-size: $font-size-medium;
       font-weight: bold;
 
       @media (max-width: 768px) {
-        font-size: 16px; 
+        font-size: $font-size-medium; 
       }
     }
 

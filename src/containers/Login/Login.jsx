@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, useContext } from "react";
+import { useRef, useEffect, useContext, useReducer } from "react";
 
 import AuthContext from "../../context/AuthProvider";
 import axios from "../../api/axios";
@@ -13,27 +13,31 @@ import {
 
 const LOGIN_URL = "";
 
-// const initialState = {
-//   user: "",
-//   pwd: "",
-//   errMsg: "",
-//   success: false,
-// };
+const initialState = {
+  user: "",
+  pwd: "",
+  errMsg: "",
+  success: false,
+};
 
-// function loginReducer(state, action) {
-//   switch (action.type) {
-//     case "SET_USER":
-//       return { ...state, user: action.payload };
-//     case "SET_PWD":
-//       return { ...state, pwd: action.payload };
-//     case "SET_ERR_MSG":
-//       return { ...state, errMsg: action.payload };
-//     case "SET_SUCCESS":
-//       return { ...state, success: action.payload };
-//     default:
-//       return state;
-//   }
-// }
+function loginReducer(state, action) {
+  switch (action.type) {
+    case "SET_USER":
+      return { ...state, user: action.payload };
+    case "SET_PWD":
+      return { ...state, pwd: action.payload };
+    case "SET_ERR_MSG":
+      return { ...state, errMsg: action.payload };
+    case "SET_SUCCESS":
+      return { ...state, success: action.payload };
+    case "LOGGED_IN":
+      return { ...state, user: "", pwd: "", errMsg: "", success: true };
+    case "RESET":
+      return initialState;
+    default:
+      return state;
+  }
+}
 
 const Login = () => {
   const navigate = useNavigate();
@@ -41,19 +45,19 @@ const Login = () => {
   const userRef = useRef();
   const errRef = useRef();
 
-  const [user, setUser] = useState("");
-  const [errMsg, setErrMsg] = useState("");
-  const [pwd, setPwd] = useState("");
-  const [success, setSuccess] = useState(false);
+  // const [user, setUser] = useState("");
+  // const [errMsg, setErrMsg] = useState("");
+  // const [pwd, setPwd] = useState("");
+  // const [success, setSuccess] = useState(false);
 
-  // const [{user, errMsg, pwd, success}, dispatch] = useReducer(loginReducer, initialState);
+  const [{user, errMsg, pwd, success}, dispatch] = useReducer(loginReducer, initialState);
 
   useEffect(() => {
     userRef.current.focus();
   }, []);
 
   useEffect(() => {
-    setErrMsg("");
+    dispatch({ type: "SET_ERR_MSG", payload: "" });
   }, [user, pwd]);
 
   const handleLogin = async (e) => {
@@ -73,40 +77,36 @@ const Login = () => {
       const accessToken = response?.data?.accessToken;
       const refreshToken = response?.data?.refreshToken;
       setAuth({ user, pwd, accessToken, refreshToken });
-      setSuccess(true);
-      setUser("");
-      setPwd("");
-      setErrMsg("");
+      // setSuccess(true);
+      // setUser("");
+      // setPwd("");
+      // setErrMsg("");
+      dispatch({ type: "LOGGED_IN" });
       navigate("/dashboard");
     } catch (e) {
       if (!e?.response) {
-        setErrMsg("No Server Response");
+        // setErrMsg("No Server Response");
+        dispatch({ type: "SET_ERR_MSG", payload: "No Server Response" });
       } else if (e.response.status === 400) {
-        setErrMsg("Invalid username or password");
+        // setErrMsg("Invalid username or password");
+        dispatch({ type: "SET_ERR_MSG", payload: "Invalid username or password" });
       } else if (e.response.status === 401) {
-        setErrMsg("Unauthorized");
+        // setErrMsg("Unauthorized");
+        dispatch({ type: "SET_ERR_MSG", payload: "Unauthorized" });
       } else {
-        setErrMsg("Something went wrong");
+        // setErrMsg("Something went wrong");
+        dispatch({ type: "SET_ERR_MSG", payload: "Something went wrong" });
       }
-      setSuccess(false);
+      // setSuccess(false);
+      dispatch({ type: "SET_SUCCESS", payload: false });
       errRef.current.focus();
-    }
-
-    if (user === "admin" && pwd === "password") {
-      setSuccess(true);
-      setUser("");
-      setPwd("");
-      setErrMsg("");
-      navigate("/dashboard");
-    } else {
-      setSuccess(false);
-      setErrMsg("Invalid username or password");
     }
   };
 
   const handleReset = () => {
-    setUser("");
-    setPwd("");
+    // setUser("");
+    // setPwd("");
+    dispatch({ type: "RESET" });
     userRef.current.focus();
   };
 
@@ -126,7 +126,8 @@ const Login = () => {
                   id="username"
                   ref={userRef}
                   autoComplete="off"
-                  onChange={(e) => setUser(e.target.value)}
+                  // onChange={(e) => setUser(e.target.value)}
+                  onChange = {(e) => dispatch({ type: "SET_USER", payload: e.target.value })}
                   value={user}
                   required
                 />
@@ -138,7 +139,8 @@ const Login = () => {
                   name="password"
                   placeholder=""
                   id="password"
-                  onChange={(e) => setPwd(e.target.value)}
+                  // onChange={(e) => setPwd(e.target.value)}
+                  onChange = {(e) => dispatch({ type: "SET_PWD", payload: e.target.value })}
                   value={pwd}
                   required
                 />
