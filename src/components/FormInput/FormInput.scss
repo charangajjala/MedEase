@@ -6,8 +6,10 @@
   flex-direction: column;
 
   label {
-    margin-bottom: 0.5em;
-    font-weight: 500;
+    display: block;
+    margin-bottom: 10px;
+    color: $text-color;
+    font-size: $font-size-medium;
   }
 
   input,

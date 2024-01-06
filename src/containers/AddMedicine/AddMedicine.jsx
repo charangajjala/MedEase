@@ -1,6 +1,5 @@
-import "./AddMedicine.scss";
-import logo from "../../assets/logo.png";
 import { useReducer } from "react";
+import useVisibilityToggle from "../../hooks/useVisibilityToggle.jsx";
 
 import {
   Sidebar,
@@ -14,7 +13,9 @@ import {
 import { links } from "../../constants/links.js";
 import { productTypes } from "../../constants/productTypes.js";
 import { companyNames } from "../../constants/companyNames.js";
-import useVisibilityToggle from "../../hooks/useVisibilityToggle.jsx";
+
+import "./AddMedicine.scss";
+import logo from "../../assets/logo.png";
 
 const initialState = {
   productType: "",

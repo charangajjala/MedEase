@@ -1,6 +1,11 @@
 import "./App.scss";
 
-import { Login, AdminDashboard, AddMedicine } from "./containers/index.js";
+import {
+  Login,
+  AdminDashboard,
+  AddMedicine,
+  SellsDashboard,
+} from "./containers/index.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -10,6 +15,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<AdminDashboard />} />
         <Route path="/medicine" element={<AddMedicine />} />
+        <Route path="/sells" element={<SellsDashboard />} />
       </Routes>
     </Router>
   );
