@@ -13,6 +13,28 @@ import {
 
 const LOGIN_URL = "";
 
+// const initialState = {
+//   user: "",
+//   pwd: "",
+//   errMsg: "",
+//   success: false,
+// };
+
+// function loginReducer(state, action) {
+//   switch (action.type) {
+//     case "SET_USER":
+//       return { ...state, user: action.payload };
+//     case "SET_PWD":
+//       return { ...state, pwd: action.payload };
+//     case "SET_ERR_MSG":
+//       return { ...state, errMsg: action.payload };
+//     case "SET_SUCCESS":
+//       return { ...state, success: action.payload };
+//     default:
+//       return state;
+//   }
+// }
+
 const Login = () => {
   const navigate = useNavigate();
   const { setAuth } = useContext(AuthContext);
@@ -23,6 +45,8 @@ const Login = () => {
   const [errMsg, setErrMsg] = useState("");
   const [pwd, setPwd] = useState("");
   const [success, setSuccess] = useState(false);
+
+  // const [{user, errMsg, pwd, success}, dispatch] = useReducer(loginReducer, initialState);
 
   useEffect(() => {
     userRef.current.focus();
