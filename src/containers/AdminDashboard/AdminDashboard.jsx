@@ -1,7 +1,6 @@
 import "./AdminDashboard.scss";
 import store from "../../assets/store.jpg";
 import logo from "../../assets/logo.png";
-import { useState, useRef, useEffect } from "react";
 
 import {
   Sidebar,
@@ -11,33 +10,17 @@ import {
 } from "../../components/index.js";
 
 import {links} from '../../constants/links.js';
+import useVisibilityToggle from "../../hooks/useVisibilityToggle.jsx";
 
 
 const AdminDashboard = () => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
-  const dropdownRef = useRef(null);
-
-  const toggleSidebar = () => {
-    setIsSidebarVisible(!isSidebarVisible);
-  };
-
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsDropdownOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [dropdownRef]);
-
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
+  const {
+    isSidebarVisible,
+    toggleSidebar,
+    isDropdownOpen,
+    toggleDropdown,
+    dropdownRef,
+  } = useVisibilityToggle();
 
   return (
     <>

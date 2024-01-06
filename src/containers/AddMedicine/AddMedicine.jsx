@@ -1,6 +1,6 @@
 import "./AddMedicine.scss";
 import logo from "../../assets/logo.png";
-import { useState, useRef } from "react";
+import { useState } from "react";
 
 import {
   Sidebar,
@@ -14,22 +14,19 @@ import {
 import { links } from "../../constants/links.js";
 import { productTypes } from "../../constants/productTypes.js";
 import { companyNames } from "../../constants/companyNames.js";
+import useVisibilityToggle from "../../hooks/useVisibilityToggle.jsx";
 
 const AddMedicine = () => {
-  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const {
+    isSidebarVisible,
+    toggleSidebar,
+    isDropdownOpen,
+    toggleDropdown,
+    dropdownRef,
+  } = useVisibilityToggle();
+
   const [selectedProduct, setSelectedProduct] = useState("");
   const [seletedCompany, setSelectedCompany] = useState("");
-
-  const dropdownRef = useRef(null);
-
-  const toggleSidebar = () => {
-    setIsSidebarVisible(!isSidebarVisible);
-  };
-
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
 
   const handleSelectProduct = (e) => {
     setSelectedProduct(e.target.value);
