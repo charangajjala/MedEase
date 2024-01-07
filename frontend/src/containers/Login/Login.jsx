@@ -12,7 +12,7 @@ import {
   FormInput,
 } from "../../components/index.js";
 
-const LOGIN_URL = "/api/login/";
+const LOGIN_URL = "/api/login";
 
 const initialState = {
   email: "",

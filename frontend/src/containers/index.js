@@ -6,6 +6,7 @@ import { default as OrderReport } from "./OrderReport/OrderReport.jsx";
 import { default as CompanyReport } from "./CompanyReport/CompanyReport.jsx";
 import { default as AddCategory } from "./AddCategory/AddCategory.jsx";
 import { default as UpdateMedicine } from "./UpdateMedicine/UpdateMedicine.jsx";
+import { default as Logout } from "./Logout/Logout.jsx";
 
 export {
   AdminDashboard,
@@ -16,4 +17,5 @@ export {
   CompanyReport,
   AddCategory,
   UpdateMedicine,
+  Logout,
 };

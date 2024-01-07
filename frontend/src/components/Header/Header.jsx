@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
-import { FaUser, FaSignOutAlt } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import "./Header.scss";
+
+import { Logout } from "../../containers";
 
 const Header = (props) => {
   return (
@@ -19,8 +21,8 @@ const Header = (props) => {
               <a href="/profile">Profile</a>
             </li>
             <li className="admin-dashboard__user-info__dropdown-menu-item">
-              <a href="/logout">
-                Logout <FaSignOutAlt />
+              <a href="/">
+                <Logout />
               </a>
             </li>
           </ul>
