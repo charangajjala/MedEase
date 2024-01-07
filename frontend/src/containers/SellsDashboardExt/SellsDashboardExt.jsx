@@ -11,26 +11,10 @@ import useVisibilityToggle from "../../hooks/useVisibilityToggle";
 
 import { links } from "../../constants/links.js";
 import { companyNames } from "../../constants/companyNames.js";
+import dummyData from "../../constants/dummyData.js";
 
 import logo from "../../assets/logo.png";
 import "./SellsDashboardExt.scss";
-
-const dummyData = [
-  {
-    id: 1,
-    productName: "Cough Syrup",
-    pricePerUnit: "5.00",
-    totalUnits: 2,
-    totalCost: "10.00",
-  },
-  {
-    id: 2,
-    productName: "Pain Reliever",
-    pricePerUnit: "8.00",
-    totalUnits: 1,
-    totalCost: "8.00",
-  },
-];
 
 const SellsDashboardExt = () => {
   const {
@@ -46,7 +30,9 @@ const SellsDashboardExt = () => {
     console.log("Add");
   };
 
-  const totalSum = dummyData.reduce((acc, item) => acc + parseFloat(item.totalCost), 0).toFixed(2);
+  const totalSum = dummyData
+    .reduce((acc, item) => acc + parseFloat(item.totalCost), 0)
+    .toFixed(2);
 
   return (
     <>
@@ -119,6 +105,7 @@ const SellsDashboardExt = () => {
                           name="product-type"
                           options={companyNames}
                           value={"Please Select"}
+                          onChange={() => {}}
                           required={true}
                         />
                       </td>
@@ -128,6 +115,8 @@ const SellsDashboardExt = () => {
                           type="number"
                           id="enterQuantity"
                           name="enterQuantity"
+                          value={""}
+                          onChange={() => {}}
                           required={true}
                         />
                       </td>
