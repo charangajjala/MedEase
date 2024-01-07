@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import {
   Button, 
   Footer,
+  FormInput,
 } from "../../components/index.js";
 
 const LOGIN_URL = "/api/login/";
@@ -118,31 +119,28 @@ const Login = () => {
             <h1>Medical Store Admin</h1>
             <form className="login-layout__container-left__form">
               <div className="login-layout__container-left__form__input">
-                <label htmlFor="username">Username</label>
-                <input
+                <FormInput
+                  label="Username"
                   type="text"
-                  name="username"
-                  placeholder=""
                   id="username"
-                  ref={userRef}
-                  autoComplete="off"
-                  // onChange={(e) => setUser(e.target.value)}
-                  onChange = {(e) => dispatch({ type: "SET_USER", payload: e.target.value })}
+                  name="username"
                   value={email}
+                  onChange={(e) => dispatch({ type: "SET_USER", payload: e.target.value })}
                   required
+                  autoComplete="off"
+                  ref={userRef}
                 />
               </div>
               <div className="login-layout__container-left__form__input">
-                <label htmlFor="password">Password</label>
-                <input
+                <FormInput
+                  label="Password"
                   type="password"
-                  name="password"
-                  placeholder=""
                   id="password"
-                  // onChange={(e) => setPwd(e.target.value)}
-                  onChange = {(e) => dispatch({ type: "SET_PWD", payload: e.target.value })}
+                  name="password"
                   value={password}
+                  onChange={(e) => dispatch({ type: "SET_PWD", payload: e.target.value })}
                   required
+                  autoComplete="off"
                 />
               </div>
               <div className="login-layout__container-left__form__buttons">

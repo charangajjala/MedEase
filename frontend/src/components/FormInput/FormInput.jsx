@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
+import React from "react";
 import './FormInput.scss';
 
-const FormInput = ({
+const FormInput = React.forwardRef(function FormInput({
   label,
   type,
   id,
@@ -10,7 +11,7 @@ const FormInput = ({
   onChange,
   required,
   ...props
-}) => {
+}, ref) {
   return (
     <div className="grid-item">
       <label htmlFor={id}>{label}</label>
@@ -21,11 +22,14 @@ const FormInput = ({
         value={value}
         onChange={onChange}
         required={required}
+        ref={ref}
         {...props}
       />
     </div>
   );
-};
+});
+
+FormInput.displayName = 'FormInput';
 
 FormInput.propTypes = {
   label: PropTypes.string.isRequired,
