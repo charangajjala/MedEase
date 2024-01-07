@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-MedEaseApplication<med_ease>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.chapp.med_ease.MedEaseApplication",
+      "projectName": "med_ease",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
