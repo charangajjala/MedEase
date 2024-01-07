@@ -111,10 +111,9 @@ const SellsDashboard = () => {
                   }
                   required={true}
                 />
-              </div>
-              <div className="sells-form__content__button">
                 <button type="submit">Submit</button>
               </div>
+              <div className="sells-form__content__button"></div>
             </form>
           </div>
         </main>

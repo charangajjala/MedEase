@@ -11,4 +11,5 @@ export const links = {
   addCategory: { name: "Add Category", href: "/dashboard" },
   logout: { name: "Logout", href: "/dashboard" },
   // logout: { name: "Logout", href: "/logout" },
+  addMedicine: { name: "Add Medicine", href: "/medicine" },
 };

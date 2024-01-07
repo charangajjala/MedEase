@@ -32,12 +32,28 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
 
+      button {
+        padding: 0.75em 1.5em;
+        border: none;
+        margin: auto 0;
+        border-radius: 4px;
+        background-color: $button-bg;
+        color: $button-text;
+        cursor: pointer;
+        font-weight: $font-weight-bold;
+        justify-self: start;
+
+        @media (max-width: 768px) {
+          padding: 0.75em; 
+        }
+      }
+
       @media (max-width: 768px) {
-        grid-template-columns: repeat(2, 1fr); 
+        grid-template-columns: repeat(2, 1fr);
       }
 
       @media (max-width: 480px) {
-        grid-template-columns: 1fr; 
+        grid-template-columns: 1fr;
       }
     }
 

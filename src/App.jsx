@@ -7,6 +7,7 @@ import {
   SellsDashboard,
   OrderReport,
   CompanyReport,
+  AddCategory
 } from "./containers/index.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/sells" element={<SellsDashboard />} />
         <Route path="/report" element={<OrderReport />} />
         <Route path="/companies" element={<CompanyReport />} />
+        <Route path="/category" element={<AddCategory />} />
       </Routes>
     </Router>
   );
