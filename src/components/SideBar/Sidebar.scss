@@ -43,7 +43,6 @@
     justify-content: start;
     align-items: center;
     background-color: $sidebar-bg;
-    transition: transform 0.3s ease-in-out;
 
     &--hidden {
       display: none;
