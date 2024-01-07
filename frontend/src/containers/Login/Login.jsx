@@ -11,11 +11,11 @@ import {
   Footer,
 } from "../../components/index.js";
 
-const LOGIN_URL = "";
+const LOGIN_URL = "/api/login/";
 
 const initialState = {
-  user: "",
-  pwd: "",
+  email: "",
+  password: "",
   errMsg: "",
   success: false,
 };
@@ -23,15 +23,15 @@ const initialState = {
 function loginReducer(state, action) {
   switch (action.type) {
     case "SET_USER":
-      return { ...state, user: action.payload };
+      return { ...state, email: action.payload };
     case "SET_PWD":
-      return { ...state, pwd: action.payload };
+      return { ...state, password: action.payload };
     case "SET_ERR_MSG":
       return { ...state, errMsg: action.payload };
     case "SET_SUCCESS":
       return { ...state, success: action.payload };
     case "LOGGED_IN":
-      return { ...state, user: "", pwd: "", errMsg: "", success: true };
+      return { ...state, email: "", password: "", errMsg: "", success: true };
     case "RESET":
       return initialState;
     default:
@@ -43,14 +43,14 @@ const Login = () => {
   const navigate = useNavigate();
   const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
-  const errRef = useRef();
+  // const errRef = useRef();
 
   // const [user, setUser] = useState("");
   // const [errMsg, setErrMsg] = useState("");
   // const [pwd, setPwd] = useState("");
   // const [success, setSuccess] = useState(false);
 
-  const [{user, errMsg, pwd, success}, dispatch] = useReducer(loginReducer, initialState);
+  const [{email, errMsg, password, success}, dispatch] = useReducer(loginReducer, initialState);
 
   useEffect(() => {
     userRef.current.focus();
@@ -58,7 +58,7 @@ const Login = () => {
 
   useEffect(() => {
     dispatch({ type: "SET_ERR_MSG", payload: "" });
-  }, [user, pwd]);
+  }, [email, password]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -66,7 +66,7 @@ const Login = () => {
     try {
       const response = await axios.post(
         LOGIN_URL,
-        JSON.stringify({ user, pwd }),
+        JSON.stringify({ email, password }),
         {
           headers: {
             "Content-Type": "application/json",
@@ -76,7 +76,7 @@ const Login = () => {
       );
       const accessToken = response?.data?.accessToken;
       const refreshToken = response?.data?.refreshToken;
-      setAuth({ user, pwd, accessToken, refreshToken });
+      setAuth({ email, password, accessToken, refreshToken });
       // setSuccess(true);
       // setUser("");
       // setPwd("");
@@ -99,7 +99,7 @@ const Login = () => {
       }
       // setSuccess(false);
       dispatch({ type: "SET_SUCCESS", payload: false });
-      errRef.current.focus();
+      // errRef.current.focus();
     }
   };
 
@@ -128,7 +128,7 @@ const Login = () => {
                   autoComplete="off"
                   // onChange={(e) => setUser(e.target.value)}
                   onChange = {(e) => dispatch({ type: "SET_USER", payload: e.target.value })}
-                  value={user}
+                  value={email}
                   required
                 />
               </div>
@@ -141,7 +141,7 @@ const Login = () => {
                   id="password"
                   // onChange={(e) => setPwd(e.target.value)}
                   onChange = {(e) => dispatch({ type: "SET_PWD", payload: e.target.value })}
-                  value={pwd}
+                  value={password}
                   required
                 />
               </div>
