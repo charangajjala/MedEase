@@ -1,0 +1,53 @@
+import PropTypes from "prop-types";
+import "./SelectField.scss"; // Add styles as needed
+
+const SelectField = ({
+  label,
+  id,
+  name,
+  options,
+  value,
+  onChange,
+  required,
+}) => {
+  return (
+    <div className="grid-item">
+      <label htmlFor={id}>{label}</label>
+      <select
+        id={id}
+        name={name}
+        value={value}
+        onChange={onChange}
+        required={required}
+      >
+        <option value="">Please select</option>
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
+
+SelectField.propTypes = {
+  label: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  value: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+  required: PropTypes.bool,
+};
+
+SelectField.defaultProps = {
+  required: false,
+};
+
+export default SelectField;

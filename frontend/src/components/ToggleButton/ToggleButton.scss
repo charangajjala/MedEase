@@ -1,0 +1,21 @@
+@import '../../styles/colors/colors.scss';
+
+.admin-dashboard {
+  &__toggle-btn {
+    padding: 10px;
+    border: none;
+    background-color: $white;
+
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(1.2);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(adjust-color($button-bg, $lightness: -20%), 0.5);
+    }
+  }
+}

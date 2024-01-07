@@ -1,0 +1,41 @@
+@import "../../styles/colors/colors.scss";
+@import "../../styles/fonts/fonts.scss";
+
+.grid-item {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    display: block;
+    margin-bottom: 10px;
+    color: $text-color;
+    font-size: $font-size-medium;
+  }
+
+  input,
+  select,
+  textarea {
+    padding: 10px;
+    border: 1px solid $form-input-border;
+    background-color: $form-input-bg-active;
+    border-radius: 4px;
+    margin-bottom: 1em;
+    font-size: $font-size-small;
+    transition: border-color 0.3s ease-in-out;
+
+    &:focus {
+      border-color: darken($button-bg, 20%);
+      box-shadow: 0 0 0 2px rgba($button-bg, 0.2);
+      outline: none;
+    }
+  }
+
+  textarea {
+    height: 150px;
+    resize: vertical;
+  }
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}

@@ -1,0 +1,12 @@
+@import "./styles/colors/colors.scss";
+@import "./styles/fonts/fonts.scss";
+
+.App {
+  text-align: center;
+  background-color: $body-bg;
+
+  p {
+    font-size: $font-size-medium;
+    color: $text-color;
+  }
+}
