@@ -15,9 +15,9 @@ export const links = {
   startSell: { name: "Start Sell", href: "/sells", icon: faShoppingCart },
   orderReport: { name: "Order Report", href: "/report", icon: faClipboardList },
   productReport: { name: "Product Report", href: "/dashboard", icon: faBoxOpen },
-  addCompany: { name: "Add Company", href: "/dashboard", icon: faBuilding },
+  addMedicine: { name: "Add Product", href: "/medicine", icon: faCapsules },
   companyReport: { name: "Company Report", href: "/companies", icon: faSitemap },
+  addCompany: { name: "Add Company", href: "/dashboard", icon: faBuilding },
   addCategory: { name: "Add Category", href: "/category", icon: faPlusCircle },
   logout: { name: "Logout", href: "/logout", icon: faSignOutAlt },
-  addMedicine: { name: "Add Medicine", href: "/medicine", icon: faCapsules },
 };
