@@ -43,12 +43,16 @@ function reducer(state, action) {
   }
 }
 
-const MedicineForm = ({ onSubmit }) => {
+const MedicineForm = ({ button_name }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const handleSubmit = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
-    onSubmit(state);
+    if (button_name === "Submit") {
+      console.log("Add");
+    } else {
+      console.log("Update");
+    }
   };
 
   return (
@@ -147,16 +151,15 @@ const MedicineForm = ({ onSubmit }) => {
           required
         />
       </div>
-      <div className="form-button" onClick={handleSubmit}>
-        <button type="submit">Submit</button>
+      <div className="form-button" onClick={handleFormSubmit}>
+        <button type="submit">{button_name}</button>
       </div>
     </form>
   );
 };
 
 MedicineForm.propTypes = {
-  heading: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func.isRequired,
+  button_name: PropTypes.string.isRequired,
 };
 
 export default MedicineForm;

@@ -10,7 +10,7 @@ import {
 
 import { links } from "../../constants/links.js";
 
-import "./AddMedicine.scss";
+import "./UpdateMedicine.scss";
 import logo from "../../assets/logo.png";
 
 const AddMedicine = () => {
@@ -28,10 +28,13 @@ const AddMedicine = () => {
   // Once the backend is done convert it to async for post request
   // Upon successful submit clear the form
   // else display error message
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <>
-      <div className="add-product-form">
+      <div className="update-product-form">
         <ToggleButton
           toggleSidebar={toggleSidebar}
           isSidebarVisible={isSidebarVisible}
@@ -42,8 +45,8 @@ const AddMedicine = () => {
           links={links}
           isSidebarVisible={isSidebarVisible}
         />
-        <main className="add-product-form__main">
-          <div className="add-product-form__main__header">
+        <main className="update-product-form__main">
+          <div className="update-product-form__main__header">
             <Header
               dropdownRef={dropdownRef}
               toggleDropdown={toggleDropdown}
@@ -59,12 +62,12 @@ const AddMedicine = () => {
                   link: "/logout",
                 },
               ]}
-              heading={"Add Medicine"}
+              heading={"Update Medicine"}
             />
           </div>
 
-          <div className="add-product-form__content">
-            <MedicineForm button_name="Submit" />
+          <div className="update-product-form__content">
+            <MedicineForm onSubmit={handleSubmit} />
           </div>
         </main>
       </div>

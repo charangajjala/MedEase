@@ -5,6 +5,7 @@ import { default as SellsDashboard } from "./SellsDashboard/SellsDashboard.jsx";
 import { default as OrderReport } from "./OrderReport/OrderReport.jsx";
 import { default as CompanyReport } from "./CompanyReport/CompanyReport.jsx";
 import { default as AddCategory } from "./AddCategory/AddCategory.jsx";
+import { default as UpdateMedicine } from "./UpdateMedicine/UpdateMedicine.jsx";
 
 export {
   AdminDashboard,
@@ -14,4 +15,5 @@ export {
   OrderReport,
   CompanyReport,
   AddCategory,
+  UpdateMedicine,
 };
