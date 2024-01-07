@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 import "./Sidebar.scss";
 import { links } from "../../constants/links.js";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 const Sidebar = (props) => {
   return (
     <aside
@@ -15,7 +17,11 @@ const Sidebar = (props) => {
       <nav className="admin-dashboard__nav">
         {Object.values(links).map((link, index) => (
           <a href={link.href} key={index} className="admin-dashboard__nav-link">
-            {link.name}
+            <FontAwesomeIcon
+              icon={link.icon}
+              className="admin-dashboard__nav-icon"
+            />
+            <span className="admin-dashboard__nav-text">{link.name}</span>
           </a>
         ))}
       </nav>
