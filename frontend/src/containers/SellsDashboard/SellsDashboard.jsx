@@ -79,7 +79,7 @@ const SellsDashboard = () => {
           </div>
 
           <div className="sells-form__content">
-            <h1>Sells Dashboard</h1>
+            <h2>Sells Dashboard</h2>
             <hr />
             <form onSubmit={handleSubmit}>
               <div className="sells-form__content__inputs">

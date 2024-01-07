@@ -1,0 +1,181 @@
+@import "../../styles/colors/colors.scss";
+@import "../../styles/fonts/fonts.scss";
+
+.sells-dashboard-ext {
+  display: flex;
+  min-height: 100vh;
+  font-family: $font-family;
+
+  &__main {
+    width: 100%;
+    background-color: $body-bg;
+    color: $text-light;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    justify-content: start;
+  }
+
+  &__content {
+    background-color: $white;
+    color: $text-color;
+    border-radius: 8px;
+    padding: 10px 10px;
+    box-shadow: 0 4px 8px rgba($black, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2em;
+  }
+
+  &__customer-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    &__content {
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+
+        tbody {
+          tr {
+            &:first-child {
+              background-color: $table-first-child;
+            }
+
+            &:last-child {
+              background-color: $table-last-child;
+            }
+
+            td {
+              padding: 10px;
+              border: 1px solid $table-border;
+
+              &:nth-child(odd) {
+                font-weight: bold;
+                color: $text-color;
+                background-color: $table-first-child;
+              }
+
+              &:nth-child(even) {
+                background-color: $table-last-child;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &__cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    &__content {
+      table {
+        width: 100%;
+        border-collapse: collapse;
+
+        td {
+          padding: 10px;
+          vertical-align: auto;
+
+          label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: $font-weight-bold;
+          }
+
+          input[type="number"],
+          select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid $form-input-bg-active;
+            background-color: $form-input-bg-active;
+            border-radius: 4px;
+            font-size: $font-size-medium;
+            margin-bottom: 10px;
+            height: 40px;
+          }
+
+          button {
+            background-color: $button-bg;
+            border: none;
+            border-radius: 4px;
+            color: $white;
+            font-weight: $font-weight-bold;
+            cursor: pointer;
+            width: 100%;
+            padding: 10px 0;
+
+            &:hover {
+              background-color: darken($button-bg, 10%);
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+  &__order-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+
+        thead {
+          th {
+            background-color: $white;
+            color: $text-color;
+            font-weight: $font-weight-bold;
+            padding: 10px;
+            border: 1px solid $border-color;
+          }
+        }
+
+        tbody {
+          td {
+            padding: 10px;
+            border: 1px solid $border-color;
+            text-align: center;
+
+            button {
+              margin-right: 5px;
+              padding: 5px 10px;
+              background-color: $button-bg;
+              color: $white;
+              border: none;
+              border-radius: 4px;
+              cursor: pointer;
+
+              &:hover {
+                background-color: darken($button-bg, 10%);
+              }
+            }
+          }
+
+          tr:nth-child(odd) {
+            background-color: $table-first-child;
+          }
+
+          tr:nth-child(even) {
+            background-color: $table-last-child;
+          }
+        }
+      }
+    }
+  }
+}

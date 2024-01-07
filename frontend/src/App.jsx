@@ -8,7 +8,8 @@ import {
   OrderReport,
   CompanyReport,
   AddCategory,
-  Logout
+  Logout,
+  SellsDashboardExt,
 } from "./containers/index.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/dashboard" element={<AdminDashboard />} />
         <Route path="/medicine" element={<AddMedicine />} />
         <Route path="/sells" element={<SellsDashboard />} />
+        <Route path="/sellsExt" element={<SellsDashboardExt />} />
         <Route path="/report" element={<OrderReport />} />
         <Route path="/companies" element={<CompanyReport />} />
         <Route path="/category" element={<AddCategory />} />
