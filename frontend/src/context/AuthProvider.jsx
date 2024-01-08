@@ -1,13 +1,29 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState({ user: null });
+  const [auth, setAuth] = useState({ user: JSON.parse(localStorage.getItem('user')) });
 
-  const login = (user) => setAuth({ user });
-  const logout = () => setAuth({ user: null });
+  useEffect(() => {
+    if (auth.user) {
+      localStorage.setItem('user', JSON.stringify(auth.user));
+    } else {
+      localStorage.removeItem('user');
+    }
+  }, [auth.user]);
+
+  const login = (user) => {
+    setAuth({ user });
+  };
+
+  const logout = () => {
+    setAuth({ user: null });
+    // Add logic here to call the backend to clear the HTTP-only cookie
+  };
+
+  console.log("auth", auth);
 
   return (
     <AuthContext.Provider value={{ auth, setAuth, login, logout }}>

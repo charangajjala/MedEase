@@ -1,43 +1,31 @@
 import { useEffect } from "react";
 import { axiosPrivate } from "../api/axios";
 import useRefreshToken from "./useRefreshToken";
-import useAuth from "./useAuth";
 
 const useAxiosPrivate = () => {
   const refresh = useRefreshToken();
-  const { auth } = useAuth();
 
   useEffect(() => {
-    const requestIntercept = axiosPrivate.interceptors.request.use(
-      (config) => {
-        if (!config.headers["Authorization"]) {
-          config.headers["Authorization"] = `Bearer ${auth?.accessToken}`;
-        }
-
-        return config;
-      },
-      (error) => Promise.reject(error)
-    );
-
+    // Response interceptor to handle token refresh
     const responseIntercept = axiosPrivate.interceptors.response.use(
-      (response) => response,
+      response => response, // Pass through successful responses
       async (error) => {
         const prevRequest = error?.config;
+        // Check for token expiration indicator (e.g., 403 status)
         if (error?.response?.status === 403 && !prevRequest?.sent) {
           prevRequest.sent = true;
-          const newAccessTokem = await refresh();
-          prevRequest.headers["Authorization"] = `Bearer ${newAccessTokem}`;
-          return axiosPrivate(prevRequest);
+          await refresh(); // Attempt to refresh the token
+          return axiosPrivate(prevRequest); // Retry the original request
         }
-        return Promise.reject(error);
+        return Promise.reject(error); // For other errors, reject the promise
       }
     );
 
     return () => {
-      axiosPrivate.interceptors.response.eject(requestIntercept);
+      // Eject the interceptor when the component using this hook unmounts
       axiosPrivate.interceptors.response.eject(responseIntercept);
     };
-  }, [auth, refresh]);
+  }, [refresh]);
 
   return axiosPrivate;
 };
