@@ -8,10 +8,14 @@ import {
 import useVisibilityToggle from "../../hooks/useVisibilityToggle";
 
 import { links } from "../../constants/links.js";
-import companies from "../../constants/companies.js";
+// import companies from "../../constants/companies.js";
 import logo from "../../assets/logo.png";
 import "./CompanyReport.scss";
 import { useNavigate } from "react-router";
+import { useState, useEffect } from "react";
+import { axiosPrivate } from "../../api/axios.jsx";
+
+const COMPANY_REPORTS_URL = "/api/companies";
 
 const columnHeaders = [
   { key: "id", label: "ID" },
@@ -20,6 +24,7 @@ const columnHeaders = [
 ];
 
 const CompanyReport = () => {
+  const [companies, setCompanies] = useState([]);
   const {
     isSidebarVisible,
     toggleSidebar,
@@ -35,8 +40,20 @@ const CompanyReport = () => {
 
   const handleDelete = () => {
     console.log("Delete");
-  }
+  };
 
+  useEffect(() => {
+    const fetchCompanies = async () => {
+      try {
+        const response = await axiosPrivate.get(COMPANY_REPORTS_URL);
+        setCompanies(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchCompanies();
+  }, []);
 
   return (
     <>

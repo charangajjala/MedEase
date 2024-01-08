@@ -75,6 +75,7 @@ const Login = () => {
           withCredentials: true,
         }
       );
+      console.log(response);
       const accessToken = response?.data?.accessToken;
       const refreshToken = response?.data?.refreshToken;
       setAuth({ email, password, accessToken, refreshToken });

@@ -8,10 +8,14 @@ import {
 import useVisibilityToggle from "../../hooks/useVisibilityToggle";
 
 import { links } from "../../constants/links.js";
-import products from "../../constants/products.js";
+// import products from "../../constants/products.js";
 import logo from "../../assets/logo.png";
 import "./ProductReports.scss";
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { axiosPrivate } from "../../api/axios.jsx";
+import { useEffect, useState } from "react";
+
+const PRODUCT_REPORTS_URL = "/api/products";
 
 const columnHeaders = [
   { key: "id", label: "ID" },
@@ -21,6 +25,7 @@ const columnHeaders = [
 ];
 
 const ProductReports = () => {
+  const [products, setProducts] = useState([]);
   const {
     isSidebarVisible,
     toggleSidebar,
@@ -29,8 +34,22 @@ const ProductReports = () => {
     dropdownRef,
   } = useVisibilityToggle();
 
-  // const navigate = useNavigate();
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axiosPrivate.get(PRODUCT_REPORTS_URL);
+        setProducts(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const navigate = useNavigate();
   const handleClick = (product) => {
+    navigate("/medicine");
     console.log(product);
   };
 
@@ -74,7 +93,12 @@ const ProductReports = () => {
               columnHeaders={columnHeaders}
               data={products}
               renderRowActions={(product) => (
-                <button className="action-button view" onClick={() => handleClick(product)}>View</button>
+                <button
+                  className="action-button view"
+                  onClick={() => handleClick(product)}
+                >
+                  View
+                </button>
               )}
             />
           </div>
