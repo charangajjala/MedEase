@@ -13,6 +13,7 @@ import {
   SellsDashboardExt,
   AddCompany,
   UpdateCompany,
+  ProductReports,
 } from "./containers/index.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -28,6 +29,7 @@ function App() {
         <Route path="/sellsExt" element={<SellsDashboardExt />} />
         <Route path="/report" element={<OrderReports />} />
         <Route path="/reportExt" element={<OrderReport />} />
+        <Route path="/products" element={<ProductReports />} />
         <Route path="/companies" element={<CompanyReport />} />
         <Route path="/companyAdd" element={<AddCompany />} />
         <Route path="/companyUpdate" element={<UpdateCompany />} />

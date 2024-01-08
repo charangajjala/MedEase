@@ -11,6 +11,7 @@ import { default as Logout } from "./Logout/Logout.jsx";
 import { default as SellsDashboardExt } from "./SellsDashboardExt/SellsDashboardExt.jsx";
 import {default as AddCompany} from "./AddCompany/AddCompany.jsx";
 import {default as UpdateCompany} from "./UpdateCompany/UpdateCompany.jsx";
+import {default as ProductReports} from "./ProductReports/ProductReports.jsx";
 
 export {
   AdminDashboard,
@@ -26,4 +27,5 @@ export {
   SellsDashboardExt,
   AddCompany,
   UpdateCompany,
+  ProductReports,
 };
