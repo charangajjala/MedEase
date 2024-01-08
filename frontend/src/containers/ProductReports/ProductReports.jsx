@@ -11,7 +11,7 @@ import { links } from "../../constants/links.js";
 import products from "../../constants/products.js";
 import logo from "../../assets/logo.png";
 import "./ProductReports.scss";
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 const columnHeaders = [
   { key: "id", label: "ID" },
@@ -29,9 +29,9 @@ const ProductReports = () => {
     dropdownRef,
   } = useVisibilityToggle();
 
-  const navigate = useNavigate();
-  const handleClick = () => {
-    navigate("/reportExt");
+  // const navigate = useNavigate();
+  const handleClick = (product) => {
+    console.log(product);
   };
 
   return (
@@ -73,8 +73,8 @@ const ProductReports = () => {
             <ReportTable
               columnHeaders={columnHeaders}
               data={products}
-              renderRowActions={() => (
-                <button className="action-button view" onClick={handleClick}>View</button>
+              renderRowActions={(product) => (
+                <button className="action-button view" onClick={() => handleClick(product)}>View</button>
               )}
             />
           </div>

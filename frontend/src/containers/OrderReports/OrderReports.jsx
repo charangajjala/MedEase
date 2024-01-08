@@ -46,9 +46,9 @@ const OrderReports = () => {
   } = useVisibilityToggle();
 
   const navigate = useNavigate();
-  const handleViewClick = () => {
-    navigate("/reportExt");
-  }
+  const handleViewClick = (order) => {
+    navigate("/reportExt", { state: { order } });
+  };
 
   return (
     <>
@@ -88,8 +88,13 @@ const OrderReports = () => {
             <ReportTable
               data={orders}
               columnHeaders={columnHeaders}
-              renderRowActions={() => (
-                <button className="action-button view" onClick={handleViewClick}>View</button>
+              renderRowActions={(order) => (
+                <button
+                  className="action-button view"
+                  onClick={() => handleViewClick(order)}
+                >
+                  View
+                </button>
               )}
             />
           </div>

@@ -13,6 +13,8 @@ import { links } from "../../constants/links.js";
 import dummyData from "../../constants/dummyData.js";
 import logo from "../../assets/logo.png";
 
+import { useLocation } from "react-router";
+
 import "./OrderReport.scss";
 
 const OrderReport = () => {
@@ -24,9 +26,12 @@ const OrderReport = () => {
     dropdownRef,
   } = useVisibilityToggle();
 
+  const location = useLocation();
+  const { order } = location.state;
+
   const totalSum = dummyData
-  .reduce((acc, item) => acc + parseFloat(item.totalCost), 0)
-  .toFixed(2);
+    .reduce((acc, item) => acc + parseFloat(item.totalCost), 0)
+    .toFixed(2);
 
   return (
     <>
@@ -69,21 +74,21 @@ const OrderReport = () => {
                   <tbody>
                     <tr>
                       <td>Order ID</td>
-                      <td>106</td>
+                      <td>{order.id}</td>
                       <td>Order Date</td>
-                      <td>11 Oct 2021 01:13 AM</td>
+                      <td>{order.date}</td>
                     </tr>
                     <tr>
                       <td>Customer Name</td>
-                      <td>Jay Kumar</td>
+                      <td>{order.customerName}</td>
                       <td>Customer Mobile</td>
-                      <td>84359834509</td>
+                      <td>{order.mobile}</td>
                     </tr>
                     <tr>
                       <td>Order Status</td>
                       <td>Paid</td>
                       <td>Total Amount</td>
-                      <td>3500</td>
+                      <td>{order.totalAmount}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -95,7 +100,7 @@ const OrderReport = () => {
                 <hr />
               </div>
               <div className="order-report__order-items__content">
-              <table>
+                <table>
                   <thead>
                     <tr>
                       <th>Product ID</th>
