@@ -46,7 +46,7 @@ const CompanyForm = ({ method, companyData }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (method === "Add") {
-      console.log("Add");
+      console.log(state);
     } else {
       console.log("Update");
     }

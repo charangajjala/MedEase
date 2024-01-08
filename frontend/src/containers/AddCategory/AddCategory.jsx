@@ -100,6 +100,7 @@ const AddCategory = () => {
                     payload: e.target.value,
                   })
                 }
+                required={true}
                 ref={categoryNameRef}
               />
               <Textarea
@@ -112,6 +113,7 @@ const AddCategory = () => {
                     payload: e.target.value,
                   })
                 }
+                required={true}
               />              
             </form>
             <div className="add-category-form__buttons">
