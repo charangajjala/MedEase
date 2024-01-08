@@ -9,6 +9,8 @@ import useVisibilityToggle from "../../hooks/useVisibilityToggle";
 
 import { links } from "../../constants/links.js";
 
+import { useLocation } from "react-router";
+
 import logo from "../../assets/logo.png";
 import "./UpdateCompany.scss";
 
@@ -20,6 +22,9 @@ const UpdateCompany = () => {
     toggleDropdown,
     dropdownRef,
   } = useVisibilityToggle();
+
+  const location = useLocation();
+  const { company } = location.state;
 
   return (
     <>
@@ -58,7 +63,7 @@ const UpdateCompany = () => {
           </div>
 
           <div className="update-company-form__content">
-            <CompanyForm method={"Update"} />
+            <CompanyForm method={"Update"} companyData={company}/>
           </div>
         </main>
       </div>

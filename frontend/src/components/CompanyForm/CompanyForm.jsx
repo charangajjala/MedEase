@@ -1,7 +1,7 @@
 import { FormInput, Textarea } from "../../components/index.js";
 import { useReducer, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import './CompanyForm.scss';
+import "./CompanyForm.scss";
 
 const initialState = {
   companyName: "",
@@ -14,19 +14,34 @@ function reducer(state, action) {
       return { ...state, companyName: action.payload };
     case "SET_DESCRIPTION":
       return { ...state, description: action.payload };
-    case "RESET_FORM":
-      return initialState;
+    case "UPDATE_COMPANY":
+      return { ...state,...action.payload };
     default:
       return state;
   }
 }
 
-const CompanyForm = ({ method }) => {
+const CompanyForm = ({ method, companyData }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const companyNameRef = useRef();
   useEffect(() => {
     companyNameRef.current.focus();
   }, []);
+
+  useEffect(() => {
+    companyNameRef.current.focus();
+
+    if (companyData) {
+      dispatch({
+        type: "UPDATE_COMPANY",
+        payload: {
+          companyName: companyData.name,
+          description: companyData.description,
+        },
+      });
+    }
+  }, [companyData]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,8 +54,9 @@ const CompanyForm = ({ method }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className='company-form'>
+      <form onSubmit={handleSubmit} className="company-form">
         <FormInput
+          id="companyName"
           type="text"
           name="companyName"
           value={state.companyName}
@@ -54,8 +70,10 @@ const CompanyForm = ({ method }) => {
           ref={companyNameRef}
         />
         <Textarea
+          id="description"
           name="description"
           value={state.description}
+          required={true}
           onChange={(e) =>
             dispatch({
               type: "SET_DESCRIPTION",
@@ -73,8 +91,8 @@ const CompanyForm = ({ method }) => {
 };
 
 CompanyForm.propTypes = {
-  title: PropTypes.string.isRequired,
   method: PropTypes.string.isRequired,
+  companyData: PropTypes.object,
 };
 
 export default CompanyForm;

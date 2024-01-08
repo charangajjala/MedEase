@@ -11,6 +11,7 @@ import { links } from "../../constants/links.js";
 import companies from "../../constants/companies.js";
 import logo from "../../assets/logo.png";
 import "./CompanyReport.scss";
+import { useNavigate } from "react-router";
 
 const columnHeaders = [
   { key: "id", label: "ID" },
@@ -26,6 +27,16 @@ const CompanyReport = () => {
     toggleDropdown,
     dropdownRef,
   } = useVisibilityToggle();
+
+  const navigate = useNavigate();
+  const handleEdit = (company) => {
+    navigate("/companyUpdate", { state: { company } });
+  };
+
+  const handleDelete = () => {
+    console.log("Delete");
+  }
+
 
   return (
     <>
@@ -65,17 +76,17 @@ const CompanyReport = () => {
             <ReportTable
               data={companies}
               columnHeaders={columnHeaders}
-              renderRowActions={() => (
+              renderRowActions={(company) => (
                 <>
                   <button
                     className="action-button edit"
-                    onClick={() => {}}
+                    onClick={() => handleEdit(company)}
                   >
                     Edit
                   </button>
                   <button
                     className="action-button delete"
-                    onClick={() => {}}
+                    onClick={handleDelete}
                   >
                     Delete
                   </button>

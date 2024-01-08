@@ -5,6 +5,7 @@ import {
   Header,
   ReportTable,
 } from "../../components/index.js";
+import { useNavigate } from "react-router-dom";
 import useVisibilityToggle from "../../hooks/useVisibilityToggle.jsx";
 
 import { links } from "../../constants/links.js";
@@ -44,6 +45,11 @@ const OrderReports = () => {
     dropdownRef,
   } = useVisibilityToggle();
 
+  const navigate = useNavigate();
+  const handleViewClick = () => {
+    navigate("/reportExt");
+  }
+
   return (
     <>
       <div className="order-reports">
@@ -79,12 +85,11 @@ const OrderReports = () => {
             />
           </div>
           <div className="order-reports__content">
-            {/* <OrderTable orders={orders} /> */}
             <ReportTable
               data={orders}
               columnHeaders={columnHeaders}
               renderRowActions={() => (
-                <button className="action-button view">View</button>
+                <button className="action-button view" onClick={handleViewClick}>View</button>
               )}
             />
           </div>
