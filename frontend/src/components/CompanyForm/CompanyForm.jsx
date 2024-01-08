@@ -39,7 +39,7 @@ const CompanyForm = ({ method }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className='company-form'>
         <FormInput
           type="text"
           name="companyName"

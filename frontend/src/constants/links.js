@@ -17,7 +17,7 @@ export const links = {
   productReport: { name: "Product Report", href: "/dashboard", icon: faBoxOpen },
   addMedicine: { name: "Add Product", href: "/medicine", icon: faCapsules },
   companyReport: { name: "Company Report", href: "/companies", icon: faSitemap },
-  addCompany: { name: "Add Company", href: "/dashboard", icon: faBuilding },
+  addCompany: { name: "Add Company", href: "/companyAdd", icon: faBuilding },
   addCategory: { name: "Add Category", href: "/category", icon: faPlusCircle },
   logout: { name: "Logout", href: "/logout", icon: faSignOutAlt },
 };
