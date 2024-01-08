@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/med_ease
+    url: jdbc:mysql://127.0.0.1:3306/medease
     username: root
-    password: MMpp@1973
+    password: root
 
   jpa:
     show-sql: true
@@ -27,3 +27,5 @@ application:
       expiration: 86400000 # a day
       refresh-token:
         expiration: 604800000 # 7 days
+
+
