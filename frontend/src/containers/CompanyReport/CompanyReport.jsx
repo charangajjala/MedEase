@@ -12,6 +12,12 @@ import companies from "../../constants/companies.js";
 import logo from "../../assets/logo.png";
 import "./CompanyReport.scss";
 
+const columnHeaders = [
+  { key: "id", label: "ID" },
+  { key: "name", label: "Name" },
+  { key: "description", label: "Description" },
+];
+
 const CompanyReport = () => {
   const {
     isSidebarVisible,
@@ -56,13 +62,32 @@ const CompanyReport = () => {
             />
           </div>
           <div className="company-report__content">
-            <ReportTable companies={companies} />
+            <ReportTable
+              data={companies}
+              columnHeaders={columnHeaders}
+              renderRowActions={() => (
+                <>
+                  <button
+                    className="action-button edit"
+                    onClick={() => {}}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="action-button delete"
+                    onClick={() => {}}
+                  >
+                    Delete
+                  </button>
+                </>
+              )}
+            />
           </div>
         </main>
       </div>
       <Footer />
     </>
   );
-}
+};
 
 export default CompanyReport;

@@ -1,28 +1,29 @@
 import PropTypes from 'prop-types';
 import './ReportTable.scss';
 
-const ReportTable = ({ companies }) => {
+const ReportTable = ({ data, columnHeaders, renderRowActions }) => {
   return (
-    <div className="company-report-table">
+    <div className="report-table">
       <table>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Actions</th>
+            {columnHeaders.map(header => (
+              <th key={header.key}>{header.label}</th>
+            ))}
+            {renderRowActions && <th>Actions</th>}
           </tr>
         </thead>
         <tbody>
-          {companies.map(company => (
-            <tr key={company.id}>
-              <td>{company.id}</td>
-              <td>{company.name}</td>
-              <td>{company.description}</td>
-              <td>
-                <button className="action-button edit" onClick={() => {}}>Edit</button>
-                <button className="action-button delete" onClick={() => {}}>Delete</button>
-              </td>
+          {data.map(item => (
+            <tr key={item.id}>
+              {columnHeaders.map(header => (
+                <td key={header.key}>{item[header.key]}</td>
+              ))}
+              {renderRowActions && (
+                <td>
+                  {renderRowActions(item)}
+                </td>
+              )}
             </tr>
           ))}
         </tbody>
@@ -32,13 +33,14 @@ const ReportTable = ({ companies }) => {
 };
 
 ReportTable.propTypes = {
-  companies: PropTypes.arrayOf(
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  columnHeaders: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-    }),
+      key: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+    })
   ).isRequired,
+  renderRowActions: PropTypes.func,
 };
 
 export default ReportTable;
