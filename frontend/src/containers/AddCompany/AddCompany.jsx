@@ -1,18 +1,18 @@
 import {
   Sidebar,
+  Header,
   ToggleButton,
   Footer,
-  Header,
-  OrderTable,
+  CompanyForm,
 } from "../../components/index.js";
-import useVisibilityToggle from "../../hooks/useVisibilityToggle.jsx";
+import useVisibilityToggle from "../../hooks/useVisibilityToggle";
 
 import { links } from "../../constants/links.js";
-import orders from "../../constants/orders.js";
-import logo from "../../assets/logo.png";
-import "./OrderReports.scss";
 
-const OrderReports = () => {
+import logo from "../../assets/logo.png";
+import "./AddCompany.scss";
+
+const AddCompany = () => {
   const {
     isSidebarVisible,
     toggleSidebar,
@@ -23,20 +23,21 @@ const OrderReports = () => {
 
   return (
     <>
-      <div className="order-reports">
+      <div className="add-company-form">
         <ToggleButton
           toggleSidebar={toggleSidebar}
           isSidebarVisible={isSidebarVisible}
         />
-
         <Sidebar
-          logo={logo}
-          links={links}
           isSidebarVisible={isSidebarVisible}
+          toggleDropdown={toggleDropdown}
+          isDropdownOpen={isDropdownOpen}
+          dropdownRef={dropdownRef}
+          links={links}
+          logo={logo}
         />
-
-        <main className="order-reports__main">
-          <div className="order-reports__main__header">
+        <main className="add-company-form__main">
+          <div className="add-company-form__main__header">
             <Header
               dropdownRef={dropdownRef}
               toggleDropdown={toggleDropdown}
@@ -52,11 +53,12 @@ const OrderReports = () => {
                   link: "/logout",
                 },
               ]}
-              heading={"All Orders Reports"}
+              heading={"Add New Company"}
             />
           </div>
-          <div className="order-reports__content">
-            <OrderTable orders={orders} />
+
+          <div className="add-company-form__content">
+            <CompanyForm method={"Add"} />
           </div>
         </main>
       </div>
@@ -65,4 +67,4 @@ const OrderReports = () => {
   );
 };
 
-export default OrderReports;
+export default AddCompany;

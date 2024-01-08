@@ -1,7 +1,10 @@
 import Protypes from "prop-types";
 import "./OrderTable.scss";
+import { useNavigate } from 'react-router-dom';
 
 const OrderTable = ({ orders }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="order-report-table">
       <table>
@@ -24,7 +27,7 @@ const OrderTable = ({ orders }) => {
               <td>{order.totalAmount}</td>
               <td>{order.date}</td>
               <td>
-                <button className="action-button">View</button>
+                <button className="action-button" onClick={() => navigate('/reportExt')}>View</button>
               </td>
             </tr>
           ))}

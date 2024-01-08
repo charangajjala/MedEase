@@ -3,7 +3,7 @@ import {
   ToggleButton,
   Footer,
   Header,
-  CompanyReportTable,
+  ReportTable,
 } from "../../components/index.js";
 import useVisibilityToggle from "../../hooks/useVisibilityToggle";
 
@@ -56,7 +56,7 @@ const CompanyReport = () => {
             />
           </div>
           <div className="company-report__content">
-            <CompanyReportTable companies={companies} />
+            <ReportTable companies={companies} />
           </div>
         </main>
       </div>

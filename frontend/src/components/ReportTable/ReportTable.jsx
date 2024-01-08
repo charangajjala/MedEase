@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import './CompanyReportTable.scss';
+import './ReportTable.scss';
 
-const CompanyReportTable = ({ companies }) => {
+const ReportTable = ({ companies }) => {
   return (
     <div className="company-report-table">
       <table>
@@ -20,8 +20,8 @@ const CompanyReportTable = ({ companies }) => {
               <td>{company.name}</td>
               <td>{company.description}</td>
               <td>
-                <button className="action-button edit">Edit</button>
-                <button className="action-button delete">Delete</button>
+                <button className="action-button edit" onClick={() => {}}>Edit</button>
+                <button className="action-button delete" onClick={() => {}}>Delete</button>
               </td>
             </tr>
           ))}
@@ -31,7 +31,7 @@ const CompanyReportTable = ({ companies }) => {
   );
 };
 
-CompanyReportTable.propTypes = {
+ReportTable.propTypes = {
   companies: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -41,4 +41,4 @@ CompanyReportTable.propTypes = {
   ).isRequired,
 };
 
-export default CompanyReportTable;
+export default ReportTable;
