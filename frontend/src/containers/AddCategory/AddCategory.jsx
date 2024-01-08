@@ -4,6 +4,7 @@ import {
   Footer,
   Header,
   FormInput,
+  Textarea,
 } from "../../components/index.js";
 import useVisibilityToggle from "../../hooks/useVisibilityToggle";
 
@@ -11,7 +12,7 @@ import { links } from "../../constants/links.js";
 
 import logo from "../../assets/logo.png";
 import "./AddCategory.scss";
-import { useReducer } from "react";
+import { useReducer, useEffect, useRef } from "react";
 
 const initialState = {
   categoryName: "",
@@ -41,11 +42,11 @@ const AddCategory = () => {
   } = useVisibilityToggle();
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  // const categoryNameRef = useRef();
+  const categoryNameRef = useRef();
 
-  // useEffect(() => {
-  //   categoryNameRef.current.focus();
-  // }, [])
+  useEffect(() => {
+    categoryNameRef.current.focus();
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -99,11 +100,10 @@ const AddCategory = () => {
                     payload: e.target.value,
                   })
                 }
-                // ref={categoryNameRef}
+                ref={categoryNameRef}
               />
-              <FormInput
+              <Textarea
                 label="Description"
-                type="text"
                 name="description"
                 id="description"
                 onChange={(e) =>
@@ -112,7 +112,7 @@ const AddCategory = () => {
                     payload: e.target.value,
                   })
                 }
-              />
+              />              
             </form>
             <div className="add-category-form__buttons">
               <button

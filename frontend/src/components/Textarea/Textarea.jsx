@@ -1,16 +1,15 @@
-import PropTypes from "prop-types";
 import React from "react";
-import "./FormInput.scss";
+import PropTypes from "prop-types";
+import "./Textarea.scss";
 
-const FormInput = React.forwardRef(function FormInput(
-  { label, type, id, name, value, onChange, required, ...props },
+const Textarea = React.forwardRef(function Textarea(
+  { label, id, name, value, onChange, required, ...props },
   ref
 ) {
   return (
-    <div className="grid-item">
+    <div className="text-area">
       <label htmlFor={id}>{label}</label>
-      <input
-        type={type}
+      <textarea
         id={id}
         name={name}
         value={value}
@@ -23,11 +22,10 @@ const FormInput = React.forwardRef(function FormInput(
   );
 });
 
-FormInput.displayName = "FormInput";
+Textarea.displayName = "Textarea";
 
-FormInput.propTypes = {
+Textarea.propTypes = {
   label: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.string,
@@ -35,10 +33,4 @@ FormInput.propTypes = {
   required: PropTypes.bool.isRequired,
 };
 
-FormInput.defaultProps = {
-  type: "text",
-  required: false,
-  onChange: () => {},
-};
-
-export default FormInput;
+export default Textarea;

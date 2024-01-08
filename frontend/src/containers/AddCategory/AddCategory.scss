@@ -27,33 +27,17 @@
     flex-direction: column;
     gap: 1em;
 
-    .grid-item {
-      max-width: 50%;
-      margin: 0 auto;
-    }
-
-    .grid-item #description {
-      height: 100px;
-    }
-
-    @media (max-width: 768px) {
-      .grid-item {
-        max-width: 70%;  
-      }
-    }
-
-    @media (max-width: 480px) {
-      .grid-item {
-        max-width: 100%;  
-      }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+      width: 50%;
     }
   }
 
   &__buttons {
     display: flex;
-    justify-content: start;
     gap: 1em;
-    margin: 0 auto;
 
     button {
       padding: 0.75em 1.5em;

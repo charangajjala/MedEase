@@ -1,10 +1,8 @@
 @import "../../styles/colors/colors.scss";
 @import "../../styles/fonts/fonts.scss";
 
-.grid-item {
-  display: flex;
-  flex-direction: column;
 
+.text-area {
   label {
     display: block;
     margin-bottom: 10px;
@@ -12,8 +10,7 @@
     font-size: $font-size-medium;
   }
 
-  input,
-  select {
+  textarea {
     padding: 10px;
     border: 1px solid $form-input-border;
     background-color: $form-input-bg-active;
@@ -21,6 +18,9 @@
     margin-bottom: 1em;
     font-size: $font-size-small;
     transition: border-color 0.3s ease-in-out;
+    height: 150px;
+    resize: vertical;
+    width: 100%;
 
     &:focus {
       border-color: darken($button-bg, 20%);
@@ -28,13 +28,4 @@
       outline: none;
     }
   }
-
-  textarea {
-    height: 150px;
-    resize: vertical;
-  }
-}
-
-.full-width {
-  grid-column: 1 / -1;
 }

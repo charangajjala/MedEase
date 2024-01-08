@@ -8,6 +8,7 @@ import { default as SelectField } from "./SelectField/SelectField.jsx";
 import { default as CompanyReportTable } from "./CompanyReportTable/CompanyReportTable.jsx";
 import { default as OrderTable } from "./OrderTable/OrderTable.jsx";
 import { default as MedicineForm } from "./MedicineForm/MedicineForm.jsx";
+import { default as Textarea } from "./Textarea/Textarea.jsx";
 
 export {
   Button,
@@ -20,4 +21,5 @@ export {
   CompanyReportTable,
   OrderTable,
   MedicineForm,
+  Textarea,
 };
