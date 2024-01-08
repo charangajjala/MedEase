@@ -29,6 +29,27 @@
     gap: 2em;
   }
 
+  &__submit-btn {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    button {
+      padding: 0.75rem 1rem;
+      grid-column: 4;
+      justify-self: center;
+      background-color: $button-bg;
+      border: none;
+      border-radius: 4px;
+      color: $white;
+      font-weight: $font-weight-bold;
+      cursor: pointer;
+
+      &:hover {
+        background-color: darken($button-bg, 10%);
+      }
+    }
+  }
+
   &__customer-details {
     display: flex;
     flex-direction: column;
@@ -76,51 +97,46 @@
     gap: 1em;
 
     &__content {
-      table {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 1em;
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: $font-weight-bold;
+      }
+
+      input[type="number"],
+      select {
         width: 100%;
-        border-collapse: collapse;
+        padding: 0.5rem;
+        border: 1px solid $form-input-bg-active;
+        background-color: $form-input-bg-active;
+        border-radius: 4px;
+        font-size: $font-size-medium;
+        margin-bottom: 10px;
+        height: 40px;
+      }
 
-        td {
-          padding: 10px;
-          vertical-align: auto;
+      button {
+        background-color: $button-bg;
+        border: none;
+        border-radius: 4px;
+        color: $white;
+        font-weight: $font-weight-bold;
+        cursor: pointer;
+        width: fit-content;
+        justify-self: center;
+        align-self: center;
+        padding: 0.75rem 1rem;
 
-          label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: $font-weight-bold;
-          }
-
-          input[type="number"],
-          select {
-            width: 100%;
-            padding: 0.5rem;
-            border: 1px solid $form-input-bg-active;
-            background-color: $form-input-bg-active;
-            border-radius: 4px;
-            font-size: $font-size-medium;
-            margin-bottom: 10px;
-            height: 40px;
-          }
-
-          button {
-            background-color: $button-bg;
-            border: none;
-            border-radius: 4px;
-            color: $white;
-            font-weight: $font-weight-bold;
-            cursor: pointer;
-            width: 100%;
-            padding: 10px 0;
-
-            &:hover {
-              background-color: darken($button-bg, 10%);
-            }
-          }
+        &:hover {
+          background-color: darken($button-bg, 10%);
         }
       }
     }
   }
-
 
   &__order-details {
     display: flex;

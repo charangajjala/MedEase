@@ -95,41 +95,27 @@ const SellsDashboardExt = () => {
                 <hr />
               </div>
               <div className="sells-dashboard-ext__cart-items__content">
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <SelectField
-                          label="Select Product Type"
-                          id="product-type"
-                          name="product-type"
-                          options={companyNames}
-                          value={"Please Select"}
-                          onChange={() => {}}
-                          required={true}
-                        />
-                      </td>
-                      <td>
-                        <FormInput
-                          label="Enter Quantity"
-                          type="number"
-                          id="enterQuantity"
-                          name="enterQuantity"
-                          value={""}
-                          onChange={() => {}}
-                          required={true}
-                        />
-                      </td>
-                      <td>
-                        <Button
-                          name="Login"
-                          type="submit"
-                          function={handleAdd}
-                        />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <SelectField
+                  label="Select Product Type"
+                  id="product-type"
+                  name="product-type"
+                  options={companyNames}
+                  value={""}
+                  onChange={() => {}}
+                  required={true}
+                />
+
+                <FormInput
+                  label="Enter Quantity"
+                  type="number"
+                  id="enterQuantity"
+                  name="enterQuantity"
+                  value={""}
+                  onChange={() => {}}
+                  required={true}
+                />
+
+                <Button name="Add to Cart" type="submit" function={handleAdd} />
               </div>
             </div>
             <div className="sells-dashboard-ext__order-details">
@@ -171,6 +157,13 @@ const SellsDashboardExt = () => {
                   </tbody>
                 </table>
               </div>
+            </div>
+            <div className="sells-dashboard-ext__submit-btn">
+              <Button
+                name="Save Sell Details"
+                type="submit"
+                function={() => {}}
+              />
             </div>
           </div>
         </main>
