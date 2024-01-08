@@ -8,12 +8,13 @@ import {
   FormInput,
 } from "../../components/index.js";
 import useVisibilityToggle from "../../hooks/useVisibilityToggle";
+import { useNavigate } from "react-router-dom";
 
 import { links } from "../../constants/links.js";
 import { companyNames } from "../../constants/companyNames.js";
 import dummyData from "../../constants/dummyData.js";
-
 import logo from "../../assets/logo.png";
+
 import "./SellsDashboardExt.scss";
 
 const SellsDashboardExt = () => {
@@ -24,6 +25,8 @@ const SellsDashboardExt = () => {
     toggleDropdown,
     dropdownRef,
   } = useVisibilityToggle();
+
+  const navigate = useNavigate();
 
   const handleAdd = (e) => {
     e.preventDefault();
@@ -76,12 +79,12 @@ const SellsDashboardExt = () => {
                     <tr>
                       <td>Order ID</td>
                       <td>106</td>
-                      <td>Customer Name</td>
-                      <td>Jay Kumar</td>
-                    </tr>
-                    <tr>
                       <td>Order Date</td>
                       <td>11 Oct 2021 01:13 AM</td>
+                    </tr>
+                    <tr>
+                      <td>Customer Name</td>
+                      <td>Jay Kumar</td>
                       <td>Customer Mobile</td>
                       <td>84359834509</td>
                     </tr>
@@ -144,7 +147,6 @@ const SellsDashboardExt = () => {
                         <td>{item.totalUnits}</td>
                         <td>{item.totalCost}</td>
                         <td>
-                          <button>Edit</button>
                           <button>Delete</button>
                         </td>
                       </tr>
@@ -162,7 +164,9 @@ const SellsDashboardExt = () => {
               <Button
                 name="Save Sell Details"
                 type="submit"
-                function={() => {}}
+                function={() => {
+                  navigate("/reportExt");
+                }}
               />
             </div>
           </div>

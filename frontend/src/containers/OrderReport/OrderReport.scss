@@ -18,7 +18,119 @@
   }
 
   &__content {
-    font-family: $font-family;
-    overflow-x: auto;
+    background-color: $white;
+    color: $text-color;
+    border-radius: 8px;
+    padding: 10px 10px;
+    box-shadow: 0 4px 8px rgba($black, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2em;
+  }
+
+  &__order-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    &__content {
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+
+        tbody {
+          tr {
+            &:first-child {
+              background-color: $table-first-child;
+            }
+
+            &:last-child {
+              background-color: $table-last-child;
+            }
+
+            td {
+              padding: 10px;
+              border: 1px solid $table-border;
+
+              &:nth-child(odd) {
+                font-weight: bold;
+                color: $text-color;
+                background-color: $table-first-child;
+              }
+
+              &:nth-child(even) {
+                background-color: $table-last-child;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &__order-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+
+        thead {
+          th {
+            background-color: $white;
+            color: $text-color;
+            font-weight: $font-weight-bold;
+            padding: 10px;
+            border: 1px solid $border-color;
+          }
+        }
+
+        tbody {
+          td {
+            padding: 10px;
+            border: 1px solid $border-color;
+            text-align: center;
+          }
+
+          tr:nth-child(odd) {
+            background-color: $table-first-child;
+          }
+
+          tr:nth-child(even) {
+            background-color: $table-last-child;
+          }
+        }
+      }
+    }
+  }
+
+  &__button {
+    display: grid;
+
+    button {
+      background-color: $button-bg;
+      border: none;
+      border-radius: 4px;
+      color: $white;
+      font-weight: $font-weight-bold;
+      cursor: pointer;
+      width: fit-content;
+      justify-self: center;
+      align-self: center;
+      padding: 0.75rem 1rem;
+
+      &:hover {
+        background-color: darken($button-bg, 10%);
+      }
+    }
   }
 }

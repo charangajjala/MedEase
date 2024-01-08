@@ -5,6 +5,7 @@ import {
   AdminDashboard,
   AddMedicine,
   SellsDashboard,
+  OrderReports,
   OrderReport,
   CompanyReport,
   AddCategory,
@@ -23,7 +24,8 @@ function App() {
         <Route path="/medicine" element={<AddMedicine />} />
         <Route path="/sells" element={<SellsDashboard />} />
         <Route path="/sellsExt" element={<SellsDashboardExt />} />
-        <Route path="/report" element={<OrderReport />} />
+        <Route path="/report" element={<OrderReports />} />
+        <Route path="/reportExt" element={<OrderReport />} />
         <Route path="/companies" element={<CompanyReport />} />
         <Route path="/category" element={<AddCategory />} />
         <Route path="/logout" element={<Logout />} />

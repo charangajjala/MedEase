@@ -1,0 +1,24 @@
+@import "../../styles/colors/colors.scss";
+@import "../../styles/fonts/fonts.scss";
+
+.order-reports {
+  display: flex;
+  min-height: 100vh;
+  font-family: $font-family;
+
+  &__main {
+    width: 100%;
+    background-color: $body-bg;
+    color: $text-light;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    justify-content: start;
+  }
+
+  &__content {
+    font-family: $font-family;
+    overflow-x: auto;
+  }
+}
