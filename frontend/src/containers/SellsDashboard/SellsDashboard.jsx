@@ -12,6 +12,7 @@ import { links } from "../../constants/links.js";
 import logo from "../../assets/logo.png";
 import "./SellsDashboard.scss";
 import { useReducer } from "react";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   customerName: "",
@@ -39,8 +40,11 @@ const SellsDashboard = () => {
   } = useVisibilityToggle();
 
   const [state, dispatch] = useReducer(reducers, initialState);
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    navigate("/sellsExt");
     console.log(state);
   };
 
@@ -79,7 +83,7 @@ const SellsDashboard = () => {
           </div>
 
           <div className="sells-form__content">
-            <h1>Sells Dashboard</h1>
+            <h2>Sells Dashboard</h2>
             <hr />
             <form onSubmit={handleSubmit}>
               <div className="sells-form__content__inputs">

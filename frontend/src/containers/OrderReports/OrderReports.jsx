@@ -5,21 +5,38 @@ import {
   Header,
   ReportTable,
 } from "../../components/index.js";
-import useVisibilityToggle from "../../hooks/useVisibilityToggle";
+import { useNavigate } from "react-router-dom";
+import useVisibilityToggle from "../../hooks/useVisibilityToggle.jsx";
 
 import { links } from "../../constants/links.js";
-import companies from "../../constants/companies.js";
+import orders from "../../constants/orders.js";
 import logo from "../../assets/logo.png";
-import "./CompanyReport.scss";
-import { useNavigate } from "react-router";
+import "./OrderReports.scss";
 
 const columnHeaders = [
-  { key: "id", label: "ID" },
-  { key: "name", label: "Name" },
-  { key: "description", label: "Description" },
+  {
+    key: "id",
+    label: "ID",
+  },
+  {
+    key: "customerName",
+    label: "Customer Name",
+  },
+  {
+    key: "mobile",
+    label: "Mobile",
+  },
+  {
+    key: "totalAmount",
+    label: "Total Amount",
+  },
+  {
+    key: "date",
+    label: "Date",
+  },
 ];
 
-const CompanyReport = () => {
+const OrderReports = () => {
   const {
     isSidebarVisible,
     toggleSidebar,
@@ -29,18 +46,13 @@ const CompanyReport = () => {
   } = useVisibilityToggle();
 
   const navigate = useNavigate();
-  const handleEdit = (company) => {
-    navigate("/companyUpdate", { state: { company } });
+  const handleViewClick = (order) => {
+    navigate("/reportExt", { state: { order } });
   };
-
-  const handleDelete = () => {
-    console.log("Delete");
-  }
-
 
   return (
     <>
-      <div className="company-report">
+      <div className="order-reports">
         <ToggleButton
           toggleSidebar={toggleSidebar}
           isSidebarVisible={isSidebarVisible}
@@ -52,8 +64,8 @@ const CompanyReport = () => {
           isSidebarVisible={isSidebarVisible}
         />
 
-        <main className="company-report__main">
-          <div className="company-report__main__header">
+        <main className="order-reports__main">
+          <div className="order-reports__main__header">
             <Header
               dropdownRef={dropdownRef}
               toggleDropdown={toggleDropdown}
@@ -69,28 +81,20 @@ const CompanyReport = () => {
                   link: "/logout",
                 },
               ]}
-              heading={"All Companies Report"}
+              heading={"All Orders Reports"}
             />
           </div>
-          <div className="company-report__content">
+          <div className="order-reports__content">
             <ReportTable
-              data={companies}
+              data={orders}
               columnHeaders={columnHeaders}
-              renderRowActions={(company) => (
-                <>
-                  <button
-                    className="action-button edit"
-                    onClick={() => handleEdit(company)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="action-button delete"
-                    onClick={handleDelete}
-                  >
-                    Delete
-                  </button>
-                </>
+              renderRowActions={(order) => (
+                <button
+                  className="action-button view"
+                  onClick={() => handleViewClick(order)}
+                >
+                  View
+                </button>
               )}
             />
           </div>
@@ -101,4 +105,4 @@ const CompanyReport = () => {
   );
 };
 
-export default CompanyReport;
+export default OrderReports;

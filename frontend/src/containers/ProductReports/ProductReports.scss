@@ -1,7 +1,7 @@
 @import "../../styles/colors/colors.scss";
 @import "../../styles/fonts/fonts.scss";
 
-.company-report {
+.product-reports {
   display: flex;
   min-height: 100vh;
   font-family: $font-family;
@@ -30,10 +30,7 @@
       font-weight: $font-weight-bold;
       transition: background-color 0.3s ease-in-out;
 
-      &.edit {
-        background-color: $text-color;
-      }
-      &.delete {
+      &.view {
         background-color: $text-color;
       }
 

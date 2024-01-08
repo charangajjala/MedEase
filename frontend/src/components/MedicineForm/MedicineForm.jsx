@@ -1,4 +1,5 @@
 import SelectField from "../SelectField/SelectField.jsx";
+import Textarea from "../Textarea/Textarea.jsx";
 import PropTypes from "prop-types";
 import { productTypes } from "../../constants/productTypes.js";
 import { useReducer } from "react";
@@ -139,16 +140,15 @@ const MedicineForm = ({ button_name }) => {
         }
         required={true}
       />
-      <div className="grid-item full-width">
-        <label htmlFor="medicine-description">Description</label>
-        <textarea
-          type="text"
+      <div className="full-width">
+        <Textarea
+          label="Description"
           id="medicine-description"
           name="medicine-description"
           onChange={(e) =>
             dispatch({ type: "SET_DESCRIPTION", payload: e.target.value })
           }
-          required
+          required={true}
         />
       </div>
       <div className="form-button" onClick={handleFormSubmit}>

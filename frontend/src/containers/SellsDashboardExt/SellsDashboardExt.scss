@@ -1,7 +1,7 @@
 @import "../../styles/colors/colors.scss";
 @import "../../styles/fonts/fonts.scss";
 
-.order-report {
+.sells-dashboard-ext {
   display: flex;
   min-height: 100vh;
   font-family: $font-family;
@@ -29,7 +29,28 @@
     gap: 2em;
   }
 
-  &__order-details {
+  &__submit-btn {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    button {
+      padding: 0.75rem 1rem;
+      grid-column: 4;
+      justify-self: center;
+      background-color: $button-bg;
+      border: none;
+      border-radius: 4px;
+      color: $white;
+      font-weight: $font-weight-bold;
+      cursor: pointer;
+
+      &:hover {
+        background-color: darken($button-bg, 10%);
+      }
+    }
+  }
+
+  &__customer-details {
     display: flex;
     flex-direction: column;
     gap: 1em;
@@ -70,7 +91,54 @@
     }
   }
 
-  &__order-items {
+  &__cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    &__content {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 1em;
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: $font-weight-bold;
+      }
+
+      input[type="number"],
+      select {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid $form-input-bg-active;
+        background-color: $form-input-bg-active;
+        border-radius: 4px;
+        font-size: $font-size-medium;
+        margin-bottom: 10px;
+        height: 40px;
+      }
+
+      button {
+        background-color: $button-bg;
+        border: none;
+        border-radius: 4px;
+        color: $white;
+        font-weight: $font-weight-bold;
+        cursor: pointer;
+        width: fit-content;
+        justify-self: center;
+        align-self: center;
+        padding: 0.75rem 1rem;
+
+        &:hover {
+          background-color: darken($button-bg, 10%);
+        }
+      }
+    }
+  }
+
+  &__order-details {
     display: flex;
     flex-direction: column;
     gap: 1em;
@@ -99,6 +167,20 @@
             padding: 10px;
             border: 1px solid $border-color;
             text-align: center;
+
+            button {
+              margin-right: 5px;
+              padding: 5px 10px;
+              background-color: $button-bg;
+              color: $white;
+              border: none;
+              border-radius: 4px;
+              cursor: pointer;
+
+              &:hover {
+                background-color: darken($button-bg, 10%);
+              }
+            }
           }
 
           tr:nth-child(odd) {
@@ -109,27 +191,6 @@
             background-color: $table-last-child;
           }
         }
-      }
-    }
-  }
-
-  &__button {
-    display: grid;
-
-    button {
-      background-color: $button-bg;
-      border: none;
-      border-radius: 4px;
-      color: $white;
-      font-weight: $font-weight-bold;
-      cursor: pointer;
-      width: fit-content;
-      justify-self: center;
-      align-self: center;
-      padding: 0.75rem 1rem;
-
-      &:hover {
-        background-color: darken($button-bg, 10%);
       }
     }
   }

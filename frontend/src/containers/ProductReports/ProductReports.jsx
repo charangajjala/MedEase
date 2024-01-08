@@ -8,18 +8,19 @@ import {
 import useVisibilityToggle from "../../hooks/useVisibilityToggle";
 
 import { links } from "../../constants/links.js";
-import companies from "../../constants/companies.js";
+import products from "../../constants/products.js";
 import logo from "../../assets/logo.png";
-import "./CompanyReport.scss";
-import { useNavigate } from "react-router";
+import "./ProductReports.scss";
+// import { useNavigate } from 'react-router-dom';
 
 const columnHeaders = [
   { key: "id", label: "ID" },
   { key: "name", label: "Name" },
-  { key: "description", label: "Description" },
+  { key: "category", label: "Category" },
+  { key: "cost", label: "Cost" },
 ];
 
-const CompanyReport = () => {
+const ProductReports = () => {
   const {
     isSidebarVisible,
     toggleSidebar,
@@ -28,19 +29,14 @@ const CompanyReport = () => {
     dropdownRef,
   } = useVisibilityToggle();
 
-  const navigate = useNavigate();
-  const handleEdit = (company) => {
-    navigate("/companyUpdate", { state: { company } });
+  // const navigate = useNavigate();
+  const handleClick = (product) => {
+    console.log(product);
   };
-
-  const handleDelete = () => {
-    console.log("Delete");
-  }
-
 
   return (
     <>
-      <div className="company-report">
+      <div className="product-reports">
         <ToggleButton
           toggleSidebar={toggleSidebar}
           isSidebarVisible={isSidebarVisible}
@@ -52,8 +48,8 @@ const CompanyReport = () => {
           isSidebarVisible={isSidebarVisible}
         />
 
-        <main className="company-report__main">
-          <div className="company-report__main__header">
+        <main className="product-reports__main">
+          <div className="product-reports__main__header">
             <Header
               dropdownRef={dropdownRef}
               toggleDropdown={toggleDropdown}
@@ -69,28 +65,16 @@ const CompanyReport = () => {
                   link: "/logout",
                 },
               ]}
-              heading={"All Companies Report"}
+              heading={"Product Reports"}
             />
           </div>
-          <div className="company-report__content">
+
+          <div className="product-reports__main__content">
             <ReportTable
-              data={companies}
               columnHeaders={columnHeaders}
-              renderRowActions={(company) => (
-                <>
-                  <button
-                    className="action-button edit"
-                    onClick={() => handleEdit(company)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="action-button delete"
-                    onClick={handleDelete}
-                  >
-                    Delete
-                  </button>
-                </>
+              data={products}
+              renderRowActions={(product) => (
+                <button className="action-button view" onClick={() => handleClick(product)}>View</button>
               )}
             />
           </div>
@@ -101,4 +85,4 @@ const CompanyReport = () => {
   );
 };
 
-export default CompanyReport;
+export default ProductReports;

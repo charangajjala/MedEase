@@ -1,0 +1,32 @@
+@import "../../styles/colors/colors.scss";
+@import "../../styles/fonts/fonts.scss";
+
+.company-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  width: 50%;
+}
+
+.add-company-form__button {
+  padding: 0.75em 1.5em;
+  border: none;
+  border-radius: 4px;
+  background-color: $button-bg;
+  color: $button-text;
+  cursor: pointer;
+  font-weight: 600; 
+  transition: all 0.3s ease-in-out;
+  justify-self: center;
+  align-self: center;
+
+  &:hover {
+    background-color: $button-hover;
+    box-shadow: 0 4px 12px rgba($black, 0.2);
+  }
+
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 8px rgba($black, 0.2);
+  }
+}
