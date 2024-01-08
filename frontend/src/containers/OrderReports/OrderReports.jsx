@@ -3,7 +3,7 @@ import {
   ToggleButton,
   Footer,
   Header,
-  OrderTable,
+  ReportTable,
 } from "../../components/index.js";
 import useVisibilityToggle from "../../hooks/useVisibilityToggle.jsx";
 
@@ -11,6 +11,29 @@ import { links } from "../../constants/links.js";
 import orders from "../../constants/orders.js";
 import logo from "../../assets/logo.png";
 import "./OrderReports.scss";
+
+const columnHeaders = [
+  {
+    key: "id",
+    label: "ID",
+  },
+  {
+    key: "customerName",
+    label: "Customer Name",
+  },
+  {
+    key: "mobile",
+    label: "Mobile",
+  },
+  {
+    key: "totalAmount",
+    label: "Total Amount",
+  },
+  {
+    key: "date",
+    label: "Date",
+  },
+];
 
 const OrderReports = () => {
   const {
@@ -56,7 +79,14 @@ const OrderReports = () => {
             />
           </div>
           <div className="order-reports__content">
-            <OrderTable orders={orders} />
+            {/* <OrderTable orders={orders} /> */}
+            <ReportTable
+              data={orders}
+              columnHeaders={columnHeaders}
+              renderRowActions={() => (
+                <button className="action-button view">View</button>
+              )}
+            />
           </div>
         </main>
       </div>
