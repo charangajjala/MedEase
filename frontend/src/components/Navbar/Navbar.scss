@@ -1,46 +1,77 @@
 @import "../../styles/colors/colors.scss";
+@import "../../styles/fonts/fonts.scss";
 
 .navbar {
-  background-color: $white; // Adjust to fit your design
-  color: $text-color;
-  padding: 10px;
-  box-shadow: 0 4px 8px rgba($black, 0.1);
   display: flex;
-  position: fixed;
-  width: 100%;
   justify-content: space-between;
   align-items: center;
+  background-color: $white;
+  padding: 10px;
+  box-shadow: 0 2px 10px rgba($black, 0.1);
 
-  &__container {
+  &__brand {
+    .navbar__logo {
+      text-decoration: none;
+      color: $text-color;
+      font-weight: bold;
+    }
+  }
+
+  &__menu {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    width: 100%;
+
+    .navbar__menu-item {
+      margin-left: 20px;
+      text-decoration: none;
+      color: $text-color;
+
+      &:hover {
+        color: $button-bg; // Adjust hover color as needed
+      }
+    }
   }
 
-  #navbar__logo {
-    font-family: "Roboto", sans-serif;
-    color: $text-color;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1.5rem; // Adjust as necessary
-  }
+  &__user-info {
+    position: relative;
 
-  .navbar__toggle {
-    display: none; // Hidden initially, shown in mobile view
-
-    @media (max-width: 768px) {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
+    &-button {
+      background: none;
+      border: none;
+      color: inherit;
       cursor: pointer;
+      font-size: $font-size-medium;
+      font-weight: bold;
     }
 
-    .bar {
-      height: 3px;
-      width: 25px;
-      background-color: $text-color;
-      border-radius: 2px;
+    &__dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color: $white;
+      box-shadow: 0 2px 10px rgba($black, 0.1);
+      border-radius: 5px;
+      padding: 10px;
+      display: none;
+
+      &-item {
+        a {
+          text-decoration: none;
+          color: $text-color;
+          display: block;
+          padding: 5px;
+
+          &:hover {
+            background-color: $form-input-bg-active;
+          }
+        }
+      }
+    }
+
+    .navbar__user-info-button {
+      &:hover + .navbar__user-info__dropdown-menu {
+        display: block;
+      }
     }
   }
 }
