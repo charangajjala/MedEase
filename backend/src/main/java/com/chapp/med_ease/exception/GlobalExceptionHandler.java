@@ -63,7 +63,7 @@ public class GlobalExceptionHandler {
                     .build();
             errors.add(errorResponse);
         });
-        System.out.println(errors);
+        // System.out.println(errors);
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 }

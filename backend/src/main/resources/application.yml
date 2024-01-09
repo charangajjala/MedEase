@@ -19,6 +19,7 @@ server:
 logging:
   level:
     root: WARN
+    "[com.chapp.med_ease.logging.LoggingFilter]": INFO
 
 application:
   security:
@@ -27,5 +28,4 @@ application:
       expiration: 86400000 # a day
       refresh-token:
         expiration: 604800000 # 7 days
-
 
