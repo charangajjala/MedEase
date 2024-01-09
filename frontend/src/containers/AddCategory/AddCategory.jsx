@@ -62,8 +62,8 @@ const AddCategory = () => {
       } else {
         alert("Something went wrong");
       }
-    }catch(e){
-      console.log(e);
+    }catch(err){
+      console.log(err);
     }
   };
 

@@ -4,7 +4,7 @@ import {
   Footer,
   Header,
   ReportTable,
-  Loading
+  Loading,
 } from "../../components/index.js";
 import useVisibilityToggle from "../../hooks/useVisibilityToggle";
 
@@ -27,6 +27,7 @@ const columnHeaders = [
 const ProductReports = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
   const {
     isSidebarVisible,
     toggleSidebar,
@@ -52,12 +53,7 @@ const ProductReports = () => {
 
   const navigate = useNavigate();
   const handleClick = (product) => {
-    navigate("/medicine");
-    console.log(product);
-  };
-
-  const handleEdit = (product) => {
-    navigate("/medicine");
+    navigate("/medicineUpdate");
     console.log(product);
   };
 
@@ -111,12 +107,6 @@ const ProductReports = () => {
                     onClick={() => handleClick(product)}
                   >
                     View
-                  </button>
-                  <button
-                    className="action-button view"
-                    onClick={() => handleEdit(product)}
-                  >
-                    Edit
                   </button>
                 </>
               )}

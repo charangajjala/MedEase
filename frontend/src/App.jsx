@@ -14,6 +14,7 @@ import {
   AddCompany,
   UpdateCompany,
   ProductReports,
+  UpdateMedicine,
 } from "./containers/index.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -24,6 +25,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<AdminDashboard />} />
         <Route path="/medicine" element={<AddMedicine />} />
+        <Route path="/medicineUpdate" element={<UpdateMedicine />} />
         <Route path="/sells" element={<SellsDashboard />} />
         <Route path="/sellsExt" element={<SellsDashboardExt />} />
         <Route path="/report" element={<OrderReports />} />
