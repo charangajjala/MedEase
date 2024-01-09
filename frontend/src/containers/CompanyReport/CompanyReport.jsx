@@ -13,7 +13,7 @@ import logo from "../../assets/logo.png";
 import "./CompanyReport.scss";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
-import { axiosPrivate } from "../../api/axios.jsx";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
 
 const COMPANY_REPORTS_URL = "/api/companies";
 
@@ -32,6 +32,7 @@ const CompanyReport = () => {
     toggleDropdown,
     dropdownRef,
   } = useVisibilityToggle();
+  const axiosPrivate = useAxiosPrivate();
 
   const navigate = useNavigate();
   const handleEdit = (company) => {
@@ -43,16 +44,22 @@ const CompanyReport = () => {
   };
 
   useEffect(() => {
+    let isMounted = true;
     const fetchCompanies = async () => {
       try {
         const response = await axiosPrivate.get(COMPANY_REPORTS_URL);
-        setCompanies(response.data);
+        if (isMounted) {
+          setCompanies(response.data);
+        }
       } catch (err) {
         console.log(err);
       }
     };
 
     fetchCompanies();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (
