@@ -10,6 +10,7 @@ import { default as MedicineForm } from "./MedicineForm/MedicineForm.jsx";
 import { default as Textarea } from "./Textarea/Textarea.jsx";
 import { default as CompanyForm } from "./CompanyForm/CompanyForm.jsx";
 import { default as Loading } from "./Loading/Loading.jsx";
+import { default as Navbar } from "./Navbar/Navbar.jsx";
 
 export {
   Button,
@@ -24,4 +25,5 @@ export {
   CompanyForm,
   Textarea,
   Loading,
+  Navbar,
 };

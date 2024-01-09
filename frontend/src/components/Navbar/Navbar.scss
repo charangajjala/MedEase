@@ -1,0 +1,46 @@
+@import "../../styles/colors/colors.scss";
+
+.navbar {
+  background-color: $white; // Adjust to fit your design
+  color: $text-color;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba($black, 0.1);
+  display: flex;
+  position: fixed;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  #navbar__logo {
+    font-family: "Roboto", sans-serif;
+    color: $text-color;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.5rem; // Adjust as necessary
+  }
+
+  .navbar__toggle {
+    display: none; // Hidden initially, shown in mobile view
+
+    @media (max-width: 768px) {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .bar {
+      height: 3px;
+      width: 25px;
+      background-color: $text-color;
+      border-radius: 2px;
+    }
+  }
+}
