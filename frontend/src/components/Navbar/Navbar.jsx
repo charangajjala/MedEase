@@ -2,24 +2,26 @@ import PropTypes from "prop-types";
 import { FaUser, FaSignOutAlt } from "react-icons/fa";
 import "./Navbar.scss";
 
-const Navbar = ({ userName, isDropdownOpen, toggleDropdown, dropdownMenu }) => {
+const Navbar = (props) => {
   return (
     <nav className="navbar">
       <div className="navbar__brand">
-        <a href="/" className="navbar__logo">Logo</a>
+        <h1>MSMS</h1>
       </div>
-      <div className="navbar__menu">
-        {dropdownMenu.map((item, index) => (
+
+      {/* <div className="navbar__menu">
+        {props.dropdownMenu.map((item, index) => (
           <a href={item.link} key={index} className="navbar__menu-item">
             {item.name}
           </a>
         ))}
-      </div>
+      </div> */}
+
       <div className="navbar__user-info">
-        <button onClick={toggleDropdown} className="navbar__user-info-button">
-          {userName} <FaUser />
+        <button onClick={props.toggleDropdown} className="navbar__user-info-button">
+          {props.userName} <FaUser />
         </button>
-        {isDropdownOpen && (
+        {props.isDropdownOpen && (
           <ul className="navbar__user-info__dropdown-menu">
             <li className="navbar__user-info__dropdown-menu-item">
               <a href="/profile">Profile</a>

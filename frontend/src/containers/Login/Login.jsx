@@ -6,11 +6,7 @@ import "./Login.scss";
 import store from "../../assets/store.jpg";
 import { useNavigate } from "react-router-dom";
 
-import {
-  Button, 
-  Footer,
-  FormInput,
-} from "../../components/index.js";
+import { Button, Footer, FormInput } from "../../components/index.js";
 
 const LOGIN_URL = "/api/login";
 
@@ -51,11 +47,24 @@ const Login = () => {
   // const [pwd, setPwd] = useState("");
   // const [success, setSuccess] = useState(false);
 
-  const [{email, errMsg, password, success}, dispatch] = useReducer(loginReducer, initialState);
+  const [{ email, errMsg, password, success }, dispatch] = useReducer(
+    loginReducer,
+    initialState
+  );
 
   useEffect(() => {
     userRef.current.focus();
   }, []);
+
+  useEffect(() => {
+    const authObj = JSON.parse(localStorage.getItem("auth"));
+    console.log(Boolean(authObj.accessToken) && Boolean(authObj.refreshToken));
+    if (Boolean(authObj.accessToken) && Boolean(authObj.refreshToken)) {
+      navigate("/dashboard");
+    } else {
+      navigate("/");
+    }
+  }, [navigate]);
 
   useEffect(() => {
     dispatch({ type: "SET_ERR_MSG", payload: "" });
@@ -91,7 +100,10 @@ const Login = () => {
         dispatch({ type: "SET_ERR_MSG", payload: "No Server Response" });
       } else if (e.response.status === 400) {
         // setErrMsg("Invalid username or password");
-        dispatch({ type: "SET_ERR_MSG", payload: "Invalid username or password" });
+        dispatch({
+          type: "SET_ERR_MSG",
+          payload: "Invalid username or password",
+        });
       } else if (e.response.status === 401) {
         // setErrMsg("Unauthorized");
         dispatch({ type: "SET_ERR_MSG", payload: "Unauthorized" });
@@ -126,7 +138,9 @@ const Login = () => {
                   id="username"
                   name="username"
                   value={email}
-                  onChange={(e) => dispatch({ type: "SET_USER", payload: e.target.value })}
+                  onChange={(e) =>
+                    dispatch({ type: "SET_USER", payload: e.target.value })
+                  }
                   required
                   autoComplete="off"
                   ref={userRef}
@@ -139,7 +153,9 @@ const Login = () => {
                   id="password"
                   name="password"
                   value={password}
-                  onChange={(e) => dispatch({ type: "SET_PWD", payload: e.target.value })}
+                  onChange={(e) =>
+                    dispatch({ type: "SET_PWD", payload: e.target.value })
+                  }
                   required
                   autoComplete="off"
                 />
