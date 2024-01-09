@@ -15,7 +15,7 @@ import logo from "../../assets/logo.png";
 
 import { useLocation } from "react-router";
 
-import "./OrderReport.scss";
+import "./OrderReport.scss"; 
 
 const OrderReport = () => {
   const {
@@ -129,7 +129,6 @@ const OrderReport = () => {
               </div>
             </div>
             <div className="order-report__button">
-              {/* Add an invoice component and pass the data into it */}
               <Button name="Print Invoice" type="submit" />
             </div>
           </div>

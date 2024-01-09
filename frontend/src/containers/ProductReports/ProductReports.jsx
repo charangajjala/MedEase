@@ -14,8 +14,8 @@ import endpoints from "../../constants/endpoints.js";
 import logo from "../../assets/logo.png";
 import "./ProductReports.scss";
 import { useNavigate } from "react-router-dom";
-import { axiosPrivate } from "../../api/axios.jsx";
 import { useEffect, useState } from "react";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
 
 const columnHeaders = [
   { key: "id", label: "ID" },
@@ -35,12 +35,16 @@ const ProductReports = () => {
     toggleDropdown,
     dropdownRef,
   } = useVisibilityToggle();
+  const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
+    let isMounted = true;
     const fetchProducts = async () => {
       try {
         const response = await axiosPrivate.get(endpoints.PRODUCT_REPORTS_URL);
-        setProducts(response.data);
+        if (isMounted) {
+          setProducts(response.data);
+        }
       } catch (err) {
         console.log(err);
       } finally {
@@ -49,6 +53,11 @@ const ProductReports = () => {
     };
 
     fetchProducts();
+    return () => {
+      isMounted = false;
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const navigate = useNavigate();

@@ -1,0 +1,63 @@
+@import "../../styles/colors/colors.scss";
+@import "../../styles/fonts/fonts.scss";
+
+.invoice-container {
+  background-color: $body-bg;
+  color: $text-color;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    background-color: $white;
+    padding: 10px;
+
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      color: $text-color;
+    }
+
+    img {
+      width: 150px;
+      height: auto;
+    }
+  }
+
+  .customer-info,
+  .order-details,
+  .total-amount {
+    background-color: $form-input-bg-active;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      border: 1px solid $table-border;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: $table-first-child;
+    }
+
+    tr:nth-child(odd) {
+      background-color: #f8f9fa;
+    }
+  }
+}

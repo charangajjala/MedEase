@@ -11,6 +11,7 @@ import { default as Textarea } from "./Textarea/Textarea.jsx";
 import { default as CompanyForm } from "./CompanyForm/CompanyForm.jsx";
 import { default as Loading } from "./Loading/Loading.jsx";
 import { default as Navbar } from "./Navbar/Navbar.jsx";
+import { default as Invoice } from "./Invoice/Invoice.jsx";
 
 export {
   Button,
@@ -26,4 +27,5 @@ export {
   Textarea,
   Loading,
   Navbar,
+  Invoice,
 };
