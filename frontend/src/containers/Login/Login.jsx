@@ -72,6 +72,7 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    console.log("Login: handleLogin");
 
     try {
       const response = await axios.post(
@@ -162,8 +163,8 @@ const Login = () => {
                 />
               </div>
               <div className="login-layout__container-left__form__buttons">
-                <Button name="Login" type="submit" function={handleLogin} />
-                <Button name="Reset" type="button" function={handleReset} />
+                <Button name="Login" type="submit" onClick={handleLogin} />
+                <Button name="Reset" type="button" onClick={handleReset} />
               </div>
             </form>
             {errMsg && <p className="error-message">{errMsg}</p>}
