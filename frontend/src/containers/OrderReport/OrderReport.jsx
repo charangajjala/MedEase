@@ -12,10 +12,12 @@ import { links } from "../../constants/links.js";
 // import { companyNames } from "../../constants/companyNames.js";
 import dummyData from "../../constants/dummyData.js";
 import logo from "../../assets/logo.png";
+import activeOrderData from "../../constants/order.js";
 
 import { useLocation } from "react-router";
 
-import "./OrderReport.scss"; 
+import "./OrderReport.scss";
+import PdfGen from "../../utils/PdfGen.jsx";
 
 const OrderReport = () => {
   const {
@@ -129,7 +131,11 @@ const OrderReport = () => {
               </div>
             </div>
             <div className="order-report__button">
-              <Button name="Print Invoice" type="submit" />
+              <Button
+                name="Download Invoice"
+                type="submit"
+                onClick={() => PdfGen(activeOrderData, "invoice.pdf")}
+              />
             </div>
           </div>
         </main>
