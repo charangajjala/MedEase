@@ -14,8 +14,12 @@ import dummyData from "../../constants/dummyData.js";
 import logo from "../../assets/logo.png";
 
 import { useLocation } from "react-router";
+import { useRef } from "react";
 
 import "./OrderReport.scss";
+
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 const OrderReport = () => {
   const {
@@ -27,11 +31,35 @@ const OrderReport = () => {
   } = useVisibilityToggle();
 
   const location = useLocation();
+  const tableRef = useRef();
   const { order } = location.state;
 
   const totalSum = dummyData
     .reduce((acc, item) => acc + parseFloat(item.totalCost), 0)
     .toFixed(2);
+
+  const generatePDF = () => {
+    html2canvas(tableRef.current).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdfPageWidth = 842;
+      const pdfPageHeight = 595;
+      const scale = Math.min(
+        pdfPageWidth / canvas.width,
+        pdfPageHeight / canvas.height
+      );
+      const imgWidth = canvas.width * scale;
+      const imgHeight = canvas.height * scale;
+      const xPosition = (pdfPageWidth - imgWidth) / 2;
+      const yPosition = (pdfPageHeight - imgHeight) / 2;
+      const pdf = new jsPDF({
+        orientation: "landscape",
+        unit: "pt",
+        format: [pdfPageWidth, pdfPageHeight]
+      });
+      pdf.addImage(imgData, "PNG", xPosition, yPosition, imgWidth, imgHeight);
+      pdf.save("invoice.pdf");
+    });
+  };
 
   return (
     <>
@@ -63,7 +91,7 @@ const OrderReport = () => {
             ]}
             heading={"Order Report"}
           />
-          <div className="order-report__content">
+          <div className="order-report__content" ref={tableRef}>
             <div className="order-report__order-details">
               <div className="order-report__order-details__heading">
                 <h2>Order Details</h2>
@@ -128,10 +156,13 @@ const OrderReport = () => {
                 </table>
               </div>
             </div>
-            <div className="order-report__button">
-              {/* Add an invoice component and pass the data into it */}
-              <Button name="Print Invoice" type="submit" />
-            </div>
+          </div>
+          <div className="order-report__button">
+            <Button
+              name="Download Invoice"
+              type="submit"
+              onClick={generatePDF}
+            />
           </div>
         </main>
       </div>

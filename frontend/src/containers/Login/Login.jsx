@@ -6,11 +6,7 @@ import "./Login.scss";
 import store from "../../assets/store.jpg";
 import { useNavigate } from "react-router-dom";
 
-import {
-  Button, 
-  Footer,
-  FormInput,
-} from "../../components/index.js";
+import { Button, Footer, FormInput } from "../../components/index.js";
 
 const LOGIN_URL = "/api/login";
 
@@ -51,11 +47,24 @@ const Login = () => {
   // const [pwd, setPwd] = useState("");
   // const [success, setSuccess] = useState(false);
 
-  const [{email, errMsg, password, success}, dispatch] = useReducer(loginReducer, initialState);
+  const [{ email, errMsg, password, success }, dispatch] = useReducer(
+    loginReducer,
+    initialState
+  );
 
   useEffect(() => {
     userRef.current.focus();
   }, []);
+
+  useEffect(() => {
+    const authObj = JSON.parse(localStorage.getItem("auth"));
+    console.log(Boolean(authObj.accessToken) && Boolean(authObj.refreshToken));
+    if (Boolean(authObj.accessToken) && Boolean(authObj.refreshToken)) {
+      navigate("/dashboard");
+    } else {
+      navigate("/");
+    }
+  }, [navigate]);
 
   useEffect(() => {
     dispatch({ type: "SET_ERR_MSG", payload: "" });
@@ -63,6 +72,7 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    console.log("Login: handleLogin");
 
     try {
       const response = await axios.post(
@@ -75,6 +85,7 @@ const Login = () => {
           withCredentials: true,
         }
       );
+      console.log(response);
       const accessToken = response?.data?.accessToken;
       const refreshToken = response?.data?.refreshToken;
       setAuth({ email, password, accessToken, refreshToken });
@@ -83,6 +94,7 @@ const Login = () => {
       // setPwd("");
       // setErrMsg("");
       dispatch({ type: "LOGGED_IN" });
+      console.log("Login: Navigating to dashboard")
       navigate("/dashboard");
     } catch (e) {
       if (!e?.response) {
@@ -90,7 +102,10 @@ const Login = () => {
         dispatch({ type: "SET_ERR_MSG", payload: "No Server Response" });
       } else if (e.response.status === 400) {
         // setErrMsg("Invalid username or password");
-        dispatch({ type: "SET_ERR_MSG", payload: "Invalid username or password" });
+        dispatch({
+          type: "SET_ERR_MSG",
+          payload: "Invalid username or password",
+        });
       } else if (e.response.status === 401) {
         // setErrMsg("Unauthorized");
         dispatch({ type: "SET_ERR_MSG", payload: "Unauthorized" });
@@ -125,7 +140,9 @@ const Login = () => {
                   id="username"
                   name="username"
                   value={email}
-                  onChange={(e) => dispatch({ type: "SET_USER", payload: e.target.value })}
+                  onChange={(e) =>
+                    dispatch({ type: "SET_USER", payload: e.target.value })
+                  }
                   required
                   autoComplete="off"
                   ref={userRef}
@@ -138,14 +155,16 @@ const Login = () => {
                   id="password"
                   name="password"
                   value={password}
-                  onChange={(e) => dispatch({ type: "SET_PWD", payload: e.target.value })}
+                  onChange={(e) =>
+                    dispatch({ type: "SET_PWD", payload: e.target.value })
+                  }
                   required
                   autoComplete="off"
                 />
               </div>
               <div className="login-layout__container-left__form__buttons">
-                <Button name="Login" type="submit" function={handleLogin} />
-                <Button name="Reset" type="button" function={handleReset} />
+                <Button name="Login" type="submit" onClick={handleLogin} />
+                <Button name="Reset" type="button" onClick={handleReset} />
               </div>
             </form>
             {errMsg && <p className="error-message">{errMsg}</p>}
