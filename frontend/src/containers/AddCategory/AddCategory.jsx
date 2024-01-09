@@ -7,8 +7,10 @@ import {
   Textarea,
 } from "../../components/index.js";
 import useVisibilityToggle from "../../hooks/useVisibilityToggle";
+import { axiosPrivate } from "../../api/axios.jsx";
 
 import { links } from "../../constants/links.js";
+import endpoints from "../../constants/endpoints.js";
 
 import logo from "../../assets/logo.png";
 import "./AddCategory.scss";
@@ -48,9 +50,21 @@ const AddCategory = () => {
     categoryNameRef.current.focus();
   }, [])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(state);
+    try {
+      const response = await axiosPrivate.post( endpoints.ADD_CATEGORY_URL, state);
+      if (response.status === 201) {
+        dispatch({
+          type: "RESET_FORM",
+        });
+        alert("Category added successfully");
+      } else {
+        alert("Something went wrong");
+      }
+    }catch(e){
+      console.log(e);
+    }
   };
 
   return (

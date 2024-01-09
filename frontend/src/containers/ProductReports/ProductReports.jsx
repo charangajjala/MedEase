@@ -4,18 +4,18 @@ import {
   Footer,
   Header,
   ReportTable,
+  Loading
 } from "../../components/index.js";
 import useVisibilityToggle from "../../hooks/useVisibilityToggle";
 
 import { links } from "../../constants/links.js";
+import endpoints from "../../constants/endpoints.js";
 // import products from "../../constants/products.js";
 import logo from "../../assets/logo.png";
 import "./ProductReports.scss";
 import { useNavigate } from "react-router-dom";
 import { axiosPrivate } from "../../api/axios.jsx";
 import { useEffect, useState } from "react";
-
-const PRODUCT_REPORTS_URL = "/api/products";
 
 const columnHeaders = [
   { key: "id", label: "ID" },
@@ -26,6 +26,7 @@ const columnHeaders = [
 
 const ProductReports = () => {
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const {
     isSidebarVisible,
     toggleSidebar,
@@ -37,10 +38,12 @@ const ProductReports = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axiosPrivate.get(PRODUCT_REPORTS_URL);
+        const response = await axiosPrivate.get(endpoints.PRODUCT_REPORTS_URL);
         setProducts(response.data);
       } catch (err) {
         console.log(err);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -52,6 +55,15 @@ const ProductReports = () => {
     navigate("/medicine");
     console.log(product);
   };
+
+  const handleEdit = (product) => {
+    navigate("/medicine");
+    console.log(product);
+  };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -93,12 +105,20 @@ const ProductReports = () => {
               columnHeaders={columnHeaders}
               data={products}
               renderRowActions={(product) => (
-                <button
-                  className="action-button view"
-                  onClick={() => handleClick(product)}
-                >
-                  View
-                </button>
+                <>
+                  <button
+                    className="action-button view"
+                    onClick={() => handleClick(product)}
+                  >
+                    View
+                  </button>
+                  <button
+                    className="action-button view"
+                    onClick={() => handleEdit(product)}
+                  >
+                    Edit
+                  </button>
+                </>
               )}
             />
           </div>
