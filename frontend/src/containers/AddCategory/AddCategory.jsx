@@ -133,7 +133,7 @@ const AddCategory = () => {
             <div className="add-category-form__buttons">
               <button
                 className="add-category-form__buttons__cancel"
-                onSubmit={handleSubmit}
+                onClick={handleSubmit}
               >
                 Submit
               </button>

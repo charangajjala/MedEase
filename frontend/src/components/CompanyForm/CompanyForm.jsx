@@ -3,6 +3,9 @@ import { useReducer, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import "./CompanyForm.scss";
 
+import { axiosPrivate } from "../../api/axios.jsx";
+import endpoints from "../../constants/endpoints.js";
+
 const initialState = {
   companyName: "",
   description: "",
@@ -43,10 +46,23 @@ const CompanyForm = ({ method, companyData }) => {
   }, [companyData]);
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (method === "Add") {
       console.log(state);
+      try {
+        const response = await axiosPrivate.post( endpoints.ADD_COMPANY_URL, state);
+        if (response.status === 201) {
+          dispatch({
+            type: "RESET_FORM",
+          });
+          alert("Category added successfully");
+        } else {
+          alert("Something went wrong");
+        }
+      }catch(err){
+        console.log(err);
+      }
     } else {
       console.log("Update");
     }
