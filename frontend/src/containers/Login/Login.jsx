@@ -56,15 +56,15 @@ const Login = () => {
     userRef.current.focus();
   }, []);
 
-  // useEffect(() => {
-  //   const authObj = JSON.parse(localStorage.getItem("auth"));
-  //   console.log(Boolean(authObj.accessToken) && Boolean(authObj.refreshToken));
-  //   if (Boolean(authObj.accessToken) && Boolean(authObj.refreshToken)) {
-  //     navigate("/dashboard");
-  //   } else {
-  //     navigate("/");
-  //   }
-  // }, [navigate]);
+  useEffect(() => {
+    const authObj = JSON.parse(localStorage.getItem("auth"));
+    console.log(Boolean(authObj.accessToken) && Boolean(authObj.refreshToken));
+    if (Boolean(authObj.accessToken) && Boolean(authObj.refreshToken)) {
+      navigate("/dashboard");
+    } else {
+      navigate("/");
+    }
+  }, [navigate]);
 
   useEffect(() => {
     dispatch({ type: "SET_ERR_MSG", payload: "" });
