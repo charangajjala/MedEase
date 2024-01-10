@@ -11,6 +11,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import com.chapp.med_ease.jwt.JwtAuthFilter;
 
+import java.util.logging.Logger;
+
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -18,25 +20,32 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableMethodSecurity
 public class SecurityConfig {
 
-        private static final String[] WHITE_LIST_URL = { "/api/login/" };
+        private static final String[] WHITE_LIST_URL = { "/api/login" };
         private final JwtAuthFilter jwtAuthFilter;
         private final AuthenticationProvider authenticationProvider;
+        private static final Logger logInfo = Logger.getLogger(SecurityConfig.class.getName());
 
         public SecurityConfig(JwtAuthFilter jwtAuthFilter, AuthenticationProvider authenticationProvider) {
                 this.jwtAuthFilter = jwtAuthFilter;
                 this.authenticationProvider = authenticationProvider;
+                logInfo.info("SecurityConfig initialized with JwtAuthFilter and AuthenticationProvider");
         }
 
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-                http
-                                .csrf(AbstractHttpConfigurer::disable)
-                                .authorizeHttpRequests(req -> req.anyRequest()
-                                                .permitAll())
-                                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
-                                .authenticationProvider(authenticationProvider)
-                                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                logInfo.info("Configuring security filter chain");
 
+                http
+                        .csrf(AbstractHttpConfigurer::disable)
+                        .authorizeHttpRequests(req -> req
+                                .requestMatchers("/api/login").permitAll()
+                                .anyRequest().authenticated())
+//                        .authorizeHttpRequests(req -> req.anyRequest().permitAll())
+                        .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
+                        .authenticationProvider(authenticationProvider)
+                        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
+                logInfo.info("Security filter chain configured successfully");
                 return http.build();
         }
 }

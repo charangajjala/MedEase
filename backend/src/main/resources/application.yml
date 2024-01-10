@@ -18,8 +18,9 @@ server:
 
 logging:
   level:
-    root: WARN
-    "[com.chapp.med_ease.logging.LoggingFilter]": INFO
+    root: warn
+    "[com.chapp.med_ease]": debug
+    org.springframework.security: debug
 
 application:
   security:
