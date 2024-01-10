@@ -118,7 +118,7 @@ const SellsDashboardExt = () => {
                   required={true}
                 />
 
-                <Button name="Add to Cart" type="submit" function={handleAdd} />
+                <Button name="Add to Cart" type="submit" onClick={handleAdd} />
               </div>
             </div>
             <div className="sells-dashboard-ext__order-details">
@@ -164,7 +164,7 @@ const SellsDashboardExt = () => {
               <Button
                 name="Save Sell Details"
                 type="submit"
-                function={() => {
+                onClick={() => {
                   navigate("/reportExt");
                 }}
               />
