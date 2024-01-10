@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.chapp.med_ease.company.CompanyDTO.CompanyRequest;
 import com.chapp.med_ease.company.CompanyDTO.CompanyResponse;
+import com.chapp.med_ease.company.CompanyDTO.UpdateCompanyRequest;
 import com.chapp.med_ease.exception.exceptions.BadRequestException;
 import com.chapp.med_ease.exception.exceptions.NotFoundException;
 
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RequiredArgsConstructor
 @RestController
@@ -45,6 +47,14 @@ public class CompanyController {
     @ResponseStatus(HttpStatus.OK)
     public CompanyResponse getCompany(@PathVariable int id) throws NotFoundException {
         final CompanyResponse res = companyService.getCompany(id);
+        return res;
+    }
+
+    @PutMapping("")
+    @ResponseStatus(HttpStatus.OK)
+    public CompanyResponse putMethodName(@RequestBody UpdateCompanyRequest entity) throws NotFoundException {
+
+        CompanyResponse res = companyService.updateCompany(entity);
         return res;
     }
 

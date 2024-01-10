@@ -3,11 +3,11 @@ package com.chapp.med_ease.company;
 import java.util.List;
 import java.util.Optional;
 
-import org.aspectj.weaver.ast.Not;
 import org.springframework.stereotype.Service;
 
 import com.chapp.med_ease.company.CompanyDTO.CompanyRequest;
 import com.chapp.med_ease.company.CompanyDTO.CompanyResponse;
+import com.chapp.med_ease.company.CompanyDTO.UpdateCompanyRequest;
 import com.chapp.med_ease.exception.exceptions.BadRequestException;
 import com.chapp.med_ease.exception.exceptions.NotFoundException;
 
@@ -54,6 +54,25 @@ public class CompanyService {
 
     public CompanyResponse getCompany(int id) throws NotFoundException {
         Company company = companyRepository.findById(id).orElseThrow(() -> new NotFoundException("Company not found"));
+        return CompanyResponse.builder()
+                .id(company.getId())
+                .companyName(company.getCompanyName())
+                .description(company.getDescription())
+                .build();
+    }
+
+    public CompanyResponse updateCompany(UpdateCompanyRequest req) throws NotFoundException {
+        Company company = companyRepository.findById(req.getId())
+                .orElseThrow(() -> new NotFoundException("Company not found"));
+
+        Company updatedCompany = Company.builder()
+                .id(req.getId())
+                .companyName(req.getCompanyName())
+                .description(req.getDescription())
+                .build();
+
+        companyRepository.save(updatedCompany);
+
         return CompanyResponse.builder()
                 .id(company.getId())
                 .companyName(company.getCompanyName())
