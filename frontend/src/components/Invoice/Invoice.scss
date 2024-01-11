@@ -1,0 +1,101 @@
+.invoice-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  &__header {
+    text-align: center;
+    border-bottom: 2px solid #333;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+
+    h1 {
+      font-size: 2em;
+      margin: 0 0 10px;
+    }
+
+    img {
+      max-width: 100px;
+      height: auto;
+    }
+  }
+
+  .customer-info {
+    margin-bottom: 20px;
+    p {
+      margin: 5px 0;
+      strong {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .order-details {
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+
+      thead {
+        tr {
+          background-color: #f2f2f2;
+        }
+        th {
+          text-align: left;
+          padding: 10px;
+          border-bottom: 1px solid #ddd;
+        }
+      }
+
+      tbody {
+        tr {
+          &:nth-child(odd) {
+            background-color: #f9f9f9;
+          }
+        }
+        td {
+          padding: 10px;
+          border-bottom: 1px solid #eee;
+        }
+      }
+    }
+  }
+
+  .total-amount {
+    p {
+      font-size: 1.2em;
+      text-align: right;
+      strong {
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .invoice-container, .invoice-container * {
+    visibility: visible;
+  }
+
+  .invoice-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+    box-shadow: none;
+    width: 100%;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+}
+

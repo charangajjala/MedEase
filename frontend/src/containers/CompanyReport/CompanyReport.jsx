@@ -8,18 +8,22 @@ import {
 import useVisibilityToggle from "../../hooks/useVisibilityToggle";
 
 import { links } from "../../constants/links.js";
-import companies from "../../constants/companies.js";
+// import companies from "../../constants/companies.js";
 import logo from "../../assets/logo.png";
 import "./CompanyReport.scss";
 import { useNavigate } from "react-router";
+import { useState, useEffect } from "react";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
+import endpoints from "../../constants/endpoints.js";
 
 const columnHeaders = [
   { key: "id", label: "ID" },
-  { key: "name", label: "Name" },
+  { key: "companyName", label: "Name" },
   { key: "description", label: "Description" },
 ];
 
 const CompanyReport = () => {
+  const [companies, setCompanies] = useState([]);
   const {
     isSidebarVisible,
     toggleSidebar,
@@ -27,6 +31,7 @@ const CompanyReport = () => {
     toggleDropdown,
     dropdownRef,
   } = useVisibilityToggle();
+  const axiosPrivate = useAxiosPrivate();
 
   const navigate = useNavigate();
   const handleEdit = (company) => {
@@ -35,8 +40,28 @@ const CompanyReport = () => {
 
   const handleDelete = () => {
     console.log("Delete");
-  }
+  };
 
+  useEffect(() => {
+    let isMounted = true;
+    const fetchCompanies = async () => {
+      try {
+        const response = await axiosPrivate.get(endpoints.COMPANY_REPORTS_URL);
+        console.log(response.data)
+        if (isMounted) {
+          setCompanies(response.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchCompanies();
+    return () => {
+      isMounted = false;
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -86,7 +111,7 @@ const CompanyReport = () => {
                   </button>
                   <button
                     className="action-button delete"
-                    onClick={handleDelete}
+                    onClick={() => handleDelete(company)}
                   >
                     Delete
                   </button>

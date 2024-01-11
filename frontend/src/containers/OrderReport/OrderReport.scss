@@ -117,10 +117,9 @@
     display: grid;
 
     button {
-      background-color: $button-bg;
+      background-color: $white;
       border: none;
       border-radius: 4px;
-      color: $white;
       font-weight: $font-weight-bold;
       cursor: pointer;
       width: fit-content;
@@ -129,7 +128,7 @@
       padding: 0.75rem 1rem;
 
       &:hover {
-        background-color: darken($button-bg, 10%);
+        background-color: darken($button-text, 10%);
       }
     }
   }

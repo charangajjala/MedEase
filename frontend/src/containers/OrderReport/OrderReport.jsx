@@ -6,16 +6,17 @@ import {
   Button,
 } from "../../components/index.js";
 import useVisibilityToggle from "../../hooks/useVisibilityToggle";
-// import { useNavigate } from "react-router-dom";
 
 import { links } from "../../constants/links.js";
-// import { companyNames } from "../../constants/companyNames.js";
-import dummyData from "../../constants/dummyData.js";
 import logo from "../../assets/logo.png";
+import dummyData from "../../constants/dummyData.js";
+// import activeOrderData from "../../constants/order.js";
 
 import { useLocation } from "react-router";
+import { useRef } from "react";
 
 import "./OrderReport.scss";
+import { useNavigate } from "react-router-dom";
 
 const OrderReport = () => {
   const {
@@ -27,7 +28,9 @@ const OrderReport = () => {
   } = useVisibilityToggle();
 
   const location = useLocation();
+  const tableRef = useRef();
   const { order } = location.state;
+  const navigate = useNavigate();
 
   const totalSum = dummyData
     .reduce((acc, item) => acc + parseFloat(item.totalCost), 0)
@@ -63,7 +66,7 @@ const OrderReport = () => {
             ]}
             heading={"Order Report"}
           />
-          <div className="order-report__content">
+          <div className="order-report__content" ref={tableRef}>
             <div className="order-report__order-details">
               <div className="order-report__order-details__heading">
                 <h2>Order Details</h2>
@@ -128,10 +131,15 @@ const OrderReport = () => {
                 </table>
               </div>
             </div>
-            <div className="order-report__button">
-              {/* Add an invoice component and pass the data into it */}
-              <Button name="Print Invoice" type="submit" />
-            </div>
+          </div>
+          <div className="order-report__button">
+            <Button
+              name="Download Invoice"
+              type="submit"
+              onClick={() => {
+                navigate("/invoice", { state: { order, dummyData, totalSum } });
+              }}
+            />
           </div>
         </main>
       </div>

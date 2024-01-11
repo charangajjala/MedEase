@@ -4,14 +4,18 @@ import {
   Footer,
   Header,
   ReportTable,
+  Loading,
 } from "../../components/index.js";
 import useVisibilityToggle from "../../hooks/useVisibilityToggle";
 
 import { links } from "../../constants/links.js";
-import products from "../../constants/products.js";
+import endpoints from "../../constants/endpoints.js";
+// import products from "../../constants/products.js";
 import logo from "../../assets/logo.png";
 import "./ProductReports.scss";
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
 
 const columnHeaders = [
   { key: "id", label: "ID" },
@@ -21,6 +25,9 @@ const columnHeaders = [
 ];
 
 const ProductReports = () => {
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   const {
     isSidebarVisible,
     toggleSidebar,
@@ -28,11 +35,40 @@ const ProductReports = () => {
     toggleDropdown,
     dropdownRef,
   } = useVisibilityToggle();
+  const axiosPrivate = useAxiosPrivate();
 
-  // const navigate = useNavigate();
+  useEffect(() => {
+    let isMounted = true;
+    const fetchProducts = async () => {
+      try {
+        const response = await axiosPrivate.get(endpoints.PRODUCT_REPORTS_URL);
+        if (isMounted) {
+          setProducts(response.data);
+        }
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
+    return () => {
+      isMounted = false;
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const navigate = useNavigate();
   const handleClick = (product) => {
+    navigate("/medicineUpdate");
     console.log(product);
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -74,7 +110,14 @@ const ProductReports = () => {
               columnHeaders={columnHeaders}
               data={products}
               renderRowActions={(product) => (
-                <button className="action-button view" onClick={() => handleClick(product)}>View</button>
+                <>
+                  <button
+                    className="action-button view"
+                    onClick={() => handleClick(product)}
+                  >
+                    View
+                  </button>
+                </>
               )}
             />
           </div>

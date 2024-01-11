@@ -9,10 +9,12 @@ import {
 import useVisibilityToggle from "../../hooks/useVisibilityToggle";
 
 import { links } from "../../constants/links.js";
+import endpoints from "../../constants/endpoints.js";
 
 import logo from "../../assets/logo.png";
 import "./AddCategory.scss";
 import { useReducer, useEffect, useRef } from "react";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
 
 const initialState = {
   categoryName: "",
@@ -43,14 +45,27 @@ const AddCategory = () => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
   const categoryNameRef = useRef();
+  const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
     categoryNameRef.current.focus();
   }, [])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(state);
+    try {
+      const response = await axiosPrivate.post( endpoints.ADD_CATEGORY_URL, state);
+      if (response.status === 201) {
+        dispatch({
+          type: "RESET_FORM",
+        });
+        alert("Category added successfully");
+      } else {
+        alert("Something went wrong");
+      }
+    }catch(err){
+      console.log(err);
+    }
   };
 
   return (
@@ -100,6 +115,7 @@ const AddCategory = () => {
                     payload: e.target.value,
                   })
                 }
+                required={true}
                 ref={categoryNameRef}
               />
               <Textarea
@@ -112,12 +128,13 @@ const AddCategory = () => {
                     payload: e.target.value,
                   })
                 }
+                required={true}
               />              
             </form>
             <div className="add-category-form__buttons">
               <button
                 className="add-category-form__buttons__cancel"
-                onSubmit={handleSubmit}
+                onClick={handleSubmit}
               >
                 Submit
               </button>

@@ -13,6 +13,7 @@ import logo from "../../assets/logo.png";
 import "./SellsDashboard.scss";
 import { useReducer } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRef, useEffect } from "react";
 
 const initialState = {
   customerName: "",
@@ -41,6 +42,11 @@ const SellsDashboard = () => {
 
   const [state, dispatch] = useReducer(reducers, initialState);
   const navigate = useNavigate();
+  const customerNameRef = useRef();
+
+  useEffect(() => {
+    customerNameRef.current.focus();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -99,6 +105,7 @@ const SellsDashboard = () => {
                       payload: e.target.value,
                     })
                   }
+                  ref={customerNameRef}
                   required={true}
                 />
                 <FormInput

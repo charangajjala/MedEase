@@ -63,7 +63,7 @@ const UpdateCompany = () => {
           </div>
 
           <div className="update-company-form__content">
-            <CompanyForm method={"Update"} companyData={company}/>
+            <CompanyForm method={"Update"} companyData={company} />
           </div>
         </main>
       </div>
