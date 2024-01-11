@@ -31,11 +31,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain filterChain)
             throws ServletException, IOException {
 
-        logger.info("Processing authentication for '{}'", req.getRequestURL());
+        logger.info("Processing authentication for '{}'", req.getRequestURI());
         final String authorizationHeader = req.getHeader("Authorization");
-        logger.info("Authorization header: {}", authorizationHeader);
 
-        if (req.getRequestURI().contains("/api/login")) {
+        if (req.getRequestURL().toString().contains("/api/login")) {
             filterChain.doFilter(req, res);
             logger.info("Authentication skipped for login request {}",req.getRequestURI());
             return;

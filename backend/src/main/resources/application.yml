@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/medease
+    url: jdbc:mysql://localhost:3306/medease
     username: root
-    password: root
+    password: MMpp@1973
 
   jpa:
     show-sql: true
@@ -19,7 +19,7 @@ server:
 logging:
   level:
     root: warn
-    "[com.chapp.med_ease]": debug
+    com.chapp.med_ease: debug
     org.springframework.security: debug
 
 application:

@@ -20,7 +20,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableMethodSecurity
 public class SecurityConfig {
 
-        private static final String[] WHITE_LIST_URL = { "/api/login" };
+        private static final String[] WHITE_LIST_URL = { "/login" };
         private final JwtAuthFilter jwtAuthFilter;
         private final AuthenticationProvider authenticationProvider;
         private static final Logger logInfo = Logger.getLogger(SecurityConfig.class.getName());
@@ -38,7 +38,7 @@ public class SecurityConfig {
                 http
                         .csrf(AbstractHttpConfigurer::disable)
                         .authorizeHttpRequests(req -> req
-                                .requestMatchers("/api/login").permitAll()
+                                .requestMatchers(WHITE_LIST_URL).permitAll()
                                 .anyRequest().authenticated())
 //                        .authorizeHttpRequests(req -> req.anyRequest().permitAll())
                         .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))

@@ -22,7 +22,7 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/api/login")
+    @PostMapping("/login")
     public ResponseEntity<LoginResponse> loginUser(@Valid @RequestBody LoginRequest req) throws NotFoundException {
         logger.info("Login request received in AuthController");
 
