@@ -7,7 +7,6 @@ import {
   Textarea,
 } from "../../components/index.js";
 import useVisibilityToggle from "../../hooks/useVisibilityToggle";
-import { axiosPrivate } from "../../api/axios.jsx";
 
 import { links } from "../../constants/links.js";
 import endpoints from "../../constants/endpoints.js";
@@ -15,6 +14,7 @@ import endpoints from "../../constants/endpoints.js";
 import logo from "../../assets/logo.png";
 import "./AddCategory.scss";
 import { useReducer, useEffect, useRef } from "react";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
 
 const initialState = {
   categoryName: "",
@@ -45,6 +45,7 @@ const AddCategory = () => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
   const categoryNameRef = useRef();
+  const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
     categoryNameRef.current.focus();

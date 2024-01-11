@@ -3,8 +3,8 @@ import { useReducer, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import "./CompanyForm.scss";
 
-import { axiosPrivate } from "../../api/axios.jsx";
 import endpoints from "../../constants/endpoints.js";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
 
 const initialState = {
   companyName: "",
@@ -27,6 +27,8 @@ function reducer(state, action) {
 const CompanyForm = ({ method, companyData }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const companyNameRef = useRef();
+  const axiosPrivate = useAxiosPrivate();
+  
   useEffect(() => {
     companyNameRef.current.focus();
   }, []);
