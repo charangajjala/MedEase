@@ -1,11 +1,14 @@
 import SelectField from "../SelectField/SelectField.jsx";
 import Textarea from "../Textarea/Textarea.jsx";
 import PropTypes from "prop-types";
-import { productTypes } from "../../constants/productTypes.js";
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import FormInput from "../FormInput/FormInput.jsx";
-import { companyNames } from "../../constants/companyNames.js";
+// import { companyNames } from "../../constants/companyNames.js";
 import "./MedicineForm.scss";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
+import endpoints from "../../constants/endpoints.js";
+import { useState } from "react";
+import axios from "axios";
 
 const initialState = {
   productType: "",
@@ -46,6 +49,60 @@ function reducer(state, action) {
 
 const MedicineForm = ({ button_name }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [productTypes, setProductTypes] = useState([]);
+  const [companyNames, setCompanyNames] = useState([]);
+  const axiosPrivate = useAxiosPrivate();
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    const fetchProductTypes = async () => {
+      try {
+        const response = await axiosPrivate.get(endpoints.GET_CATERGORY_URL, {
+          signal,
+        });
+        const formatProductTypes = response.data.map((item) => ({
+          value: item.id.toString(),
+          label: item.categoryName,
+        }));
+        if (response.status === 200) {
+          setProductTypes(formatProductTypes);
+        }
+      } catch (error) {
+        if (error.name == "CanceledError") {
+          console.log("Request cancelled");
+        }
+      }
+    };
+
+    const fetchCompanies = async () => {
+      try {
+        const response = await axiosPrivate.get(endpoints.COMPANY_REPORTS_URL, {
+          signal,
+        });
+        const formatCompanies = response.data.map((item) => ({
+          value: item.id.toString(),
+          label: item.companyName,
+        }));
+        if (response.status === 200) {
+          setCompanyNames(formatCompanies);
+        }
+      } catch (error) {
+        if (error.name == "CanceledError") {
+          console.log("Request cancelled");
+        }
+      }
+    };
+
+    fetchCompanies();
+    fetchProductTypes();
+
+    return () => {
+      controller.abort();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();

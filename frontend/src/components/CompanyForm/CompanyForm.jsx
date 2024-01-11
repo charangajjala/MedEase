@@ -79,6 +79,7 @@ const CompanyForm = ({ method, companyData }) => {
           alert("Company updated successfully");
         }
       } catch (err) {
+        console.error(err);
         alert("An error occurred while updating the data");
       }
     }

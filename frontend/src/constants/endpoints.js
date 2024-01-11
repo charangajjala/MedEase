@@ -11,6 +11,8 @@ const Endpoints = {
 
     // Category Related URLs
     ADD_CATEGORY_URL: '/api/medicine_type',
+    GET_ONE_CATEGORY_URL: '/api/medicine_type/{id}',
+    GET_CATERGORY_URL: '/api/medicine_type',
 
     // Medicine Related URLs
     ADD_MEDICINE_URL: '/api/medicines',
