@@ -8,7 +8,6 @@ import "./MedicineForm.scss";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
 import endpoints from "../../constants/endpoints.js";
 import { useState } from "react";
-import axios from "axios";
 
 const initialState = {
   productType: "",

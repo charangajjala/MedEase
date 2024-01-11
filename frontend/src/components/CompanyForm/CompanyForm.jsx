@@ -8,8 +8,8 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
 
 const CompanyForm = ({ method, companyData }) => {
   const initialState = {
-    companyName: companyData.companyName || "",
-    description: companyData.description || "",
+    companyName: companyData?.companyName || "",
+    description: companyData?.description || "",
   };
 
   function reducer(state, action) {
