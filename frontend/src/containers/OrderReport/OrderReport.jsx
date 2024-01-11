@@ -6,20 +6,17 @@ import {
   Button,
 } from "../../components/index.js";
 import useVisibilityToggle from "../../hooks/useVisibilityToggle";
-// import { useNavigate } from "react-router-dom";
 
 import { links } from "../../constants/links.js";
-// import { companyNames } from "../../constants/companyNames.js";
-import dummyData from "../../constants/dummyData.js";
 import logo from "../../assets/logo.png";
+import dummyData from "../../constants/dummyData.js";
+// import activeOrderData from "../../constants/order.js";
 
 import { useLocation } from "react-router";
 import { useRef } from "react";
 
 import "./OrderReport.scss";
-
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
+import { useNavigate } from "react-router-dom";
 
 const OrderReport = () => {
   const {
@@ -33,33 +30,11 @@ const OrderReport = () => {
   const location = useLocation();
   const tableRef = useRef();
   const { order } = location.state;
+  const navigate = useNavigate();
 
   const totalSum = dummyData
     .reduce((acc, item) => acc + parseFloat(item.totalCost), 0)
     .toFixed(2);
-
-  const generatePDF = () => {
-    html2canvas(tableRef.current).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdfPageWidth = 842;
-      const pdfPageHeight = 595;
-      const scale = Math.min(
-        pdfPageWidth / canvas.width,
-        pdfPageHeight / canvas.height
-      );
-      const imgWidth = canvas.width * scale;
-      const imgHeight = canvas.height * scale;
-      const xPosition = (pdfPageWidth - imgWidth) / 2;
-      const yPosition = (pdfPageHeight - imgHeight) / 2;
-      const pdf = new jsPDF({
-        orientation: "landscape",
-        unit: "pt",
-        format: [pdfPageWidth, pdfPageHeight]
-      });
-      pdf.addImage(imgData, "PNG", xPosition, yPosition, imgWidth, imgHeight);
-      pdf.save("invoice.pdf");
-    });
-  };
 
   return (
     <>
@@ -161,7 +136,9 @@ const OrderReport = () => {
             <Button
               name="Download Invoice"
               type="submit"
-              onClick={generatePDF}
+              onClick={() => {
+                navigate("/invoice", { state: { order, dummyData, totalSum } });
+              }}
             />
           </div>
         </main>

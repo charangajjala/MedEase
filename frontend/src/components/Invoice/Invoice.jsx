@@ -1,9 +1,17 @@
 import './Invoice.scss';
 import PropTypes from 'prop-types';
 import invoice_logo from '../../assets/invoice_logo.png';
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
-const Invoice = ({ activeOrderData }) => {
-  const { customerName, orderDate, totalAmount, items } = activeOrderData;
+const Invoice = () => {
+  console.log("Invoice")
+  const location = useLocation();
+  const { order, dummyData, totalSum } = location.state;
+
+  useEffect(() => {
+    window.print();
+  }, [])
 
   return (
     <div className="invoice-container">
@@ -12,8 +20,8 @@ const Invoice = ({ activeOrderData }) => {
         <img src={invoice_logo} alt="logo"  />
       </div>
       <div className="customer-info">
-        <p><strong>Customer Name:</strong> {customerName}</p>
-        <p><strong>Order Date:</strong> {orderDate}</p>
+        <p><strong>Customer Name:</strong> {order.customerName}</p>
+        <p><strong>Order Date:</strong> {order.date}</p>
       </div>
       <div className="order-details">
         <table>
@@ -26,7 +34,7 @@ const Invoice = ({ activeOrderData }) => {
             </tr>
           </thead>
           <tbody>
-            {items.map(item => (
+            {dummyData.map(item => (
               <tr key={item.id}>
                 <td>{item.productName}</td>
                 <td>${item.pricePerUnit}</td>
@@ -38,7 +46,7 @@ const Invoice = ({ activeOrderData }) => {
         </table>
       </div>
       <div className="total-amount">
-        <p><strong>Total Amount:</strong> ${totalAmount}</p>
+        <p><strong>Total Amount:</strong> ${totalSum}</p>
       </div>
     </div>
   );

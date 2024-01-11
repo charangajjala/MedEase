@@ -9,9 +9,9 @@ import { default as AddCategory } from "./AddCategory/AddCategory.jsx";
 import { default as UpdateMedicine } from "./UpdateMedicine/UpdateMedicine.jsx";
 import { default as Logout } from "./Logout/Logout.jsx";
 import { default as SellsDashboardExt } from "./SellsDashboardExt/SellsDashboardExt.jsx";
-import {default as AddCompany} from "./AddCompany/AddCompany.jsx";
-import {default as UpdateCompany} from "./UpdateCompany/UpdateCompany.jsx";
-import {default as ProductReports} from "./ProductReports/ProductReports.jsx";
+import { default as AddCompany } from "./AddCompany/AddCompany.jsx";
+import { default as UpdateCompany } from "./UpdateCompany/UpdateCompany.jsx";
+import { default as ProductReports } from "./ProductReports/ProductReports.jsx";
 
 export {
   AdminDashboard,

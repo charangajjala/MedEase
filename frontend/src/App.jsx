@@ -17,6 +17,7 @@ import {
   UpdateMedicine,
 } from "./containers/index.js";
 import WithAuth from "./utils/WithAuth.jsx";
+import { Invoice } from "./components/index.js";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -32,6 +33,7 @@ const CompanyReportWithAuth = WithAuth(CompanyReport);
 const AddCompanyWithAuth = WithAuth(AddCompany);
 const UpdateCompanyWithAuth = WithAuth(UpdateCompany);
 const AddCategoryWithAuth = WithAuth(AddCategory);
+const InvoiceWithAuth = WithAuth(Invoice);
 
 function App() {
   return (
@@ -50,6 +52,7 @@ function App() {
         <Route path="/companyAdd" element={<AddCompanyWithAuth />} />
         <Route path="/companyUpdate" element={<UpdateCompanyWithAuth />} />
         <Route path="/category" element={<AddCategoryWithAuth />} />
+        <Route path="/invoice" element={<InvoiceWithAuth />} />
         <Route path="/logout" element={<Logout />} />
       </Routes>
     </Router>

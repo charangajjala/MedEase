@@ -1,63 +1,101 @@
-@import "../../styles/colors/colors.scss";
-@import "../../styles/fonts/fonts.scss";
-
 .invoice-container {
-  background-color: $body-bg;
-  color: $text-color;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
+  background-color: #fff;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
   &__header {
-    display: flex;
-    justify-content: space-between;
+    text-align: center;
+    border-bottom: 2px solid #333;
+    padding-bottom: 20px;
     margin-bottom: 20px;
-    background-color: $white;
-    padding: 10px;
 
     h1 {
-      font-size: 24px;
-      font-weight: 600;
-      color: $text-color;
+      font-size: 2em;
+      margin: 0 0 10px;
     }
 
     img {
-      width: 150px;
+      max-width: 100px;
       height: auto;
     }
   }
 
-  .customer-info,
-  .order-details,
-  .total-amount {
-    background-color: $form-input-bg-active;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    display: flex;
-    justify-content: space-around;
+  .customer-info {
+    margin-bottom: 20px;
+    p {
+      margin: 5px 0;
+      strong {
+        font-weight: bold;
+      }
+    }
   }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
+  .order-details {
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
 
-    th,
-    td {
-      border: 1px solid $table-border;
-      padding: 8px;
-      text-align: left;
+      thead {
+        tr {
+          background-color: #f2f2f2;
+        }
+        th {
+          text-align: left;
+          padding: 10px;
+          border-bottom: 1px solid #ddd;
+        }
+      }
+
+      tbody {
+        tr {
+          &:nth-child(odd) {
+            background-color: #f9f9f9;
+          }
+        }
+        td {
+          padding: 10px;
+          border-bottom: 1px solid #eee;
+        }
+      }
     }
+  }
 
-    th {
-      background-color: $table-first-child;
-    }
-
-    tr:nth-child(odd) {
-      background-color: #f8f9fa;
+  .total-amount {
+    p {
+      font-size: 1.2em;
+      text-align: right;
+      strong {
+        font-weight: bold;
+      }
     }
   }
 }
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .invoice-container, .invoice-container * {
+    visibility: visible;
+  }
+
+  .invoice-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+    box-shadow: none;
+    width: 100%;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+}
+
