@@ -1,5 +1,5 @@
 import { FormInput, Textarea } from "../../components/index.js";
-import { useReducer, useEffect, useRef } from "react";
+import { useReducer, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import "./CompanyForm.scss";
 
@@ -28,6 +28,8 @@ const CompanyForm = ({ method, companyData }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const companyNameRef = useRef();
   const axiosPrivate = useAxiosPrivate();
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     companyNameRef.current.focus();
@@ -50,6 +52,8 @@ const CompanyForm = ({ method, companyData }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSuccessMessage("");
+    setErrorMessage("");
 
     if (method === "Add") {
       try {
@@ -58,13 +62,12 @@ const CompanyForm = ({ method, companyData }) => {
           state
         );
         if (response.status === 201) {
-          alert("Company added successfully");
+          setSuccessMessage("Company added successfully");
         } else {
-          alert("Something went wrong");
+          setErrorMessage("An error occurred");
         }
       } catch (err) {
-        console.error(err);
-        alert("An error occurred");
+        alert("An error occurred while adding the data");
       }
     }
 
@@ -76,11 +79,10 @@ const CompanyForm = ({ method, companyData }) => {
           state
         );
         if (response.status === 200) {
-          alert("Company updated successfully");
+          setSuccessMessage("Company updated successfully");
         }
       } catch (err) {
-        console.error(err);
-        alert("An error occurred while updating the data");
+        setErrorMessage("An error occurred");
       }
     }
   };
@@ -115,6 +117,12 @@ const CompanyForm = ({ method, companyData }) => {
           }
           label="Description"
         />
+        {successMessage && (
+          <div className="company-form__success-message">{successMessage}</div>
+        )}
+        {errorMessage && (
+          <div className="company-form__error-message">{errorMessage}</div>
+        )}
         <button type="submit" className="add-company-form__button">
           {method} Company
         </button>

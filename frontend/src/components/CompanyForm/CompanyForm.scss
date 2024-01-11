@@ -5,7 +5,24 @@
   display: flex;
   flex-direction: column;
   gap: 1em;
-  width: 50%;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 2em;
+  border-radius: 8px;
+
+
+  &__error-message {
+    color: $error-color;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  &__success-message {
+    color: $success-color;
+    font-weight: 600;
+    text-align: center;
+  }
 }
 
 .add-company-form__button {
