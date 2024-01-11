@@ -7,7 +7,7 @@ const Endpoints = {
     // Company Related URLs
     COMPANY_REPORTS_URL: '/api/company',
     ADD_COMPANY_URL: '/api/company',
-    UPDATE_COMPANY_URL: '/api/company/{id}',
+    UPDATE_COMPANY_URL: '/api/company',
 
     // Category Related URLs
     ADD_CATEGORY_URL: '/api/medicine_type',

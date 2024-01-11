@@ -10,6 +10,7 @@ const CompanyForm = ({ method, companyData }) => {
   const initialState = {
     companyName: companyData?.companyName || "",
     description: companyData?.description || "",
+    id: companyData?.id || "",
   };
 
   function reducer(state, action) {
@@ -75,7 +76,7 @@ const CompanyForm = ({ method, companyData }) => {
       try {
         console.log(state);
         const response = await axiosPrivate.put(
-          endpoints.UPDATE_COMPANY_URL.replace("{id}", companyData.id),
+          endpoints.UPDATE_COMPANY_URL,
           state
         );
         if (response.status === 200) {
