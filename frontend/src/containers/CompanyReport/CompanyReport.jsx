@@ -14,12 +14,11 @@ import "./CompanyReport.scss";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
-
-const COMPANY_REPORTS_URL = "/api/companies";
+import endpoints from "../../constants/endpoints.js";
 
 const columnHeaders = [
   { key: "id", label: "ID" },
-  { key: "name", label: "Name" },
+  { key: "companyName", label: "Name" },
   { key: "description", label: "Description" },
 ];
 
@@ -47,7 +46,8 @@ const CompanyReport = () => {
     let isMounted = true;
     const fetchCompanies = async () => {
       try {
-        const response = await axiosPrivate.get(COMPANY_REPORTS_URL);
+        const response = await axiosPrivate.get(endpoints.COMPANY_REPORTS_URL);
+        console.log(response.data)
         if (isMounted) {
           setCompanies(response.data);
         }
@@ -111,7 +111,7 @@ const CompanyReport = () => {
                   </button>
                   <button
                     className="action-button delete"
-                    onClick={handleDelete}
+                    onClick={() => handleDelete(company)}
                   >
                     Delete
                   </button>

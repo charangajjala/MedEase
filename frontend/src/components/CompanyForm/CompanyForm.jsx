@@ -6,29 +6,29 @@ import "./CompanyForm.scss";
 import endpoints from "../../constants/endpoints.js";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
 
-const initialState = {
-  companyName: "",
-  description: "",
-};
-
-function reducer(state, action) {
-  switch (action.type) {
-    case "SET_COMPANY_NAME":
-      return { ...state, companyName: action.payload };
-    case "SET_DESCRIPTION":
-      return { ...state, description: action.payload };
-    case "UPDATE_COMPANY":
-      return { ...state,...action.payload };
-    default:
-      return state;
-  }
-}
-
 const CompanyForm = ({ method, companyData }) => {
+  const initialState = {
+    companyName: companyData.companyName || "",
+    description: companyData.description || "",
+  };
+
+  function reducer(state, action) {
+    switch (action.type) {
+      case "SET_COMPANY_NAME":
+        return { ...state, companyName: action.payload };
+      case "SET_DESCRIPTION":
+        return { ...state, description: action.payload };
+      case "UPDATE_COMPANY":
+        return { ...state, ...action.payload };
+      default:
+        return state;
+    }
+  }
+
   const [state, dispatch] = useReducer(reducer, initialState);
   const companyNameRef = useRef();
   const axiosPrivate = useAxiosPrivate();
-  
+
   useEffect(() => {
     companyNameRef.current.focus();
   }, []);
@@ -37,36 +37,50 @@ const CompanyForm = ({ method, companyData }) => {
     companyNameRef.current.focus();
 
     if (companyData) {
+      console.log(companyData);
       dispatch({
         type: "UPDATE_COMPANY",
         payload: {
-          companyName: companyData.name,
+          companyName: companyData.companyName,
           description: companyData.description,
         },
       });
     }
   }, [companyData]);
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (method === "Add") {
-      console.log(state);
       try {
-        const response = await axiosPrivate.post( endpoints.ADD_COMPANY_URL, state);
+        const response = await axiosPrivate.post(
+          endpoints.ADD_COMPANY_URL,
+          state
+        );
         if (response.status === 201) {
-          dispatch({
-            type: "RESET_FORM",
-          });
-          alert("Category added successfully");
+          alert("Company added successfully");
         } else {
           alert("Something went wrong");
         }
-      }catch(err){
-        console.log(err);
+      } catch (err) {
+        console.error(err);
+        alert("An error occurred");
       }
-    } else {
-      console.log("Update");
+    }
+
+    if (method === "Update") {
+      try {
+        console.log(state);
+        const response = await axiosPrivate.put(
+          endpoints.UPDATE_COMPANY_URL.replace("{id}", companyData.id),
+          state
+        );
+        if (response.status === 200) {
+          alert("Company updated successfully");
+        }
+      } catch (err) {
+        alert("An error occurred while updating the data");
+      }
     }
   };
 
@@ -90,8 +104,8 @@ const CompanyForm = ({ method, companyData }) => {
         <Textarea
           id="description"
           name="description"
-          value={state.description}
           required={true}
+          value={state.description}
           onChange={(e) =>
             dispatch({
               type: "SET_DESCRIPTION",
