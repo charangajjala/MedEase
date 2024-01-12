@@ -48,9 +48,11 @@ function reducer(state, action) {
 
 const MedicineForm = ({ button_name }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const axiosPrivate = useAxiosPrivate();
+
   const [productTypes, setProductTypes] = useState([]);
   const [companyNames, setCompanyNames] = useState([]);
-  const axiosPrivate = useAxiosPrivate();
+  const [dateError, setDateError] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -135,7 +137,7 @@ const MedicineForm = ({ button_name }) => {
         onChange={(e) => {
           const selectedOption = companyNames.find((object) => {
             return object.value === e.target.value;
-          })
+          });
           dispatch({
             type: "SET_PRODUCT_TYPE",
             payload: selectedOption?.label,
@@ -155,6 +157,7 @@ const MedicineForm = ({ button_name }) => {
         type="text"
         id="medicine-expiry"
         name="medicine-expiry"
+        autoComplete="off"
         onChange={(e) =>
           dispatch({ type: "SET_PRODUCT_CODE", payload: e.target.value })
         }
@@ -164,6 +167,7 @@ const MedicineForm = ({ button_name }) => {
         label="Product Title"
         type="text"
         id="product-title"
+        autoComplete="off"
         name="product-title"
         onChange={(e) =>
           dispatch({ type: "SET_PRODUCT_TITLE", payload: e.target.value })
@@ -185,11 +189,10 @@ const MedicineForm = ({ button_name }) => {
         id="company-name"
         name="company-name"
         options={companyNames}
-        value={state.companyName}
         onChange={(e) => {
           const selectedOption = companyNames.find((object) => {
             return object.value === e.target.value;
-          })
+          });
           dispatch({
             type: "SET_COMPANY_NAME",
             payload: selectedOption?.label,
@@ -215,16 +218,6 @@ const MedicineForm = ({ button_name }) => {
         required={true}
       />
       <FormInput
-        label="Expiry Date"
-        type="date"
-        id="expiry-date"
-        name="expiry-date"
-        onChange={(e) =>
-          dispatch({ type: "SET_EXPIRY_DATE", payload: e.target.value })
-        }
-        required={true}
-      />
-      <FormInput
         label="Manufacture Date"
         type="date"
         id="manufacture-date"
@@ -233,6 +226,22 @@ const MedicineForm = ({ button_name }) => {
           dispatch({ type: "SET_MANUFACTURE_DATE", payload: e.target.value })
         }
         required={true}
+      />
+      <FormInput
+        label="Expiry Date"
+        type="date"
+        id="expiry-date"
+        name="expiry-date"
+        onChange={(e) => {
+          if (e.target.value < state.manufactureDate) {
+            setDateError(true);
+          } else {
+            setDateError(false);
+            dispatch({ type: "SET_EXPIRY_DATE", payload: e.target.value });
+          }
+        }}
+        required={true}
+        error={dateError ? "Expiry date cannot be before manufacture date" : ""}
       />
       <div className="full-width">
         <Textarea

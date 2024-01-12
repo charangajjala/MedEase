@@ -78,7 +78,26 @@ const SellsDashboardExt = () => {
 
   // Need to modify this it just currently generates a random number
   const orderId = Math.floor(Math.random() * 1000);
-  const orderDate = new Date().toUTCString().slice(0, 16);
+  const now = new Date();
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const orderDate = `${now.getDate()} ${
+    months[now.getMonth()]
+  } ${now.getFullYear()} ${String(now.getHours()).padStart(2, "0")}:${String(
+    now.getMinutes()
+  ).padStart(2, "0")}`;
 
   const handleAdd = (e) => {
     e.preventDefault();
@@ -90,11 +109,23 @@ const SellsDashboardExt = () => {
     console.log("Delete");
   };
 
+  const handleNumChange = (e) => {
+    const value = e.target.value;
+    if (!isNaN(value)) {
+      dispatch({
+        type: "SET_TOTAL_UNITS",
+        payload: value,
+      });
+    }
+  };
+
   useEffect(() => {
-    const totalSum = orders.reduce((acc, item) => acc + parseFloat(item.totalCost), 0).toFixed(2);
+    const totalSum = orders
+      .reduce((acc, item) => acc + parseFloat(item.totalCost), 0)
+      .toFixed(2);
     setTotalSum(totalSum);
     console.log(totalSum);
-  }, [orders]) 
+  }, [orders]);
 
   useEffect(() => {
     // no the order types instead we need to fetch the product list
@@ -191,14 +222,12 @@ const SellsDashboardExt = () => {
                   autoComplete="off"
                   id="enterQuantity"
                   name="enterQuantity"
-                  onChange={(e) => {
-                    dispatch({
-                      type: "SET_TOTAL_UNITS",
-                      payload: e.target.value,
-                    });
-                  }}
                   required={true}
+                  onChange={(e) => {
+                    handleNumChange(e);
+                  }}
                 />
+                
 
                 <Button name="Add to Cart" type="submit" onClick={handleAdd} />
               </div>

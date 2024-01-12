@@ -36,3 +36,14 @@
     }
   }
 }
+
+.error {
+  color: $error-color; 
+  padding: 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  border-radius: 4px;
+  border: 1px solid $error-bg-color; 
+  font-size: 0.9em;
+  text-align: left;
+}
