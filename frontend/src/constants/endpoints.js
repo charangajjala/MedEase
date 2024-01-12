@@ -2,7 +2,7 @@ const Endpoints = {
   LOGIN: "/api/login",
 
   // Product Related URLs
-  PRODUCT_REPORTS_URL: "/api/products",
+  PRODUCT_REPORTS_URL: "/api/medicine",
 
   // Company Related URLs
   COMPANY_REPORTS_URL: "/api/company",
@@ -16,6 +16,7 @@ const Endpoints = {
 
   // Medicine Related URLs
   ADD_MEDICINE_URL: "/api/medicine",
+  GET_ONE_MEDICINE_URL: "/api/medicine/{id}",
   MEDICINE_REPORTS_URL: "/api/medicines",
   UPDATE_MEDICINE_URL: "/api/medicines",
 

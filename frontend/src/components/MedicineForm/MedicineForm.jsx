@@ -46,7 +46,7 @@ function reducer(state, action) {
   }
 }
 
-const MedicineForm = ({ button_name }) => {
+const MedicineForm = ({ button_name, productData }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const axiosPrivate = useAxiosPrivate();
 
@@ -55,6 +55,65 @@ const MedicineForm = ({ button_name }) => {
   const [formIsValid, setFormIsValid] = useState(true);
   const [dateError, setDateError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    if (productData) {
+      if (productTypes.length && productData.productType) {
+        const productType = productTypes.find(
+          (object) => object.label === productData.productType
+        );
+        if (productType) {
+          dispatch({
+            type: "SET_PRODUCT_TYPE",
+            payload: productType.value,
+          });
+        }
+      }
+
+      dispatch({
+        type: "SET_PRODUCT_CODE",
+        payload: productData.productCode || "",
+      });
+      dispatch({
+        type: "SET_PRODUCT_TITLE",
+        payload: productData.productTitle || "",
+      });
+      dispatch({
+        type: "SET_TOTAL_STOCK",
+        payload: productData.totalStock || "",
+      });
+
+      if (companyNames.length && productData.companyName) {
+        const companyName = companyNames.find(
+          (object) => object.label === productData.companyName
+        );
+        if (companyName) {
+          dispatch({
+            type: "SET_COMPANY_NAME",
+            payload: companyName.value,
+          });
+        }
+      }
+
+      dispatch({
+        type: "SET_COST_PER_MONTH",
+        payload: productData.costPerMonth || "",
+      });
+      dispatch({
+        type: "SET_EXPIRY_DATE",
+        payload: productData.expiryDate || "",
+      });
+      dispatch({
+        type: "SET_MANUFACTURE_DATE",
+        payload: productData.manufactureDate || "",
+      });
+      dispatch({
+        type: "SET_DESCRIPTION",
+        payload: productData.description || "",
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productData]);
 
   useEffect(() => {
     if (state.manufactureDate && state.expiryDate) {
@@ -128,7 +187,6 @@ const MedicineForm = ({ button_name }) => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (button_name === "Submit") {
-      console.log("Add");
       try {
         const productAddStatus = await axiosPrivate.post(
           endpoints.ADD_MEDICINE_URL,
@@ -140,7 +198,9 @@ const MedicineForm = ({ button_name }) => {
       } catch (error) {
         console.log(error);
       }
-    } else {
+    }
+
+    if (button_name === "Update") {
       console.log("Update");
     }
   };
@@ -156,12 +216,12 @@ const MedicineForm = ({ button_name }) => {
         setDateError(false);
         setFormIsValid(true);
       }
-    } 
+    }
 
     if (state.manufactureDate === "") {
       setErrorMessage("Manufacture date cannot be empty");
-        setDateError(true);
-        setFormIsValid(false);
+      setDateError(true);
+      setFormIsValid(false);
     }
   }, [state.manufactureDate, state.expiryDate]);
 
@@ -172,6 +232,7 @@ const MedicineForm = ({ button_name }) => {
         id="product-type"
         name="product-type"
         options={productTypes}
+        value={state.productType}
         onChange={(e) => {
           const selectedOption = productTypes.find((object) => {
             return object.value === e.target.value;
@@ -193,6 +254,7 @@ const MedicineForm = ({ button_name }) => {
       <FormInput
         label="Product Code"
         type="text"
+        value={state.productCode}
         id="medicine-expiry"
         name="medicine-expiry"
         autoComplete="off"
@@ -204,6 +266,7 @@ const MedicineForm = ({ button_name }) => {
       <FormInput
         label="Product Title"
         type="text"
+        value={state.productTitle}
         id="product-title"
         autoComplete="off"
         name="product-title"
@@ -215,6 +278,7 @@ const MedicineForm = ({ button_name }) => {
       <FormInput
         label="Total Stock"
         type="text"
+        value={String(state.totalStock)}
         id="total-stock"
         name="total-stock"
         onChange={(e) =>
@@ -225,6 +289,7 @@ const MedicineForm = ({ button_name }) => {
       <SelectField
         label="Select Company Name"
         id="company-name"
+        value={state.companyName}
         name="company-name"
         options={companyNames}
         onChange={(e) => {
@@ -248,6 +313,7 @@ const MedicineForm = ({ button_name }) => {
       <FormInput
         label="Cost Per Month"
         type="number"
+        value={String(state.costPerMonth)}
         id="cost-per-month"
         name="cost-per-month"
         onChange={(e) =>
@@ -258,6 +324,7 @@ const MedicineForm = ({ button_name }) => {
       <FormInput
         label="Manufacture Date"
         type="date"
+        value={state.manufactureDate}
         id="manufacture-date"
         name="manufacture-date"
         onChange={(e) => {
@@ -268,6 +335,7 @@ const MedicineForm = ({ button_name }) => {
       <FormInput
         label="Expiry Date"
         type="date"
+        value={state.expiryDate}
         id="expiry-date"
         name="expiry-date"
         onChange={(e) => {
@@ -279,6 +347,7 @@ const MedicineForm = ({ button_name }) => {
       <div className="full-width">
         <Textarea
           label="Description"
+          value={state.description}
           id="medicine-description"
           name="medicine-description"
           onChange={(e) =>
@@ -287,7 +356,7 @@ const MedicineForm = ({ button_name }) => {
           required={true}
         />
       </div>
-      {formIsValid && (
+      {formIsValid && button_name !== "Update" && (
         <div className="form-button" onClick={handleFormSubmit}>
           <button type="submit">{button_name}</button>
         </div>
@@ -297,7 +366,8 @@ const MedicineForm = ({ button_name }) => {
 };
 
 MedicineForm.propTypes = {
-  button_name: PropTypes.string.isRequired,
+  button_name: PropTypes.string,
+  productData: PropTypes.object,
 };
 
 export default MedicineForm;

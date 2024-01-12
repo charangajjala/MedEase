@@ -25,7 +25,6 @@ const columnHeaders = [
 ];
 
 const ProductReports = () => {
-  const [products, setProducts] = useState([]);
   const [productTypes, setProductTypes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -44,12 +43,11 @@ const ProductReports = () => {
       try {
         const response = await axiosPrivate.get(endpoints.PRODUCT_REPORTS_URL);
         if (isMounted) {
-          setProducts(response.data);
           const formatedResponse = response.data.map((product) => ({
-            id: product.productCode,
-            name: product.productTitle,
-            category: product.productType,
-            cost: product.costPerMonth,
+            id: product.id,
+            name: product.name,
+            category: product.category,
+            cost: product.cost,
           }));
           setProductTypes(formatedResponse);
         }
@@ -70,8 +68,7 @@ const ProductReports = () => {
 
   const navigate = useNavigate();
   const handleClick = (product) => {
-    navigate("/medicineUpdate");
-    console.log(product);
+    navigate("/medicineUpdate", { state: product });
   };
 
   if (isLoading) {
