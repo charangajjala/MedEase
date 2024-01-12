@@ -1,16 +1,21 @@
 import './Invoice.scss';
 import PropTypes from 'prop-types';
 import invoice_logo from '../../assets/invoice_logo.png';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
 const Invoice = () => {
   console.log("Invoice")
   const location = useLocation();
+  const navigate = useNavigate();
   const { order, dummyData, totalSum } = location.state;
 
   useEffect(() => {
     window.print();
+
+    return () => {
+      navigate('/report');
+    }
   }, [])
 
   return (

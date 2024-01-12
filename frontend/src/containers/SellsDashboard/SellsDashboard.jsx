@@ -11,9 +11,8 @@ import { links } from "../../constants/links.js";
 
 import logo from "../../assets/logo.png";
 import "./SellsDashboard.scss";
-import { useReducer } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useReducer } from "react";
 
 const initialState = {
   customerName: "",
@@ -50,8 +49,7 @@ const SellsDashboard = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/sellsExt");
-    console.log(state);
+    navigate("/sellsExt", { state });
   };
 
   return (

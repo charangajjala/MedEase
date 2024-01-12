@@ -42,8 +42,7 @@
   &__buttons {
     display: flex;
     gap: 1em;
-    justify-self: center;
-    align-self: center;
+    justify-content: space-around;
 
     button {
       padding: 0.75em 1.5em;
@@ -54,6 +53,8 @@
       cursor: pointer;
       font-weight: 600;
       transition: all 0.3s ease-in-out;
+      justify-self: center;
+      align-self: center;
 
       &:hover {
         background-color: $button-hover;

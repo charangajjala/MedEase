@@ -8,14 +8,55 @@ import {
   FormInput,
 } from "../../components/index.js";
 import useVisibilityToggle from "../../hooks/useVisibilityToggle";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { links } from "../../constants/links.js";
-import { companyNames } from "../../constants/companyNames.js";
-import dummyData from "../../constants/dummyData.js";
+import endpoints from "../../constants/endpoints.js";
 import logo from "../../assets/logo.png";
 
+import dummyData from "../../constants/dummyData.js";
 import "./SellsDashboardExt.scss";
+import { useEffect, useReducer } from "react";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
+import { useState } from "react";
+
+// {dummyData.map((item) => (
+//   <tr key={item.id}>
+//     <td>{item.id}</td>
+//     <td>{item.productName}</td>
+//     <td>{item.pricePerUnit}</td>
+//     <td>{item.totalUnits}</td>
+//     <td>{item.totalCost}</td>
+//     <td>
+//       <button>Delete</button>
+//     </td>
+//   </tr>
+// ))}
+
+const initalState = {
+  id: "",
+  productName: "",
+  pricePerUnit: "",
+  totalUnits: "",
+  totalCost: "",
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "SET_ID":
+      return { ...state, id: action.payload };
+    case "SET_PRODUCT_NAME":
+      return { ...state, productName: action.payload };
+    case "SET_PRICE_PER_UNIT":
+      return { ...state, pricePerUnit: action.payload };
+    case "SET_TOTAL_UNITS":
+      return { ...state, totalUnits: action.payload };
+    case "SET_TOTAL_COST":
+      return { ...state, totalCost: action.payload };
+    default:
+      return state;
+  }
+}
 
 const SellsDashboardExt = () => {
   const {
@@ -27,15 +68,47 @@ const SellsDashboardExt = () => {
   } = useVisibilityToggle();
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const data = location.state;
+  const axiosPrivate = useAxiosPrivate();
+  const [productTypes, setProductTypes] = useState([]);
+  const [state, dispatch] = useReducer(reducer, initalState);
+  const [orders, setOrders] = useState([]);
+  const [totalSum, setTotalSum] = useState(0);
+
+  // Need to modify this it just currently generates a random number
+  const orderId = Math.floor(Math.random() * 1000);
+  const orderDate = new Date().toUTCString().slice(0, 16);
 
   const handleAdd = (e) => {
     e.preventDefault();
-    console.log("Add");
+    console.log(state);
   };
 
-  const totalSum = dummyData
-    .reduce((acc, item) => acc + parseFloat(item.totalCost), 0)
-    .toFixed(2);
+  const handleDelete = (e) => {
+    e.preventDefault();
+    console.log("Delete");
+  };
+
+  useEffect(() => {
+    const totalSum = orders.reduce((acc, item) => acc + parseFloat(item.totalCost), 0).toFixed(2);
+    setTotalSum(totalSum);
+    console.log(totalSum);
+  }, [orders]) 
+
+  useEffect(() => {
+    // no the order types instead we need to fetch the product list
+    const fetchProductTypes = async () => {
+      const response = await axiosPrivate.get(endpoints.GET_CATERGORY_URL);
+      const formatProductTypes = response.data.map((item) => {
+        return { value: item.id.toString(), label: item.categoryName };
+      });
+      setProductTypes(formatProductTypes);
+    };
+
+    fetchProductTypes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -78,15 +151,15 @@ const SellsDashboardExt = () => {
                   <tbody>
                     <tr>
                       <td>Order ID</td>
-                      <td>106</td>
+                      <td>{orderId}</td>
                       <td>Order Date</td>
-                      <td>11 Oct 2021 01:13 AM</td>
+                      <td>{orderDate}</td>
                     </tr>
                     <tr>
                       <td>Customer Name</td>
-                      <td>Jay Kumar</td>
+                      <td>{data?.customerName}</td>
                       <td>Customer Mobile</td>
-                      <td>84359834509</td>
+                      <td>{data?.customerMobile}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -99,22 +172,31 @@ const SellsDashboardExt = () => {
               </div>
               <div className="sells-dashboard-ext__cart-items__content">
                 <SelectField
-                  label="Select Product Type"
+                  label="Select Product"
                   id="product-type"
                   name="product-type"
-                  options={companyNames}
-                  value={""}
-                  onChange={() => {}}
+                  options={productTypes}
+                  onChange={(e) => {
+                    dispatch({
+                      type: "SET_PRODUCT_NAME",
+                      payload: e.target.value,
+                    });
+                  }}
                   required={true}
                 />
 
                 <FormInput
                   label="Enter Quantity"
                   type="number"
+                  autoComplete="off"
                   id="enterQuantity"
                   name="enterQuantity"
-                  value={""}
-                  onChange={() => {}}
+                  onChange={(e) => {
+                    dispatch({
+                      type: "SET_TOTAL_UNITS",
+                      payload: e.target.value,
+                    });
+                  }}
                   required={true}
                 />
 
@@ -147,7 +229,7 @@ const SellsDashboardExt = () => {
                         <td>{item.totalUnits}</td>
                         <td>{item.totalCost}</td>
                         <td>
-                          <button>Delete</button>
+                          <button onClick={handleDelete}>Delete</button>
                         </td>
                       </tr>
                     ))}

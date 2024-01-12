@@ -49,12 +49,15 @@ const AddCategory = () => {
 
   useEffect(() => {
     categoryNameRef.current.focus();
-  }, [])
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosPrivate.post( endpoints.ADD_CATEGORY_URL, state);
+      const response = await axiosPrivate.post(
+        endpoints.ADD_CATEGORY_URL,
+        state
+      );
       if (response.status === 201) {
         dispatch({
           type: "RESET_FORM",
@@ -63,7 +66,7 @@ const AddCategory = () => {
       } else {
         alert("Something went wrong");
       }
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
   };
@@ -129,26 +132,26 @@ const AddCategory = () => {
                   })
                 }
                 required={true}
-              />              
+              />
+              <div className="add-category-form__buttons">
+                <button
+                  className="add-category-form__buttons__cancel"
+                  onClick={handleSubmit}
+                >
+                  Submit
+                </button>
+                <button
+                  className="add-category-form__buttons__save"
+                  onClick={() =>
+                    dispatch({
+                      type: "RESET_FORM",
+                    })
+                  }
+                >
+                  Reset
+                </button>
+              </div>
             </form>
-            <div className="add-category-form__buttons">
-              <button
-                className="add-category-form__buttons__cancel"
-                onClick={handleSubmit}
-              >
-                Submit
-              </button>
-              <button
-                className="add-category-form__buttons__save"
-                onClick={() =>
-                  dispatch({
-                    type: "RESET_FORM",
-                  })
-                }
-              >
-                Reset
-              </button>
-            </div>
           </div>
         </main>
       </div>
