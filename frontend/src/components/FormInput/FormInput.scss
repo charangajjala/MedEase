@@ -29,6 +29,12 @@
     }
   }
 
+  input:disabled,
+  select:disabled {
+    background-color: #f5f5f5;
+    color: rgb(0,0,0)
+  }
+
   textarea {
     height: 150px;
     resize: vertical;

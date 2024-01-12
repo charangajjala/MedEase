@@ -9,6 +9,7 @@ const SelectField = ({
   value,
   onChange,
   required,
+  disabled,
 }) => {
   return (
     <div className="grid-item">
@@ -19,6 +20,7 @@ const SelectField = ({
         value={value}
         onChange={onChange}
         required={required}
+        disabled={disabled}
       >
         <option value="">Please select</option>
         {options.map((option) => (
@@ -44,10 +46,12 @@ SelectField.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   required: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 SelectField.defaultProps = {
   required: false,
+  disabled: false,
 };
 
 export default SelectField;
