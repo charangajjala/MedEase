@@ -14,45 +14,22 @@ import { links } from "../../constants/links.js";
 import endpoints from "../../constants/endpoints.js";
 import logo from "../../assets/logo.png";
 
-import dummyData from "../../constants/dummyData.js";
 import "./SellsDashboardExt.scss";
 import { useEffect, useReducer } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
 import { useState } from "react";
 
-// {dummyData.map((item) => (
-//   <tr key={item.id}>
-//     <td>{item.id}</td>
-//     <td>{item.productName}</td>
-//     <td>{item.pricePerUnit}</td>
-//     <td>{item.totalUnits}</td>
-//     <td>{item.totalCost}</td>
-//     <td>
-//       <button>Delete</button>
-//     </td>
-//   </tr>
-// ))}
-
 const initalState = {
   id: "",
-  productName: "",
-  pricePerUnit: "",
   totalUnits: "",
-  totalCost: "",
 };
 
 function reducer(state, action) {
   switch (action.type) {
     case "SET_ID":
       return { ...state, id: action.payload };
-    case "SET_PRODUCT_NAME":
-      return { ...state, productName: action.payload };
-    case "SET_PRICE_PER_UNIT":
-      return { ...state, pricePerUnit: action.payload };
     case "SET_TOTAL_UNITS":
       return { ...state, totalUnits: action.payload };
-    case "SET_TOTAL_COST":
-      return { ...state, totalCost: action.payload };
     default:
       return state;
   }
@@ -73,12 +50,11 @@ const SellsDashboardExt = () => {
   const axiosPrivate = useAxiosPrivate();
   const [productTypes, setProductTypes] = useState([]);
   const [state, dispatch] = useReducer(reducer, initalState);
-  const [orders, setOrders] = useState(dummyData);
+  const [orders, setOrders] = useState([]);
   const [totalSum, setTotalSum] = useState(0);
   const [products, setProducts] = useState([]);
+  const [orderId] = useState(Math.floor(Math.random() * 1000));
 
-  // Need to modify this it just currently generates a random number
-  const orderId = Math.floor(Math.random() * 1000);
   const now = new Date();
   const months = [
     "January",
@@ -100,9 +76,46 @@ const SellsDashboardExt = () => {
     now.getMinutes()
   ).padStart(2, "0")}`;
 
-  const handleAdd = (e) => {
+  const handleAdd = async (e) => {
     e.preventDefault();
-    console.log(state);
+    try {
+      const response = await axiosPrivate.get(
+        endpoints.GET_ONE_MEDICINE_URL.replace("{id}", state.id)
+      );
+      const productDetails = response.data;
+
+      const existingOrderIndex = orders.findIndex(
+        (order) => order.id === state.id
+      );
+
+      if (existingOrderIndex !== -1) {
+        const updatedOrders = [...orders];
+        updatedOrders[existingOrderIndex] = {
+          ...updatedOrders[existingOrderIndex],
+          totalUnits:
+            Number(updatedOrders[existingOrderIndex].totalUnits) +
+            Number(state.totalUnits),
+          totalCost:
+            (Number(updatedOrders[existingOrderIndex].totalUnits) +
+              Number(state.totalUnits)) *
+            productDetails.costPerMonth,
+        };
+        setOrders(updatedOrders);
+      } else {
+        setOrders([
+          ...orders,
+          {
+            id: state.id,
+            totalUnits: state.totalUnits,
+            productName: productDetails.productTitle,
+            pricePerUnit: productDetails.costPerMonth,
+            totalCost: state.totalUnits * productDetails.costPerMonth,
+          },
+        ]);
+      }
+    } catch (error) {
+      console.error("Error fetching product data:", error);
+    }
   };
 
   const handleDelete = (id) => {
@@ -112,11 +125,13 @@ const SellsDashboardExt = () => {
 
   const handleNumChange = (e) => {
     const value = e.target.value;
-    if (!isNaN(value)) {
+    if (!isNaN(value) && Number(value) >= 0) {
       dispatch({
         type: "SET_TOTAL_UNITS",
         payload: value,
       });
+    } else {
+      console.log("Please enter a valid quantity");
     }
   };
 
@@ -129,11 +144,10 @@ const SellsDashboardExt = () => {
   }, [orders]);
 
   useEffect(() => {
-    // no the order types instead we need to fetch the product list
     const fetchProductTypes = async () => {
-      const response = await axiosPrivate.get(endpoints.GET_CATERGORY_URL);
+      const response = await axiosPrivate.get(endpoints.PRODUCT_REPORTS_URL);
       const formatProductTypes = response.data.map((item) => {
-        return { value: item.id.toString(), label: item.categoryName };
+        return { value: item.id.toString(), label: item.name };
       });
       setProductTypes(formatProductTypes);
       setProducts(response.data);
@@ -142,6 +156,19 @@ const SellsDashboardExt = () => {
     fetchProductTypes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleSubmit = () => {
+    const sellPayload = {
+      orderId: orderId,
+      orderDate: orderDate,
+      customerName: data.customerName,
+      customerMobile: data.customerMobile,
+      totalSum: totalSum,
+      orders: orders,
+    };
+
+    console.log(sellPayload);
+  };
 
   return (
     <>
@@ -214,22 +241,8 @@ const SellsDashboardExt = () => {
                       console.log(item.id);
                       if (item.id === parseInt(e.target.value)) {
                         dispatch({
-                          type: "SET_PRODUCT_NAME",
-                          payload: item.productName,
-                        });
-                        dispatch({
-                          type: "SET_PRICE_PER_UNIT",
-                          payload: item.pricePerUnit,
-                        });
-                        dispatch({
                           type: "SET_ID",
                           payload: item.id,
-                        });
-                        dispatch({
-                          type: "SET_TOTAL_COST",
-                          payload: (
-                            Number(item.pricePerUnit) * Number(state.totalUnits)
-                          ).toString(),
                         });
                       }
                     });
@@ -303,7 +316,8 @@ const SellsDashboardExt = () => {
                   name="Save Sell Details"
                   type="submit"
                   onClick={() => {
-                    navigate("/reportExt");
+                    handleSubmit();
+                    // navigate("/reportExt");
                   }}
                 />
               </div>
