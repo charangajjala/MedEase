@@ -90,7 +90,7 @@ const AddMedicine = () => {
                   link: "/logout",
                 },
               ]}
-              heading={`${productData.productTitle}`}
+              heading={`${productData.companyName} - ${productData.productTitle}`}
             />
           </div>
 

@@ -55,6 +55,7 @@ const MedicineForm = ({ button_name, productData }) => {
   const [formIsValid, setFormIsValid] = useState(true);
   const [dateError, setDateError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [sucessMessage, setSucessMessage] = useState("");
 
   useEffect(() => {
     if (productData) {
@@ -116,24 +117,6 @@ const MedicineForm = ({ button_name, productData }) => {
   }, [productData]);
 
   useEffect(() => {
-    if (state.manufactureDate && state.expiryDate) {
-      if (state.expiryDate < state.manufactureDate) {
-        setErrorMessage("Expiry date cannot be less than manufacture date");
-        setDateError(true);
-        setFormIsValid(false);
-      } else {
-        setErrorMessage("");
-        setDateError(false);
-        setFormIsValid(true);
-      }
-    } else {
-      setErrorMessage("");
-      setDateError(false);
-      setFormIsValid(true);
-    }
-  }, [state.manufactureDate, state.expiryDate]);
-
-  useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
 
@@ -166,7 +149,9 @@ const MedicineForm = ({ button_name, productData }) => {
           label: item.companyName,
         }));
         if (response.status === 200) {
+          setFormIsValid(false);
           setCompanyNames(formatCompanies);
+          setSucessMessage("Product added successfully");
         }
       } catch (error) {
         if (error.name == "CanceledError") {
@@ -193,7 +178,8 @@ const MedicineForm = ({ button_name, productData }) => {
           state
         );
         if (productAddStatus.status === 201) {
-          console.log("Success");
+          formIsValid(false);
+          setSucessMessage("Product added successfully");
         }
       } catch (error) {
         console.log(error);
@@ -232,11 +218,16 @@ const MedicineForm = ({ button_name, productData }) => {
         id="product-type"
         name="product-type"
         options={productTypes}
-        value={state.productType}
+        value={
+          productTypes.find((object) => {
+            return object.value === state.productType;
+          })?.value
+        }
         onChange={(e) => {
           const selectedOption = productTypes.find((object) => {
             return object.value === e.target.value;
           });
+          console.log(selectedOption);
           dispatch({
             type: "SET_PRODUCT_TYPE",
             payload: selectedOption?.label,
@@ -289,7 +280,11 @@ const MedicineForm = ({ button_name, productData }) => {
       <SelectField
         label="Select Company Name"
         id="company-name"
-        value={state.companyName}
+        value={
+          companyNames.find((object) => {
+            return object.value === state.companyName;
+          })?.value
+        }
         name="company-name"
         options={companyNames}
         onChange={(e) => {
@@ -360,6 +355,25 @@ const MedicineForm = ({ button_name, productData }) => {
         <div className="form-button" onClick={handleFormSubmit}>
           <button type="submit">{button_name}</button>
         </div>
+      )}
+      {sucessMessage && button_name !== "Update" && (
+        <>
+          <div className="form-success-message">
+            <p>{sucessMessage}</p>
+          </div>
+          <div className="form-reset">
+            <button
+              onClick={() => {
+                dispatch({
+                  type: "RESET_FORM",
+                });
+                setSucessMessage("");
+              }}
+            >
+              Add Another Product
+            </button>
+          </div>
+        </>
       )}
     </form>
   );

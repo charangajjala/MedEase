@@ -62,7 +62,6 @@ const AddCategory = () => {
         dispatch({
           type: "RESET_FORM",
         });
-        alert("Category added successfully");
       } else {
         alert("Something went wrong");
       }
@@ -112,6 +111,8 @@ const AddCategory = () => {
                 type="text"
                 name="categoryName"
                 id="category-name"
+                autoComplete="off"
+                value={state.categoryName}
                 onChange={(e) =>
                   dispatch({
                     type: "SET_CATEGORY_NAME",
@@ -125,6 +126,7 @@ const AddCategory = () => {
                 label="Description"
                 name="description"
                 id="description"
+                value={state.description}
                 onChange={(e) =>
                   dispatch({
                     type: "SET_DESCRIPTION",
@@ -142,11 +144,11 @@ const AddCategory = () => {
                 </button>
                 <button
                   className="add-category-form__buttons__save"
-                  onClick={() =>
+                  onClick={() => {
                     dispatch({
                       type: "RESET_FORM",
-                    })
-                  }
+                    });
+                  }}
                 >
                   Reset
                 </button>
