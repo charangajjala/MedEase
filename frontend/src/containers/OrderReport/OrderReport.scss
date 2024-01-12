@@ -114,7 +114,9 @@
   }
 
   &__button {
-    display: grid;
+    display: flex;
+    justify-content: space-evenly;
+
 
     button {
       background-color: $white;

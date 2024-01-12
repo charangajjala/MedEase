@@ -10,7 +10,6 @@ import useVisibilityToggle from "../../hooks/useVisibilityToggle";
 import { links } from "../../constants/links.js";
 import logo from "../../assets/logo.png";
 import dummyData from "../../constants/dummyData.js";
-// import activeOrderData from "../../constants/order.js";
 
 import { useLocation } from "react-router";
 import { useRef } from "react";
@@ -138,6 +137,12 @@ const OrderReport = () => {
               type="submit"
               onClick={() => {
                 navigate("/invoice", { state: { order, dummyData, totalSum } });
+              }}
+            />
+            <Button
+              name="Back to Orders"
+              onClick={() => {
+                navigate("/report");
               }}
             />
           </div>

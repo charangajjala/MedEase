@@ -52,6 +52,7 @@ const MedicineForm = ({ button_name }) => {
 
   const [productTypes, setProductTypes] = useState([]);
   const [companyNames, setCompanyNames] = useState([]);
+  const [formIsValid, setFormIsValid] = useState(true);
   const [dateError, setDateError] = useState(false);
 
   useEffect(() => {
@@ -235,8 +236,10 @@ const MedicineForm = ({ button_name }) => {
         onChange={(e) => {
           if (e.target.value < state.manufactureDate) {
             setDateError(true);
+            setFormIsValid(false);
           } else {
             setDateError(false);
+            setFormIsValid(true);
             dispatch({ type: "SET_EXPIRY_DATE", payload: e.target.value });
           }
         }}
@@ -254,9 +257,11 @@ const MedicineForm = ({ button_name }) => {
           required={true}
         />
       </div>
-      <div className="form-button" onClick={handleFormSubmit}>
-        <button type="submit">{button_name}</button>
-      </div>
+      {formIsValid && (
+        <div className="form-button" onClick={handleFormSubmit}>
+          <button type="submit">{button_name}</button>
+        </div>
+      )}
     </form>
   );
 };
