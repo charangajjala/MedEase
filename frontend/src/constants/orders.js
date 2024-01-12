@@ -1,7 +1,7 @@
 const orders = [
   {
     orderId: 493,
-    orderDate: "13 January 2024 03:17",
+    orderDate: "13 January 2024 03:17 PM",
     customerName: "John Doe",
     customerMobile: "9391098117",
     totalSum: "15.00",

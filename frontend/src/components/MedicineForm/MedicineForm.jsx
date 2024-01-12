@@ -41,6 +41,8 @@ function reducer(state, action) {
       return { ...state, manufactureDate: action.payload };
     case "SET_DESCRIPTION":
       return { ...state, description: action.payload };
+    case "RESET_FORM":
+      return initialState;
     default:
       return state;
   }
@@ -151,7 +153,6 @@ const MedicineForm = ({ button_name, productData }) => {
         if (response.status === 200) {
           setFormIsValid(false);
           setCompanyNames(formatCompanies);
-          setSucessMessage("Product added successfully");
         }
       } catch (error) {
         if (error.name == "CanceledError") {
@@ -178,7 +179,7 @@ const MedicineForm = ({ button_name, productData }) => {
           state
         );
         if (productAddStatus.status === 201) {
-          formIsValid(false);
+          setFormIsValid(false);
           setSucessMessage("Product added successfully");
         }
       } catch (error) {

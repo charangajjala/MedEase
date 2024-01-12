@@ -73,8 +73,8 @@ const SellsDashboardExt = () => {
   const orderDate = `${now.getDate()} ${
     months[now.getMonth()]
   } ${now.getFullYear()} ${String(now.getHours()).padStart(2, "0")}:${String(
-    now.getMinutes()
-  ).padStart(2, "0")}`;
+    now.getMinutes() 
+  ).padStart(2, "0")} ${now.getHours() >= 12 ? "PM" : "AM"}`;
 
   const handleAdd = async (e) => {
     e.preventDefault();
@@ -239,7 +239,6 @@ const SellsDashboardExt = () => {
                   options={productTypes}
                   onChange={(e) => {
                     products.forEach((item) => {
-                      console.log(item.id);
                       if (item.id === parseInt(e.target.value)) {
                         dispatch({
                           type: "SET_ID",
@@ -318,7 +317,6 @@ const SellsDashboardExt = () => {
                   type="submit"
                   onClick={() => {
                     handleSubmit();
-                    // navigate("/reportExt");
                   }}
                 />
               </div>
