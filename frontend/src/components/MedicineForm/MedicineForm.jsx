@@ -54,6 +54,25 @@ const MedicineForm = ({ button_name }) => {
   const [companyNames, setCompanyNames] = useState([]);
   const [formIsValid, setFormIsValid] = useState(true);
   const [dateError, setDateError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    if (state.manufactureDate && state.expiryDate) {
+      if (state.expiryDate < state.manufactureDate) {
+        setErrorMessage("Expiry date cannot be less than manufacture date");
+        setDateError(true);
+        setFormIsValid(false);
+      } else {
+        setErrorMessage("");
+        setDateError(false);
+        setFormIsValid(true);
+      }
+    } else {
+      setErrorMessage("");
+      setDateError(false);
+      setFormIsValid(true);
+    }
+  }, [state.manufactureDate, state.expiryDate]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -127,6 +146,26 @@ const MedicineForm = ({ button_name }) => {
       console.log("Update");
     }
   };
+
+  useEffect(() => {
+    if (state.manufactureDate && state.expiryDate) {
+      if (state.expiryDate < state.manufactureDate) {
+        setErrorMessage("Expiry date cannot be less than manufacture date");
+        setDateError(true);
+        setFormIsValid(false);
+      } else {
+        setErrorMessage("");
+        setDateError(false);
+        setFormIsValid(true);
+      }
+    } 
+
+    if (state.manufactureDate === "") {
+      setErrorMessage("Manufacture date cannot be empty");
+        setDateError(true);
+        setFormIsValid(false);
+    }
+  }, [state.manufactureDate, state.expiryDate]);
 
   return (
     <form className="form">
@@ -223,9 +262,9 @@ const MedicineForm = ({ button_name }) => {
         type="date"
         id="manufacture-date"
         name="manufacture-date"
-        onChange={(e) =>
-          dispatch({ type: "SET_MANUFACTURE_DATE", payload: e.target.value })
-        }
+        onChange={(e) => {
+          dispatch({ type: "SET_MANUFACTURE_DATE", payload: e.target.value });
+        }}
         required={true}
       />
       <FormInput
@@ -234,17 +273,10 @@ const MedicineForm = ({ button_name }) => {
         id="expiry-date"
         name="expiry-date"
         onChange={(e) => {
-          if (e.target.value < state.manufactureDate) {
-            setDateError(true);
-            setFormIsValid(false);
-          } else {
-            setDateError(false);
-            setFormIsValid(true);
-            dispatch({ type: "SET_EXPIRY_DATE", payload: e.target.value });
-          }
+          dispatch({ type: "SET_EXPIRY_DATE", payload: e.target.value });
         }}
         required={true}
-        error={dateError ? "Expiry date cannot be before manufacture date" : ""}
+        error={dateError ? errorMessage : ""}
       />
       <div className="full-width">
         <Textarea

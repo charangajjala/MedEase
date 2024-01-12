@@ -73,8 +73,9 @@ const SellsDashboardExt = () => {
   const axiosPrivate = useAxiosPrivate();
   const [productTypes, setProductTypes] = useState([]);
   const [state, dispatch] = useReducer(reducer, initalState);
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState(dummyData);
   const [totalSum, setTotalSum] = useState(0);
+  const [products, setProducts] = useState([]);
 
   // Need to modify this it just currently generates a random number
   const orderId = Math.floor(Math.random() * 1000);
@@ -104,9 +105,9 @@ const SellsDashboardExt = () => {
     console.log(state);
   };
 
-  const handleDelete = (e) => {
-    e.preventDefault();
-    console.log("Delete");
+  const handleDelete = (id) => {
+    const updatedOrder = orders.filter((item) => item.id !== id);
+    setOrders(updatedOrder);
   };
 
   const handleNumChange = (e) => {
@@ -135,6 +136,7 @@ const SellsDashboardExt = () => {
         return { value: item.id.toString(), label: item.categoryName };
       });
       setProductTypes(formatProductTypes);
+      setProducts(response.data);
     };
 
     fetchProductTypes();
@@ -208,9 +210,28 @@ const SellsDashboardExt = () => {
                   name="product-type"
                   options={productTypes}
                   onChange={(e) => {
-                    dispatch({
-                      type: "SET_PRODUCT_NAME",
-                      payload: e.target.value,
+                    products.forEach((item) => {
+                      console.log(item.id);
+                      if (item.id === parseInt(e.target.value)) {
+                        dispatch({
+                          type: "SET_PRODUCT_NAME",
+                          payload: item.productName,
+                        });
+                        dispatch({
+                          type: "SET_PRICE_PER_UNIT",
+                          payload: item.pricePerUnit,
+                        });
+                        dispatch({
+                          type: "SET_ID",
+                          payload: item.id,
+                        });
+                        dispatch({
+                          type: "SET_TOTAL_COST",
+                          payload: (
+                            Number(item.pricePerUnit) * Number(state.totalUnits)
+                          ).toString(),
+                        });
+                      }
                     });
                   }}
                   required={true}
@@ -227,9 +248,12 @@ const SellsDashboardExt = () => {
                     handleNumChange(e);
                   }}
                 />
-                
 
-                <Button name="Add to Cart" type="submit" onClick={handleAdd} />
+                <Button
+                  name="Add to Cart"
+                  type="submit"
+                  onClick={(e) => handleAdd(e)}
+                />
               </div>
             </div>
             <div className="sells-dashboard-ext__order-details">
@@ -250,7 +274,7 @@ const SellsDashboardExt = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {dummyData.map((item) => (
+                    {orders.map((item) => (
                       <tr key={item.id}>
                         <td>{item.id}</td>
                         <td>{item.productName}</td>
@@ -258,7 +282,9 @@ const SellsDashboardExt = () => {
                         <td>{item.totalUnits}</td>
                         <td>{item.totalCost}</td>
                         <td>
-                          <button onClick={handleDelete}>Delete</button>
+                          <button onClick={() => handleDelete(item.id)}>
+                            Delete
+                          </button>
                         </td>
                       </tr>
                     ))}
@@ -271,15 +297,17 @@ const SellsDashboardExt = () => {
                 </table>
               </div>
             </div>
-            <div className="sells-dashboard-ext__submit-btn">
-              <Button
-                name="Save Sell Details"
-                type="submit"
-                onClick={() => {
-                  navigate("/reportExt");
-                }}
-              />
-            </div>
+            {orders.length > 0 && (
+              <div className="sells-dashboard-ext__submit-btn">
+                <Button
+                  name="Save Sell Details"
+                  type="submit"
+                  onClick={() => {
+                    navigate("/reportExt");
+                  }}
+                />
+              </div>
+            )}
           </div>
         </main>
       </div>
