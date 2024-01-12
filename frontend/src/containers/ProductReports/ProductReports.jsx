@@ -26,6 +26,7 @@ const columnHeaders = [
 
 const ProductReports = () => {
   const [products, setProducts] = useState([]);
+  const [productTypes, setProductTypes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const {
@@ -44,6 +45,13 @@ const ProductReports = () => {
         const response = await axiosPrivate.get(endpoints.PRODUCT_REPORTS_URL);
         if (isMounted) {
           setProducts(response.data);
+          const formatedResponse = response.data.map((product) => ({
+            id: product.productCode,
+            name: product.productTitle,
+            category: product.productType,
+            cost: product.costPerMonth,
+          }));
+          setProductTypes(formatedResponse);
         }
       } catch (err) {
         console.log(err);
@@ -108,7 +116,7 @@ const ProductReports = () => {
           <div className="product-reports__main__content">
             <ReportTable
               columnHeaders={columnHeaders}
-              data={products}
+              data={productTypes}
               renderRowActions={(product) => (
                 <>
                   <button

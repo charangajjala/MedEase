@@ -134,10 +134,8 @@ const MedicineForm = ({ button_name }) => {
           endpoints.ADD_MEDICINE_URL,
           state
         );
-        if (productAddStatus.status === 200) {
+        if (productAddStatus.status === 201) {
           console.log("Success");
-        } else {
-          console.log("Failed");
         }
       } catch (error) {
         console.log(error);
@@ -175,7 +173,7 @@ const MedicineForm = ({ button_name }) => {
         name="product-type"
         options={productTypes}
         onChange={(e) => {
-          const selectedOption = companyNames.find((object) => {
+          const selectedOption = productTypes.find((object) => {
             return object.value === e.target.value;
           });
           dispatch({
