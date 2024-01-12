@@ -8,7 +8,7 @@ const Invoice = () => {
   console.log("Invoice")
   const location = useLocation();
   const navigate = useNavigate();
-  const { order, dummyData, totalSum } = location.state;
+  const { order, orders, totalSum } = location.state;
 
   useEffect(() => {
     window.print();
@@ -39,7 +39,7 @@ const Invoice = () => {
             </tr>
           </thead>
           <tbody>
-            {dummyData.map(item => (
+            {orders.map(item => (
               <tr key={item.id}>
                 <td>{item.productName}</td>
                 <td>${item.pricePerUnit}</td>

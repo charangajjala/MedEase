@@ -9,7 +9,6 @@ import useVisibilityToggle from "../../hooks/useVisibilityToggle";
 
 import { links } from "../../constants/links.js";
 import logo from "../../assets/logo.png";
-import dummyData from "../../constants/dummyData.js";
 
 import { useLocation } from "react-router";
 import { useRef } from "react";
@@ -29,11 +28,9 @@ const OrderReport = () => {
   const location = useLocation();
   const tableRef = useRef();
   const { order } = location.state;
+  const { customerMobile, customerName, orderDate, orderId, totalSum, orders } =
+    order;
   const navigate = useNavigate();
-
-  const totalSum = dummyData
-    .reduce((acc, item) => acc + parseFloat(item.totalCost), 0)
-    .toFixed(2);
 
   return (
     <>
@@ -76,21 +73,21 @@ const OrderReport = () => {
                   <tbody>
                     <tr>
                       <td>Order ID</td>
-                      <td>{order.id}</td>
+                      <td>{orderId}</td>
                       <td>Order Date</td>
-                      <td>{order.date}</td>
+                      <td>{orderDate}</td>
                     </tr>
                     <tr>
                       <td>Customer Name</td>
-                      <td>{order.customerName}</td>
+                      <td>{customerName}</td>
                       <td>Customer Mobile</td>
-                      <td>{order.mobile}</td>
+                      <td>{customerMobile}</td>
                     </tr>
                     <tr>
                       <td>Order Status</td>
                       <td>Paid</td>
                       <td>Total Amount</td>
-                      <td>{order.totalAmount}</td>
+                      <td>{totalSum}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -113,7 +110,7 @@ const OrderReport = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {dummyData.map((item) => (
+                    {orders.map((item) => (
                       <tr key={item.id}>
                         <td>{item.id}</td>
                         <td>{item.productName}</td>
@@ -136,7 +133,7 @@ const OrderReport = () => {
               name="Download Invoice"
               type="submit"
               onClick={() => {
-                navigate("/invoice", { state: { order, dummyData, totalSum } });
+                navigate("/invoice", { state: { order, orders, totalSum } });
               }}
             />
             <Button

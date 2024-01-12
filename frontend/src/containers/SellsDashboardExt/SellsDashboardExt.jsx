@@ -168,6 +168,7 @@ const SellsDashboardExt = () => {
     };
 
     console.log(sellPayload);
+    navigate("/reportExt", { state: { order: sellPayload } });
   };
 
   return (
