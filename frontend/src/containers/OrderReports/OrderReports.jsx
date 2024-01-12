@@ -15,7 +15,7 @@ import "./OrderReports.scss";
 
 const columnHeaders = [
   {
-    key: "id",
+    key: "orderId",
     label: "ID",
   },
   {
@@ -23,15 +23,15 @@ const columnHeaders = [
     label: "Customer Name",
   },
   {
-    key: "mobile",
+    key: "customerMobile",
     label: "Mobile",
   },
   {
-    key: "totalAmount",
+    key: "totalSum",
     label: "Total Amount",
   },
   {
-    key: "date",
+    key: "orderDate",
     label: "Date",
   },
 ];
