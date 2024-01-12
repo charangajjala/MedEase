@@ -1,26 +1,26 @@
 const Endpoints = {
-    LOGIN: '/api/login',
+  LOGIN: "/api/login",
 
-    // Product Related URLs
-    PRODUCT_REPORTS_URL: '/api/products',
+  // Product Related URLs
+  PRODUCT_REPORTS_URL: "/api/products",
 
-    // Company Related URLs
-    COMPANY_REPORTS_URL: '/api/company',
-    ADD_COMPANY_URL: '/api/company',
-    UPDATE_COMPANY_URL: '/api/company',
+  // Company Related URLs
+  COMPANY_REPORTS_URL: "/api/company",
+  ADD_COMPANY_URL: "/api/company",
+  UPDATE_COMPANY_URL: "/api/company",
 
-    // Category Related URLs
-    ADD_CATEGORY_URL: '/api/medicine_type',
-    GET_ONE_CATEGORY_URL: '/api/medicine_type/{id}',
-    GET_CATERGORY_URL: '/api/medicine_type',
+  // Category Related URLs
+  ADD_CATEGORY_URL: "/api/medicine_type",
+  GET_ONE_CATEGORY_URL: "/api/medicine_type/{id}",
+  GET_CATERGORY_URL: "/api/medicine_type",
 
-    // Medicine Related URLs
-    ADD_MEDICINE_URL: '/api/medicines',
-    MEDICINE_REPORTS_URL: '/api/medicines',
-    UPDATE_MEDICINE_URL: '/api/medicines',
+  // Medicine Related URLs
+  ADD_MEDICINE_URL: "/api/medicine",
+  MEDICINE_REPORTS_URL: "/api/medicines",
+  UPDATE_MEDICINE_URL: "/api/medicines",
 
-    // Order Related URLs
-    ORDER_REPORTS_URL: '/api/orders',
-}
+  // Order Related URLs
+  ORDER_REPORTS_URL: "/api/orders",
+};
 
 export default Endpoints;

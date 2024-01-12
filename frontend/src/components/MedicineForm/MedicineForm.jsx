@@ -103,10 +103,23 @@ const MedicineForm = ({ button_name }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (button_name === "Submit") {
       console.log("Add");
+      try {
+        const productAddStatus = await axiosPrivate.post(
+          endpoints.ADD_MEDICINE_URL,
+          state
+        );
+        if (productAddStatus.status === 200) {
+          console.log("Success");
+        } else {
+          console.log("Failed");
+        }
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       console.log("Update");
     }
@@ -119,10 +132,22 @@ const MedicineForm = ({ button_name }) => {
         id="product-type"
         name="product-type"
         options={productTypes}
-        value={state.productType}
-        onChange={(e) =>
-          dispatch({ type: "SET_PRODUCT_TYPE", payload: e.target.value })
-        }
+        onChange={(e) => {
+          const selectedOption = companyNames.find((object) => {
+            return object.value === e.target.value;
+          })
+          dispatch({
+            type: "SET_PRODUCT_TYPE",
+            payload: selectedOption?.label,
+          });
+        }}
+        // The below code sends the value of the selected option above sends the label
+        // onChange={(e) => {
+        //   dispatch({
+        //     type: "SET_PRODUCT_TYPE",
+        //     payload: e.target.value,
+        //   });
+        // }}
         required={true}
       />
       <FormInput
@@ -161,14 +186,27 @@ const MedicineForm = ({ button_name }) => {
         name="company-name"
         options={companyNames}
         value={state.companyName}
-        onChange={(e) =>
-          dispatch({ type: "SET_COMPANY_NAME", payload: e.target.value })
-        }
+        onChange={(e) => {
+          const selectedOption = companyNames.find((object) => {
+            return object.value === e.target.value;
+          })
+          dispatch({
+            type: "SET_COMPANY_NAME",
+            payload: selectedOption?.label,
+          });
+        }}
+        // The below code sends the value of the selected option above sends the label
+        // onChange={(e) => {
+        //   dispatch({
+        //     type: "SET_COMPANY_NAME",
+        //     payload: e.target.value,
+        //   });
+        // }}
         required={true}
       />
       <FormInput
         label="Cost Per Month"
-        type="text"
+        type="number"
         id="cost-per-month"
         name="cost-per-month"
         onChange={(e) =>
