@@ -13,6 +13,7 @@ import { default as AddCompany } from "./Admin/AddCompany/AddCompany.jsx";
 import { default as UpdateCompany } from "./Admin/UpdateCompany/UpdateCompany.jsx";
 import { default as ProductReports } from "./Admin/ProductReports/ProductReports.jsx";
 import { default as Register } from "./User/Register/Register.jsx";
+import { default as UserDashboard } from "./User/UserDashboard/UserDashboard.jsx";
 
 export {
   AdminDashboard,
@@ -30,4 +31,5 @@ export {
   UpdateCompany,
   ProductReports,
   Register,
+  UserDashboard,
 };

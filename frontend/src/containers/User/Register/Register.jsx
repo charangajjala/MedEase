@@ -1,6 +1,7 @@
 import { useReducer } from "react";
 import { Button, FormInput, Footer, PasswordInput } from "../../../components";
 import "./Register.scss";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   username: "",
@@ -26,10 +27,11 @@ function reducer(state, action) {
 
 const Register = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(state);
+    navigate("/dashboard");
   };
 
   return (
@@ -48,7 +50,6 @@ const Register = () => {
               onChange={(e) =>
                 dispatch({ type: "SET_USERNAME", payload: e.target.value })
               }
-              required
               autoComplete="off"
             />
             <FormInput
@@ -59,7 +60,6 @@ const Register = () => {
               onChange={(e) =>
                 dispatch({ type: "SET_EMAIL", payload: e.target.value })
               }
-              required
               autoComplete="off"
             />
             <PasswordInput
@@ -69,7 +69,6 @@ const Register = () => {
               onChange={(e) =>
                 dispatch({ type: "SET_PWD", payload: e.target.value })
               }
-              required
               autoComplete="off"
             />
             <PasswordInput
@@ -79,7 +78,6 @@ const Register = () => {
               onChange={(e) =>
                 dispatch({ type: "SET_CONFIRM_PWD", payload: e.target.value })
               }
-              required
               autoComplete="off"
             />
           </div>

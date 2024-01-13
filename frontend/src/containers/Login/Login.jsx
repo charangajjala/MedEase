@@ -6,7 +6,12 @@ import "./Login.scss";
 import store from "../../assets/store.jpg";
 import { useNavigate } from "react-router-dom";
 
-import { Button, Footer, FormInput } from "../../components/index.js";
+import {
+  Button,
+  Footer,
+  FormInput,
+  PasswordInput,
+} from "../../components/index.js";
 import endpoints from "../../constants/endpoints.js";
 
 const initialState = {
@@ -79,10 +84,27 @@ const Login = () => {
       console.log(response);
       const accessToken = response?.data?.accessToken;
       const refreshToken = response?.data?.refreshToken;
+      const role = response?.data?.role;
       setAuth({ email, password, accessToken, refreshToken });
-      dispatch({ type: "LOGGED_IN" });
-      console.log("Login: Navigating to dashboard");
-      navigate("/admin/dashboard");
+
+      // navigate to dashboard based on role
+      switch (role) {
+        case "admin":
+          dispatch({ type: "LOGGED_IN" });
+          console.log("Login: Navigating to dashboard");
+          navigate("/admin/dashboard");
+          break;
+        case "user":
+          dispatch({ type: "LOGGED_IN" });
+          console.log("Login: Navigating to dashboard");
+          navigate("/dashboard");
+          break;
+        default:
+          navigate("/");
+      }
+
+      // console.log("Login: Navigating to dashboard");
+      // navigate("/admin/dashboard");
     } catch (e) {
       if (!e?.response) {
         dispatch({ type: "SET_ERR_MSG", payload: "No Server Response" });
@@ -101,9 +123,9 @@ const Login = () => {
   };
 
   const hangleRegister = () => {
-    console.log("register")
+    console.log("register");
     navigate("/register");
-  }
+  };
 
   return (
     <>
@@ -128,11 +150,9 @@ const Login = () => {
                 />
               </div>
               <div className="login-layout__container-left__form__input">
-                <FormInput
-                  label="Password"
-                  type="password"
+                <PasswordInput
                   id="password"
-                  name="password"
+                  label="Password"
                   value={password}
                   onChange={(e) =>
                     dispatch({ type: "SET_PWD", payload: e.target.value })
@@ -143,7 +163,11 @@ const Login = () => {
               </div>
               <div className="login-layout__container-left__form__buttons">
                 <Button name="Login" type="submit" onClick={handleLogin} />
-                <Button name="Register" type="button" onClick={hangleRegister} />
+                <Button
+                  name="Register"
+                  type="button"
+                  onClick={hangleRegister}
+                />
               </div>
             </form>
             {errMsg && <p className="error-message">{errMsg}</p>}
