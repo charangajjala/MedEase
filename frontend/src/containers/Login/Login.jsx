@@ -1,12 +1,12 @@
 import { useRef, useEffect, useContext, useReducer } from "react";
 
-import AuthContext from "../../../context/AuthProvider.jsx";
-import axios from "../../../api/axios.jsx";
+import AuthContext from "../../context/AuthProvider.jsx";
+import axios from "../../api/axios.jsx";
 import "./Login.scss";
-import store from "../../../assets/store.jpg";
+import store from "../../assets/store.jpg";
 import { useNavigate } from "react-router-dom";
 
-import { Button, Footer, FormInput } from "../../../components/index.js";
+import { Button, Footer, FormInput } from "../../components/index.js";
 
 const LOGIN_URL = "/api/login";
 
@@ -131,7 +131,7 @@ const Login = () => {
       <div className="login-layout">
         <div className="login-layout__container">
           <div className="login-layout__container-left">
-            <h1>Medical Store Admin</h1>
+            <h1>Medical Store Login</h1>
             <form className="login-layout__container-left__form">
               <div className="login-layout__container-left__form__input">
                 <FormInput
