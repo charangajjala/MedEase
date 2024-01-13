@@ -12,6 +12,7 @@ import { default as CompanyForm } from "./CompanyForm/CompanyForm.jsx";
 import { default as Loading } from "./Loading/Loading.jsx";
 import { default as Navbar } from "./Navbar/Navbar.jsx";
 import { default as Invoice } from "./Invoice/Invoice.jsx";
+import { default as PasswordInput } from "./PasswordInput/PasswordInput.jsx";
 
 export {
   Button,
@@ -28,4 +29,5 @@ export {
   Loading,
   Navbar,
   Invoice,
+  PasswordInput,
 };
