@@ -1,0 +1,45 @@
+@import "../../../styles/colors/colors.scss";
+@import "../../../styles/fonts/fonts.scss";
+
+.company-report {
+  display: flex;
+  min-height: 100vh;
+  font-family: $font-family;
+
+  &__main {
+    width: 100%;
+    background-color: $body-bg;
+    color: $text-light;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    justify-content: start;
+  }
+
+  &__content {
+    font-family: $font-family;
+    overflow-x: auto;
+
+    .action-button {
+      margin: 0 0.25em;
+      padding: 0.5em 1em;
+      border: none;
+      border-radius: 0.3em;
+      cursor: pointer;
+      font-weight: $font-weight-bold;
+      transition: background-color 0.3s ease-in-out;
+
+      &.edit {
+        background-color: $text-color;
+      }
+      &.delete {
+        background-color: $text-color;
+      }
+
+      &:hover {
+        opacity: 0.85;
+      }
+    }
+  }
+}
