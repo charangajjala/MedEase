@@ -35,7 +35,7 @@ const CompanyReport = () => {
 
   const navigate = useNavigate();
   const handleEdit = (company) => {
-    navigate("/companyUpdate", { state: { company } });
+    navigate("/admin/companyUpdate", { state: { company } });
   };
 
   const handleDelete = () => {

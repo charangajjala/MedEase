@@ -66,7 +66,7 @@ const CompanyForm = ({ method, companyData }) => {
         );
         if (response.status === 201) {
           setSuccessMessage("Company added successfully");
-          navigate("/companies");
+          navigate("/admin/companies");
         } else {
           setErrorMessage("An error occurred");
         }
@@ -84,7 +84,7 @@ const CompanyForm = ({ method, companyData }) => {
         );
         if (response.status === 200) {
           setSuccessMessage("Company updated successfully");
-          navigate("/companies");
+          navigate("/admin/companies");
         }
       } catch (err) {
         setErrorMessage("An error occurred");
@@ -136,7 +136,7 @@ const CompanyForm = ({ method, companyData }) => {
           <button
             className="company-form__button"
             onClick={() => {
-              navigate("/companies");
+              navigate("/admin/companies");
             }}
           >
             Return to Companies

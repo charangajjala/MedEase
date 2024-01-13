@@ -49,7 +49,7 @@ const SellsDashboard = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/sellsExt", { state });
+    navigate("/admin/sellsExt", { state });
   };
 
   return (

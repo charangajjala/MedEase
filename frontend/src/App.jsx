@@ -40,20 +40,20 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/dashboard" element={<AdminDashboardWithAuth />} />
-        <Route path="/medicine" element={<AddMedicineWithAuth />} />
-        <Route path="/medicineUpdate" element={<UpdateMedicineWithAuth />} />
-        <Route path="/sells" element={<StartSellWithAuth />} />
-        <Route path="/sellsExt" element={<SellsDashboardExtWithAuth />} />
-        <Route path="/report" element={<OrderReportsWithAuth />} />
-        <Route path="/reportExt" element={<OrderReportWithAuth />} />
-        <Route path="/products" element={<ProductReportsWithAuth />} />
-        <Route path="/companies" element={<CompanyReportWithAuth />} />
-        <Route path="/companyAdd" element={<AddCompanyWithAuth />} />
-        <Route path="/companyUpdate" element={<UpdateCompanyWithAuth />} />
-        <Route path="/category" element={<AddCategoryWithAuth />} />
-        <Route path="/invoice" element={<InvoiceWithAuth />} />
         <Route path="/logout" element={<Logout />} />
+        <Route path="/admin/dashboard" element={<AdminDashboardWithAuth />} />
+        <Route path="/admin/medicine" element={<AddMedicineWithAuth />} />
+        <Route path="/admin/medicineUpdate" element={<UpdateMedicineWithAuth />} />
+        <Route path="/admin/sells" element={<StartSellWithAuth />} />
+        <Route path="/admin/sellsExt" element={<SellsDashboardExtWithAuth />} />
+        <Route path="/admin/report" element={<OrderReportsWithAuth />} />
+        <Route path="/admin/reportExt" element={<OrderReportWithAuth />} />
+        <Route path="/admin/products" element={<ProductReportsWithAuth />} />
+        <Route path="/admin/companies" element={<CompanyReportWithAuth />} />
+        <Route path="/admin/companyAdd" element={<AddCompanyWithAuth />} />
+        <Route path="/admin/companyUpdate" element={<UpdateCompanyWithAuth />} />
+        <Route path="/admin/category" element={<AddCategoryWithAuth />} />
+        <Route path="/admin/invoice" element={<InvoiceWithAuth />} />
       </Routes>
     </Router>
   );

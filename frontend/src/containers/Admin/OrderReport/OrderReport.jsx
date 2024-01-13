@@ -133,13 +133,13 @@ const OrderReport = () => {
               name="Download Invoice"
               type="submit"
               onClick={() => {
-                navigate("/invoice", { state: { order, orders, totalSum } });
+                navigate("/admin/invoice", { state: { order, orders, totalSum } });
               }}
             />
             <Button
               name="Back to Orders"
               onClick={() => {
-                navigate("/report");
+                navigate("/admin/report");
               }}
             />
           </div>

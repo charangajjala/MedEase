@@ -47,7 +47,7 @@ const OrderReports = () => {
 
   const navigate = useNavigate();
   const handleViewClick = (order) => {
-    navigate("/reportExt", { state: { order } });
+    navigate("/admin/reportExt", { state: { order } });
   };
 
   return (

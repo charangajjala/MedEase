@@ -40,12 +40,6 @@ const Login = () => {
   const navigate = useNavigate();
   const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
-  // const errRef = useRef();
-
-  // const [user, setUser] = useState("");
-  // const [errMsg, setErrMsg] = useState("");
-  // const [pwd, setPwd] = useState("");
-  // const [success, setSuccess] = useState(false);
 
   const [{ email, errMsg, password, success }, dispatch] = useReducer(
     loginReducer,
@@ -60,7 +54,7 @@ const Login = () => {
     const authObj = JSON.parse(localStorage.getItem("auth"));
     console.log(Boolean(authObj.accessToken) && Boolean(authObj.refreshToken));
     if (Boolean(authObj.accessToken) && Boolean(authObj.refreshToken)) {
-      navigate("/dashboard");
+      navigate("/admin/dashboard");
     } else {
       navigate("/");
     }
@@ -95,7 +89,7 @@ const Login = () => {
       // setErrMsg("");
       dispatch({ type: "LOGGED_IN" });
       console.log("Login: Navigating to dashboard")
-      navigate("/dashboard");
+      navigate("/admin/dashboard");
     } catch (e) {
       if (!e?.response) {
         // setErrMsg("No Server Response");

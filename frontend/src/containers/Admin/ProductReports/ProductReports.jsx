@@ -68,7 +68,7 @@ const ProductReports = () => {
 
   const navigate = useNavigate();
   const handleClick = (product) => {
-    navigate("/medicineUpdate", { state: product });
+    navigate("/admin/medicineUpdate", { state: product });
   };
 
   if (isLoading) {
