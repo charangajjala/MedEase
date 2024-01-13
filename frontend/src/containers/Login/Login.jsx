@@ -7,8 +7,7 @@ import store from "../../assets/store.jpg";
 import { useNavigate } from "react-router-dom";
 
 import { Button, Footer, FormInput } from "../../components/index.js";
-
-const LOGIN_URL = "/api/login";
+import endpoints from "../../constants/endpoints.js";
 
 const initialState = {
   email: "",
@@ -29,8 +28,6 @@ function loginReducer(state, action) {
       return { ...state, success: action.payload };
     case "LOGGED_IN":
       return { ...state, email: "", password: "", errMsg: "", success: true };
-    case "RESET":
-      return initialState;
     default:
       return state;
   }
@@ -70,7 +67,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        LOGIN_URL,
+        endpoints.LOGIN_URL,
         JSON.stringify({ email, password }),
         {
           headers: {
@@ -83,42 +80,30 @@ const Login = () => {
       const accessToken = response?.data?.accessToken;
       const refreshToken = response?.data?.refreshToken;
       setAuth({ email, password, accessToken, refreshToken });
-      // setSuccess(true);
-      // setUser("");
-      // setPwd("");
-      // setErrMsg("");
       dispatch({ type: "LOGGED_IN" });
-      console.log("Login: Navigating to dashboard")
+      console.log("Login: Navigating to dashboard");
       navigate("/admin/dashboard");
     } catch (e) {
       if (!e?.response) {
-        // setErrMsg("No Server Response");
         dispatch({ type: "SET_ERR_MSG", payload: "No Server Response" });
       } else if (e.response.status === 400) {
-        // setErrMsg("Invalid username or password");
         dispatch({
           type: "SET_ERR_MSG",
           payload: "Invalid username or password",
         });
       } else if (e.response.status === 401) {
-        // setErrMsg("Unauthorized");
         dispatch({ type: "SET_ERR_MSG", payload: "Unauthorized" });
       } else {
-        // setErrMsg("Something went wrong");
         dispatch({ type: "SET_ERR_MSG", payload: "Something went wrong" });
       }
-      // setSuccess(false);
       dispatch({ type: "SET_SUCCESS", payload: false });
-      // errRef.current.focus();
     }
   };
 
-  const handleReset = () => {
-    // setUser("");
-    // setPwd("");
-    dispatch({ type: "RESET" });
-    userRef.current.focus();
-  };
+  const hangleRegister = () => {
+    console.log("register")
+    navigate("/register");
+  }
 
   return (
     <>
@@ -158,7 +143,7 @@ const Login = () => {
               </div>
               <div className="login-layout__container-left__form__buttons">
                 <Button name="Login" type="submit" onClick={handleLogin} />
-                <Button name="Reset" type="button" onClick={handleReset} />
+                <Button name="Register" type="button" onClick={hangleRegister} />
               </div>
             </form>
             {errMsg && <p className="error-message">{errMsg}</p>}

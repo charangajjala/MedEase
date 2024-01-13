@@ -12,6 +12,7 @@ import { default as SellsDashboardExt } from "./Admin/SellsDashboardExt/SellsDas
 import { default as AddCompany } from "./Admin/AddCompany/AddCompany.jsx";
 import { default as UpdateCompany } from "./Admin/UpdateCompany/UpdateCompany.jsx";
 import { default as ProductReports } from "./Admin/ProductReports/ProductReports.jsx";
+import { default as Register } from "./User/Register/Register.jsx";
 
 export {
   AdminDashboard,
@@ -28,4 +29,5 @@ export {
   AddCompany,
   UpdateCompany,
   ProductReports,
+  Register,
 };

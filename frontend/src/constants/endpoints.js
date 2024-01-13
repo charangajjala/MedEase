@@ -22,6 +22,10 @@ const Endpoints = {
 
   // Order Related URLs
   ORDER_REPORTS_URL: "/api/orders",
+
+  // Login
+  LOGIN_URL: "/api/login",
+  LOGOUT_URL: "/api/logout",
 };
 
 export default Endpoints;

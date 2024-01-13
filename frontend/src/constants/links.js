@@ -19,5 +19,5 @@ export const links = {
   companyReport: { name: "Company Report", href: "/admin/companies", icon: faSitemap },
   addCompany: { name: "Add Company", href: "/admin/companyAdd", icon: faBuilding },
   addCategory: { name: "Add Category", href: "/admin/category", icon: faPlusCircle },
-  logout: { name: "Logout", href: "/admin/logout", icon: faSignOutAlt },
+  logout: { name: "Logout", href: "/logout", icon: faSignOutAlt },
 };

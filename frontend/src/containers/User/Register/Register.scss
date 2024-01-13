@@ -1,0 +1,47 @@
+@import "../../../styles/colors/colors.scss";
+@import "../../../styles/fonts/fonts.scss";
+
+.register-layout {
+  background-color: $body-bg;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+
+  &__content {
+    background-color: $white;
+    padding: 0.75rem 1.25rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 400px;
+
+    &__header {
+      color: $text-color;
+      text-decoration: underline;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    &__button {
+      display: flex;
+      justify-content: center;
+      
+      button {
+        background-color: $button-bg;
+        color: $button-text;
+        padding: 12px 40px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+
+        &:hover {
+          background-color: $button-hover;
+        }
+      }
+    }
+  }
+}

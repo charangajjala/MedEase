@@ -15,6 +15,7 @@ import {
   UpdateCompany,
   ProductReports,
   UpdateMedicine,
+  Register,
 } from "./containers/index.js";
 import WithAuth from "./utils/WithAuth.jsx";
 import { Invoice } from "./components/index.js";
@@ -41,6 +42,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/admin/dashboard" element={<AdminDashboardWithAuth />} />
         <Route path="/admin/medicine" element={<AddMedicineWithAuth />} />
         <Route path="/admin/medicineUpdate" element={<UpdateMedicineWithAuth />} />
