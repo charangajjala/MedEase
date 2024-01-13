@@ -82,7 +82,7 @@ const SellsDashboard = () => {
                   link: "/logout",
                 },
               ]}
-              heading={"Add Medicine"}
+              heading={"Sell"}
             />
           </div>
 
