@@ -1,20 +1,15 @@
-import { Header, Footer, CategoryCard, Navbar } from "../../../userComponents";
+import { Header, Footer, Navbar, BannerSlider } from "../../../userComponents";
+import "./UserDashboard.scss";
 
 const UserDashboard = () => {
   return (
     <>
       <Header />
       <Navbar />
-      <div className="home">
-        <CategoryCard />
-        <CategoryCard />
-        <CategoryCard />
-        <CategoryCard />
-        <CategoryCard />
-      </div>
+      <BannerSlider />
       <Footer />
     </>
-  )
+  );
 };
 
 export default UserDashboard;

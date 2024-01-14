@@ -1,0 +1,54 @@
+@import "../../styles/colors/colors.scss";
+@import "../../styles/fonts/fonts.scss";
+@import "../../styles/mixins/userMixins.scss";
+
+.banner-slider {
+  position: relative;
+  overflow: hidden;
+
+  &__info-bars {
+    display: flex;
+    background-color: $white;
+    justify-content: space-between;
+    
+    .info-bar {
+      padding: 10px;
+    }
+  }
+
+  &__slides {
+    display: flex;
+    transition: all 0.5s ease-in-out;
+    object-fit: cover;
+  }
+
+  img {
+    max-width: 100%;
+    display: none;
+    transition: opacity 0.5s ease-in-out;
+
+    &.active {
+      display: block;
+    }
+  }
+
+  &__controls {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+
+    div {
+      cursor: pointer;
+      padding: 5px 10px;
+      background-color: rgba(255, 255, 255, 0.7);
+      transition: background-color 0.5s ease-in-out;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.9);
+      }
+    }
+  }
+}
