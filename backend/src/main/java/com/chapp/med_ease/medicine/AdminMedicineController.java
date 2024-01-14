@@ -26,9 +26,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/medicine")
-public class MedicineController {
+public class AdminMedicineController {
 
-    private final MedicineService medicineService;
+    private final AdminMedicineService medicineService;
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)

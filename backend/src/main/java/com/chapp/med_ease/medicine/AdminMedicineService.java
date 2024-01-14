@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class MedicineService {
+public class AdminMedicineService {
 
     private final MedicineRepository medicineRepository;
 
