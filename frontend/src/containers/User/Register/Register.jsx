@@ -2,7 +2,7 @@ import { useReducer } from "react";
 import { Button, FormInput, Footer, PasswordInput } from "../../../components";
 import "./Register.scss";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { axiosPrivate } from "../../../api/axios";
 import endpoints from "../../../constants/endpoints";
 
 const initialState = {
@@ -55,11 +55,10 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post(endpoints.REGISTER, {
+      const response = await axiosPrivate.post(endpoints.REGISTER, {
         username,
         email,
         password,
-        role,
       });
 
       if (response.data.success) {
