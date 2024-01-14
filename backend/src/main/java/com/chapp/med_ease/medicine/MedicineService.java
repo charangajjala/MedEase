@@ -11,6 +11,7 @@ import com.chapp.med_ease.exception.exceptions.BadRequestException;
 import com.chapp.med_ease.medicine.medicine_dto.MedicineRequest;
 import com.chapp.med_ease.medicine.medicine_dto.MedicineResponse;
 import com.chapp.med_ease.medicine.medicine_dto.MedicinesResponse;
+import com.chapp.med_ease.medicine.medicine_dto.UpdateMedicineRequest;
 import com.chapp.med_ease.medicine_type.MedicineType;
 import com.chapp.med_ease.medicine_type.MedicineTypeRepository;
 
@@ -72,6 +73,46 @@ public class MedicineService {
                 .costPerMonth(medicine.getCostPerMonth()).expiryDate(medicine.getExpiryDate())
                 .manufactureDate(medicine.getManufactureDate()).productCode(medicine.getProductCode())
                 .totalStock(medicine.getTotalStock()).build();
+
+    }
+
+    public void updateMedicine(UpdateMedicineRequest req) throws BadRequestException {
+
+        final Medicine oldMedicine = medicineRepository.findById(req.getId())
+                .orElseThrow(() -> new BadRequestException(
+                        "Medicine with product title " + req.getProductTitle() + " not found"));
+
+        if (req.getCompanyName() != oldMedicine.getCompany().getCompanyName()) {
+            final Company company = companyRepository.findByCompanyName(req.getCompanyName())
+                    .orElseThrow(
+                            () -> new BadRequestException("Company with name " + req.getCompanyName() + " not found"));
+            oldMedicine.setCompany(company);
+        }
+
+        if (req.getProductType() != oldMedicine.getMedicineType().getCategoryName()) {
+            final MedicineType medType = medicineTypeRepository.findByCategoryName(req.getProductType())
+                    .orElseThrow(() -> new BadRequestException("Medicine type " + req.getProductType() + " not found"));
+            oldMedicine.setMedicineType(medType);
+        }
+
+        oldMedicine.setProductTitle(req.getProductTitle());
+        oldMedicine.setDescription(req.getDescription());
+        oldMedicine.setCostPerMonth(req.getCostPerMonth());
+        oldMedicine.setExpiryDate(req.getExpiryDate());
+        oldMedicine.setManufactureDate(req.getManufactureDate());
+        oldMedicine.setProductCode(req.getProductCode());
+        oldMedicine.setTotalStock(req.getTotalStock());
+
+        medicineRepository.save(oldMedicine);
+
+    }
+
+    public void deleteMedicine(int id) throws BadRequestException {
+
+        medicineRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException("Medicine with id " + id + " not found"));
+
+        medicineRepository.deleteById(id);
 
     }
 }

@@ -1,5 +1,6 @@
 package com.chapp.med_ease.auth;
 
+import com.chapp.med_ease.exception.exceptions.BadRequestException;
 import com.chapp.med_ease.exception.exceptions.NotFoundException;
 
 import jakarta.validation.Valid;
@@ -13,9 +14,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.http.HttpStatus;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/auth")
 public class AuthController {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
@@ -41,4 +46,13 @@ public class AuthController {
             throw e;
         }
     }
+
+    @PostMapping("/register")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void registerUser(@Valid @RequestBody RegisterRequest req) throws BadRequestException {
+
+        authService.register(req);
+
+    }
+
 }

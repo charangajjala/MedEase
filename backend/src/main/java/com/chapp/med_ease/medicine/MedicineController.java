@@ -8,6 +8,7 @@ import com.chapp.med_ease.exception.exceptions.BadRequestException;
 import com.chapp.med_ease.medicine.medicine_dto.MedicineRequest;
 import com.chapp.med_ease.medicine.medicine_dto.MedicineResponse;
 import com.chapp.med_ease.medicine.medicine_dto.MedicinesResponse;
+import com.chapp.med_ease.medicine.medicine_dto.UpdateMedicineRequest;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequiredArgsConstructor
@@ -49,6 +52,20 @@ public class MedicineController {
         MedicineResponse res = medicineService.getMedicine(id);
 
         return res;
+    }
+
+    @PutMapping("medicine")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateMedicine(@Valid @RequestBody UpdateMedicineRequest req) throws BadRequestException {
+        medicineService.updateMedicine(req);
+
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteMedicine(@PathVariable int id) throws BadRequestException {
+        medicineService.deleteMedicine(id);
+
     }
 
 }
