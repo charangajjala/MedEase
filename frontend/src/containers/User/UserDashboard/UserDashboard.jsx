@@ -1,9 +1,10 @@
-import { Header, Footer, CategoryCard } from "../../../userComponents";
+import { Header, Footer, CategoryCard, Navbar } from "../../../userComponents";
 
 const UserDashboard = () => {
   return (
     <>
       <Header />
+      <Navbar />
       <div className="home">
         <CategoryCard />
         <CategoryCard />

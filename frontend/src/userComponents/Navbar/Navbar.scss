@@ -1,0 +1,68 @@
+@import "../../styles/colors/colors.scss";
+@import "../../styles/fonts/fonts.scss";
+@import "../../styles/mixins/userMixins.scss";
+
+.navbar-container {
+  @include navbar-style;
+  justify-content: space-between;
+
+  &__location {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    color: $text-color;
+    gap: 1em;
+    
+    &-button {
+      @include button-style;
+    }
+
+    &-text {
+      display: grid;
+      grid-template-rows: auto auto;
+      @include input-style;
+      padding: 5px;
+      
+      span {
+        font-size: 10px; 
+        line-height: normal; 
+      }
+    }
+  }
+
+  &__search {
+    display: flex;
+    align-items: center;
+    flex-grow: 0.5;
+    gap: 1em;
+
+    &__cat-search {
+      @include input-style;
+    }
+
+    input[type="text"] {
+      @include input-style;
+    }
+
+    &-button {
+      @include button-style;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+
+    button {
+      @include button-style;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-container {
+    flex-direction: column;
+    align-items: start;
+  }
+}

@@ -88,6 +88,8 @@ const Login = () => {
       setAuth({ email, password, accessToken, refreshToken });
 
       // navigate to dashboard based on role
+      // Modify the default routing to /admin/dashboard if logged in as per the role
+      // Adding it here might be redundant
       switch (role) {
         case "admin":
           dispatch({ type: "LOGGED_IN" });
