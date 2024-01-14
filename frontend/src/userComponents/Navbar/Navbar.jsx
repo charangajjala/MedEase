@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
+
   return (
     <nav className="navbar-container">
       <div className="navbar-container__location">
@@ -20,7 +21,11 @@ const Navbar = () => {
         </div>
       </div>
       <div className="navbar-container__search">
-        <select id="categories" name="Categories" className="navbar-container__search__cat-search">
+        <select
+          id="categories"
+          name="Categories"
+          className="navbar-container__search__cat-search"
+        >
           <option value="All Categories">All Categories</option>
         </select>
         <input type="text" placeholder="Search here..." />

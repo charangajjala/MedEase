@@ -10,20 +10,35 @@
     display: flex;
     background-color: $white;
     justify-content: space-between;
-    
+
     .info-bar {
       padding: 10px;
+    }
+
+    .active {
+      border-bottom: 3px solid $text-color;
+      font-weight: $font-weight-bold;
+      transition: border-color 0.5s ease-in-out, font-weight 0.5s ease;
+    }
+
+    &:hover {
+      cursor: pointer;
     }
   }
 
   &__slides {
     display: flex;
     transition: all 0.5s ease-in-out;
-    object-fit: cover;
+
+    .slide {
+      flex-shrink: 0;
+      width: 100%;
+      height: 30vh;
+      object-fit: cover;
+    }
   }
 
   img {
-    max-width: 100%;
     display: none;
     transition: opacity 0.5s ease-in-out;
 
