@@ -1,23 +1,34 @@
-import { faReorder } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moov from "../../assets/moov.jpg";
 import "./ProductCard.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart as farHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as fasHeart } from "@fortawesome/free-solid-svg-icons";
+import  { useState } from "react";
 
 const ProductCard = () => {
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+  };
+
   return (
     <div className="product-card">
-      <div className="product-card__like">
-        <FontAwesomeIcon icon={faReorder} />
-      </div>
       <div className="product-card__image">
-        <img src={moov} alt="product" />
+        <img src={moov} alt="Moov Fast Pain Relief Spray" />
+        <button className="product-card__favorite" onClick={toggleFavorite}>
+          <FontAwesomeIcon icon={isFavorite ? fasHeart : farHeart} />
+        </button>
       </div>
       <div className="product-card__content">
         <div className="product-card__content__title">
-          <h3>Moov 55g</h3>
+          <h3>Moov 55GM SPRAY</h3>
+          <span className="product-card__content__weight">55g</span>
         </div>
         <div className="product-card__content__price">
-          <p>₹199.00 <span className="price-discount">Save 20%</span></p>
+          <p className="product-card__content__actual-price">Rs. 249.00</p>
+          <p className="product-card__content__discounted-price">Rs. 199.00</p>
+          <p className="product-card__content__save">Save up to 20 %!</p>
         </div>
         <div className="product-card__content__button">
           <button>Add to Cart</button>
