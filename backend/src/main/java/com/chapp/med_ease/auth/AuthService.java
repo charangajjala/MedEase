@@ -1,14 +1,23 @@
 package com.chapp.med_ease.auth;
 
+import com.chapp.med_ease.exception.exceptions.BadRequestException;
 import com.chapp.med_ease.exception.exceptions.NotFoundException;
 import com.chapp.med_ease.jwt.JwtService;
+import com.chapp.med_ease.user.Role;
+import com.chapp.med_ease.user.User;
 import com.chapp.med_ease.user.UserRepository;
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,6 +29,7 @@ public class AuthService {
     private final AuthenticationManager authManager;
     private final JwtService jwtService;
     private final UserRepository userRepo;
+    private final PasswordEncoder passwordEncoder;
 
     public LoginResponse login(LoginRequest req) throws NotFoundException {
         logger.info("Attempting login for user: {}", req.getEmail());
@@ -27,7 +37,8 @@ public class AuthService {
         final UserDetails userDetails = userRepo.findByEmail(req.getEmail())
                 .orElseThrow(() -> new NotFoundException("User not found: " + req.getEmail()));
 
-        final UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(req.getEmail(), req.getPassword());
+        final UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(req.getEmail(),
+                req.getPassword());
 
         try {
             authManager.authenticate(authToken);
@@ -38,13 +49,40 @@ public class AuthService {
 
         final String accessToken = jwtService.generateToken(userDetails);
         final String refreshToken = jwtService.generateRefreshToken(userDetails);
+        final User user = (User) userDetails;
+        final Role role = user.getRole();
 
         logger.info("Login successful for user: {}", req.getEmail());
 
         return LoginResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
+                .role(role)
                 .build();
+    }
+
+    public void register(RegisterRequest req) throws BadRequestException {
+
+        final String email = req.getEmail();
+        final String password = req.getPassword();
+
+        final Optional<User> user = userRepo.findByEmail(email);
+
+        if (user.isPresent()) {
+            throw new BadRequestException("User already exists with email: " + email);
+        }
+
+        final String encryptedPassword = passwordEncoder.encode(password);
+
+        final User newUser = User.builder()
+                .email(email)
+                .password(encryptedPassword)
+                .username(req.getUsername())
+                .role(Role.USER)
+                .build();
+
+        userRepo.save(newUser);
+
     }
 
 }

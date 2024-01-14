@@ -20,7 +20,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableMethodSecurity
 public class SecurityConfig {
 
-        private static final String[] WHITE_LIST_URL = { "/login" };
+        private static final String[] WHITE_LIST_URL = { "/auth/login", "/auth/register" };
         private final JwtAuthFilter jwtAuthFilter;
         private final AuthenticationProvider authenticationProvider;
         private static final Logger logInfo = Logger.getLogger(SecurityConfig.class.getName());
@@ -36,13 +36,13 @@ public class SecurityConfig {
                 logInfo.info("Configuring security filter chain");
 
                 http
-                        .csrf(AbstractHttpConfigurer::disable)
-                        .authorizeHttpRequests(req -> req
-                                .requestMatchers(WHITE_LIST_URL).permitAll()
-                                .anyRequest().authenticated())
-                        .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
-                        .authenticationProvider(authenticationProvider)
-                        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                                .csrf(AbstractHttpConfigurer::disable)
+                                .authorizeHttpRequests(req -> req
+                                                .requestMatchers(WHITE_LIST_URL).permitAll()
+                                                .anyRequest().hasAuthority("ROLE_ADMIN"))
+                                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
+                                .authenticationProvider(authenticationProvider)
+                                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
                 logInfo.info("Security filter chain configured successfully");
                 return http.build();
