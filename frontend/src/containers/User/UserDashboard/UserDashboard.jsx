@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { Header, Footer, Navbar, BannerSlider } from "../../../userComponents";
+import {
+  Header,
+  Footer,
+  Navbar,
+  BannerSlider,
+  ProductCard,
+} from "../../../userComponents";
 import "./UserDashboard.scss";
 
 const UserDashboard = () => {
@@ -39,10 +45,36 @@ const UserDashboard = () => {
             <div className="user-dashboard__content__banner">
               <BannerSlider />
             </div>
+
+            <div className="user-dashboard__content__products">
+              <div className="user-dashboard__content__products__heading">
+                <h2>Our Products</h2>
+              </div>
+              <div className="user-dashboard__content__product__cards">
+                <ProductCard />
+                <ProductCard />
+                <ProductCard />
+                <ProductCard />
+                <ProductCard />
+              </div>
+            </div>
+
+            <div className="user-dashboard__content__products">
+              <div className="user-dashboard__content__products__heading">
+                <h2>Our Products</h2>
+              </div>
+              <div className="user-dashboard__content__product__cards">
+                <ProductCard />
+                <ProductCard />
+                <ProductCard />
+                <ProductCard />
+                <ProductCard />
+              </div>
+            </div>
           </div>
         </main>
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 };

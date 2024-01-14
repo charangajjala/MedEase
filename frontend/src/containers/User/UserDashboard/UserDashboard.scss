@@ -23,7 +23,6 @@
     padding: 30px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
     justify-content: start;
 
     @media (max-width: 768px) {
@@ -32,6 +31,31 @@
   }
 
   &__content {
-    @include content-style;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    &__banner {
+      @include content-style;
+    }
+
+    &__products {
+      @include content-style;
+
+      &__heading {
+        text-decoration: underline;
+      }
+    }
+
+    &__product__cards {
+      display: flex;
+      gap: 1em;
+      overflow-x: auto;
+      padding: 1rem;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
   }
 }
