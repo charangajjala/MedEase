@@ -26,6 +26,11 @@
       justify-content: center;
     }
 
+    .error-message {
+      color: $error-color;
+      margin-bottom: 10px;
+    }
+
     &__button {
       display: flex;
       justify-content: center;

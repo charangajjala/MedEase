@@ -1,5 +1,6 @@
 const Endpoints = {
-  LOGIN: "/api/login",
+  LOGIN: "/api/auth/login",
+  REGISTER: "/api/auth/register",
 
   // Product Related URLs
   PRODUCT_REPORTS_URL: "/api/medicine",
@@ -24,7 +25,7 @@ const Endpoints = {
   ORDER_REPORTS_URL: "/api/orders",
 
   // Login
-  LOGIN_URL: "/api/login",
+  LOGIN_URL: "/api/auth/login",
   LOGOUT_URL: "/api/logout",
 };
 

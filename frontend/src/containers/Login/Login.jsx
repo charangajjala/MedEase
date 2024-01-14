@@ -91,12 +91,12 @@ const Login = () => {
       // Modify the default routing to /admin/dashboard if logged in as per the role
       // Adding it here might be redundant
       switch (role) {
-        case "admin":
+        case "ADMIN":
           dispatch({ type: "LOGGED_IN" });
           console.log("Login: Navigating to dashboard");
           navigate("/admin/dashboard");
           break;
-        case "user":
+        case "USER":
           dispatch({ type: "LOGGED_IN" });
           console.log("Login: Navigating to dashboard");
           navigate("/dashboard");
