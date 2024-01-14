@@ -59,6 +59,8 @@ const MedicineForm = ({ button_name, productData }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [sucessMessage, setSucessMessage] = useState("");
 
+  const id = productData?.id;
+
   useEffect(() => {
     if (productData) {
       setFormIsValid(true);
@@ -143,6 +145,7 @@ const MedicineForm = ({ button_name, productData }) => {
     };
 
     const fetchCompanies = async () => {
+      console.log(state);
       try {
         const response = await axiosPrivate.get(endpoints.COMPANY_REPORTS_URL, {
           signal,
@@ -191,8 +194,8 @@ const MedicineForm = ({ button_name, productData }) => {
     if (button_name === "Update") {
       try {
         const productAddStatus = await axiosPrivate.put(
-          endpoints.UPDATE_MEDICINE_URL.replace("{id}", productData.id),
-          state
+          endpoints.UPDATE_PRODUCTS_URL,
+          { ...state, id }
         );
         if (productAddStatus.status === 200) {
           setFormIsValid(false);

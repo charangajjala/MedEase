@@ -4,6 +4,7 @@ const Endpoints = {
 
   // Product Related URLs
   PRODUCT_REPORTS_URL: "/api/medicine",
+  UPDATE_PRODUCTS_URL: "/api/medicine",
 
   // Company Related URLs
   COMPANY_REPORTS_URL: "/api/company",
