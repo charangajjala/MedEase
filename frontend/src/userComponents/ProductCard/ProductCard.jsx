@@ -28,7 +28,7 @@ const ProductCard = () => {
         <div className="product-card__content__price">
           <p className="product-card__content__actual-price">Rs. 249.00</p>
           <p className="product-card__content__discounted-price">Rs. 199.00</p>
-          <p className="product-card__content__save">Save up to 20 %!</p>
+          <p className="product-card__content__save">Save up to 20% !</p>
         </div>
         <div className="product-card__content__button">
           <button>Add to Cart</button>

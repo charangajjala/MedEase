@@ -5,6 +5,7 @@
 .navbar-container {
   @include navbar-style;
   justify-content: space-between;
+  flex-wrap: wrap;
 
   &__location {
     display: grid;
@@ -12,7 +13,7 @@
     align-items: center;
     color: $text-color;
     gap: 1em;
-    
+
     &-button {
       @include button-style;
     }
@@ -21,11 +22,11 @@
       display: grid;
       grid-template-rows: auto auto;
       @include input-style;
-      padding: 5px;
-      
+      padding: 0.3rem;
+
       span {
-        font-size: 10px; 
-        line-height: normal; 
+        font-size: clamp(0.625rem, 1vw, 0.875rem);
+        line-height: normal;
       }
     }
   }
