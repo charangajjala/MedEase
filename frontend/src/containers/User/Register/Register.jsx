@@ -44,6 +44,11 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!username || !email || !password || !confirmPassword) {
+      dispatch({ type: "SET_ERR_MSG", payload: "Please fill in all fields." });
+      return;
+    }
+
     if (password !== confirmPassword) {
       dispatch({ type: "SET_ERR_MSG", payload: "Passwords do not match!" });
       console.log("Passwords do not match!");
@@ -125,11 +130,11 @@ const Register = () => {
               autoComplete="off"
             />
           </form>
-          {errMsg && <span className="error-message">{errMsg}</span>}
           <div className="register-layout__content__button">
             <Button type="submit" name="Register" onClick={handleSubmit} />
           </div>
         </div>
+        {errMsg && <span className="error-message">{errMsg}</span>}
       </div>
       <Footer />
     </>

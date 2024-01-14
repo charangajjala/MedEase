@@ -61,6 +61,7 @@ const MedicineForm = ({ button_name, productData }) => {
 
   useEffect(() => {
     if (productData) {
+      setFormIsValid(true);
       if (productTypes.length && productData.productType) {
         const productType = productTypes.find(
           (object) => object.label === productData.productType
@@ -188,7 +189,18 @@ const MedicineForm = ({ button_name, productData }) => {
     }
 
     if (button_name === "Update") {
-      console.log("Update");
+      try {
+        const productAddStatus = await axiosPrivate.put(
+          endpoints.UPDATE_MEDICINE_URL.replace("{id}", productData.id),
+          state
+        );
+        if (productAddStatus.status === 200) {
+          setFormIsValid(false);
+          setSucessMessage("Product updated successfully");
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -218,7 +230,7 @@ const MedicineForm = ({ button_name, productData }) => {
         label="Select Product Type"
         id="product-type"
         name="product-type"
-        disabled={button_name === "Update" ? true : false}
+        // disabled={button_name === "Update" ? true : false}
         options={productTypes}
         value={
           productTypes.find((object) => {
@@ -247,7 +259,7 @@ const MedicineForm = ({ button_name, productData }) => {
       <FormInput
         label="Product Code"
         type="text"
-        disabled={button_name === "Update" ? true : false}
+        // disabled={button_name === "Update" ? true : false}
         value={state.productCode}
         id="medicine-expiry"
         name="medicine-expiry"
@@ -260,7 +272,7 @@ const MedicineForm = ({ button_name, productData }) => {
       <FormInput
         label="Product Title"
         type="text"
-        disabled={button_name === "Update" ? true : false}
+        // disabled={button_name === "Update" ? true : false}
         value={state.productTitle}
         id="product-title"
         autoComplete="off"
@@ -273,7 +285,7 @@ const MedicineForm = ({ button_name, productData }) => {
       <FormInput
         label="Total Stock"
         type="text"
-        disabled={button_name === "Update" ? true : false}
+        // disabled={button_name === "Update" ? true : false}
         value={String(state.totalStock)}
         id="total-stock"
         name="total-stock"
@@ -285,7 +297,7 @@ const MedicineForm = ({ button_name, productData }) => {
       <SelectField
         label="Select Company Name"
         id="company-name"
-        disabled={button_name === "Update" ? true : false}
+        // disabled={button_name === "Update" ? true : false}
         value={
           companyNames.find((object) => {
             return object.value === state.companyName;
@@ -314,7 +326,7 @@ const MedicineForm = ({ button_name, productData }) => {
       <FormInput
         label="Cost Per Month"
         type="number"
-        disabled={button_name === "Update" ? true : false}
+        // disabled={button_name === "Update" ? true : false}
         value={String(state.costPerMonth)}
         id="cost-per-month"
         name="cost-per-month"
@@ -326,7 +338,7 @@ const MedicineForm = ({ button_name, productData }) => {
       <FormInput
         label="Manufacture Date"
         type="date"
-        disabled={button_name === "Update" ? true : false}
+        // disabled={button_name === "Update" ? true : false}
         value={state.manufactureDate}
         id="manufacture-date"
         name="manufacture-date"
@@ -338,7 +350,7 @@ const MedicineForm = ({ button_name, productData }) => {
       <FormInput
         label="Expiry Date"
         type="date"
-        disabled={button_name === "Update" ? true : false}
+        // disabled={button_name === "Update" ? true : false}
         value={state.expiryDate}
         id="expiry-date"
         name="expiry-date"
@@ -351,7 +363,7 @@ const MedicineForm = ({ button_name, productData }) => {
       <div className="full-width">
         <Textarea
           label="Description"
-          disabled={button_name === "Update" ? true : false}
+          // disabled={button_name === "Update" ? true : false}
           value={state.description}
           id="medicine-description"
           name="medicine-description"
@@ -361,12 +373,12 @@ const MedicineForm = ({ button_name, productData }) => {
           required={true}
         />
       </div>
-      {formIsValid && button_name !== "Update" && (
+      {formIsValid && (
         <div className="form-button" onClick={handleFormSubmit}>
           <button type="submit">{button_name}</button>
         </div>
       )}
-      {sucessMessage && button_name !== "Update" && (
+      {sucessMessage && (
         <>
           <div className="form-success-message">
             <p>{sucessMessage}</p>

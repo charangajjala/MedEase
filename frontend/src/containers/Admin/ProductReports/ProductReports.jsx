@@ -71,6 +71,10 @@ const ProductReports = () => {
     navigate("/admin/medicineUpdate", { state: product });
   };
 
+  const handleUpdate = (product) => {
+    navigate("/admin/medicineUpdate", { state: product })
+  }
+
   if (isLoading) {
     return <Loading />;
   }
@@ -118,9 +122,15 @@ const ProductReports = () => {
                 <>
                   <button
                     className="action-button view"
+                    onClick={() => handleUpdate(product)}
+                  >
+                    Update
+                  </button>
+                  <button
+                    className="action-button view"
                     onClick={() => handleClick(product)}
                   >
-                    View
+                    Delete
                   </button>
                 </>
               )}
