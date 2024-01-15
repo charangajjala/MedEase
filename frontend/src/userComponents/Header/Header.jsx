@@ -2,10 +2,17 @@ import "./Header.scss";
 import logo from "../../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Header = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const auth = localStorage.getItem("auth");
+    const authObject = auth ? JSON.parse(auth) : null;
+    setIsLoggedIn(!!(authObject && authObject.accessToken));
+  }, []);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -24,12 +31,20 @@ const Header = () => {
           {dropdownOpen && (
             <div className="header-container__content__dropdown">
               <ul>
-                <li>
-                  <a href="/profile">Profile</a>
-                </li>
-                <li>
-                  <a href="/logout">Logout</a>
-                </li>
+                {isLoggedIn && (
+                  <li>
+                    <a href="/profile">Profile</a>
+                  </li>
+                )}
+                {isLoggedIn ? (
+                  <li>
+                    <a href="/logout">Logout</a>
+                  </li>
+                ) : (
+                  <li>
+                    <a href="/login">Login</a>
+                  </li>
+                )}
               </ul>
             </div>
           )}
