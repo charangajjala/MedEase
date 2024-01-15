@@ -14,6 +14,7 @@ import { default as UpdateCompany } from "./Admin/UpdateCompany/UpdateCompany.js
 import { default as ProductReports } from "./Admin/ProductReports/ProductReports.jsx";
 import { default as Register } from "./User/Register/Register.jsx";
 import { default as UserDashboard } from "./User/UserDashboard/UserDashboard.jsx";
+import { default as ProductDetails } from "./User/ProductDetails/ProductDetails.jsx";
 
 export {
   AdminDashboard,
@@ -32,4 +33,5 @@ export {
   ProductReports,
   Register,
   UserDashboard,
+  ProductDetails,
 };

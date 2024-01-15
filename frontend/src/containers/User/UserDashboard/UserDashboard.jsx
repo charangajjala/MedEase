@@ -5,6 +5,7 @@ import {
   Navbar,
   BannerSlider,
   ProductCard,
+  LoginBox,
 } from "../../../userComponents";
 import "./UserDashboard.scss";
 import { useRef } from "react";
@@ -13,10 +14,30 @@ const UserDashboard = () => {
   const [isNavFixed, setIsNavFixed] = useState(false);
   const [navbarHeight, setNavbarHeight] = useState(0);
   const [cartCount, setCartCount] = useState(0);
+  const [showLoginBox, setShowLoginBox] = useState(false);
+
   const navbarRef = useRef(null);
 
+  const handleLoginSucess = () => {
+    setCartCount(cartCount);
+    setShowLoginBox(false);
+  };
+
   const handleAddToCart = () => {
-    setCartCount(cartCount + 1);
+    try {
+      if (localStorage.getItem("accessToken") !== null) {
+        setCartCount(cartCount + 1);
+      } else {
+        console.log("Login to add to cart");
+        setShowLoginBox(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const toggleLoginModal = () => {
+    setShowLoginBox(!showLoginBox);
   };
 
   const handleScroll = () => {
@@ -36,7 +57,17 @@ const UserDashboard = () => {
 
   return (
     <>
-      <div className="user-dashboard">
+      {showLoginBox && (
+        <div className="dashboard-blur">
+          <LoginBox
+            onClose={toggleLoginModal}
+            onLogin={handleLoginSucess}
+            show={showLoginBox}
+          />
+        </div>
+      )}
+
+      <div className={`user-dashboard ${showLoginBox ? "is-blurred" : ""}`}>
         <div className="user-dahboard__header">
           <Header />
         </div>
@@ -64,11 +95,11 @@ const UserDashboard = () => {
                 <h2>Our Products</h2>
               </div>
               <div className="user-dashboard__content__product__cards">
-                <ProductCard onAddToCart={() => handleAddToCart()}/>
-                <ProductCard onAddToCart={() => handleAddToCart()}/>
-                <ProductCard onAddToCart={() => handleAddToCart()}/>
-                <ProductCard onAddToCart={() => handleAddToCart()}/>
-                <ProductCard onAddToCart={() => handleAddToCart()}/>
+                <ProductCard onAddToCart={handleAddToCart} />
+                <ProductCard onAddToCart={handleAddToCart} />
+                <ProductCard onAddToCart={handleAddToCart} />
+                <ProductCard onAddToCart={handleAddToCart} />
+                <ProductCard onAddToCart={handleAddToCart} />
               </div>
             </div>
 
@@ -77,14 +108,13 @@ const UserDashboard = () => {
                 <h2>Our Products</h2>
               </div>
               <div className="user-dashboard__content__product__cards">
-                <ProductCard onAddToCart={() => handleAddToCart()}/>
-                <ProductCard onAddToCart={() => handleAddToCart()}/>
-                <ProductCard onAddToCart={() => handleAddToCart()}/>
-                <ProductCard onAddToCart={() => handleAddToCart()}/>
-                <ProductCard onAddToCart={() => handleAddToCart()}/>
+                <ProductCard onAddToCart={handleAddToCart} />
+                <ProductCard onAddToCart={handleAddToCart} />
+                <ProductCard onAddToCart={handleAddToCart} />
+                <ProductCard onAddToCart={handleAddToCart} />
+                <ProductCard onAddToCart={handleAddToCart} />
               </div>
             </div>
-
           </div>
         </main>
         <Footer />
