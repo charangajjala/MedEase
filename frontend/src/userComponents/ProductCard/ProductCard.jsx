@@ -3,9 +3,10 @@ import "./ProductCard.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as farHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as fasHeart } from "@fortawesome/free-solid-svg-icons";
-import  { useState } from "react";
+import { useState } from "react";
+import PropTypes from "prop-types";
 
-const ProductCard = () => {
+const ProductCard = ({ onAddToCart }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const toggleFavorite = () => {
@@ -31,11 +32,15 @@ const ProductCard = () => {
           <p className="product-card__content__save">Save up to 20% !</p>
         </div>
         <div className="product-card__content__button">
-          <button>Add to Cart</button>
+          <button onClick={onAddToCart}>Add to Cart</button>
         </div>
       </div>
     </div>
   );
+};
+
+ProductCard.propTypes = {
+  onAddToCart: PropTypes.func,
 };
 
 export default ProductCard;

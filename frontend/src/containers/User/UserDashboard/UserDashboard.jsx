@@ -12,7 +12,12 @@ import { useRef } from "react";
 const UserDashboard = () => {
   const [isNavFixed, setIsNavFixed] = useState(false);
   const [navbarHeight, setNavbarHeight] = useState(0);
+  const [cartCount, setCartCount] = useState(0);
   const navbarRef = useRef(null);
+
+  const handleAddToCart = () => {
+    setCartCount(cartCount + 1);
+  };
 
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
@@ -43,7 +48,7 @@ const UserDashboard = () => {
               : "user-dashboard__navbar--static"
           }`}
         >
-          <Navbar />
+          <Navbar cartCount={cartCount} />
         </div>
         <main
           className="user-dashboard__main"
@@ -59,11 +64,11 @@ const UserDashboard = () => {
                 <h2>Our Products</h2>
               </div>
               <div className="user-dashboard__content__product__cards">
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
+                <ProductCard onAddToCart={() => handleAddToCart()}/>
+                <ProductCard onAddToCart={() => handleAddToCart()}/>
+                <ProductCard onAddToCart={() => handleAddToCart()}/>
+                <ProductCard onAddToCart={() => handleAddToCart()}/>
+                <ProductCard onAddToCart={() => handleAddToCart()}/>
               </div>
             </div>
 
@@ -72,13 +77,14 @@ const UserDashboard = () => {
                 <h2>Our Products</h2>
               </div>
               <div className="user-dashboard__content__product__cards">
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
+                <ProductCard onAddToCart={() => handleAddToCart()}/>
+                <ProductCard onAddToCart={() => handleAddToCart()}/>
+                <ProductCard onAddToCart={() => handleAddToCart()}/>
+                <ProductCard onAddToCart={() => handleAddToCart()}/>
+                <ProductCard onAddToCart={() => handleAddToCart()}/>
               </div>
             </div>
+
           </div>
         </main>
         <Footer />

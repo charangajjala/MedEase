@@ -6,8 +6,9 @@ import {
   faShoppingCart,
   faLocation,
 } from "@fortawesome/free-solid-svg-icons";
+import PropTypes from "prop-types";
 
-const Navbar = () => {
+const Navbar = ({cartCount}) => {
 
   return (
     <nav className="navbar-container">
@@ -39,10 +40,19 @@ const Navbar = () => {
         </button>
         <button className="navbar-container__cart-button">
           <FontAwesomeIcon icon={faShoppingCart} />
+          {cartCount > 0 && (
+            <span className="cart-count">
+              {cartCount}
+            </span>
+          )}
         </button>
       </div>
     </nav>
   );
+};
+
+Navbar.propTypes = {
+  cartCount: PropTypes.number,
 };
 
 export default Navbar;
