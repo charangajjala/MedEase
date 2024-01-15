@@ -1,5 +1,7 @@
 package com.chapp.med_ease.medicine.medicine_dto;
 
+import com.chapp.med_ease.medicine.Medicine;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,5 +32,18 @@ public class MedicineResponse {
     private String productCode;
 
     private int totalStock;
+
+    public MedicineResponse(Medicine medicine) {
+        this.id = medicine.getId();
+        this.productTitle = medicine.getProductTitle();
+        this.description = medicine.getDescription();
+        this.productType = medicine.getMedicineType().getCategoryName();
+        this.companyName = medicine.getCompany().getCompanyName();
+        this.costPerMonth = medicine.getCostPerMonth();
+        this.expiryDate = medicine.getExpiryDate();
+        this.manufactureDate = medicine.getManufactureDate();
+        this.productCode = medicine.getProductCode();
+        this.totalStock = medicine.getTotalStock();
+    }
 
 }
