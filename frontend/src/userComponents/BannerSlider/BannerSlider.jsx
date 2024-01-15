@@ -18,25 +18,27 @@ const BannerSlider = () => {
   useEffect(() => {
     const slideInterval = setInterval(() => {
       setCurrentSlide((current) => (current + 1) % slides.length);
-    }, 3000); // Change the interval time as needed
+    }, 3500);
 
     return () => clearInterval(slideInterval);
   }, []);
 
   const handleSlideClick = (index) => {
-    console.log(`Navigate to slide ${index}`);
+    setCurrentSlide(index);
   };
 
   return (
     <div className="banner-slider">
-      <div className="banner-slider__slides">
+      <div
+        className="banner-slider__slides"
+        style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+      >
         {slides.map((slide, index) => (
           <img
             key={index}
             src={slide.image}
             alt={`Slide ${index + 1}`}
-            className={`slide ${currentSlide === index ? "active" : ""}`}
-            onClick={() => handleSlideClick(index)}
+            className="slide"
           />
         ))}
       </div>
@@ -45,6 +47,7 @@ const BannerSlider = () => {
           <div
             key={index}
             className={`info-bar ${currentSlide === index ? "active" : ""}`}
+            onClick={() => handleSlideClick(index)}
           >
             {slide.info}
           </div>

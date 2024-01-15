@@ -13,7 +13,7 @@
     z-index: 100;
     width: 100%;
     padding: 30px;
-    transition: all 0.5s ease-in-out;
+    transition: all 0.8s ease-in-out;
   }
 
   &__main {
@@ -41,6 +41,10 @@
 
     &__products {
       @include content-style;
+
+      &:hover {
+        cursor: pointer;
+      }
 
       &__heading {
         text-decoration: underline;
