@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/medicine_type")
-public class MedicineTypeController {
+@RequestMapping("/admin/medicine_type")
+public class AdminMedicineTypeController {
 
-    private final MedicineTypeService medicineTypeService;
+    private final AdminMedicineTypeService medicineTypeService;
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)

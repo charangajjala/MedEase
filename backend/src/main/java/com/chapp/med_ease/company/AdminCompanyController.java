@@ -24,10 +24,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/company")
-public class CompanyController {
+@RequestMapping("/admin/company")
+public class AdminCompanyController {
 
-    private final CompanyService companyService;
+    private final AdminCompanyService companyService;
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
