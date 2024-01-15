@@ -7,9 +7,12 @@ import {
   ProductCard,
 } from "../../../userComponents";
 import "./UserDashboard.scss";
+import { useRef } from "react";
 
 const UserDashboard = () => {
   const [isNavFixed, setIsNavFixed] = useState(false);
+  const [navbarHeight, setNavbarHeight] = useState(0);
+  const navbarRef = useRef(null);
 
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
@@ -19,6 +22,7 @@ const UserDashboard = () => {
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
+    setNavbarHeight(navbarRef.current.clientHeight);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -32,6 +36,7 @@ const UserDashboard = () => {
           <Header />
         </div>
         <div
+          ref={navbarRef}
           className={`user-dashboard__navbar ${
             isNavFixed
               ? "user-dashboard__navbar--fixed"
@@ -40,7 +45,10 @@ const UserDashboard = () => {
         >
           <Navbar />
         </div>
-        <main className="user-dashboard__main">
+        <main
+          className="user-dashboard__main"
+          style={{ paddingTop: isNavFixed ? `${navbarHeight}px` : "0" }}
+        >
           <div className="user-dashboard__content">
             <div className="user-dashboard__content__banner">
               <BannerSlider />

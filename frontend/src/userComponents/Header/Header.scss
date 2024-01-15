@@ -13,11 +13,52 @@
   &__content__profile {
     font-size: $font-size-medium;
     font-weight: $font-weight-bold;
+
+    button {
+      @include button-style;
+    }
   }
 
   &__content__logo {
     img {
       @include image-style;
+    }
+  }
+}
+
+.header-container__content__dropdown {
+  position: absolute;
+  top: 10; 
+  right: 0; 
+  background-color: $white;
+  border: 1px solid $form-input-border;
+  border-radius: 4px;
+  width: 150px;
+  z-index: 1000;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      padding: 8px 12px;
+      border-bottom: 1px solid #ddd;
+
+      &:hover {
+        background-color: #f6f6f6; 
+      }
+
+      &:last-child {
+        border-bottom: none; 
+      }
+
+      a {
+        text-decoration: none;
+        color: black; 
+        display: block; 
+        
+      }
     }
   }
 }

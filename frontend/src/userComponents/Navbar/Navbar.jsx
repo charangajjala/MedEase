@@ -17,7 +17,7 @@ const Navbar = () => {
         </button>
         <div className="navbar-container__location-text">
           <span>19-4-3A/7, STV Nagar</span>
-          <span>Venkata Reddy Colony Tirupati</span>
+          <span>Venkat Reddy Colony Tirupati</span>
         </div>
       </div>
       <div className="navbar-container__search">
