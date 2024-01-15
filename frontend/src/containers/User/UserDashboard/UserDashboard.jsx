@@ -19,13 +19,16 @@ const UserDashboard = () => {
   const navbarRef = useRef(null);
 
   const handleLoginSucess = () => {
-    setCartCount(cartCount);
     setShowLoginBox(false);
+    console.log("Login Success");
   };
 
   const handleAddToCart = () => {
     try {
-      if (localStorage.getItem("accessToken") !== null) {
+      console.log("Add to cart function");
+      const auth = JSON.parse(localStorage.getItem("auth"));
+      if (auth.accessToken !== null) {
+        console.log("You have access");
         setCartCount(cartCount + 1);
       } else {
         console.log("Login to add to cart");
