@@ -9,6 +9,7 @@ import {
 } from "../../../userComponents";
 import "./UserDashboard.scss";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 const UserDashboard = () => {
   const [isNavFixed, setIsNavFixed] = useState(false);
@@ -17,6 +18,11 @@ const UserDashboard = () => {
   const [showLoginBox, setShowLoginBox] = useState(false);
 
   const navbarRef = useRef(null);
+  const navigate = useNavigate();
+
+  const handleNavigation = () => {
+    navigate("/product", { state: { id: 1 } });
+  };
 
   const handleLoginSucess = () => {
     setShowLoginBox(false);
@@ -98,7 +104,7 @@ const UserDashboard = () => {
                 <h2>Our Products</h2>
               </div>
               <div className="user-dashboard__content__product__cards">
-                <ProductCard onAddToCart={handleAddToCart} />
+                <ProductCard onAddToCart={handleAddToCart} onClick={handleNavigation}/>
                 <ProductCard onAddToCart={handleAddToCart} />
                 <ProductCard onAddToCart={handleAddToCart} />
                 <ProductCard onAddToCart={handleAddToCart} />

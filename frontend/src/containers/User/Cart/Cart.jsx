@@ -2,8 +2,20 @@ import "./Cart.scss";
 import { Header, Footer, CartItem } from "../../../userComponents";
 import cartItems from "../../../constants/cartItems";
 import { Button } from "../../../components";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+    // navigate("/checkout");
+    console.log("Checkout");
+  };
+
+  const handleContinueShopping = () => {
+    navigate("/dashboard");
+  };
+
   return (
     <div className="cart">
       <div className="cart__header">
@@ -38,11 +50,15 @@ const Cart = () => {
               <span>$ 80</span>
             </div>
             <div className="cart__content-right__summary__checkout">
-              <Button name="Checkout" />
-              <Button name="Continue Shopping" />
+              <Button name="Checkout" onClick={handleCheckout} />
+              <Button
+                name="Continue Shopping"
+                onClick={handleContinueShopping}
+              />
             </div>
           </div>
           <div className="cart__content-right__others">
+            {/* add this if necessary else just leave it */}
           </div>
         </div>
       </main>

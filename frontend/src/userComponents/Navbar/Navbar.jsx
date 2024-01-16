@@ -33,7 +33,11 @@ const Navbar = ({ cartCount }) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log(category, searchContent);
+    const queryParams = new URLSearchParams();
+    queryParams.append("category", category);
+    queryParams.append("searchContent", searchContent);
+    console.log(queryParams.toString());
+    navigate(`/search?${queryParams.toString()}`);
   };
 
   return (
