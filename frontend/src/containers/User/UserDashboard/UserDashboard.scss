@@ -24,7 +24,6 @@
     display: flex;
     flex-direction: column;
     justify-content: start;
-    transition: padding-top 0.8s ease-in-out;
 
     @media (max-width: 768px) {
       width: calc(100vw - 15vw);

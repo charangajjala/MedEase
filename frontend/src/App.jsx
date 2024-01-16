@@ -17,6 +17,7 @@ import {
   UpdateMedicine,
   Register,
   UserDashboard,
+  Cart,
 } from "./containers/index.js";
 import WithAuth from "./utils/WithAuth.jsx";
 import { Invoice } from "./components/index.js";
@@ -36,6 +37,7 @@ const AddCompanyWithAuth = WithAuth(AddCompany);
 const UpdateCompanyWithAuth = WithAuth(UpdateCompany);
 const AddCategoryWithAuth = WithAuth(AddCategory);
 const InvoiceWithAuth = WithAuth(Invoice);
+const CartWithAuth = WithAuth(Cart);
 
 function App() {
   return (
@@ -45,6 +47,7 @@ function App() {
         <Route path="/logout" element={<Logout />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<UserDashboard />} />
+        <Route path="/cart" element={<CartWithAuth />} />
         <Route path="/admin/dashboard" element={<AdminDashboardWithAuth />} />
         <Route path="/admin/medicine" element={<AddMedicineWithAuth />} />
         <Route path="/admin/medicineUpdate" element={<UpdateMedicineWithAuth />} />

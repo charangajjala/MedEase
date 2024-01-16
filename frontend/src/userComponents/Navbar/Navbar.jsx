@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import { useReducer } from "react";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   category: "All Categories",
@@ -28,6 +29,7 @@ function reducer(state, action) {
 const Navbar = ({ cartCount }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { category, searchContent } = state;
+  const navigate = useNavigate();
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -76,7 +78,12 @@ const Navbar = ({ cartCount }) => {
         <button className="navbar-container__notification-button">
           <FontAwesomeIcon icon={faBell} />
         </button>
-        <button className="navbar-container__cart-button">
+        <button
+          className="navbar-container__cart-button"
+          onClick={() => {
+            navigate("/cart");
+          }}
+        >
           <FontAwesomeIcon icon={faShoppingCart} />
           {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
         </button>

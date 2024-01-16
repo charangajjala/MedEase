@@ -66,3 +66,13 @@
   box-shadow: 0 2px 4px rgba($black, 0.1);
   margin: 10px 0;
 }
+
+@mixin main-style {
+  width: 100%;
+  background-color: $body-bg;
+  color: $text-light;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}

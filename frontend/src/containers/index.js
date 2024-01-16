@@ -15,6 +15,7 @@ import { default as ProductReports } from "./Admin/ProductReports/ProductReports
 import { default as Register } from "./User/Register/Register.jsx";
 import { default as UserDashboard } from "./User/UserDashboard/UserDashboard.jsx";
 import { default as ProductDetails } from "./User/ProductDetails/ProductDetails.jsx";
+import { default as Cart } from "./User/Cart/Cart.jsx";
 
 export {
   AdminDashboard,
@@ -34,4 +35,5 @@ export {
   Register,
   UserDashboard,
   ProductDetails,
+  Cart,
 };
