@@ -1,6 +1,7 @@
 import "./Cart.scss";
 import { Header, Footer, CartItem } from "../../../userComponents";
 import cartItems from "../../../constants/cartItems";
+import { Button } from "../../../components";
 
 const Cart = () => {
   return (
@@ -24,9 +25,24 @@ const Cart = () => {
         <div className="cart__content-right">
           <div className="cart__content-right__summary">
             <h2>Summary</h2>
+            <div className="cart__content-right__summary__subtotal">
+              <span>Subtotal ({cartItems.length} items)</span>
+              <span>$ 100</span>
+            </div>
+            <div className="cart__content-right__summary__discount">
+              <span>Discount offered</span>
+              <p>- $ 20</p>
+            </div>
+            <div className="cart__content-right__summary__total">
+              <span>Total ({cartItems.length} items)</span>
+              <span>$ 80</span>
+            </div>
+            <div className="cart__content-right__summary__checkout">
+              <Button name="Checkout" />
+              <Button name="Continue Shopping" />
+            </div>
           </div>
           <div className="cart__content-right__others">
-            <h2>Other Items</h2>
           </div>
         </div>
       </main>
