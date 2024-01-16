@@ -12,8 +12,8 @@
 
   &__image-container {
     flex-shrink: 0;
-    width: 120px; 
-    height: 120px; 
+    width: 120px;
+    height: 120px;
     margin-right: 16px;
     border: 1px solid $table-border;
     border-radius: 4px;
@@ -48,6 +48,48 @@
       font-size: 1.125rem;
       color: $text-color;
       margin: 4px 0;
+    }
+
+    .quantity-container {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      padding: 5px;
+      border-radius: 8px;
+
+      .quantity-div {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        border: 1px solid $table-border;
+        padding: 3px;
+        border-radius: 10px;
+
+        p {
+          font-size: 0.875rem;
+          color: $text-color;
+        }
+      }
+
+      button {
+        @include button-style;
+        padding: inherit
+      }
+
+      .quantity-selector {
+        border: none;
+        padding: 3px;
+        background-color: white;
+
+        &:focus {
+          outline: none;
+          border-color: $black;
+        }
+
+        option {
+          padding: 5px;
+        }
+      }
     }
   }
 
