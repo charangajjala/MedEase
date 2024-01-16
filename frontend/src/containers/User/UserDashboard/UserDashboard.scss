@@ -43,10 +43,6 @@
     &__products {
       @include content-style;
 
-      &:hover {
-        cursor: pointer;
-      }
-
       &__heading {
         text-decoration: underline;
       }

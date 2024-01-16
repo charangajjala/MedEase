@@ -17,7 +17,6 @@ const UserDashboard = () => {
   const [showLoginBox, setShowLoginBox] = useState(false);
 
   const navbarRef = useRef(null);
-  const auth = JSON.parse(localStorage.getItem("auth"));
 
   const handleLoginSucess = () => {
     setShowLoginBox(false);
@@ -26,7 +25,8 @@ const UserDashboard = () => {
 
   const handleAddToCart = () => {
     try {
-      console.log("Add to cart function");
+      const auth = JSON.parse(localStorage.getItem("auth"));
+      console.log("Add to cart function", auth);
       if (auth?.accessToken) {
         console.log("You have access");
         setCartCount(cartCount + 1);
