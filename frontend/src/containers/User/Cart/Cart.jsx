@@ -1,7 +1,6 @@
 import "./Cart.scss";
-import { Header, Footer } from "../../../userComponents";
+import { Header, Footer, CartItem } from "../../../userComponents";
 import cartItems from "../../../constants/cartItems";
-import image from "../../../assets/moov.jpg";
 
 const Cart = () => {
   return (
@@ -17,17 +16,7 @@ const Cart = () => {
           </div>
           <div className="cart__content-left__items">
             {cartItems.map((item, index) => (
-              <div key={index} className="cart__content-left__items__item">
-                <div className="cart__content-left__items__item__image">
-                  <img src={image} alt="product" />
-                </div>
-                <div className="cart__content-left__items__item__details">
-                  <h3>{item.product.productName}</h3>
-                  <h3>{item.product.pricePerUnit}</h3>
-                  <h3>{item.product.totalUnits}</h3>
-                  <h3>{item.totalCost}</h3>
-                </div>
-              </div>
+              <CartItem key={index} item={item} />
             ))}
           </div>
         </div>
