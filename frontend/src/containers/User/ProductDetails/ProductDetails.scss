@@ -2,3 +2,92 @@
 @import "../../../styles/fonts/fonts.scss";
 @import "../../../styles/mixins/userMixins.scss";
 
+.product-page {
+
+  &__main {
+    @include main-style;
+    color: $text-color;
+  }
+
+  &__actions {
+    button {
+      @include button-style;
+    }
+  }
+
+  &__container {
+    display: flex;
+    max-width: 1200px;
+    margin: 2rem;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+  }
+
+  &__image-container {
+    flex: 1;
+    padding: 1rem;
+
+    &__image {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+  }
+
+  &__details {
+    flex: 2;
+    padding: 1rem;
+
+    &__title {
+      font-size: 2rem;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    &__price {
+      font-size: 1.5rem;
+      color: #e44d26;
+      margin-bottom: 1rem;
+    }
+
+    &__description {
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 1rem;
+    }
+
+    &__additional-info {
+      &__subtitle {
+        font-size: 1.25rem;
+        font-weight: bold;
+        margin-top: 2rem;
+        margin-bottom: 0.5rem;
+        color: #333;
+      }
+      &__ingredients-list {
+        list-style-type: none;
+        padding-left: 0;
+        margin-bottom: 1rem;
+
+        li {
+          padding-left: 1rem;
+          text-indent: -1rem;
+
+          &::before {
+            padding-right: 0.5rem;
+            color: #e44d26;
+          }
+        }
+      }
+
+      &__usage,
+      &__warnings {
+        margin-bottom: 1rem;
+        font-size: 1rem;
+        color: #666;
+      }
+    }
+  }
+}
