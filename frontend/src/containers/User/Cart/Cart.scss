@@ -5,7 +5,7 @@
 .cart {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   font-family: $font-family, sans-serif;
   overflow: hidden;
 
@@ -14,8 +14,8 @@
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 1em;
-    overflow: hidden;
-    height: 100%;
+    // overflow: hidden;
+    // height: 100%;
   }
 
   &__content-left {
@@ -23,7 +23,7 @@
     flex: 2;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
+    // overflow-y: auto;
 
     h2 {
       text-decoration: underline;
@@ -33,8 +33,6 @@
   .cart__content-right {
     &__summary {
       @include content-style;
-      min-height: 30%;
-      overflow-y: auto;
       padding: 16px;
 
       &__checkout {

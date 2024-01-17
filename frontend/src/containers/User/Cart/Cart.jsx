@@ -1,5 +1,5 @@
 import "./Cart.scss";
-import { Header, Footer, CartItem } from "../../../userComponents";
+import { Header, Navbar, Footer, CartItem } from "../../../userComponents";
 import cartItems from "../../../constants/cartItems";
 import { Button } from "../../../components";
 import { useNavigate } from "react-router-dom";
@@ -20,6 +20,10 @@ const Cart = () => {
     <div className="cart">
       <div className="cart__header">
         <Header />
+      </div>
+
+      <div className="cart__navbar">
+        <Navbar />
       </div>
 
       <main className="cart__main">
