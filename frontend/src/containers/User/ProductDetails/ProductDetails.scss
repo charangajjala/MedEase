@@ -202,3 +202,35 @@
     }
   }
 }
+
+.product-page__image {
+  .product-page__main-image {
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+  }
+
+  .product-page__thumbnail-container {
+    display: flex;
+    overflow-x: auto; 
+    gap: 10px;
+    padding: 10px 0;
+
+    .product-page__thumbnail {
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border 0.3s ease;
+
+      &:hover {
+        border: 2px solid #0056b3; 
+      }
+
+      &.active {
+        border: 2px solid #0056b3;
+      }
+    }
+  }
+}

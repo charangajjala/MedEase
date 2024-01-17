@@ -2,11 +2,16 @@ import { useLocation } from "react-router-dom";
 import "./ProductDetails.scss";
 import { Header, Footer, Navbar } from "../../../userComponents";
 import moov from "../../../assets/moov.jpg";
+import moov2 from "../../../assets/moov2.jpg"
+import { useState } from "react";
 
 const Productdetails = () => {
   const location = useLocation();
+  const [mainImage, setMainImage] = useState(moov);
   const { id } = location.state;
   console.log(id);
+
+  const imageGallery = [moov, moov2, moov, moov, moov];
 
   return (
     <>
@@ -23,8 +28,25 @@ const Productdetails = () => {
           <div className="grid-container">
             <div className="product-page__grid">
               {/* grid-column 1 */}
-              <div className="product-page__image">
+              {/* <div className="product-page__image">
                 <img src={moov} alt="product_image" />
+              </div> */}
+
+              <div className="product-page__image">
+                <div className="product-page__main-image">
+                  <img src={mainImage} alt="Main Product" />
+                </div>
+                <div className="product-page__thumbnail-container">
+                  {imageGallery.map((image, index) => (
+                    <img
+                      key={index}
+                      src={image}
+                      alt={`Product Thumbnail ${index + 1}`}
+                      onClick={() => setMainImage(image)}
+                      className="product-page__thumbnail"
+                    />
+                  ))}
+                </div>
               </div>
 
               {/* grid-column 2 */}
@@ -117,9 +139,7 @@ const Productdetails = () => {
             <h3 className="product__reviews-title">Reviews</h3>
             {Array.from({ length: 10 }, (_, index) => (
               <div key={index} className="product__review-item">
-                <div className="product__review-stars">
-                  ★★★★☆
-                </div>
+                <div className="product__review-stars">★★★★☆</div>
                 <p className="product__reviews-text">
                   The product is excellent, and I love using it!
                 </p>

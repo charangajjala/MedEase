@@ -4,7 +4,7 @@
 
 .admin-dashboard {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   font-family: "Roboto", sans-serif;
 
   &__main {
