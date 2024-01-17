@@ -2,6 +2,9 @@
 @import "../../../styles/fonts/fonts.scss";
 @import "../../../styles/mixins/userMixins.scss";
 
+$breakpoint-mobile: 768px;
+$breakpoint-tablet: 1024px;
+
 .product-page {
   display: flex;
   flex-direction: column;
@@ -19,6 +22,14 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
+
+    @media (max-width: $breakpoint-mobile) {
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: $breakpoint-mobile) and (max-width: $breakpoint-tablet) {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   &__grid-2 {
@@ -26,6 +37,14 @@
     grid-template-columns: 2fr 1fr;
     gap: 10px;
     height: 600px;
+
+    @media (max-width: $breakpoint-mobile) {
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: $breakpoint-mobile) and (max-width: $breakpoint-tablet) {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   &__image {
@@ -165,7 +184,7 @@
   }
 
   &__seller {
-    @include content-style; 
+    @include content-style;
   }
 
   &__seller__products {
@@ -186,19 +205,31 @@
   }
 
   .product__review-item {
-    border-bottom: 1px solid #ccc; 
+    border-bottom: 1px solid #ccc;
     padding-bottom: 0.5rem;
     margin-bottom: 0.5rem;
 
     .product__review-stars {
-      color: gold; 
-      font-size: 1rem; 
+      color: gold;
+      font-size: 1rem;
     }
 
     .product__reviews-text {
       font-size: 0.875rem;
       color: $text-color;
       margin-top: 0.25rem;
+    }
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    .product__review-item {
+      .product__review-stars {
+        font-size: 0.75rem;
+      }
+
+      .product__reviews-text {
+        font-size: 0.75rem;
+      }
     }
   }
 }
@@ -215,7 +246,7 @@
 
   .product-page__thumbnail-container {
     display: flex;
-    overflow-x: auto; 
+    overflow-x: auto;
     gap: 10px;
     padding: 10px 0;
 
@@ -225,11 +256,22 @@
       transition: border 0.3s ease;
 
       &:hover {
-        border: 2px solid #0056b3; 
+        border: 2px solid #0056b3;
       }
 
       &.active {
         border: 2px solid #0056b3;
+      }
+    }
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    .product-page__thumbnail-container {
+      gap: 5px;
+
+      .product-page__thumbnail {
+        width: 60px;
+        height: 60px;
       }
     }
   }

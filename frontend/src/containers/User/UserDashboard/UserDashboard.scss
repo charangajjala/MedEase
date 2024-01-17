@@ -4,7 +4,7 @@
 
 .user-dashboard {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   flex-direction: column;
   font-family: $font-family, sans-serif;
 
