@@ -1,5 +1,6 @@
 package com.chapp.med_ease.cart;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.chapp.med_ease.user.User;
@@ -29,7 +30,7 @@ public class Cart {
 
     @OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH })
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
     @OneToMany
@@ -38,5 +39,13 @@ public class Cart {
 
     @Column(name = "total_cost")
     private int totalCost;
+
+    public void addCartItem(CartItem cartItem) {
+        if (cartItems == null) {
+            cartItems = new ArrayList<>();
+        }
+        cartItems.add(cartItem);
+        cartItem.setCart(this);
+    }
 
 }

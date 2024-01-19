@@ -1,5 +1,7 @@
 package com.chapp.med_ease.cart;
 
+import com.chapp.med_ease.medicine.Medicine;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -18,20 +20,20 @@ import lombok.NoArgsConstructor;
 @Entity
 public class CartItem {
 
-    @Id
-    private int id;
+        @Id
+        private int id;
 
-    @OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH })
-    private int medicineId;
+        @OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+                        CascadeType.DETACH, CascadeType.REFRESH })
+        private Medicine medicine;
 
-    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH })
-    @JoinColumn(name = "cart_id", nullable = false)
-    private int cartId;
+        @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+                        CascadeType.DETACH, CascadeType.REFRESH })
+        @JoinColumn(name = "cart_id", nullable = false)
+        private Cart cart;
 
-    private int quantity;
+        private int quantity;
 
-    private int cost;
+        private int cost;
 
 }
