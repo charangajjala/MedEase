@@ -14,7 +14,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const profileLinks = [
-  { name: "My Account", icon: faUser, href: "/profile/my-account" },
+  { name: "My Account", icon: faUser, href: "/profile/" },
   { name: "Purchase History", icon: faHistory, href: "/profile/purchase-history" },
   // { name: "My Lab Orders", icon: faVial, href: "/profile/lab-orders" },
   { name: "My Prescriptions", icon: faPrescriptionBottleAlt, href: "/profile/prescriptions" },
