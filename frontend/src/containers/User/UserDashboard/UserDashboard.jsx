@@ -10,6 +10,9 @@ import {
 import "./UserDashboard.scss";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import endpoints from "../../../constants/endpoints";
+import axiosInstance from "../../../api/axios";
+// import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const UserDashboard = () => {
   const [isNavFixed, setIsNavFixed] = useState(false);
@@ -19,6 +22,20 @@ const UserDashboard = () => {
 
   const navbarRef = useRef(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const res = async () => {
+      try {
+        const response = await axiosInstance.get(endpoints.GET_PRODUCTS_URL);
+        const data = await response.data;
+        console.log(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    res();
+  }, []);
 
   const handleNavigation = () => {
     navigate("/product", { state: { id: 1 } });
@@ -104,7 +121,10 @@ const UserDashboard = () => {
                 <h2>Our Products</h2>
               </div>
               <div className="user-dashboard__content__product__cards">
-                <ProductCard onAddToCart={handleAddToCart} onClick={handleNavigation}/>
+                <ProductCard
+                  onAddToCart={handleAddToCart}
+                  onClick={handleNavigation}
+                />
                 <ProductCard onAddToCart={handleAddToCart} />
                 <ProductCard onAddToCart={handleAddToCart} />
                 <ProductCard onAddToCart={handleAddToCart} />
