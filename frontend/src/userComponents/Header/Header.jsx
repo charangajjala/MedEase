@@ -50,7 +50,7 @@ const Header = () => {
                   </li>
                 ) : (
                   <li>
-                    <a href="/login">Login</a>
+                    <a href="/">Login</a>
                   </li>
                 )}
               </ul>
