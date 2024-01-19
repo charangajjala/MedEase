@@ -1,0 +1,68 @@
+@import "../../styles/colors/colors.scss";
+@import "../../styles/fonts/fonts.scss";
+@import "../../styles/mixins/userMixins.scss";
+
+.header-container {
+  background-color: $white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  justify-self: center;
+  padding: 0 10px;
+
+  &__content__profile {
+    font-size: $font-size-medium;
+    font-weight: $font-weight-bold;
+
+    button {
+      @include button-style;
+    }
+  }
+
+  &__content__logo {
+    img {
+      @include image-style;
+    }
+
+    img:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.header-container__content__dropdown {
+  position: absolute;
+  top: 10; 
+  right: 0; 
+  background-color: $white;
+  border: 1px solid $form-input-border;
+  border-radius: 4px;
+  width: 150px;
+  z-index: 1000;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      padding: 8px 12px;
+      border-bottom: 1px solid #ddd;
+
+      &:hover {
+        background-color: #f6f6f6; 
+      }
+
+      &:last-child {
+        border-bottom: none; 
+      }
+
+      a {
+        text-decoration: none;
+        color: black; 
+        display: block; 
+        
+      }
+    }
+  }
+}

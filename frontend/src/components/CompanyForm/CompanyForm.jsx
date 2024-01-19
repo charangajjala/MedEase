@@ -5,11 +5,13 @@ import "./CompanyForm.scss";
 
 import endpoints from "../../constants/endpoints.js";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
+import { useNavigate } from "react-router-dom";
 
 const CompanyForm = ({ method, companyData }) => {
   const initialState = {
     companyName: companyData?.companyName || "",
     description: companyData?.description || "",
+    id: companyData?.id || "",
   };
 
   function reducer(state, action) {
@@ -30,6 +32,7 @@ const CompanyForm = ({ method, companyData }) => {
   const axiosPrivate = useAxiosPrivate();
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     companyNameRef.current.focus();
@@ -63,11 +66,12 @@ const CompanyForm = ({ method, companyData }) => {
         );
         if (response.status === 201) {
           setSuccessMessage("Company added successfully");
+          navigate("/admin/companies");
         } else {
           setErrorMessage("An error occurred");
         }
       } catch (err) {
-        alert("An error occurred while adding the data");
+        setErrorMessage("An Unknown Error has occured error occurred");
       }
     }
 
@@ -75,11 +79,12 @@ const CompanyForm = ({ method, companyData }) => {
       try {
         console.log(state);
         const response = await axiosPrivate.put(
-          endpoints.UPDATE_COMPANY_URL.replace("{id}", companyData.id),
+          endpoints.UPDATE_COMPANY_URL,
           state
         );
         if (response.status === 200) {
           setSuccessMessage("Company updated successfully");
+          navigate("/admin/companies");
         }
       } catch (err) {
         setErrorMessage("An error occurred");
@@ -95,6 +100,7 @@ const CompanyForm = ({ method, companyData }) => {
           type="text"
           name="companyName"
           value={state.companyName}
+          autoComplete="off"
           onChange={(e) =>
             dispatch({
               type: "SET_COMPANY_NAME",
@@ -123,9 +129,19 @@ const CompanyForm = ({ method, companyData }) => {
         {errorMessage && (
           <div className="company-form__error-message">{errorMessage}</div>
         )}
-        <button type="submit" className="add-company-form__button">
-          {method} Company
-        </button>
+        <div className="company-form__button-container">
+          <button className="company-form__button" type="submit">
+            {method} Company
+          </button>
+          <button
+            className="company-form__button"
+            onClick={() => {
+              navigate("/admin/companies");
+            }}
+          >
+            Return to Companies
+          </button>
+        </div>
       </form>
     </>
   );

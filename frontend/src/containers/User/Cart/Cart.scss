@@ -1,0 +1,114 @@
+@import "../../../styles/colors/colors.scss";
+@import "../../../styles/fonts/fonts.scss";
+@import "../../../styles/mixins/userMixins.scss";
+
+.cart {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-width: max-content;
+  font-family: $font-family, sans-serif;
+
+  &__main {
+    @include main-style;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2em; 
+    padding: 1em; 
+  }
+
+  &__content-left {
+    @include content-style;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+
+    h2 {
+      text-decoration: underline;
+      font-size: 1.8rem; 
+      margin-bottom: 25px; 
+    }
+  }
+
+  .cart__content-right {
+    &__summary {
+      @include content-style;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+
+      &__checkout {
+        button {
+          @include button-style;
+        }
+      }
+
+      h2 {
+        font-size: 1.8rem;
+        color: $text-color;
+        text-decoration: underline;
+        margin-bottom: 25px;
+      }
+
+      > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+
+        span {
+          font-size: 1.1rem;
+          color: $text-color;
+
+          &:first-child {
+            font-weight: bold;
+          }
+
+          &:last-child {
+            color: $text-color;
+          }
+        }
+      }
+
+      &__discount {
+        color: $error-color;
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+      }
+
+      &__total {
+        font-size: 1.3rem;
+        font-weight: $font-weight-bold;
+        margin-top: auto;
+        span {
+          &:last-child {
+            color: $text-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .cart {
+    &__main {
+      grid-template-columns: 1fr;
+      gap: 1em; 
+    }
+
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    .cart__content-right {
+      &__summary {
+        padding: 15px; 
+
+        h2 {
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
+}

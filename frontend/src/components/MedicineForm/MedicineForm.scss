@@ -22,7 +22,7 @@
     background-color: $button-bg;
     color: $button-text;
     cursor: pointer;
-    font-weight: 600; 
+    font-weight: 600;
     transition: all 0.3s ease-in-out;
 
     &:hover {
@@ -35,4 +35,54 @@
       box-shadow: 0 2px 8px rgba($black, 0.2);
     }
   }
+}
+
+.form-success-message {
+  color: $success-color;
+  padding: 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  border-radius: 4px;
+  border: 1px solid $success-bg-color;
+  font-size: 0.9em;
+  text-align: center;
+  justify-self: center;
+}
+
+.form-reset {
+  display: flex;
+  justify-self: center;
+  align-self: center;
+
+  button {
+    padding: 0.75em 1.5em;
+    border: none;
+    border-radius: 4px;
+    background-color: $button-bg;
+    color: $button-text;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      background-color: $button-hover;
+      box-shadow: 0 4px 12px rgba($black, 0.2);
+    }
+
+    &:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 8px rgba($black, 0.2);
+    }
+  }
+}
+
+.error {
+  color: $error-color;
+  padding: 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  border-radius: 4px;
+  border: 1px solid $error-bg-color;
+  font-size: 0.9em;
+  text-align: left;
 }

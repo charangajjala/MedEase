@@ -18,8 +18,33 @@ const WithAuth = (WrappedComponent) => {
         console.log("WithAuth: User is authenticated");
         setIsAuthenticated(true);
       } else {
-        console.log("WithAuth: User is not authenticated, navigating to login");
-        navigate("/");
+        // Version 1
+        // console.log("WithAuth: User is not authenticated, navigating to login");
+        // navigate("/");
+
+        // Version 2
+        console.log("WithAuth: User is not authenticated");
+        try {
+          if (authObj && authObj.role) {
+            switch (authObj.role) {
+              case "ADMIN":
+                navigate("/admin/dashboard");
+                break;
+              case "USER":
+                navigate("/dashboard");
+                break;
+              default:
+                navigate("/");
+                break;
+            }
+          } else {
+            console.warn("Authentication object is missing or invalid");
+            navigate("/");
+          }
+        } catch (error) {
+          console.error("An error occurred during navigation:", error);
+          navigate("/");
+        }
       }
     }, [navigate]);
 

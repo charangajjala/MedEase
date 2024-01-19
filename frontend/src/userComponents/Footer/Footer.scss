@@ -1,0 +1,17 @@
+@import "../../styles/colors/colors.scss";
+@import "../../styles/fonts/fonts.scss";
+
+.footer {
+  width: 100%;
+  padding: 10px 20px;
+  background-color: $sidebar-bg;
+  color: $text-light;
+  text-align: center;
+  bottom: 0;
+  left: 0;
+  margin-top: 0;
+  
+  &__content {
+    font-size: $font-size-small;
+  }
+}

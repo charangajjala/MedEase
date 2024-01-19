@@ -1,0 +1,41 @@
+@import "./../../styles/colors/colors.scss";
+@import "./../../styles/fonts/fonts.scss";
+@import "./../../styles/mixins/userMixins.scss";
+
+.sidebar-item {
+  display: block;
+  color: $text-color;
+  padding: 0.75rem 1rem;
+  margin: 0.5rem 0;
+  text-decoration: none;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateX(5px);
+
+    .sidebar-icon {
+      animation: icon-bounce 0.5s ease;
+    }
+  }
+
+  .sidebar-icon {
+    margin-right: 10px;
+    transition: transform 0.3s ease;
+  }
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba($sidebar-bg, 0), rgba($text-color, 0.75), rgba($sidebar-bg, 0));
+  margin: 0.5rem 0;
+}
+
+@keyframes icon-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}

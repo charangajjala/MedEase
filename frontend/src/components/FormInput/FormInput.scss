@@ -29,9 +29,31 @@
     }
   }
 
+  input:disabled,
+  select:disabled {
+    background-color: #f5f5f5;
+    color: rgb(0,0,0)
+  }
+
   textarea {
     height: 150px;
     resize: vertical;
+  }
+
+  .input-error {
+    border-color: $error-color;
+
+    &:focus {
+      border-color: darken($error-color, 20%);
+      box-shadow: 0 0 0 2px rgba($error-color, 0.2);
+    }
+  }
+
+  .error-message {
+    color: $error-color;
+    padding: 0.5em;
+    font-size: 0.9em;
+    text-align: left;
   }
 }
 

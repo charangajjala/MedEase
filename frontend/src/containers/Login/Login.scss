@@ -1,11 +1,14 @@
 @import "../../styles/colors/colors.scss";
+@import "../../styles/fonts/fonts.scss";
+@import "../../styles/mixins/userMixins.scss";
 
 .login-layout {
   background-color: $body-bg;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  min-height: 100vh;
+  animation: fadeInScale 0.8s ease-in-out both;
 
   &__container {
     display: flex;
@@ -15,13 +18,20 @@
     height: 80vh;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
+    &-left, &-right {
+      transition: transform 0.5s ease-in-out;
+    }
+
     &-left {
       flex: 1;
       padding: 20px;
       background-color: $white;
-      justify-content: center;
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      transform: translateX(-50px);
+      opacity: 0;
+      animation: slideInLeft 0.8s ease-out 0.3s forwards;
 
       h1 {
         color: $text-color;
@@ -38,6 +48,7 @@
           label {
             display: block;
             margin-bottom: 5px;
+            transition: color 0.3s ease;
           }
 
           input {
@@ -47,44 +58,32 @@
             background-color: $form-input-bg-active;
             color: $text-color;
             border-radius: 5px;
+            transition: border 0.3s ease, box-shadow 0.3s ease, background-color 0.4s ease;
 
             &:focus {
               border-color: darken($button-bg, 20%);
-              box-shadow: 0 0 0 2px rgba($button-bg, 0.2);
+              box-shadow: 0 0 8px rgba($button-bg, 0.3);
+              background-color: lighten($form-input-bg-active, 5%);
               outline: none;
             }
           }
         }
 
         button {
-          background-color: $button-bg;
-          color: $button-text;
+          @include button-style;
           padding: 12px 40px;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-          transition: background-color 0.3s ease-in-out;
-
-          &:hover {
-            background-color: $button-hover;
-          }
         }
 
         &__buttons {
           display: flex;
-          justify-content: flex-end;
+          justify-content: space-around;
           gap: 10px;
         }
       }
 
-      .error-message {
-        color: $error-color;
+      .error-message, .success-message {
         margin-bottom: 10px;
-      }
-
-      .success-message {
-        color: $success-color;
-        margin-bottom: 10px;
+        animation: fadeIn 0.5s ease-in-out;
       }
     }
 
@@ -93,6 +92,11 @@
       padding: 20px;
       background: $white;
       display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translateX(50px);
+      opacity: 0;
+      animation: slideInRight 0.8s ease-out 0.3s forwards;
 
       img {
         max-width: 100%;
@@ -107,10 +111,45 @@
     &__container {
       flex-direction: column;
 
-      &-left,
-      &-right {
+      &-left, &-right {
         flex: 1;
+        transform: none;
+        animation: none;
       }
     }
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  to {
+    transform: translateX(0);
+    opacity: 1;
   }
 }

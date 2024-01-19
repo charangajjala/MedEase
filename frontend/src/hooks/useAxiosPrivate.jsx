@@ -8,13 +8,13 @@ const useAxiosPrivate = () => {
   const { auth } = useAuth();
 
   useEffect(() => {
-    console.log("Setting up interceptors");
+    console.log("useAxiosPrivate: Setting up interceptors");
 
     const requestIntercept = axiosPrivate.interceptors.request.use(
       (config) => {
         console.log("Intercepting request", config);
         if (!config.headers["Authorization"]) {
-          console.log("Adding Authorization header");
+          console.log("useAxiosPrivate: Adding Authorization header");
           config.headers["Authorization"] = `Bearer ${auth?.accessToken}`;
         }
         return config;
@@ -31,10 +31,12 @@ const useAxiosPrivate = () => {
         return response;
       },
       async (error) => {
-        console.error("Response error:", error);
+        if (error.name !== "CanceledError") {
+          console.error("Response error:", error);
+        }
         const prevRequest = error?.config;
         if (error?.response?.status === 403 && !prevRequest?.sent) {
-          console.log("Attempting token refresh");
+          console.log("useAxiosPrivate: Attempting token refresh");
           prevRequest.sent = true;
           const newAccessToken = await refresh();
           prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
@@ -46,7 +48,7 @@ const useAxiosPrivate = () => {
     );
 
     return () => {
-      console.log("Ejecting interceptors");
+      console.log("useAxiosPrivate: Ejecting interceptors");
       axiosPrivate.interceptors.request.eject(requestIntercept);
       axiosPrivate.interceptors.response.eject(responseIntercept);
     };

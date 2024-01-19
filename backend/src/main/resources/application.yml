@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/medease
     username: root
-    password: root
+    password: MMpp@1973
 
   jpa:
     show-sql: true

@@ -41,16 +41,85 @@ function reducer(state, action) {
       return { ...state, manufactureDate: action.payload };
     case "SET_DESCRIPTION":
       return { ...state, description: action.payload };
+    case "RESET_FORM":
+      return initialState;
     default:
       return state;
   }
 }
 
-const MedicineForm = ({ button_name }) => {
+const MedicineForm = ({ button_name, productData }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const axiosPrivate = useAxiosPrivate();
+
   const [productTypes, setProductTypes] = useState([]);
   const [companyNames, setCompanyNames] = useState([]);
-  const axiosPrivate = useAxiosPrivate();
+  const [formIsValid, setFormIsValid] = useState(true);
+  const [dateError, setDateError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [sucessMessage, setSucessMessage] = useState("");
+
+  const id = productData?.id;
+
+  useEffect(() => {
+    if (productData) {
+      setFormIsValid(true);
+      if (productTypes.length && productData.productType) {
+        const productType = productTypes.find(
+          (object) => object.label === productData.productType
+        );
+        if (productType) {
+          dispatch({
+            type: "SET_PRODUCT_TYPE",
+            payload: productType.value,
+          });
+        }
+      }
+
+      dispatch({
+        type: "SET_PRODUCT_CODE",
+        payload: productData.productCode || "",
+      });
+      dispatch({
+        type: "SET_PRODUCT_TITLE",
+        payload: productData.productTitle || "",
+      });
+      dispatch({
+        type: "SET_TOTAL_STOCK",
+        payload: productData.totalStock || "",
+      });
+
+      if (companyNames.length && productData.companyName) {
+        const companyName = companyNames.find(
+          (object) => object.label === productData.companyName
+        );
+        if (companyName) {
+          dispatch({
+            type: "SET_COMPANY_NAME",
+            payload: companyName.value,
+          });
+        }
+      }
+
+      dispatch({
+        type: "SET_COST_PER_MONTH",
+        payload: productData.costPerMonth || "",
+      });
+      dispatch({
+        type: "SET_EXPIRY_DATE",
+        payload: productData.expiryDate || "",
+      });
+      dispatch({
+        type: "SET_MANUFACTURE_DATE",
+        payload: productData.manufactureDate || "",
+      });
+      dispatch({
+        type: "SET_DESCRIPTION",
+        payload: productData.description || "",
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productData]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -76,6 +145,7 @@ const MedicineForm = ({ button_name }) => {
     };
 
     const fetchCompanies = async () => {
+      console.log(state);
       try {
         const response = await axiosPrivate.get(endpoints.COMPANY_REPORTS_URL, {
           signal,
@@ -85,6 +155,7 @@ const MedicineForm = ({ button_name }) => {
           label: item.companyName,
         }));
         if (response.status === 200) {
+          setFormIsValid(false);
           setCompanyNames(formatCompanies);
         }
       } catch (error) {
@@ -103,14 +174,58 @@ const MedicineForm = ({ button_name }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (button_name === "Submit") {
-      console.log("Add");
-    } else {
-      console.log("Update");
+      try {
+        const productAddStatus = await axiosPrivate.post(
+          endpoints.ADD_MEDICINE_URL,
+          state
+        );
+        if (productAddStatus.status === 201) {
+          setFormIsValid(false);
+          setSucessMessage("Product added successfully");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    if (button_name === "Update") {
+      try {
+        const productAddStatus = await axiosPrivate.put(
+          endpoints.UPDATE_PRODUCTS_URL,
+          { ...state, id }
+        );
+        if (productAddStatus.status === 200) {
+          setFormIsValid(false);
+          setSucessMessage("Product updated successfully");
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
+
+  useEffect(() => {
+    if (state.manufactureDate && state.expiryDate) {
+      if (state.expiryDate < state.manufactureDate) {
+        setErrorMessage("Expiry date cannot be less than manufacture date");
+        setDateError(true);
+        setFormIsValid(false);
+      } else {
+        setErrorMessage("");
+        setDateError(false);
+        setFormIsValid(true);
+      }
+    }
+
+    if (state.manufactureDate === "") {
+      setErrorMessage("Manufacture date cannot be empty");
+      setDateError(true);
+      setFormIsValid(false);
+    }
+  }, [state.manufactureDate, state.expiryDate]);
 
   return (
     <form className="form">
@@ -118,18 +233,40 @@ const MedicineForm = ({ button_name }) => {
         label="Select Product Type"
         id="product-type"
         name="product-type"
+        // disabled={button_name === "Update" ? true : false}
         options={productTypes}
-        value={state.productType}
-        onChange={(e) =>
-          dispatch({ type: "SET_PRODUCT_TYPE", payload: e.target.value })
+        value={
+          productTypes.find((object) => {
+            return object.value === state.productType;
+          })?.value
         }
+        onChange={(e) => {
+          const selectedOption = productTypes.find((object) => {
+            return object.value === e.target.value;
+          });
+          console.log(selectedOption);
+          dispatch({
+            type: "SET_PRODUCT_TYPE",
+            payload: selectedOption?.label,
+          });
+        }}
+        // The below code sends the value of the selected option above sends the label
+        // onChange={(e) => {
+        //   dispatch({
+        //     type: "SET_PRODUCT_TYPE",
+        //     payload: e.target.value,
+        //   });
+        // }}
         required={true}
       />
       <FormInput
         label="Product Code"
         type="text"
+        // disabled={button_name === "Update" ? true : false}
+        value={state.productCode}
         id="medicine-expiry"
         name="medicine-expiry"
+        autoComplete="off"
         onChange={(e) =>
           dispatch({ type: "SET_PRODUCT_CODE", payload: e.target.value })
         }
@@ -138,7 +275,10 @@ const MedicineForm = ({ button_name }) => {
       <FormInput
         label="Product Title"
         type="text"
+        // disabled={button_name === "Update" ? true : false}
+        value={state.productTitle}
         id="product-title"
+        autoComplete="off"
         name="product-title"
         onChange={(e) =>
           dispatch({ type: "SET_PRODUCT_TITLE", payload: e.target.value })
@@ -148,6 +288,8 @@ const MedicineForm = ({ button_name }) => {
       <FormInput
         label="Total Stock"
         type="text"
+        // disabled={button_name === "Update" ? true : false}
+        value={String(state.totalStock)}
         id="total-stock"
         name="total-stock"
         onChange={(e) =>
@@ -158,17 +300,37 @@ const MedicineForm = ({ button_name }) => {
       <SelectField
         label="Select Company Name"
         id="company-name"
+        // disabled={button_name === "Update" ? true : false}
+        value={
+          companyNames.find((object) => {
+            return object.value === state.companyName;
+          })?.value
+        }
         name="company-name"
         options={companyNames}
-        value={state.companyName}
-        onChange={(e) =>
-          dispatch({ type: "SET_COMPANY_NAME", payload: e.target.value })
-        }
+        onChange={(e) => {
+          const selectedOption = companyNames.find((object) => {
+            return object.value === e.target.value;
+          });
+          dispatch({
+            type: "SET_COMPANY_NAME",
+            payload: selectedOption?.label,
+          });
+        }}
+        // The below code sends the value of the selected option above sends the label
+        // onChange={(e) => {
+        //   dispatch({
+        //     type: "SET_COMPANY_NAME",
+        //     payload: e.target.value,
+        //   });
+        // }}
         required={true}
       />
       <FormInput
         label="Cost Per Month"
-        type="text"
+        type="number"
+        // disabled={button_name === "Update" ? true : false}
+        value={String(state.costPerMonth)}
         id="cost-per-month"
         name="cost-per-month"
         onChange={(e) =>
@@ -177,28 +339,35 @@ const MedicineForm = ({ button_name }) => {
         required={true}
       />
       <FormInput
-        label="Expiry Date"
+        label="Manufacture Date"
         type="date"
-        id="expiry-date"
-        name="expiry-date"
-        onChange={(e) =>
-          dispatch({ type: "SET_EXPIRY_DATE", payload: e.target.value })
-        }
+        // disabled={button_name === "Update" ? true : false}
+        value={state.manufactureDate}
+        id="manufacture-date"
+        name="manufacture-date"
+        onChange={(e) => {
+          dispatch({ type: "SET_MANUFACTURE_DATE", payload: e.target.value });
+        }}
         required={true}
       />
       <FormInput
-        label="Manufacture Date"
+        label="Expiry Date"
         type="date"
-        id="manufacture-date"
-        name="manufacture-date"
-        onChange={(e) =>
-          dispatch({ type: "SET_MANUFACTURE_DATE", payload: e.target.value })
-        }
+        // disabled={button_name === "Update" ? true : false}
+        value={state.expiryDate}
+        id="expiry-date"
+        name="expiry-date"
+        onChange={(e) => {
+          dispatch({ type: "SET_EXPIRY_DATE", payload: e.target.value });
+        }}
         required={true}
+        error={dateError ? errorMessage : ""}
       />
       <div className="full-width">
         <Textarea
           label="Description"
+          // disabled={button_name === "Update" ? true : false}
+          value={state.description}
           id="medicine-description"
           name="medicine-description"
           onChange={(e) =>
@@ -207,15 +376,37 @@ const MedicineForm = ({ button_name }) => {
           required={true}
         />
       </div>
-      <div className="form-button" onClick={handleFormSubmit}>
-        <button type="submit">{button_name}</button>
-      </div>
+      {formIsValid && (
+        <div className="form-button" onClick={handleFormSubmit}>
+          <button type="submit">{button_name}</button>
+        </div>
+      )}
+      {sucessMessage && (
+        <>
+          <div className="form-success-message">
+            <p>{sucessMessage}</p>
+          </div>
+          <div className="form-reset">
+            <button
+              onClick={() => {
+                dispatch({
+                  type: "RESET_FORM",
+                });
+                setSucessMessage("");
+              }}
+            >
+              Add Another Product
+            </button>
+          </div>
+        </>
+      )}
     </form>
   );
 };
 
 MedicineForm.propTypes = {
-  button_name: PropTypes.string.isRequired,
+  button_name: PropTypes.string,
+  productData: PropTypes.object,
 };
 
 export default MedicineForm;

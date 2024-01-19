@@ -15,7 +15,7 @@ const ReportTable = ({ data, columnHeaders, renderRowActions }) => {
         </thead>
         <tbody>
           {data.map(item => (
-            <tr key={item.id}>
+            <tr key={item.orderId || item.id}>
               {columnHeaders.map(header => (
                 <td key={header.key}>{item[header.key]}</td>
               ))}
