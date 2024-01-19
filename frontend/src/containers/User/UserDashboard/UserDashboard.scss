@@ -13,8 +13,14 @@
     z-index: 100;
     width: 100%;
     padding: 0 30px;
+    background-color: rgba($navbar-bg-color, 0.95);
     transition: all 0.5s ease-in-out;
+    box-shadow: 0 2px 5px rgba($shadow-color, 0.2);
+
+    &.scrolled {
+      background-color: $navbar-bg-color;
     }
+  }
 
   &__main {
     width: 100%;
@@ -26,24 +32,24 @@
     justify-content: start;
 
     @media (max-width: 768px) {
-      width: calc(100vw - 15vw);
+      padding: 15px;
     }
   }
 
   &__content {
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    gap: 2em;
 
-    &__banner {
+    &__banner,
+    &__products {
       @include content-style;
     }
 
     &__products {
-      @include content-style;
-
       &__heading {
         text-decoration: underline;
+        margin-bottom: 1rem;
       }
     }
 
@@ -55,6 +61,14 @@
 
       &::-webkit-scrollbar {
         display: none;
+      }
+
+      .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        &:hover {
+          transform: scale(1.05);
+          box-shadow: 0 4px 8px rgba($shadow-color, 0.3);
+        }
       }
     }
   }
@@ -76,5 +90,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgba($modal-bg-color, 0.8);
+  animation: fadeIn 0.5s ease-in-out;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

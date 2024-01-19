@@ -16,6 +16,11 @@
 
     &-button {
       @include button-style;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: lighten($text-color, 10%);
+      }
     }
 
     &-text {
@@ -37,16 +42,23 @@
     flex-grow: 0.5;
     gap: 1em;
 
-    &__cat-search {
-      @include input-style;
-    }
-
+    &__cat-search,
     input[type="text"] {
       @include input-style;
+      transition: border-color 0.3s ease;
+
+      &:focus {
+        border-color: $focus-border-color;
+      }
     }
 
     &-button {
       @include button-style;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: lighten($text-color, 10%);
+      }
     }
   }
 
@@ -58,6 +70,11 @@
     button {
       @include button-style;
       position: relative;
+      transition: transform 0.3s ease;
+
+      &:active {
+        transform: scale(0.95);
+      }
 
       .cart-count {
         position: absolute;
@@ -74,14 +91,20 @@
         align-items: center;
         font-size: 0.75em;
         line-height: 1;
+        animation: cart-bump 0.3s ease;
       }
     }
   }
 }
 
-@media (max-width: 768px) {
-  .navbar-container {
-    flex-direction: column;
-    align-items: start;
+@keyframes cart-bump {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
   }
 }
