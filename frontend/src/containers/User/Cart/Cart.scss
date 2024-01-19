@@ -6,38 +6,40 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  min-width: max-content;
   font-family: $font-family, sans-serif;
-  overflow: hidden;
 
   &__main {
     @include main-style;
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 1em;
-    // overflow: hidden;
-    // height: 100%;
   }
 
   &__content-left {
     @include content-style;
-    flex: 2;
     display: flex;
     flex-direction: column;
-    // overflow-y: auto;
+    padding: 16px; 
 
     h2 {
       text-decoration: underline;
+      font-size: 1.5rem; 
+      margin-bottom: 20px; 
     }
   }
 
   .cart__content-right {
     &__summary {
       @include content-style;
-      padding: 16px;
+      padding: 16px; 
+      display: flex;
+      flex-direction: column; 
 
       &__checkout {
         button {
           @include button-style;
+          margin-top: auto;
         }
       }
 
@@ -45,7 +47,7 @@
         font-size: 1.5rem;
         color: $text-color;
         text-decoration: underline;
-        margin-bottom: 20px;
+        margin-bottom: 20px; 
       }
 
       > div {
@@ -70,17 +72,27 @@
 
       &__discount {
         color: $error-color;
+        margin-bottom: 10px;
       }
 
       &__total {
         font-size: 1.2rem;
         font-weight: $font-weight-bold;
+        margin-top: auto; 
         span {
           &:last-child {
             color: $text-color;
           }
         }
       }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .cart {
+    &__main {
+      grid-template-columns: 1fr;
     }
   }
 }
