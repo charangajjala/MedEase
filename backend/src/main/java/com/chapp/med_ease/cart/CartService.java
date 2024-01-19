@@ -31,13 +31,15 @@ public class CartService {
         final Medicine medicine = medicineRepository.findById(req.getMedicineId())
                 .orElseThrow(() -> new BadRequestException("Medicine not found"));
 
-        final Cart cart = user.getCart();
+        Cart cart = user.getCart();
 
         if (cart == null) {
             final Cart newCart = Cart.builder()
                     .user(user)
                     .build();
             cartRepository.save(newCart);
+            cart = newCart;
+
         }
 
         final List<CartItem> cartItems = cart.getCartItems();
@@ -50,6 +52,7 @@ public class CartService {
                     .build();
             cart.addCartItem(newCartItem);
             cartRepository.save(cart);
+            cartItemRepository.save(newCartItem);
         }
 
         else {
@@ -70,6 +73,7 @@ public class CartService {
                         .build();
                 cart.addCartItem(newCartItem);
                 cartRepository.save(cart);
+                cartItemRepository.save(newCartItem);
             }
 
         }
