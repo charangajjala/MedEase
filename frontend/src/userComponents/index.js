@@ -5,6 +5,7 @@ import { default as BannerSlider } from "./BannerSlider/BannerSlider.jsx";
 import { default as ProductCard } from "./ProductCard/ProductCard.jsx";
 import { default as LoginBox } from "./LoginBox/LoginBox.jsx";
 import { default as CartItem } from "./CartItem/CartItem.jsx";
+import { default as Sidebar } from "./Sidebar/Sidebar.jsx";
 
 export {
   Header,
@@ -14,4 +15,5 @@ export {
   ProductCard,
   LoginBox,
   CartItem,
+  Sidebar,
 };

@@ -1,0 +1,22 @@
+@import "./../../styles/colors/colors.scss";
+@import "./../../styles/fonts/fonts.scss";
+@import "./../../styles/mixins/userMixins.scss";
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  color: $text-color;
+  
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    color: inherit;
+    text-decoration: none;
+    
+    .sidebar-icon {
+      margin-right: 0.5rem;
+    }
+  }
+}

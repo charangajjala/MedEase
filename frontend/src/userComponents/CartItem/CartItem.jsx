@@ -43,7 +43,7 @@ CartItem.propTypes = {
       pricePerUnit: PropTypes.string.isRequired,
       totalUnits: PropTypes.number.isRequired,
     }).isRequired,
-    mrp: PropTypes.string,
+    mrp: PropTypes.number,
     quantity: PropTypes.number.isRequired,
     totalCost: PropTypes.string.isRequired,
   }).isRequired,

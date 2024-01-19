@@ -6,6 +6,9 @@ const Endpoints = {
   PRODUCT_REPORTS_URL: "/api/admin/medicine",
   UPDATE_PRODUCTS_URL: "/api/admin/medicine",
 
+  // Cart Links
+  ADD_TO_CART_URL: "/api/cart",
+
   // Company Related URLs
   COMPANY_REPORTS_URL: "/api/admin/company",
   ADD_COMPANY_URL: "/api/admin/company",
