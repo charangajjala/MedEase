@@ -134,7 +134,7 @@ const Login = () => {
       <div className="login-layout">
         <div className="login-layout__container">
           <div className="login-layout__container-left">
-            <h1>Medical Store Login</h1>
+            <h1>Store Login</h1>
             <form className="login-layout__container-left__form">
               <div className="login-layout__container-left__form__input">
                 <FormInput
