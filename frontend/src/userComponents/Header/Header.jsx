@@ -3,10 +3,12 @@ import logo from "../../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const auth = localStorage.getItem("auth");
@@ -22,7 +24,13 @@ const Header = () => {
     <header>
       <div className="header-container">
         <div className="header-container__content__logo">
-          <img src={logo} alt="logo" />
+          <img
+            src={logo}
+            alt="logo"
+            onClick={() => {
+              navigate("/dashboard");
+            }}
+          />
         </div>
         <div className="header-container__content__profile">
           <button onClick={toggleDropdown}>
