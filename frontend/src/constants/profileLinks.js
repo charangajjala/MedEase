@@ -15,17 +15,17 @@ import {
 
 const profileLinks = [
   { name: "My Account", icon: faUser, href: "/profile/my-account" },
-  { name: "Purchase History", icon: faHistory, href: "/purchase-history" },
-  // { name: "My Lab Orders", icon: faVial, href: "/lab-orders" },
-  { name: "My Prescriptions", icon: faPrescriptionBottleAlt, href: "/prescriptions" },
+  { name: "Purchase History", icon: faHistory, href: "/profile/purchase-history" },
+  // { name: "My Lab Orders", icon: faVial, href: "/profile/lab-orders" },
+  { name: "My Prescriptions", icon: faPrescriptionBottleAlt, href: "/profile/prescriptions" },
   // { name: "My Appointments", icon: faCalendarAlt, href: "/appointments" },
-  { name: "My Reviews", icon: faCommentDots, href: "/reviews" },
-  { name: "My Wallet", icon: faWallet, href: "/wallet" },
-  { name: "My Offers", icon: faGift, href: "/offers" },
-  // { name: "My Coins", icon: faCoins, href: "/coins" },
-  { name: "My Orders", icon: faShoppingCart, href: "/orders" },
-  // { name: "My Bookmarks", icon: faBookMedical, href: "/bookmarks" },
-  { name: "My Reports", icon: faClipboardList, href: "/reports" },
+  { name: "My Reviews", icon: faCommentDots, href: "/profile/reviews" },
+  { name: "My Wallet", icon: faWallet, href: "/profile/wallet" },
+  { name: "My Offers", icon: faGift, href: "/profile/offers" },
+  // { name: "My Coins", icon: faCoins, href: "/profile/coins" },
+  { name: "My Orders", icon: faShoppingCart, href: "/profile/orders" },
+  // { name: "My Bookmarks", icon: faBookMedical, href: "/profile/bookmarks" },
+  { name: "My Reports", icon: faClipboardList, href: "/profile/reports" },
 ];
 
 export default profileLinks;

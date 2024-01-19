@@ -20,8 +20,29 @@
   &__links {
     @include content-style;
   }
+}
 
-  &__content {
-    @include content-style;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.profile-page__content {
+  @include content-style;
+  animation: fadeIn 0.5s ease-out, slideIn 0.5s ease-out;
 }
