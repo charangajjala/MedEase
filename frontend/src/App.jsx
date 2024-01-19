@@ -52,10 +52,12 @@ function App() {
         <Route path="/dashboard" element={<UserDashboard />} />
         <Route path="/product" element={<ProductDetails />} />
         <Route path="/cart" element={<CartWithAuth />} />
-        <Route path="/profile" element={<ProfileWithAuth />} />
         <Route path="/admin/dashboard" element={<AdminDashboardWithAuth />} />
         <Route path="/admin/medicine" element={<AddMedicineWithAuth />} />
-        <Route path="/admin/medicineUpdate" element={<UpdateMedicineWithAuth />} />
+        <Route
+          path="/admin/medicineUpdate"
+          element={<UpdateMedicineWithAuth />}
+        />
         <Route path="/admin/sells" element={<StartSellWithAuth />} />
         <Route path="/admin/sellsExt" element={<SellsDashboardExtWithAuth />} />
         <Route path="/admin/report" element={<OrderReportsWithAuth />} />
@@ -63,9 +65,15 @@ function App() {
         <Route path="/admin/products" element={<ProductReportsWithAuth />} />
         <Route path="/admin/companies" element={<CompanyReportWithAuth />} />
         <Route path="/admin/companyAdd" element={<AddCompanyWithAuth />} />
-        <Route path="/admin/companyUpdate" element={<UpdateCompanyWithAuth />} />
+        <Route
+          path="/admin/companyUpdate"
+          element={<UpdateCompanyWithAuth />}
+        />
         <Route path="/admin/category" element={<AddCategoryWithAuth />} />
         <Route path="/admin/invoice" element={<InvoiceWithAuth />} />
+
+        {/* Profile components */}
+        <Route path="/profile/*" element={<ProfileWithAuth />} />
       </Routes>
     </Router>
   );

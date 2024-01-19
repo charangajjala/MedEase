@@ -1,13 +1,14 @@
-import "./SidebarItem.scss";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import propTypes from "prop-types";
+import './SidebarItem.scss';
 
 const SidebarItem = ({ name, icon, href }) => (
   <>
-    <a href={href} className="sidebar-item">
+    <Link to={href} className="sidebar-item">
       <FontAwesomeIcon icon={icon} className="sidebar-icon" />
-      {name}
-    </a>
+      <span className="sidebar-item-text">{name}</span>
+    </Link>
     <hr />
   </>
 );

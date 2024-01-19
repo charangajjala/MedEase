@@ -5,7 +5,7 @@ import {
   faPrescriptionBottleAlt,
   // faBookMedical,
   faClipboardList,
-  faCalendarAlt,
+  // faCalendarAlt,
   faGift,
   faWallet,
   // faCoins,
@@ -14,11 +14,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const profileLinks = [
-  { name: "My Account", icon: faUser, href: "/my-account" },
+  { name: "My Account", icon: faUser, href: "/profile/my-account" },
   { name: "Purchase History", icon: faHistory, href: "/purchase-history" },
   // { name: "My Lab Orders", icon: faVial, href: "/lab-orders" },
   { name: "My Prescriptions", icon: faPrescriptionBottleAlt, href: "/prescriptions" },
-  { name: "My Appointments", icon: faCalendarAlt, href: "/appointments" },
+  // { name: "My Appointments", icon: faCalendarAlt, href: "/appointments" },
   { name: "My Reviews", icon: faCommentDots, href: "/reviews" },
   { name: "My Wallet", icon: faWallet, href: "/wallet" },
   { name: "My Offers", icon: faGift, href: "/offers" },

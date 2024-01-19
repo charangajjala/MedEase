@@ -1,6 +1,7 @@
 import "./Profile.scss";
-import { Navbar, Header, Footer } from "../../../userComponents";
+import { Navbar, Header, Footer, AccountPage } from "../../../userComponents";
 import { Sidebar } from "../../../userComponents";
+import { Routes, Route } from 'react-router-dom';
 
 const Profile = () => {
   return (
@@ -21,7 +22,9 @@ const Profile = () => {
           </div>
 
           <div className="profile-page__content">
-            <h1>Profile</h1>
+            <Routes>
+              <Route path="/my-account" element={<AccountPage />} />
+            </Routes>
           </div>
         </div>
       </main>

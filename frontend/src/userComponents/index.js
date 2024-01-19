@@ -7,6 +7,9 @@ import { default as LoginBox } from "./LoginBox/LoginBox.jsx";
 import { default as CartItem } from "./CartItem/CartItem.jsx";
 import { default as Sidebar } from "./Sidebar/Sidebar.jsx";
 
+// Profile Components
+import { default as AccountPage } from "./AccountPage/AccountPage.jsx";
+
 export {
   Header,
   Navbar,
@@ -16,4 +19,5 @@ export {
   LoginBox,
   CartItem,
   Sidebar,
+  AccountPage,
 };
