@@ -13,4 +13,6 @@ public interface MedicineRepository extends JpaRepository<Medicine, Integer> {
 
     List<Medicine> findByMedicineTypeAndProductTitleContaining(MedicineType medicineType, String keyword);
 
+    List<Medicine> findByProductTitleContaining(String keyword);
+
 }
