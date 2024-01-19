@@ -33,7 +33,7 @@ public class Cart {
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "cart_item_id")
     private List<CartItem> cartItems;
 
@@ -43,8 +43,10 @@ public class Cart {
     public void addCartItem(CartItem cartItem) {
         if (cartItems == null) {
             cartItems = new ArrayList<>();
+        } else {
+            cartItems.add(cartItem);
         }
-        cartItems.add(cartItem);
+
         cartItem.setCart(this);
     }
 
