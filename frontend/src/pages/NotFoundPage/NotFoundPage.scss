@@ -1,19 +1,66 @@
-@import "./../../styles/colors/colors.scss";
-@import "./../../styles/fonts/fonts.scss";
-@import "./../../styles/mixins/userMixins.scss";
+@import "../../styles/colors/colors.scss";
+@import "../../styles/fonts/fonts.scss";
+@import "../../styles/mixins/userMixins.scss";
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideUpFade {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 
 .not-found-page {
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
   text-align: center;
+  color: #2c3e50;
+  background-color: #ecf0f1;
 
   h1 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    margin: 10px 0;
+    animation: fadeInScale 0.8s ease-out;
   }
 
   p {
     font-size: 1.2rem;
+    margin-bottom: 20px;
+    animation: slideUpFade 1s ease-out;
+  }
+
+  .home-link {
+    @include button-style;
+    text-decoration: none;
+    animation: pulse 1.5s infinite;
   }
 }

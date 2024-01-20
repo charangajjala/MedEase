@@ -26,6 +26,7 @@ import WithAuth from "./utils/WithAuth.jsx";
 import { Invoice } from "./components/index.js";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { NotFoundPage } from "./pages/index.js";
 
 const AdminDashboardWithAuth = WithAuth(AdminDashboard);
 const AddMedicineWithAuth = WithAuth(AddMedicine);
@@ -76,6 +77,9 @@ function App() {
 
         {/* Profile components */}
         <Route path="/profile/*" element={<ProfileWithAuth />} />
+
+        {/* Not Found Page */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
   );
