@@ -30,10 +30,6 @@ const UserDashboard = () => {
     return auth && auth.accessToken;
   };
 
-  const promptLogin = () => {
-    setShowLoginBox(true);
-  };
-
   // useEffect(() => {
   //   const fetchProducts = async () => {
   //     try {
@@ -57,6 +53,11 @@ const UserDashboard = () => {
 
   //   fetchProducts();
   // }, []);
+
+  // Login Functionality
+  const promptLogin = () => {
+    setShowLoginBox(true);
+  };
 
   const handleLoginSucess = () => {
     setShowLoginBox(false);
@@ -82,6 +83,7 @@ const UserDashboard = () => {
     };
   }, []);
 
+  //  Adding to cart functionality
   const handleAddToCart = async (product) => {
     try {
       if (isAuthenticated()) {
@@ -93,7 +95,7 @@ const UserDashboard = () => {
         promptLogin();
       }
     } catch (err) {
-      console.log(err);
+      console.error("Error adding product to cart:", err);
     }
   };
 
@@ -107,8 +109,10 @@ const UserDashboard = () => {
       });
       const data = await response.data;
       console.log(data);
+      return data;
     } catch (err) {
-      console.log(err);
+      console.error("Error in addToCart:", err);
+      throw err;
     }
   };
 
@@ -147,22 +151,6 @@ const UserDashboard = () => {
               <BannerSlider />
             </div>
 
-            {/* <div className="user-dashboard__content__products">
-              <div className="user-dashboard__content__products__heading">
-                <h2>Our Products</h2>
-              </div>
-              <div className="user-dashboard__content__product__cards">
-                <ProductCard
-                  onAddToCart={handleAddToCart}
-                  onClick={handleNavigation}
-                />
-                <ProductCard onAddToCart={handleAddToCart} />
-                <ProductCard onAddToCart={handleAddToCart} />
-                <ProductCard onAddToCart={handleAddToCart} />
-                <ProductCard onAddToCart={handleAddToCart} />
-              </div>
-            </div> */}
-
             <div className="user-dashboard__content__products">
               <div className="user-dashboard__content__product__heading">
                 <h2>Our Products</h2>
@@ -178,6 +166,7 @@ const UserDashboard = () => {
                 ))}
               </div>
             </div>
+            
           </div>
         </main>
         <Footer />

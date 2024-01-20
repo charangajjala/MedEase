@@ -276,3 +276,39 @@ $breakpoint-tablet: 1024px;
     }
   }
 }
+
+.product-page__description {
+  background-color: $white;
+  padding: 20px;
+  border-radius: 8px;
+  font-family: $font-family;
+
+  .product__description-title {
+    color: $text-color;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .product__description-text {
+    color: $text-color;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+  .product__description-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+      border: 1px solid $text-color;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: $white;
+      color: $text-color;
+    }
+  }
+}

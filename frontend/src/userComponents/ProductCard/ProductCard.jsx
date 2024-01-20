@@ -7,7 +7,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
-const ProductCard = ({ onAddToCart, onClick, data }) => {
+const ProductCard = ({ onAddToCart, data }) => {
   const [isFavorite, setIsFavorite] = useState(true);
   const navigate = useNavigate();
 
@@ -35,18 +35,18 @@ const ProductCard = ({ onAddToCart, onClick, data }) => {
         </button>
       </div>
       <div className="product-card__content">
-        <div className="product-card__content__title" onClick={onClick}>
+        <div className="product-card__content__title" onClick={handleNavigation}>
           <h3>{data.productTitle}</h3>
-          <span className="product-card__content__weight" onClick={onClick}>
+          <span className="product-card__content__weight" onClick={handleNavigation}>
             55g
           </span>
         </div>
-        <div className="product-card__content__price" onClick={onClick}>
+        <div className="product-card__content__price" onClick={handleNavigation}>
           <p className="product-card__content__actual-price">
-            $ {data.costPerMonth}.00
+            ${data.costPerMonth}.00
           </p>
           <p className="product-card__content__discounted-price">
-            $ {data.costPerMonth}.00
+            ${data.costPerMonth}.00
           </p>
           <p className="product-card__content__save">Save up to 20% !</p>
         </div>

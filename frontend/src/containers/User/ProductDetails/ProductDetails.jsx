@@ -147,7 +147,7 @@ const Productdetails = () => {
             </div>
           </div>
 
-          <div className="product-page__reviews">
+          {/* <div className="product-page__reviews">
             <h3 className="product__reviews-title">Reviews</h3>
             {Array.from({ length: 10 }, (_, index) => (
               <div key={index} className="product__review-item">
@@ -157,7 +157,7 @@ const Productdetails = () => {
                 </p>
               </div>
             ))}
-          </div>
+          </div> */}
         </main>
       </div>
       <div className="proudct-page__footer">
