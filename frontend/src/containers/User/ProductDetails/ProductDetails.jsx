@@ -1,6 +1,10 @@
 import { useLocation } from "react-router-dom";
 import "./ProductDetails.scss";
 import { Header, Footer, Navbar } from "../../../userComponents";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart as farHeart } from "@fortawesome/free-solid-svg-icons";
+import { faShareAlt as fasShareAlt } from "@fortawesome/free-solid-svg-icons";
+
 import moov from "../../../assets/moov.jpg";
 import moov2 from "../../../assets/moov2.jpg";
 import { useState } from "react";
@@ -58,8 +62,12 @@ const Productdetails = () => {
                     <p className="product__seller">Seller</p>
                   </div>
                   <div className="product-page__details-right">
-                    <button>Like</button>
-                    <button>Share</button>
+                    <button>
+                      <FontAwesomeIcon icon={farHeart} />
+                    </button>
+                    <button>
+                      <FontAwesomeIcon icon={fasShareAlt} />
+                    </button>
                   </div>
                 </div>
 

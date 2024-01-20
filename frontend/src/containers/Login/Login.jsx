@@ -90,7 +90,7 @@ const Login = () => {
       const accessToken = response?.data?.accessToken;
       const refreshToken = response?.data?.refreshToken;
       const role = response?.data?.role;
-      setAuth({ email, password, accessToken, refreshToken });
+      setAuth({ email, password, accessToken, refreshToken, role });
 
       // navigate to dashboard based on role
       // Modify the default routing to /admin/dashboard if logged in as per the role
