@@ -139,11 +139,64 @@ const Productdetails = () => {
           <div className="product-page__grid-2">
             <div className="product-page__seller">
               <h3 className="product__seller-title">Seller Details</h3>
-              <p className="product__seller-text">Seller details Go Here</p>
+              <div className="seller-details-table">
+                <div className="seller-row">
+                  <div className="seller-key">Name</div>
+                  <div className="seller-value">John Doe Electronics</div>
+                </div>
+                <div className="seller-row">
+                  <div className="seller-key">Location</div>
+                  <div className="seller-value">
+                    123 Tech Drive, Silicon Valley, CA
+                  </div>
+                </div>
+                <div className="seller-row">
+                  <div className="seller-key">Experience</div>
+                  <div className="seller-value">
+                    10 years in electronics retail
+                  </div>
+                </div>
+                <div className="seller-row">
+                  <div className="seller-key">Specialty</div>
+                  <div className="seller-value">
+                    High-end audio and video equipment
+                  </div>
+                </div>
+                <div className="seller-row">
+                  <div className="seller-key">Contact</div>
+                  <div className="seller-value">
+                    john.doe@jdelectronics.com | +1 234 567 890
+                  </div>
+                </div>
+                <div className="seller-row">
+                  <div className="seller-key">Ratings</div>
+                  <div className="seller-value">
+                    4.8/5 (Based on 320 reviews)
+                  </div>
+                </div>
+                <div className="seller-row">
+                  <div className="seller-key">Shipping Policy</div>
+                  <div className="seller-value">
+                    2-3 business days for domestic, 5-7 days for international
+                  </div>
+                </div>
+              </div>
             </div>
+
             <div className="product-page__seller__products">
               <h3 className="product__seller-title">Seller Products</h3>
-              <p className="product__seller-text">Seller Products Go Here</p>
+              <ul className="product-list">
+                <li>Ultra HD 4K Smart TV - 55 inches</li>
+                <li>Wireless Noise-Cancelling Headphones</li>
+                <li>Portable Bluetooth Speaker - Waterproof</li>
+                <li>Latest Gaming Console - 1TB</li>
+                <li>High-Speed HDMI Cable - 10ft</li>
+                <li>Smartphone with High-Resolution Camera - 128GB</li>
+                <li>Professional Grade Laptop - 16GB RAM</li>
+                <li>Tablet with Stylus - 64GB</li>
+                <li>VR Headset with Room-Scale Tracking</li>
+                <li>Wireless Charging Pad - Fast Charge</li>
+              </ul>
             </div>
           </div>
 

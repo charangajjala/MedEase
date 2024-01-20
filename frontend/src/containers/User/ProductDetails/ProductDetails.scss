@@ -16,6 +16,7 @@ $breakpoint-tablet: 1024px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    padding: 20px;
   }
 
   &__grid {
@@ -279,7 +280,6 @@ $breakpoint-tablet: 1024px;
 
 .product-page__description {
   background-color: $white;
-  padding: 20px;
   border-radius: 8px;
   font-family: $font-family;
 
@@ -309,6 +309,56 @@ $breakpoint-tablet: 1024px;
     th {
       background-color: $white;
       color: $text-color;
+    }
+  }
+}
+
+.product-page__seller {
+  .product__seller-title {
+    font-size: 1.5em;
+  }
+
+  .seller-details-table {
+    .seller-row {
+      margin-bottom: 15px;
+
+      .seller-key, .seller-value {
+        padding: 5px 10px;
+      }
+
+      .seller-key {
+        font-weight: $font-weight-bold;
+        border-right: 2px solid white;
+      }
+    }
+  }
+}
+
+.product-page__seller__products {
+
+  .product__seller-title {
+    color: $text-color;
+    font-size: 1.5em;
+  }
+
+  .product-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      background-color: $white;
+      border-bottom: 1px solid #e1e1e1;
+      padding: 10px;
+      transition: background-color 0.3s;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background-color: #ececec;
+      }
     }
   }
 }
