@@ -17,6 +17,7 @@ import { default as UserDashboard } from "./User/UserDashboard/UserDashboard.jsx
 import { default as ProductDetails } from "./User/ProductDetails/ProductDetails.jsx";
 import { default as Cart } from "./User/Cart/Cart.jsx";
 import { default as Profile } from "./User/Profile/Profile.jsx";
+import { default as SearchResults } from "./User/SearchResults/SearchResults.jsx";
 
 export {
   AdminDashboard,
@@ -38,4 +39,5 @@ export {
   ProductDetails,
   Cart,
   Profile,
+  SearchResults,
 };

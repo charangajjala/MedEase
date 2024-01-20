@@ -20,6 +20,7 @@ import {
   Cart,
   ProductDetails,
   Profile,
+  SearchResults,
 } from "./containers/index.js";
 import WithAuth from "./utils/WithAuth.jsx";
 import { Invoice } from "./components/index.js";
@@ -51,6 +52,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<UserDashboard />} />
         <Route path="/product" element={<ProductDetails />} />
+        <Route path="/search" element={<SearchResults />} />
         <Route path="/cart" element={<CartWithAuth />} />
         <Route path="/admin/dashboard" element={<AdminDashboardWithAuth />} />
         <Route path="/admin/medicine" element={<AddMedicineWithAuth />} />

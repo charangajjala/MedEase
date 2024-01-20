@@ -56,7 +56,12 @@ const Login = () => {
     const authObj = JSON.parse(localStorage.getItem("auth"));
     console.log(Boolean(authObj.accessToken) && Boolean(authObj.refreshToken));
     if (Boolean(authObj.accessToken) && Boolean(authObj.refreshToken)) {
-      navigate("/admin/dashboard");
+      // navigate("/admin/dashboard");
+      if (authObj.role === "ADMIN") {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/dashboard");
+      }
     } else {
       navigate("/");
     }
