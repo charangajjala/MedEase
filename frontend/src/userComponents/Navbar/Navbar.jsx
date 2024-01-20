@@ -34,10 +34,10 @@ const Navbar = ({ cartCount }) => {
   const handleSearch = (e) => {
     e.preventDefault();
     const queryParams = new URLSearchParams();
-    queryParams.append("category", category);
-    queryParams.append("searchContent", searchContent);
+    queryParams.append("categoryName", category);
+    queryParams.append("keyword", searchContent);
     console.log(queryParams.toString());
-    navigate(`/search?${queryParams.toString()}`);
+    navigate(`/medicine?${queryParams.toString()}`);
   };
 
   return (

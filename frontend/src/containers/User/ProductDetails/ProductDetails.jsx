@@ -2,14 +2,14 @@ import { useLocation } from "react-router-dom";
 import "./ProductDetails.scss";
 import { Header, Footer, Navbar } from "../../../userComponents";
 import moov from "../../../assets/moov.jpg";
-import moov2 from "../../../assets/moov2.jpg"
+import moov2 from "../../../assets/moov2.jpg";
 import { useState } from "react";
 
 const Productdetails = () => {
   const location = useLocation();
   const [mainImage, setMainImage] = useState(moov);
-  const { id } = location.state;
-  console.log(id);
+  const data = location.state.data;
+  console.log(data);
 
   const imageGallery = [moov, moov2, moov, moov, moov];
 
@@ -53,8 +53,8 @@ const Productdetails = () => {
               <div className="product-page__container">
                 <div className="product-page__details">
                   <div className="product-page__details-left">
-                    <h5 className="product__company">Company Name</h5>
-                    <h1 className="product__title">Moov</h1>
+                    <h5 className="product__company">{data.companyName}</h5>
+                    <h1 className="product__title">{data.productTitle}</h1>
                     <p className="product__seller">Seller</p>
                   </div>
                   <div className="product-page__details-right">
@@ -70,8 +70,8 @@ const Productdetails = () => {
                   </div>
 
                   <div className="stock-details">
-                    <h3 className="product__price">$100</h3>
-                    <h5 className="product__mrp">$200</h5>
+                    <h3 className="product__price">${data.costPerMonth}</h3>
+                    <h5 className="product__mrp">${data.costPerMonth}</h5>
                     <h5 className="product__discount">50% off</h5>
                   </div>
                 </div>
@@ -79,8 +79,20 @@ const Productdetails = () => {
                 <div className="product-page__description">
                   <h3 className="product__description-title">Description</h3>
                   <p className="product__description-text">
-                    Product description goes here
+                    {data.description}
                   </p>
+                  <table className="product__description-table">
+                    <tbody>
+                      <tr>
+                        <th>Manufacture Date</th>
+                        <td>{data.manufactureDate}</td>
+                      </tr>
+                      <tr>
+                        <th>Expiry Date</th>
+                        <td>{data.expiryDate}</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
 

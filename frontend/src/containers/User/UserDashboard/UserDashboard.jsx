@@ -9,10 +9,12 @@ import {
 } from "../../../userComponents";
 import "./UserDashboard.scss";
 import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import endpoints from "../../../constants/endpoints";
-import axiosInstance from "../../../api/axios";
-// import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+// import axiosInstance from "../../../api/axios";
+
+// dummyData
+import dummyData from "../../../constants/dummyData";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const UserDashboard = () => {
   const [isNavFixed, setIsNavFixed] = useState(false);
@@ -21,45 +23,44 @@ const UserDashboard = () => {
   const [showLoginBox, setShowLoginBox] = useState(false);
 
   const navbarRef = useRef(null);
-  const navigate = useNavigate();
+  const axiosPrivate = useAxiosPrivate();
 
-  useEffect(() => {
-    const res = async () => {
-      try {
-        const response = await axiosInstance.get(endpoints.GET_PRODUCTS_URL);
-        const data = await response.data;
-        console.log(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    res();
-  }, []);
-
-  const handleNavigation = () => {
-    navigate("/product", { state: { id: 1 } });
+  const isAuthenticated = () => {
+    const auth = JSON.parse(localStorage.getItem("auth"));
+    return auth && auth.accessToken;
   };
+
+  const promptLogin = () => {
+    setShowLoginBox(true);
+  };
+
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const queryParams = new URLSearchParams();
+  //       queryParams.append("categoryName", "All Categories");
+  //       queryParams.append("keyword", "");
+  //       const response = await axiosInstance.get(
+  //         `${endpoints.GET_PRODUCTS_URL}?${queryParams.toString()}`,
+  //         {
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //         }
+  //       );
+  //       const data = await response.data;
+  //       console.log(data);
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //   };
+
+  //   fetchProducts();
+  // }, []);
 
   const handleLoginSucess = () => {
     setShowLoginBox(false);
     console.log("Login Success");
-  };
-
-  const handleAddToCart = () => {
-    try {
-      const auth = JSON.parse(localStorage.getItem("auth"));
-      console.log("Add to cart function", auth);
-      if (auth?.accessToken) {
-        console.log("You have access");
-        setCartCount(cartCount + 1);
-      } else {
-        console.log("Login to add to cart");
-        setShowLoginBox(true);
-      }
-    } catch (err) {
-      console.log(err);
-    }
   };
 
   const toggleLoginModal = () => {
@@ -80,6 +81,36 @@ const UserDashboard = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const handleAddToCart = async (product) => {
+    try {
+      if (isAuthenticated()) {
+        console.log("You have access to add", product);
+        const response = await addToCart(product);
+        console.log(response);
+        setCartCount(cartCount + 1);
+      } else {
+        promptLogin();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const addToCart = async (product) => {
+    try {
+      const response = await axiosPrivate.post(endpoints.ADD_TO_CART_URL, {
+        userId: 4,
+        medicineId: product.id,
+        quantity: 1,
+        costPerMonth: product.costPerMonth,
+      });
+      const data = await response.data;
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -116,7 +147,7 @@ const UserDashboard = () => {
               <BannerSlider />
             </div>
 
-            <div className="user-dashboard__content__products">
+            {/* <div className="user-dashboard__content__products">
               <div className="user-dashboard__content__products__heading">
                 <h2>Our Products</h2>
               </div>
@@ -130,18 +161,21 @@ const UserDashboard = () => {
                 <ProductCard onAddToCart={handleAddToCart} />
                 <ProductCard onAddToCart={handleAddToCart} />
               </div>
-            </div>
+            </div> */}
 
             <div className="user-dashboard__content__products">
-              <div className="user-dashboard__content__products__heading">
+              <div className="user-dashboard__content__product__heading">
                 <h2>Our Products</h2>
               </div>
+
               <div className="user-dashboard__content__product__cards">
-                <ProductCard onAddToCart={handleAddToCart} />
-                <ProductCard onAddToCart={handleAddToCart} />
-                <ProductCard onAddToCart={handleAddToCart} />
-                <ProductCard onAddToCart={handleAddToCart} />
-                <ProductCard onAddToCart={handleAddToCart} />
+                {dummyData.map((data) => (
+                  <ProductCard
+                    key={data.id}
+                    onAddToCart={() => handleAddToCart(data)}
+                    data={data}
+                  />
+                ))}
               </div>
             </div>
           </div>
