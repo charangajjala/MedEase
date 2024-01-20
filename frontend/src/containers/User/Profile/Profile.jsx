@@ -2,7 +2,7 @@ import "./Profile.scss";
 import { Navbar, Header, Footer, AccountPage } from "../../../userComponents";
 import { Sidebar } from "../../../userComponents";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { NotFoundPage } from "../../../pages";
+import { NotFoundPageInd } from "../../../pages";
 
 const Profile = () => {
   const location = useLocation();
@@ -34,7 +34,7 @@ const Profile = () => {
               <Route path="/offers" element={<AccountPage />} />
               <Route path="/orders" element={<AccountPage />} />
               <Route path="/reports" element={<AccountPage />} />
-              <Route path="*" element={<NotFoundPage />} />
+              <Route path="*" element={<NotFoundPageInd />} />
             </Routes>
           </div>
         </div>

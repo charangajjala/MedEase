@@ -9,6 +9,8 @@ import {
 import PropTypes from "prop-types";
 import { useReducer } from "react";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../api/axios";
+import endpoints from "../../constants/endpoints";
 
 const initialState = {
   category: "All Categories",
@@ -34,10 +36,28 @@ const Navbar = ({ cartCount }) => {
   const handleSearch = (e) => {
     e.preventDefault();
     const queryParams = new URLSearchParams();
-    queryParams.append("category", category);
-    queryParams.append("searchContent", searchContent);
-    console.log(queryParams.toString());
-    navigate(`/search?${queryParams.toString()}`);
+    queryParams.append("categoryName", category);
+    queryParams.append("keyword", searchContent);
+
+    const searchResults = async () => {
+      try {
+        const response = await axiosInstance.get(
+          `${endpoints.GET_PRODUCTS_URL}?${queryParams.toString()}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await response.data;
+        console.log(data);
+      } catch (err) {
+        console.log(err.name);
+      }
+    };
+
+    searchResults();
+    // navigate(`/medicine?${queryParams.toString()}`);
   };
 
   return (

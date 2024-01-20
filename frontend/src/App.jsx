@@ -20,11 +20,13 @@ import {
   Cart,
   ProductDetails,
   Profile,
+  SearchResults,
 } from "./containers/index.js";
 import WithAuth from "./utils/WithAuth.jsx";
 import { Invoice } from "./components/index.js";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { NotFoundPage } from "./pages/index.js";
 
 const AdminDashboardWithAuth = WithAuth(AdminDashboard);
 const AddMedicineWithAuth = WithAuth(AddMedicine);
@@ -51,6 +53,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<UserDashboard />} />
         <Route path="/product" element={<ProductDetails />} />
+        <Route path="/search" element={<SearchResults />} />
         <Route path="/cart" element={<CartWithAuth />} />
         <Route path="/admin/dashboard" element={<AdminDashboardWithAuth />} />
         <Route path="/admin/medicine" element={<AddMedicineWithAuth />} />
@@ -74,6 +77,9 @@ function App() {
 
         {/* Profile components */}
         <Route path="/profile/*" element={<ProfileWithAuth />} />
+
+        {/* Not Found Page */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
   );

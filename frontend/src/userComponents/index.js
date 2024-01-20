@@ -6,6 +6,7 @@ import { default as ProductCard } from "./ProductCard/ProductCard.jsx";
 import { default as LoginBox } from "./LoginBox/LoginBox.jsx";
 import { default as CartItem } from "./CartItem/CartItem.jsx";
 import { default as Sidebar } from "./Sidebar/Sidebar.jsx";
+import { default as SearchResult } from "./SearchResult/SearchResult.jsx";
 
 // Profile Components
 import { default as AccountPage } from "./AccountPage/AccountPage.jsx";
@@ -20,4 +21,5 @@ export {
   CartItem,
   Sidebar,
   AccountPage,
+  SearchResult,
 };

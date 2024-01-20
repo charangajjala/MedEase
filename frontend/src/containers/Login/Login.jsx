@@ -56,7 +56,12 @@ const Login = () => {
     const authObj = JSON.parse(localStorage.getItem("auth"));
     console.log(Boolean(authObj.accessToken) && Boolean(authObj.refreshToken));
     if (Boolean(authObj.accessToken) && Boolean(authObj.refreshToken)) {
-      navigate("/admin/dashboard");
+      // navigate("/admin/dashboard");
+      if (authObj.role === "ADMIN") {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/dashboard");
+      }
     } else {
       navigate("/");
     }
@@ -85,7 +90,7 @@ const Login = () => {
       const accessToken = response?.data?.accessToken;
       const refreshToken = response?.data?.refreshToken;
       const role = response?.data?.role;
-      setAuth({ email, password, accessToken, refreshToken });
+      setAuth({ email, password, accessToken, refreshToken, role });
 
       // navigate to dashboard based on role
       // Modify the default routing to /admin/dashboard if logged in as per the role

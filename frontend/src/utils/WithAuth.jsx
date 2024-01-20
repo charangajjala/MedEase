@@ -23,26 +23,35 @@ const WithAuth = (WrappedComponent) => {
         // navigate("/");
 
         // Version 2
-        console.log("WithAuth: User is not authenticated");
-        try {
-          if (authObj && authObj.role) {
-            switch (authObj.role) {
-              case "ADMIN":
-                navigate("/admin/dashboard");
-                break;
-              case "USER":
-                navigate("/dashboard");
-                break;
-              default:
-                navigate("/");
-                break;
-            }
-          } else {
-            console.warn("Authentication object is missing or invalid");
-            navigate("/");
-          }
-        } catch (error) {
-          console.error("An error occurred during navigation:", error);
+        // console.log("WithAuth: User is not authenticated");
+        // try {
+        //   if (authObj && authObj.role) {
+        //     switch (authObj.role) {
+        //       case "ADMIN":
+        //         navigate("/admin/dashboard");
+        //         break;
+        //       case "":
+        //         navigate("/dashboard");
+        //         break;
+        //       default:
+        //         navigate("/");
+        //         break;
+        //     }
+        //   } else {
+        //     console.warn("Authentication object is missing or invalid");
+        //     navigate("/");
+        //   }
+        // } catch (error) {
+        //   console.error("An error occurred during navigation:", error);
+        //   navigate("/");
+        // }
+
+        // Version 3
+        if (authObj?.accessToken && authObj?.refreshToken) {
+          console.log("WithAuth: User is authenticated");
+          setIsAuthenticated(true);
+        } else {
+          console.log("WithAuth: User is not authenticated, navigating to login");
           navigate("/");
         }
       }

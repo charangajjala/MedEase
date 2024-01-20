@@ -16,7 +16,7 @@
 
     &-button {
       @include button-style;
-      transition: background-color 0.3s ease;
+      transition: transform 0.3s ease-in-out;
     }
 
     &-text {
@@ -33,9 +33,9 @@
   }
 
   &__search {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 3fr auto;
     align-items: center;
-    flex-grow: 0.5;
     gap: 1em;
 
     &__cat-search,
