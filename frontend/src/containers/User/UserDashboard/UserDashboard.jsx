@@ -47,7 +47,26 @@ const UserDashboard = () => {
       }
     };
 
+    const fetchCartLength = async () => {
+      if (isAuthenticated()) {
+        try {
+          const response = await axiosPrivate.get(endpoints.GET_CART_URL);
+          const data = await response.data;
+          const totalQuantity = data.reduce((acc, item) => {
+            return acc + item.quantity;
+          }, 0);
+          setCartCount(totalQuantity);
+        } catch (err) {
+          console.error(err);
+        }
+      } else {
+        setCartCount(0);
+      }
+    };
+
     fetchProducts();
+    fetchCartLength();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Login Functionality

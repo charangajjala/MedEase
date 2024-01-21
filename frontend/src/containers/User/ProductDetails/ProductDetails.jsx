@@ -1,31 +1,131 @@
 import { useLocation } from "react-router-dom";
 import "./ProductDetails.scss";
-import { Header, Footer, Navbar } from "../../../userComponents";
+import { Header, Footer, Navbar, LoginBox } from "../../../userComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as farHeart } from "@fortawesome/free-solid-svg-icons";
 import { faShareAlt as fasShareAlt } from "@fortawesome/free-solid-svg-icons";
 
 import moov from "../../../assets/moov.jpg";
 import moov2 from "../../../assets/moov2.jpg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import endpoints from "../../../constants/endpoints";
+import { useReducer } from "react";
+
+const inititalState = {
+  quantity: 1,
+  pincode: "",
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "SET_QUANTITY":
+      return {
+        ...state,
+        quantity: action.payload,
+      };
+    case "SET_PINCODE":
+      return {
+        ...state,
+        pincode: action.payload,
+      };
+    default:
+      return state;
+  }
+};
 
 const Productdetails = () => {
   const location = useLocation();
   const [mainImage, setMainImage] = useState(moov);
-  const data = location.state.data;
-  console.log(data);
-
+  const [cartCount, setCartCount] = useState(0);
+  const [showLoginBox, setShowLoginBox] = useState(false);
+  const [addedToCart, setAddedToCart] = useState(false);
+  const [state, dispatch] = useReducer(reducer, inititalState);
   const imageGallery = [moov, moov2, moov, moov, moov];
+  const data = location.state.data;
+  const axiosPrivate = useAxiosPrivate();
+
+  const isAuthenticated = () => {
+    const auth = JSON.parse(localStorage.getItem("auth"));
+    return auth && auth.accessToken;
+  };
+
+  useEffect(() => {
+    const fetchCartLength = async () => {
+      if (isAuthenticated()) {
+        try {
+          const response = await axiosPrivate.get(endpoints.GET_CART_URL);
+          const data = await response.data;
+          const totalQuantity = data.reduce((acc, item) => {
+            return acc + item.quantity;
+          }, 0);
+          setCartCount(totalQuantity);
+        } catch (err) {
+          console.error(err);
+        }
+      } else {
+        setCartCount(0);
+      }
+    };
+    fetchCartLength();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Login Functionality
+  const promptLogin = () => {
+    setShowLoginBox(true);
+  };
+
+  const handleLoginSucess = () => {
+    setShowLoginBox(false);
+    console.log("Login Success");
+  };
+
+  const toggleLoginModal = () => {
+    setShowLoginBox(!showLoginBox);
+  };
+
+  const handleAddToCart = async () => {
+    const { id, costPerMonth } = data;
+    const { quantity } = state;
+    if (isAuthenticated()) {
+      try {
+        const response = await axiosPrivate.post(endpoints.ADD_TO_CART_URL, {
+          medicineId: id,
+          quantity,
+          costPerMonth,
+        });
+        // Response Ideality 200 or 201
+        setAddedToCart(true);
+        setCartCount(cartCount + quantity);
+        setTimeout(() => setAddedToCart(false), 3000);
+        console.log("Added to cart");
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      promptLogin();
+    }
+  };
 
   return (
     <>
+      {showLoginBox && (
+        <div className="dashboard-blur">
+          <LoginBox
+            onClose={toggleLoginModal}
+            onLogin={handleLoginSucess}
+            show={showLoginBox}
+          />
+        </div>
+      )}
       <div className="product-page">
         <div className="product-page__header">
           <Header />
         </div>
 
         <div className="product-page__navbar">
-          <Navbar />
+          <Navbar cartCount={cartCount} />
         </div>
 
         <main className="product-page__main">
@@ -79,8 +179,8 @@ const Productdetails = () => {
 
                   <div className="stock-details">
                     <h3 className="product__price">${data.costPerMonth}</h3>
-                    <h5 className="product__mrp">${data.costPerMonth}</h5>
-                    <h5 className="product__discount">50% off</h5>
+                    {/* <h5 className="product__mrp">${data.costPerMonth}</h5> */}
+                    {/* <h5 className="product__discount">50% off</h5> */}
                   </div>
                 </div>
 
@@ -115,9 +215,20 @@ const Productdetails = () => {
                   <div className="product-page__cart-quantity">
                     <div className="quantity_selector">
                       <p className="product__quantity-label">Qty</p>
-                      <select className="product__quantity-selector">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
+                      <select
+                        className="product__quantity-selector"
+                        onChange={(e) => {
+                          dispatch({
+                            type: "SET_QUANTITY",
+                            payload: Number(e.target.value),
+                          });
+                        }}
+                      >
+                        {Array.from({ length: 5 }, (_, i) => (
+                          <option key={i + 1} value={i + 1}>
+                            {i + 1}
+                          </option>
+                        ))}
                       </select>
                     </div>
                     <div className="product-page__cart-location">
@@ -127,14 +238,30 @@ const Productdetails = () => {
                           className="product__pincode-input"
                           type="number"
                           placeholder="Enter your pincode"
+                          value={state.pincode}
+                          onChange={(e) => {
+                            dispatch({
+                              type: "SET_PINCODE",
+                              payload: e.target.value,
+                            });
+                          }}
                           required
                         />
                       </div>
                     </div>
                   </div>
 
+                  {addedToCart && (
+                    <div className="add-to-cart-notification">
+                      Product added to cart!
+                    </div>
+                  )}
+
                   <div className="product-page__cart-buttons">
-                    <button className="product__cart-button">
+                    <button
+                      className="product__cart-button"
+                      onClick={handleAddToCart}
+                    >
                       Add to cart
                     </button>
                     <button className="product__cart-button">Buy Now</button>

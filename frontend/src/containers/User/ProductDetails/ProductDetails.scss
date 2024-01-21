@@ -362,3 +362,16 @@ $breakpoint-tablet: 1024px;
     }
   }
 }
+
+.add-to-cart-notification {
+  margin-top: 10px;
+  color: $success-color;
+  font-size: 16px;
+  animation: fadeInOut 3s;
+  text-align: center;
+
+  @keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    10%, 90% { opacity: 1; }
+  }
+}
