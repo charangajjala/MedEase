@@ -12,7 +12,8 @@ const Cart = () => {
   const axiosPrivate = useAxiosPrivate();
   const [cartItems, setCartItems] = useState([]);
   const [cartCount, setCartCount] = useState(0);
-  const [animateSubtotal, setAnimateSubtotal] = useState(false);
+  // Just a fade in animation
+  // const [animateSubtotal, setAnimateSubtotal] = useState(false);
 
   useEffect(() => {
     const fetchCartItems = async () => {

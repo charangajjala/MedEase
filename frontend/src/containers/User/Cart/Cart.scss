@@ -127,11 +127,12 @@
   }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+// for fade in animation
+// @keyframes fadeIn {
+//   from { opacity: 0; }
+//   to { opacity: 1; }
+// }
 
-.animate-update {
-  animation: fadeIn 1s ease-in-out;
-}
+// .animate-update {
+//   animation: fadeIn 1s ease-in-out;
+// }

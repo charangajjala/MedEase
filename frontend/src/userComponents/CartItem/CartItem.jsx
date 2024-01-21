@@ -5,6 +5,7 @@ import { Button } from "../../components";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import endpoints from "../../constants/endpoints";
 import { useReducer } from "react";
+import useAnimatedNumber from "../../hooks/useAnimatedNumber";
 
 const initialState = {
   quantity: 1,
@@ -21,7 +22,10 @@ function reducer(state, action) {
 
 const CartItem = ({ item, onQuantityChange }) => {
   const axiosPrivate = useAxiosPrivate();
-  const [state, dispatch] = useReducer(reducer, { ...initialState, quantity: item.quantity });
+  const [state, dispatch] = useReducer(reducer, {
+    ...initialState,
+    quantity: item.quantity,
+  });
 
   const isAuthenticated = () => {
     const auth = JSON.parse(localStorage.getItem("auth"));
@@ -46,6 +50,9 @@ const CartItem = ({ item, onQuantityChange }) => {
       console.log("Error in handleQuantityChange:", err);
     }
   };
+
+  const totalValue = item.cartProduct.costPerMonth * item.quantity;
+  const animatedTotalValue = useAnimatedNumber(totalValue);
 
   return (
     <div className="cart-item">
@@ -77,9 +84,7 @@ const CartItem = ({ item, onQuantityChange }) => {
         </div>
       </div>
       <div className="cart-item__price-container">
-        <p className="sale-price">
-          ${item.cartProduct.costPerMonth * item.quantity}
-        </p>
+        <p className="sale-price">${animatedTotalValue}</p>
         {/* <p className="original-price">${item.cartProduct.costPerMonth}</p> */}
         {/* <p className="discount-tag">20% off</p> */}
       </div>
