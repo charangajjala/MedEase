@@ -20,7 +20,7 @@ public class MedicineService {
 
     public List<MedicineResponse> getMedicines(String categoryName, String keyword) throws BadRequestException {
 
-        if (categoryName != "All Categories") {
+        if (categoryName.equals("All Categories")) {
 
             final MedicineType medicineType = medicineTypeRepository.findByCategoryName(categoryName)
                     .orElseThrow(() -> {
