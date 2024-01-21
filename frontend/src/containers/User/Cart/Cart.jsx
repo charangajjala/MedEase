@@ -11,6 +11,26 @@ const Cart = () => {
   const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
   const [cartItems, setCartItems] = useState([]);
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      try {
+        const response = await axiosPrivate.get(endpoints.GET_CART_URL);
+        const data = response.data;
+        const totalQuantity = data.reduce((acc, item) => {
+          return acc + item.quantity;
+        }, 0);
+        setCartItems(data);
+        setCartCount(totalQuantity);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchCartItems();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleCheckout = () => {
     // navigate("/checkout");
@@ -27,20 +47,13 @@ const Cart = () => {
     }, 0);
   };
 
-  useEffect(() => {
-    const fetchCartItems = async () => {
-      try {
-        const response = await axiosPrivate.get(endpoints.GET_CART_URL);
-        const data = response.data;
-        setCartItems(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchCartItems();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const handleQuantityChange = (itemId, newQuantity) => {
+    setCartItems((currentItems) =>
+      currentItems.map((item) =>
+        item.id === itemId ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
 
   return (
     <div className="cart">
@@ -49,7 +62,7 @@ const Cart = () => {
       </div>
 
       <div className="cart__navbar">
-        <Navbar />
+        <Navbar cartCount={cartCount} />
       </div>
 
       <main className="cart__main">
@@ -62,7 +75,7 @@ const Cart = () => {
           <div className="cart__content-left__items">
             <div className="cart__content-left__items-header"></div>
             {cartItems.map((item, index) => (
-              <CartItem key={index} item={item} />
+              <CartItem key={index} item={item} onQuantityChange={handleQuantityChange} />
             ))}
           </div>
           <div className="cart__content-left__buttons">
@@ -77,11 +90,11 @@ const Cart = () => {
             </h2>
             <div className="cart__content-right__summary__subtotal">
               <span>Subtotal ({cartItems.length} items)</span>
-              <span>$ 100</span>
+              <span>$ {totalCost()}</span>
             </div>
             <div className="cart__content-right__summary__discount">
               <span>Discount offered</span>
-              <p>- $ 20</p>
+              <p>- $ 0</p>
             </div>
             <div className="cart__content-right__summary__total">
               <span>Total ({cartItems.length} items)</span>

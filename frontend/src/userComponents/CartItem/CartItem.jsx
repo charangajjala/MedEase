@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import image from "../../assets/moov.jpg";
 import "./CartItem.scss";
 import { Button } from "../../components";
-import { useEffect } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import endpoints from "../../constants/endpoints";
 
@@ -20,7 +19,7 @@ import endpoints from "../../constants/endpoints";
 //   }
 // ]
 
-const CartItem = ({ item }) => {
+const CartItem = ({ item, onQuantityChange }) => {
   const axiosPrivate = useAxiosPrivate();
 
   const isAuthenticated = () => {
@@ -38,6 +37,7 @@ const CartItem = ({ item }) => {
         });
         const data = response.data;
         console.log(data);
+        onQuantityChange(item.id, Number(e.target.value));
       }
     } catch (err) {
       console.log("Error in handleQuantityChange:", err);
@@ -60,17 +60,13 @@ const CartItem = ({ item }) => {
             <select
               className="quantity-selector"
               onChange={(e) => handleQuantityChange(e)}
+              value={item.quantity}
             >
-              <option value={`${item.quantity}`}>{item.quantity}</option>
-              <option value={`${item.quantity + 1}`}>
-                {item.quantity + 1}
-              </option>
-              <option value={`${item.quantity + 2}`}>
-                {item.quantity + 2}
-              </option>
-              <option value={`${item.quantity + 3}`}>
-                {item.quantity + 3}
-              </option>
+              {Array.from({ length: 5 }, (_, index) => (
+                <option key={index} value={index}>
+                  {index}
+                </option>
+              ))}
             </select>
           </div>
           <Button className="remove-button" name="Remove" />
@@ -78,7 +74,9 @@ const CartItem = ({ item }) => {
         </div>
       </div>
       <div className="cart-item__price-container">
-        <p className="sale-price">${item.cartProduct.costPerMonth * item.quantity}</p>
+        <p className="sale-price">
+          ${item.cartProduct.costPerMonth * item.quantity}
+        </p>
         {/* <p className="original-price">${item.cartProduct.costPerMonth}</p> */}
         {/* <p className="discount-tag">20% off</p> */}
       </div>
@@ -97,6 +95,7 @@ CartItem.propTypes = {
     quantity: PropTypes.number.isRequired,
     totalCost: PropTypes.number.isRequired,
   }).isRequired,
+  onQuantityChange: PropTypes.func.isRequired,
 };
 
 export default CartItem;
