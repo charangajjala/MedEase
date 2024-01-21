@@ -41,3 +41,10 @@ class RegisterRequest {
     private String username;
 
 }
+
+@Data
+@Builder
+class RefreshRequest {
+    @NotBlank(message = "Refresh Token is Required")
+    private String refreshToken;
+}
