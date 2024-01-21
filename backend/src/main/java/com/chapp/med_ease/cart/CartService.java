@@ -135,6 +135,7 @@ public class CartService {
                     .id(cartItem.getId())
                     .quantity(cartItem.getQuantity())
                     .totalCost(cartItem.getTotalCost())
+                    .cartProduct(cartProduct)
                     .build();
 
             res.add(cartItemResponse);
