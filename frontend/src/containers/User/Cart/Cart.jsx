@@ -1,17 +1,18 @@
 import "./Cart.scss";
 import { Header, Navbar, Footer, CartItem } from "../../../userComponents";
-// import cartItems from "../../../constants/cartItems";
 import { Button } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { useEffect, useState } from "react";
 import endpoints from "../../../constants/endpoints";
+import useAnimatedNumber from "../../../hooks/useAnimatedNumber";
 
 const Cart = () => {
   const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
   const [cartItems, setCartItems] = useState([]);
   const [cartCount, setCartCount] = useState(0);
+  const [animateSubtotal, setAnimateSubtotal] = useState(false);
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -47,6 +48,21 @@ const Cart = () => {
     }, 0);
   };
 
+  // Just a fade in animation
+  // useEffect(() => {
+  //   if (cartItems.length > 0) {
+  //     setAnimateSubtotal(true);
+  //     const timer = setTimeout(() => {
+  //       setAnimateSubtotal(false);
+  //     }, 1000);
+  //     return () => clearTimeout(timer);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [totalCost()]);
+
+  const totalCostValue = totalCost();
+  const animatedSubtotal = useAnimatedNumber(totalCostValue);
+
   const handleQuantityChange = (itemId, newQuantity) => {
     setCartItems((currentItems) =>
       currentItems.map((item) =>
@@ -75,7 +91,11 @@ const Cart = () => {
           <div className="cart__content-left__items">
             <div className="cart__content-left__items-header"></div>
             {cartItems.map((item, index) => (
-              <CartItem key={index} item={item} onQuantityChange={handleQuantityChange} />
+              <CartItem
+                key={index}
+                item={item}
+                onQuantityChange={handleQuantityChange}
+              />
             ))}
           </div>
           <div className="cart__content-left__buttons">
@@ -90,7 +110,7 @@ const Cart = () => {
             </h2>
             <div className="cart__content-right__summary__subtotal">
               <span>Subtotal ({cartItems.length} items)</span>
-              <span>$ {totalCost()}</span>
+              <span>$ {animatedSubtotal}</span>
             </div>
             <div className="cart__content-right__summary__discount">
               <span>Discount offered</span>
@@ -98,7 +118,7 @@ const Cart = () => {
             </div>
             <div className="cart__content-right__summary__total">
               <span>Total ({cartItems.length} items)</span>
-              <span>$ {totalCost()}</span>
+              <span>$ {animatedSubtotal}</span>
             </div>
             <div className="cart__content-right__summary__checkout">
               <Button name="Checkout" onClick={handleCheckout} />

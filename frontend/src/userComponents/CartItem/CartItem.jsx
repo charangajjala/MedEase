@@ -4,23 +4,24 @@ import "./CartItem.scss";
 import { Button } from "../../components";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import endpoints from "../../constants/endpoints";
+import { useReducer } from "react";
 
-// [
-//   {
-//     "id": 1,
-//     "cartProduct": {
-//       "id": 2,
-//       "productTitle": "Medicine 2",
-//       "costPerMonth": 15,
-//       "totalStock": 52
-//     },
-//     "quantity": 1,
-//     "totalCost": 15
-//   }
-// ]
+const initialState = {
+  quantity: 1,
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "SET_QUANTITY":
+      return { ...state, quantity: action.payload };
+    default:
+      throw new Error();
+  }
+}
 
 const CartItem = ({ item, onQuantityChange }) => {
   const axiosPrivate = useAxiosPrivate();
+  const [state, dispatch] = useReducer(reducer, { ...initialState, quantity: item.quantity });
 
   const isAuthenticated = () => {
     const auth = JSON.parse(localStorage.getItem("auth"));
@@ -28,16 +29,18 @@ const CartItem = ({ item, onQuantityChange }) => {
   };
 
   const handleQuantityChange = async (e) => {
+    const newQuantity = Number(e.target.value);
+    dispatch({ type: "SET_QUANTITY", payload: newQuantity });
     try {
       if (isAuthenticated()) {
         const response = await axiosPrivate.post(endpoints.ADD_TO_CART_URL, {
           medicineId: item.id,
-          quantity: e.target.value,
+          quantity: newQuantity,
           costPerMonth: item.cartProduct.costPerMonth,
         });
         const data = response.data;
         console.log(data);
-        onQuantityChange(item.id, Number(e.target.value));
+        onQuantityChange(item.id, newQuantity);
       }
     } catch (err) {
       console.log("Error in handleQuantityChange:", err);
@@ -60,7 +63,7 @@ const CartItem = ({ item, onQuantityChange }) => {
             <select
               className="quantity-selector"
               onChange={(e) => handleQuantityChange(e)}
-              value={item.quantity}
+              value={state.quantity}
             >
               {Array.from({ length: 5 }, (_, index) => (
                 <option key={index} value={index}>
