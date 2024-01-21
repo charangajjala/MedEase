@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.chapp.med_ease.cart.cart_dto.CartItemResponse;
@@ -28,7 +31,11 @@ public class CartService {
 
     public void addProductToCart(CartRequest req) throws BadRequestException {
 
-        final User user = userRepository.findById(req.getUserId())
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        final User user = userRepository.findByEmail(userDetails.getUsername())
                 .orElseThrow(() -> new BadRequestException("User not found"));
 
         final Medicine medicine = medicineRepository.findById(req.getMedicineId())
@@ -96,9 +103,13 @@ public class CartService {
 
     }
 
-    public List<CartItemResponse> getCartItems(int userId) throws BadRequestException {
+    public List<CartItemResponse> getCartItems() throws BadRequestException {
 
-        final User user = userRepository.findById(userId)
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        final User user = userRepository.findByEmail(userDetails.getUsername())
                 .orElseThrow(() -> new BadRequestException("User not found"));
 
         final Cart cart = user.getCart();
