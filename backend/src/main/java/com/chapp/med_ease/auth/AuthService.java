@@ -85,4 +85,9 @@ public class AuthService {
 
     }
 
+    public LoginResponse refresh(@Valid LoginRequest req) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'refresh'");
+    }
+
 }

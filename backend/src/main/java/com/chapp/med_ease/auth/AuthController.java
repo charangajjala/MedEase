@@ -55,4 +55,13 @@ public class AuthController {
 
     }
 
+    @PostMapping("/refresh")
+    @ResponseStatus(HttpStatus.OK)
+    public LoginResponse postMethodName(@Valid @RequestBody LoginRequest req) {
+
+        LoginResponse res = authService.refresh(req);
+        return res;
+
+    }
+
 }
