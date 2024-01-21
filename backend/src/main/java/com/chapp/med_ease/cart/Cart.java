@@ -8,6 +8,8 @@ import com.chapp.med_ease.user.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
@@ -25,16 +27,15 @@ import lombok.NoArgsConstructor;
 public class Cart {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
     @OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH })
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+            CascadeType.DETACH, CascadeType.REFRESH }, mappedBy = "cart")
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cart_item_id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
     private List<CartItem> cartItems;
 
     @Column(name = "total_cost")
