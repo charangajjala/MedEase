@@ -6,6 +6,7 @@ import {
   ToggleButton,
   Footer,
   Header,
+  Loading,
 } from "../../../components/index.js";
 
 import { links } from "../../../constants/links.js";
@@ -15,7 +16,7 @@ import useAxiosPrivate from "../../../hooks/useAxiosPrivate.jsx";
 import endpoints from "../../../constants/endpoints.js";
 import orders from "../../../constants/orders.js";
 
-import { Bar, Pie } from "react-chartjs-2";
+import { Bar, Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -25,6 +26,8 @@ import {
   Tooltip,
   Legend,
   ArcElement,
+  PointElement,
+  LineElement,
 } from "chart.js";
 
 ChartJS.register(
@@ -34,7 +37,9 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  ArcElement
+  ArcElement,
+  PointElement,
+  LineElement
 );
 
 const AdminDashboard = () => {
@@ -49,6 +54,7 @@ const AdminDashboard = () => {
   const [products, setProducts] = useState([]);
   const [companies, setCompanies] = useState([]);
   const [productTypes, setProductTypes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -78,6 +84,8 @@ const AdminDashboard = () => {
         setProductTypes(data);
       } catch (err) {
         console.error(err);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -112,19 +120,25 @@ const AdminDashboard = () => {
     ],
   };
 
-  const orderFrequency = {};
-  orders.forEach((order) => {
-    orderFrequency[order.customerName] =
-      (orderFrequency[order.customerName] || 0) + 1;
-  });
+  function countOrdersPerYear(orders) {
+    const counts = {};
+    orders.forEach((order) => {
+      const year = new Date(order.orderDate).getFullYear();
+      counts[year] = (counts[year] || 0) + 1;
+    });
+    return counts;
+  }
 
-  const pieChartData = {
-    labels: Object.keys(orderFrequency),
+  const orderCounts = countOrdersPerYear(orders);
+  const orderLineChartData = {
+    labels: Object.keys(orderCounts).sort(),
     datasets: [
       {
-        label: "Order Frequency",
-        data: Object.values(orderFrequency),
-        backgroundColor: ["rgba(255, 99, 132, 0.5)", "rgba(54, 162, 235, 0.5)"],
+        label: "Number of Orders per Year",
+        data: Object.values(orderCounts),
+        fill: false,
+        borderColor: "rgb(75, 192, 192)",
+        tension: 0.1,
       },
     ],
   };
@@ -142,6 +156,10 @@ const AdminDashboard = () => {
       },
     ],
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -183,18 +201,18 @@ const AdminDashboard = () => {
             </section>
 
             <section className="dashboard-section">
-              <h3>Revenue by Customer</h3>
+              <h3>Revenue by Year</h3>
               <Bar data={orderBarChartData} />
             </section>
 
             <section className="dashboard-section">
-              <h3>Order Frequency</h3>
-              <Pie data={pieChartData} />
+              <h3>Orders per Year</h3>
+              <Line data={orderLineChartData} />
             </section>
 
             <section className="dashboard-section">
-              <h3>Order Frequency</h3>
-              <Pie data={pieChartData} />
+              <h3>Orders per Year</h3>
+              <Line data={orderLineChartData} />
             </section>
           </div>
         </main>
