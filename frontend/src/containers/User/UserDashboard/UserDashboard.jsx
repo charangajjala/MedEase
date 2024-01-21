@@ -10,10 +10,10 @@ import {
 import "./UserDashboard.scss";
 import { useRef } from "react";
 import endpoints from "../../../constants/endpoints";
-// import axiosInstance from "../../../api/axios";
+import axiosInstance from "../../../api/axios";
 
 // dummyData
-import dummyData from "../../../constants/dummyData";
+// import dummyData from "../../../constants/dummyData";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const UserDashboard = () => {
@@ -21,6 +21,7 @@ const UserDashboard = () => {
   const [navbarHeight, setNavbarHeight] = useState(0);
   const [cartCount, setCartCount] = useState(0);
   const [showLoginBox, setShowLoginBox] = useState(false);
+  const [products, setProducts] = useState([]);
 
   const navbarRef = useRef(null);
   const axiosPrivate = useAxiosPrivate();
@@ -30,29 +31,24 @@ const UserDashboard = () => {
     return auth && auth.accessToken;
   };
 
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     try {
-  //       const queryParams = new URLSearchParams();
-  //       queryParams.append("categoryName", "All Categories");
-  //       queryParams.append("keyword", "");
-  //       const response = await axiosInstance.get(
-  //         `${endpoints.GET_PRODUCTS_URL}?${queryParams.toString()}`,
-  //         {
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //         }
-  //       );
-  //       const data = await response.data;
-  //       console.log(data);
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const queryParams = new URLSearchParams();
+        queryParams.append("categoryName", "All Categories");
+        queryParams.append("keyword", "");
+        const response = await axiosInstance.get(
+          `${endpoints.GET_PRODUCTS_URL}?${queryParams.toString()}`
+        );
+        const data = await response.data;
+        setProducts(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
 
-  //   fetchProducts();
-  // }, []);
+    fetchProducts();
+  }, []);
 
   // Login Functionality
   const promptLogin = () => {
@@ -102,7 +98,6 @@ const UserDashboard = () => {
   const addToCart = async (product) => {
     try {
       const response = await axiosPrivate.post(endpoints.ADD_TO_CART_URL, {
-        userId: 4,
         medicineId: product.id,
         quantity: 1,
         costPerMonth: product.costPerMonth,
@@ -157,7 +152,7 @@ const UserDashboard = () => {
               </div>
 
               <div className="user-dashboard__content__product__cards">
-                {dummyData.map((data) => (
+                {products.map((data) => (
                   <ProductCard
                     key={data.id}
                     onAddToCart={() => handleAddToCart(data)}
@@ -166,7 +161,6 @@ const UserDashboard = () => {
                 ))}
               </div>
             </div>
-            
           </div>
         </main>
         <Footer />
