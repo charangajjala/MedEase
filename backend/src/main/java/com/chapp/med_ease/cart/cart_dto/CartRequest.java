@@ -8,9 +8,6 @@ import lombok.Data;
 @Builder
 public class CartRequest {
 
-    @NotNull(message = "User Id cannot be null")
-    private Integer userId;
-
     @NotNull(message = "Medicine Id cannot be null")
     private Integer medicineId;
 

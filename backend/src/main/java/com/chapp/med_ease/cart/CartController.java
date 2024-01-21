@@ -18,7 +18,6 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Data
 @RequiredArgsConstructor
@@ -35,11 +34,11 @@ public class CartController {
 
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("")
     @ResponseStatus(HttpStatus.OK)
-    public List<CartItemResponse> getMethodName(@PathVariable int userId) throws BadRequestException {
+    public List<CartItemResponse> getMethodName() throws BadRequestException {
 
-        List<CartItemResponse> res = cartService.getCartItems(userId);
+        List<CartItemResponse> res = cartService.getCartItems();
 
         return res;
 
