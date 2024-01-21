@@ -17,7 +17,4 @@ public class CartRequest {
     @NotNull(message = "Quantity cannot be null")
     private Integer quantity;
 
-    @NotNull(message = "Cost per month cannot be null")
-    private Integer costPerMonth;
-
 }

@@ -34,21 +34,24 @@ public class CartService {
         Cart cart = user.getCart();
 
         if (cart == null) {
+            System.out.println("Cart is null");
             final Cart newCart = Cart.builder()
                     .user(user)
                     .build();
             cartRepository.save(newCart);
+            user.setCart(newCart);
             cart = newCart;
-
         }
+        System.out.println("Cart is not null");
 
         final List<CartItem> cartItems = cart.getCartItems();
 
         if (cartItems == null) { // if cart is empty
+            System.out.println("Cart items is null");
             final CartItem newCartItem = CartItem.builder()
                     .medicine(medicine)
                     .quantity(req.getQuantity())
-                    .cost(req.getCostPerMonth())
+                    .cost(medicine.getCostPerMonth())
                     .build();
             cart.addCartItem(newCartItem);
             cartRepository.save(cart);
@@ -56,24 +59,28 @@ public class CartService {
         }
 
         else {
+            System.out.println("Cart items is not null");
 
             Optional<CartItem> cartItem = cartItemRepository.findByMedicine(medicine);
 
             if (cartItem.isPresent()) { // if medicine already exists in cart
+                System.out.println("Medicine already exists in cart");
                 cartItem.get().setQuantity(req.getQuantity());
-                cartItem.get().setCost(req.getCostPerMonth());
+                cartItem.get().setCost(medicine.getCostPerMonth());
                 cartItemRepository.save(cartItem.get());
             }
 
             else { // if medicine doesnt exist in cart
+                System.out.println("Medicine doesnt exist in cart");
                 final CartItem newCartItem = CartItem.builder()
                         .medicine(medicine)
                         .quantity(req.getQuantity())
-                        .cost(req.getCostPerMonth())
+                        .cost(medicine.getCostPerMonth())
                         .build();
                 cart.addCartItem(newCartItem);
                 cartRepository.save(cart);
                 cartItemRepository.save(newCartItem);
+
             }
 
         }

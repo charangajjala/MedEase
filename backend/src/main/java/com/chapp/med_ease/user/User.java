@@ -53,7 +53,7 @@ public class User implements UserDetails {
     private Role role;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cart_id", referencedColumnName = "id")
+    @JoinColumn(name = "cart_id")
     private Cart cart;
 
     private static final Logger logInfo = Logger.getLogger(User.class.getName());
