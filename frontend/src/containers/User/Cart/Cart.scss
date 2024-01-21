@@ -13,8 +13,8 @@
     @include main-style;
     display: grid;
     grid-template-columns: 2fr 1fr;
-    gap: 2em; 
-    padding: 1em; 
+    gap: 2em;
+    padding: 1em;
   }
 
   &__content-left {
@@ -23,6 +23,20 @@
     flex-direction: column;
     padding: 20px;
     min-height: 81vh;
+
+    &__noitems {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .browse {
+        .go-to-products {
+          @include button-style;
+          text-decoration: none;
+        }
+      }
+    }
 
     &__header {
       display: flex;
@@ -39,8 +53,8 @@
     }
 
     h2 {
-      font-size: 1.8rem; 
-      margin-bottom: 25px; 
+      font-size: 1.8rem;
+      margin-bottom: 25px;
     }
   }
 
@@ -108,7 +122,7 @@
   .cart {
     &__main {
       grid-template-columns: 1fr;
-      gap: 1em; 
+      gap: 1em;
     }
 
     h2 {
@@ -117,7 +131,7 @@
 
     .cart__content-right {
       &__summary {
-        padding: 15px; 
+        padding: 15px;
 
         h2 {
           font-size: 1.5rem;

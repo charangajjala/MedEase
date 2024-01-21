@@ -1,5 +1,6 @@
 import "./Cart.scss";
 import { Header, Navbar, Footer, CartItem } from "../../../userComponents";
+import emptyCart from "../../../assets/emptycart.svg";
 import { Button } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
@@ -24,6 +25,7 @@ const Cart = () => {
           return acc + item.quantity;
         }, 0);
         setCartItems(data);
+        console.log("This the response recieved : ",data);
         setCartCount(totalQuantity);
       } catch (error) {
         console.log(error);
@@ -89,19 +91,41 @@ const Cart = () => {
               Shopping Cart <hr />
             </h2>
           </div>
-          <div className="cart__content-left__items">
-            <div className="cart__content-left__items-header"></div>
-            {cartItems.map((item, index) => (
-              <CartItem
-                key={index}
-                item={item}
-                onQuantityChange={handleQuantityChange}
-              />
-            ))}
-          </div>
-          <div className="cart__content-left__buttons">
-            <Button name="Remove All" />
-          </div>
+          {cartItems.length === 0 ? (
+            <div className="cart__content-left__noitems">
+              <div className="header">
+                <h3>Your cart is empty</h3>
+                <p>
+                  You have no items in your cart. To buy one or more items,
+                  click &quot;Add to cart&quot;
+                </p>
+              </div>
+              <div className="content">
+                <img src={emptyCart} alt="" />
+              </div>
+              <div className="browse">
+                <a href="/dashboard" className="go-to-products">
+                  Browse Products
+                </a>
+              </div>
+            </div>
+          ) : (
+            <div className="cart__content-left__items">
+              <div className="cart__content-left__items-header"></div>
+              {cartItems.map((item, index) => (
+                <CartItem
+                  key={index}
+                  item={item}
+                  onQuantityChange={handleQuantityChange}
+                />
+              ))}
+            </div>
+          )}
+          {cartItems.length !== 0 && (
+            <div className="cart__content-left__buttons">
+              <Button name="Remove All" />
+            </div>
+          )}
         </div>
 
         <div className="cart__content-right">

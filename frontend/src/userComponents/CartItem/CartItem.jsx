@@ -35,10 +35,11 @@ const CartItem = ({ item, onQuantityChange }) => {
   const handleQuantityChange = async (e) => {
     const newQuantity = Number(e.target.value);
     dispatch({ type: "SET_QUANTITY", payload: newQuantity });
+    console.log(item)
     try {
       if (isAuthenticated()) {
         const response = await axiosPrivate.post(endpoints.ADD_TO_CART_URL, {
-          medicineId: item.id,
+          medicineId: item.cartProduct.id,
           quantity: newQuantity,
           costPerMonth: item.cartProduct.costPerMonth,
         });
@@ -96,6 +97,7 @@ CartItem.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.number.isRequired,
     cartProduct: PropTypes.shape({
+      id: PropTypes.number.isRequired,
       productTitle: PropTypes.string.isRequired,
       costPerMonth: PropTypes.number.isRequired,
       totalStock: PropTypes.number.isRequired,
