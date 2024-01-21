@@ -1,10 +1,13 @@
 package com.chapp.med_ease.cart;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.chapp.med_ease.cart.cart_dto.CartItemResponse;
+import com.chapp.med_ease.cart.cart_dto.CartProduct;
 import com.chapp.med_ease.cart.cart_dto.CartRequest;
 import com.chapp.med_ease.exception.exceptions.BadRequestException;
 import com.chapp.med_ease.medicine.Medicine;
@@ -52,6 +55,7 @@ public class CartService {
                     .medicine(medicine)
                     .quantity(req.getQuantity())
                     .cost(medicine.getCostPerMonth())
+                    .totalCost(medicine.getCostPerMonth() * req.getQuantity())
                     .build();
             cart.addCartItem(newCartItem);
             cartRepository.save(cart);
@@ -67,6 +71,10 @@ public class CartService {
                 System.out.println("Medicine already exists in cart");
                 cartItem.get().setQuantity(req.getQuantity());
                 cartItem.get().setCost(medicine.getCostPerMonth());
+                int prevTotalCost = cartItem.get().getTotalCost();
+                int newTotalCost = medicine.getCostPerMonth() * req.getQuantity();
+                cart.setTotalCost(cart.getTotalCost() - prevTotalCost + newTotalCost);
+                cartItem.get().setTotalCost(newTotalCost);
                 cartItemRepository.save(cartItem.get());
             }
 
@@ -76,6 +84,7 @@ public class CartService {
                         .medicine(medicine)
                         .quantity(req.getQuantity())
                         .cost(medicine.getCostPerMonth())
+                        .totalCost(medicine.getCostPerMonth() * req.getQuantity())
                         .build();
                 cart.addCartItem(newCartItem);
                 cartRepository.save(cart);
@@ -84,6 +93,43 @@ public class CartService {
             }
 
         }
+
+    }
+
+    public List<CartItemResponse> getCartItems(int userId) throws BadRequestException {
+
+        final User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BadRequestException("User not found"));
+
+        final Cart cart = user.getCart();
+
+        List<CartItemResponse> res = new ArrayList<>();
+
+        if (cart == null) {
+            return res;
+        }
+
+        final List<CartItem> cartItems = cart.getCartItems();
+
+        if (cartItems == null) {
+            return res;
+        }
+
+        for (CartItem cartItem : cartItems) {
+
+            Medicine medicine = cartItem.getMedicine();
+
+            CartProduct cartProduct = new CartProduct(medicine);
+            CartItemResponse cartItemResponse = CartItemResponse.builder()
+                    .id(cartItem.getId())
+                    .quantity(cartItem.getQuantity())
+                    .totalCost(cartItem.getTotalCost())
+                    .build();
+
+            res.add(cartItemResponse);
+        }
+
+        return res;
 
     }
 

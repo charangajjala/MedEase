@@ -41,4 +41,6 @@ public class CartItem {
 
         private int cost;
 
+        private int totalCost;
+
 }

@@ -20,7 +20,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableMethodSecurity
 public class SecurityConfig {
 
-        private static final String[] WHITE_LIST_URL = { "/auth/login", "/auth/register" };
+        private static final String[] WHITE_LIST_URL = { "/auth/**", "/**" };
         private final JwtAuthFilter jwtAuthFilter;
         private final AuthenticationProvider authenticationProvider;
         private static final Logger logInfo = Logger.getLogger(SecurityConfig.class.getName());
@@ -38,8 +38,9 @@ public class SecurityConfig {
                 http
                                 .csrf(AbstractHttpConfigurer::disable)
                                 .authorizeHttpRequests(req -> req
-                                                .requestMatchers(WHITE_LIST_URL).permitAll()
-                                                .anyRequest().hasAuthority("ROLE_ADMIN"))
+                                                .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+                                                .requestMatchers("/cart/**").hasAnyAuthority("ROLE_USER")
+                                                .requestMatchers(WHITE_LIST_URL).permitAll())
                                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                                 .authenticationProvider(authenticationProvider)
                                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
