@@ -11,6 +11,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class AddressResponse {
 
+    private int id;
     private String addressName;
     private String addressLine1;
     private String addressLine2;
@@ -20,6 +21,7 @@ public class AddressResponse {
     private String pincode;
 
     public AddressResponse(Address address) {
+        this.id = address.getId();
         this.addressName = address.getAddressName();
         this.addressLine1 = address.getAddressLine1();
         this.addressLine2 = address.getAddressLine2();
