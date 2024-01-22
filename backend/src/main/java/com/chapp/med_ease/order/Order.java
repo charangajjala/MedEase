@@ -43,7 +43,7 @@ public class Order {
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
-    @OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
     @JoinColumn(name = "address_id")
     private Address address;
 

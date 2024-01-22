@@ -28,9 +28,8 @@ public class CartItem {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private int id;
 
-        @OneToOne()
-        @JoinColumn(name = "medicine_id", unique = false)
-        @Column(unique = false)
+        @ManyToOne()
+        @JoinColumn(name = "medicine_id")
         private Medicine medicine;
 
         @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
