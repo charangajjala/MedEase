@@ -18,6 +18,8 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Data
 @RequiredArgsConstructor
@@ -43,5 +45,13 @@ public class CartController {
         return res;
 
     }
+
+    // @PutMapping("path/{id}")
+    // public SomeEnityData putMethodName(@PathVariable String id, @RequestBody
+    // SomeEnityData entity) {
+    // //TODO: process PUT request
+
+    // return entity;
+    // }
 
 }
