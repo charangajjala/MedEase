@@ -25,40 +25,40 @@ import lombok.NoArgsConstructor;
 @Table(name = "medicine")
 public class Medicine {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name = "id")
+        private int id;
 
-    @Column(name = "product_title", unique = true, nullable = false)
-    private String productTitle;
+        @Column(name = "product_title", unique = true, nullable = false)
+        private String productTitle;
 
-    @Column(name = "description", nullable = false)
-    private String description;
+        @Column(name = "description", nullable = false)
+        private String description;
 
-    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH })
-    @JoinColumn(name = "medicine_type_id", nullable = false)
-    private MedicineType medicineType;
+        @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+                        CascadeType.DETACH, CascadeType.REFRESH })
+        @JoinColumn(name = "medicine_type_id", nullable = false)
+        private MedicineType medicineType;
 
-    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH })
-    @JoinColumn(name = "company_id", nullable = false)
-    private Company company;
+        @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+                        CascadeType.DETACH, CascadeType.REFRESH })
+        @JoinColumn(name = "company_id", nullable = false)
+        private Company company;
 
-    @Column(name = "cost_per_month")
-    private int costPerMonth;
+        @Column(name = "cost_per_month")
+        private int costPerMonth;
 
-    @Column(name = "expiry_date")
-    private String expiryDate;
+        @Column(name = "expiry_date")
+        private String expiryDate;
 
-    @Column(name = "manufacture_date")
-    private String manufactureDate;
+        @Column(name = "manufacture_date")
+        private String manufactureDate;
 
-    @Column(name = "product_code")
-    private String productCode;
+        @Column(name = "product_code")
+        private String productCode;
 
-    @Column(name = "total_stock")
-    private int totalStock;
+        @Column(name = "total_stock")
+        private int totalStock;
 
 }
