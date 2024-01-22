@@ -10,8 +10,11 @@ import com.chapp.med_ease.cart.cart_dto.CartItemResponse;
 import com.chapp.med_ease.cart.cart_dto.CartProduct;
 import com.chapp.med_ease.cart.cart_dto.CartRequest;
 import com.chapp.med_ease.exception.exceptions.BadRequestException;
+import com.chapp.med_ease.exception.exceptions.NotAuthorizedException;
 import com.chapp.med_ease.medicine.Medicine;
 import com.chapp.med_ease.medicine.MedicineRepository;
+import com.chapp.med_ease.order.Order;
+import com.chapp.med_ease.order.OrderRespository;
 import com.chapp.med_ease.user.User;
 import com.chapp.med_ease.user.UserRepository;
 import com.chapp.med_ease.util.UserFromToken;
@@ -26,6 +29,7 @@ public class CartService {
     private final CartRespository cartRepository;
     private final CartItemRepository cartItemRepository;
     private final MedicineRepository medicineRepository;
+    private final OrderRespository orderRespository;
     private final UserFromToken userFromToken;
 
     public void addProductToCart(CartRequest req) throws BadRequestException {
@@ -131,6 +135,21 @@ public class CartService {
         cartRepository.save(cart);
 
         cartItemRepository.delete(cartItem);
+
+    }
+
+    public void deleteCart() throws BadRequestException {
+
+        final User user = userFromToken.get();
+
+        final Cart cart = user.getCart();
+
+        if (cart == null)
+            throw new BadRequestException("User doesnt have a cart");
+
+        cartRepository.delete(cart);
+        user.setCart(null);
+        userRepository.save(user);
 
     }
 
