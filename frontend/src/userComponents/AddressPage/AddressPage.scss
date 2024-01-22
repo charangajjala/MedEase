@@ -1,0 +1,40 @@
+@import "../../styles/colors/colors.scss";
+@import "../../styles/fonts/fonts.scss";
+@import "../../styles/mixins/userMixins.scss";
+
+.address-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+
+  &__buttons {
+    button {
+      @include button-style;
+    }
+  }
+
+  .content-wrapper {
+    text-align: center; 
+
+    img {
+      max-width: 40%; 
+      height: auto;
+      margin: auto auto; 
+    }
+
+    .message {
+      font-size: 1.2em;
+      color: $text-color;
+      margin: 20px 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .content-wrapper img {
+      max-width: 60%; 
+    }
+  }
+}
+

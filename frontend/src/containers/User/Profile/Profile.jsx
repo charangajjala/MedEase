@@ -1,5 +1,12 @@
 import "./Profile.scss";
-import { Navbar, Header, Footer, AccountPage } from "../../../userComponents";
+import {
+  Navbar,
+  Header,
+  Footer,
+  AccountPage,
+  AddressPage,
+  AddressForm,
+} from "../../../userComponents";
 import { Sidebar } from "../../../userComponents";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { NotFoundPageInd } from "../../../pages";
@@ -28,7 +35,8 @@ const Profile = () => {
             <Routes>
               <Route path="/" element={<AccountPage />} />
               <Route path="/purchase-history" element={<AccountPage />} />
-              <Route path="/prescriptions" element={<AccountPage />} />
+              <Route path="/addresses" element={<AddressPage />} />
+              <Route path="/address-form" element={<AddressForm />} />
               <Route path="/reviews" element={<AccountPage />} />
               <Route path="/wallet" element={<AccountPage />} />
               <Route path="/offers" element={<AccountPage />} />

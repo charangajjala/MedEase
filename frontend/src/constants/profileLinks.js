@@ -17,7 +17,7 @@ const profileLinks = [
   { name: "My Account", icon: faUser, href: "/profile/" },
   { name: "Purchase History", icon: faHistory, href: "/profile/purchase-history" },
   // { name: "My Lab Orders", icon: faVial, href: "/profile/lab-orders" },
-  { name: "My Prescriptions", icon: faPrescriptionBottleAlt, href: "/profile/prescriptions" },
+  { name: "My Addresses", icon: faPrescriptionBottleAlt, href: "/profile/addresses" },
   // { name: "My Appointments", icon: faCalendarAlt, href: "/appointments" },
   { name: "My Reviews", icon: faCommentDots, href: "/profile/reviews" },
   { name: "My Wallet", icon: faWallet, href: "/profile/wallet" },
