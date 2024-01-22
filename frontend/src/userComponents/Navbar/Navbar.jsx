@@ -50,6 +50,7 @@ const Navbar = ({ cartCount }) => {
           }
         );
         const data = await response.data;
+        navigate("/search", { state: { data } })
         console.log(data);
       } catch (err) {
         console.log(err.name);

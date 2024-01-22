@@ -36,9 +36,39 @@
   &__info {
     padding: 10px;
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
     flex-grow: 1; 
+
+    &-buy {
+      align-self: center;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    &-type,
+    &-company,
+    &-expiry,
+    &-code {
+      p {
+        font-size: 0.875rem;
+        margin-bottom: 5px;
+        line-height: 1.5;
+      }
+    }
+
+    &-stock {
+      padding-bottom: 3px;
+
+      &.in-stock {
+        color: $success-color;
+      }
+
+      &.out-of-stock {
+        color: $error-color;
+      }
+    }
     
     &-name {
       h2 { 
@@ -85,4 +115,20 @@
       width: 100%;
     }
   }
+}
+
+.expires-soon { 
+  color: $error-color; 
+}
+
+.expires-medium {
+  color: darken($success-color, 10%);
+}
+
+.expires-long {
+  color: $success-color;
+}
+
+.expired {
+  color: lighten($error-color, 10%);
 }

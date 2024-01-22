@@ -1,10 +1,13 @@
 import "./SearchResults.scss";
 import { Header, Navbar, Footer, SearchResult } from "../../../userComponents";
-import { useState } from 'react';
+import { useState } from "react";
 import { SelectField } from "../../../components";
+import { useLocation } from "react-router-dom";
 
 const SearchResults = () => {
   const [price, setPrice] = useState(0);
+  const location = useLocation();
+  const products = location.state.data;
 
   const handlePriceChange = (event) => {
     setPrice(event.target.value);
@@ -77,12 +80,9 @@ const SearchResults = () => {
               <hr />
             </div>
             <div className="search-result__content">
-              <SearchResult />
-              <SearchResult />
-              <SearchResult />
-              <SearchResult />
-              <SearchResult />
-              <SearchResult />
+              {products.map((product) => (
+                <SearchResult key={product.id} product={product} />
+              ))}
             </div>
           </div>
         </div>
