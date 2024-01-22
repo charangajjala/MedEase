@@ -56,6 +56,9 @@ public class OrderService {
 
         orderRespository.save(order);
 
+        user.setCart(null);
+        cart.setUser(null);
+
     }
 
     public OrderResponse getOrder(int id) throws BadRequestException, NotAuthorizedException {
