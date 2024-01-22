@@ -19,7 +19,7 @@ public class UserProfileResponse {
 
     public UserProfileResponse(User user) {
         this.id = user.getId();
-        this.username = user.getUsername();
+        this.username = user.getUserName();
         this.email = user.getEmail();
     }
 
