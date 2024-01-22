@@ -28,7 +28,7 @@ public class CartItem {
         private int id;
 
         @OneToOne()
-        @JoinColumn(name = "medicine_id")
+        @JoinColumn(name = "medicine_id", unique = false)
         private Medicine medicine;
 
         @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
