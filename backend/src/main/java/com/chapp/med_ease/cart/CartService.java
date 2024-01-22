@@ -69,6 +69,7 @@ public class CartService {
                     .cost(medicine.getCostPerMonth())
                     .totalCost(medicine.getCostPerMonth() * req.getQuantity())
                     .build();
+            cart.setTotalCost(cart.getTotalCost() + newCartItem.getTotalCost());
             cart.addCartItem(newCartItem);
             cartRepository.save(cart);
             cartItemRepository.save(newCartItem);
