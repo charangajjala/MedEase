@@ -10,6 +10,7 @@ import com.chapp.med_ease.exception.exceptions.NotFoundException;
 import com.chapp.med_ease.user.address_dto.AddressRequest;
 import com.chapp.med_ease.user.address_dto.AddressResponse;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +28,7 @@ public class AddressController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public void postAddress(@RequestBody AddressRequest req) throws BadRequestException {
+    public void postAddress(@Valid @RequestBody AddressRequest req) throws BadRequestException {
         addressService.createAddress(req);
 
     }
