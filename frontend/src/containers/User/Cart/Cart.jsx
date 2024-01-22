@@ -27,7 +27,7 @@ const Cart = () => {
           return acc + item.quantity;
         }, 0);
         setCartItems(data);
-        console.log("This the response recieved : ",data);
+        console.log("This the response recieved : ", data);
         updateCartCount(totalQuantity);
       } catch (error) {
         console.log(error);
@@ -73,6 +73,16 @@ const Cart = () => {
         item.id === itemId ? { ...item, quantity: newQuantity } : item
       )
     );
+  };
+
+  const handleRemoveALL = async () => {
+    try {
+      const resposne = await axiosPrivate.delete(endpoints.REMOVE_CART_ITEMS_URL);
+      console.log(resposne);
+      window.location.reload();
+    } catch (err) {
+      console.log("Error in handleRemoveALL:", err);
+    }
   };
 
   return (
@@ -124,7 +134,7 @@ const Cart = () => {
           )}
           {cartItems.length !== 0 && (
             <div className="cart__content-left__buttons">
-              <Button name="Remove All" />
+              <Button name="Remove All" onClick={handleRemoveALL}/>
             </div>
           )}
         </div>

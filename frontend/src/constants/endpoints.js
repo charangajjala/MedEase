@@ -12,6 +12,10 @@ const Endpoints = {
   // Cart Links
   ADD_TO_CART_URL: "/api/cart",
   GET_CART_URL: "/api/cart",
+  REMOVE_CART_ITEMS_URL: "/api/cart",
+
+  // Cart Item links
+  UPDATE_CART_ITEM_URL: "/api/cart/cartitem/{id}",
 
   // Company Related URLs
   COMPANY_REPORTS_URL: "/api/admin/company",

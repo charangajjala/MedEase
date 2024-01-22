@@ -35,7 +35,7 @@ const CartItem = ({ item, onQuantityChange, disabled }) => {
   const handleQuantityChange = async (e) => {
     const newQuantity = Number(e.target.value);
     dispatch({ type: "SET_QUANTITY", payload: newQuantity });
-    console.log(item)
+    console.log(item);
     try {
       if (isAuthenticated()) {
         const response = await axiosPrivate.post(endpoints.ADD_TO_CART_URL, {
@@ -54,6 +54,20 @@ const CartItem = ({ item, onQuantityChange, disabled }) => {
 
   const totalValue = item.cartProduct.costPerMonth * item.quantity;
   const animatedTotalValue = useAnimatedNumber(totalValue);
+
+  const handleRemove = async () => {
+    try {
+      if (isAuthenticated()) {
+        const response = await axiosPrivate.put(
+          endpoints.UPDATE_CART_ITEM_URL.replace("{id}", item.id)
+        );
+        console.log(response);
+        window.location.reload();
+      }
+    } catch (err) {
+      console.log("Error in handleRemove:", err);
+    }
+  };
 
   return (
     <div className="cart-item">
@@ -81,7 +95,11 @@ const CartItem = ({ item, onQuantityChange, disabled }) => {
               ))}
             </select>
           </div>
-          <Button className="remove-button" name="Remove" />
+          <Button
+            className="remove-button"
+            name="Remove"
+            onClick={handleRemove}
+          />
           <Button className="save-button" name="Save for later" />
         </div>
       </div>
