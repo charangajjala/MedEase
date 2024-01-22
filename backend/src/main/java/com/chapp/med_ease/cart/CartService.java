@@ -147,9 +147,11 @@ public class CartService {
         if (cart == null)
             throw new BadRequestException("User doesnt have a cart");
 
-        cart.setCartItems(null);
         user.setCart(null);
         userRepository.save(user);
+        for (CartItem cartItem : cart.getCartItems()) {
+            cartItemRepository.delete(cartItem);
+        }
         cartRepository.delete(cart);
 
     }
