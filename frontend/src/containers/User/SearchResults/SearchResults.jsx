@@ -1,17 +1,61 @@
 import "./SearchResults.scss";
 import { Header, Navbar, Footer, SearchResult } from "../../../userComponents";
-import { useState } from "react";
+import { useReducer, useMemo } from "react";
 import { SelectField } from "../../../components";
 import { useLocation } from "react-router-dom";
+import useCart from "../../../context/CartContext";
+
+const initialState = {
+  price: 0,
+  selectedCategory: "",
+  inStockOnly: false,
+};
+
+const filterReducer = (state, action) => {
+  switch (action.type) {
+    case "SET_PRICE":
+      return { ...state, price: action.payload };
+    case "SET_CATEGORY":
+      return { ...state, selectedCategory: action.payload };
+    case "TOGGLE_IN_STOCK":
+      return { ...state, inStockOnly: !state.inStockOnly };
+    case "CLEAR_FILTERS":
+      return initialState;
+    default:
+      return state;
+  }
+};
 
 const SearchResults = () => {
-  const [price, setPrice] = useState(0);
+  const [filterState, dispatch] = useReducer(filterReducer, initialState);
   const location = useLocation();
   const products = location.state.data;
+  const { cartCount } = useCart();
 
-  const handlePriceChange = (event) => {
-    setPrice(event.target.value);
-  };
+  const categoryOptions = Array.from(
+    new Set(products.map((product) => product.productType))
+  ).map((productType) => ({
+    value: productType,
+    label: productType,
+  }));
+
+  const filteredProducts = useMemo(
+    () =>
+      products.filter((product) => {
+        return (
+          (filterState.selectedCategory
+            ? product.productType === filterState.selectedCategory
+            : true) &&
+          (filterState.inStockOnly ? product.totalStock > 0 : true) &&
+          product.costPerMonth <= filterState.price
+        );
+      }),
+    [products, filterState]
+  );
+
+  const handleApplyFilters = () => {
+    console.log("Filtered products:", filteredProducts);
+  }
 
   return (
     <>
@@ -20,7 +64,7 @@ const SearchResults = () => {
           <Header />
         </div>
         <div className="search-results__navbar">
-          <Navbar />
+          <Navbar cartCount={cartCount} />
         </div>
       </div>
 
@@ -38,11 +82,16 @@ const SearchResults = () => {
                 name="priceRange"
                 min="0"
                 max="1000"
-                value={price}
-                onChange={handlePriceChange}
+                value={filterState.price}
+                onChange={(e) => {
+                  dispatch({
+                    type: "SET_PRICE",
+                    payload: e.target.value,
+                  });
+                }}
               />
               <div className="price-range__values">
-                <span>${price}</span>
+                <span>${filterState.price}</span>
                 <span>$1000</span>
               </div>
             </div>
@@ -52,24 +101,45 @@ const SearchResults = () => {
                 label="Category"
                 name="category"
                 id="category"
-                options={[
-                  { value: "category1", label: "Category 1" },
-                  { value: "category2", label: "Category 2" },
-                  { value: "category3", label: "Category 3" },
-                ]}
+                options={categoryOptions}
+                onChange={(e) => {
+                  dispatch({
+                    type: "SET_CATEGORY",
+                    payload: e.target.value,
+                  });
+                }}
               />
             </div>
 
             <div className="filter-category">
               <label>
-                <input type="checkbox" name="inStock" />
+                <input
+                  type="checkbox"
+                  name="inStock"
+                  onChange={() => {
+                    dispatch({
+                      type: "TOGGLE_IN_STOCK",
+                    });
+                  }}
+                />
                 In Stock Only
               </label>
             </div>
 
             <div className="filter-actions">
-              <button type="button">Apply Filters</button>
-              <button type="button">Clear All</button>
+              <button type="button" onClick={handleApplyFilters}>
+                Apply Filters
+              </button>
+              <button
+                type="button"
+                onChange={() => {
+                  dispatch({
+                    type: "CLEAR_FILTERS",
+                  });
+                }}
+              >
+                Clear All
+              </button>
             </div>
           </div>
 

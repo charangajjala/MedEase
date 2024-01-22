@@ -2,48 +2,79 @@ import "./SearchResult.scss";
 import moov from "../../assets/moov.jpg";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import useCart from "../../context/CartContext";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import endpoints from "../../constants/endpoints";
 
 const SearchResult = ({ product }) => {
   const currentDate = new Date();
   const expiryDate = new Date(product.expiryDate);
   const timeDiff = expiryDate.getTime() - currentDate.getTime();
   const daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24));
-  console.log(product.productTitle,expiryDate,timeDiff,daysLeft)
   const navigate = useNavigate();
+  const { cartCount, updateCartCount } = useCart();
+  const axiosPrivate = useAxiosPrivate();
+  // Using a predefined variable for medicineId
+  const productId = product.id;
 
-  let expiryClass = '';
-  let expiryText = 'Expired';
+  let expiryClass = "";
+  let expiryText = "Expired";
 
   if (daysLeft > 0) {
     if (daysLeft > 365) {
-      expiryText = 'Expires in more than a year';
-      expiryClass = 'expires-long';
+      expiryText = "Expires in more than a year";
+      expiryClass = "expires-long";
     } else if (daysLeft <= 7) {
       expiryText = `Expires in ${daysLeft} days`;
-      expiryClass = 'expires-soon';
+      expiryClass = "expires-soon";
     } else if (daysLeft <= 30) {
       expiryText = `Expires in ${daysLeft} days`;
-      expiryClass = 'expires-medium'; 
+      expiryClass = "expires-medium";
     } else {
       expiryText = `Expires in ${daysLeft} days`;
-      expiryClass = 'expires-long';
+      expiryClass = "expires-long";
     }
   } else {
-    expiryClass = 'expired';
+    expiryClass = "expired";
   }
 
-
   const handleNavigate = () => {
-    navigate("/product", { state: { data:product } });
+    navigate("/product", { state: { data: product } });
+  };
+
+  const handleAddToCart = async (product) => {
+    try {
+      const response = await addToCart(product);
+      console.log(response);
+      updateCartCount(cartCount + 1);
+    } catch (err) {
+      console.error("Error adding product to cart:", err);
+    }
+  };
+
+  const addToCart = async (product) => {
+    console.log("The product id is:", product.id);
+    try {
+      const response = await axiosPrivate.post(endpoints.ADD_TO_CART_URL, {
+        medicineId: productId,
+        quantity: 1,
+        costPerMonth: product.costPerMonth,
+      });
+      const data = await response.data;
+      return data;
+    } catch (err) {
+      console.error("Error in addToCart:", err);
+      throw err;
+    }
   };
 
   return (
-    <div className="results" onClick={handleNavigate}>
-      <div className="results__image">
+    <div className="results">
+      <div className="results__image" onClick={handleNavigate}>
         <img src={moov} alt={product.productTitle} />
       </div>
       <div className="results__info">
-        <div className="results__info-details">
+        <div className="results__info-details" onClick={handleNavigate}>
           <div className="results__info-name">
             <h2>{product.productTitle}</h2>
           </div>
@@ -75,7 +106,7 @@ const SearchResult = ({ product }) => {
             <p>{product.totalStock > 0 ? "In Stock" : "Out of Stock"}</p>
           </div>
           <div className="results__info-actions">
-            <button>Add to Cart</button>
+            <button onClick={handleAddToCart}>Add to Cart</button>
           </div>
         </div>
       </div>
