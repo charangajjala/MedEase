@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import endpoints from "../../../constants/endpoints";
 import { useReducer } from "react";
+import useCart from "../../../context/CartContext";
 
 const inititalState = {
   quantity: 1,
@@ -38,7 +39,8 @@ const Productdetails = () => {
   const location = useLocation();
   const [mainImage, setMainImage] = useState(moov);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [cartCount, setCartCount] = useState(0);
+  // const [cartCount, setCartCount] = useState(0);
+  const { cartCount, updateCartCount } = useCart();
   const [showLoginBox, setShowLoginBox] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
   const [state, dispatch] = useReducer(reducer, inititalState);
@@ -60,12 +62,12 @@ const Productdetails = () => {
           const totalQuantity = data.reduce((acc, item) => {
             return acc + item.quantity;
           }, 0);
-          setCartCount(totalQuantity);
+          updateCartCount(totalQuantity);
         } catch (err) {
           console.error(err);
         }
       } else {
-        setCartCount(0);
+        updateCartCount(0);
       }
     };
     fetchCartLength();
@@ -103,7 +105,7 @@ const Productdetails = () => {
         });
         // Response Ideality 200 or 201
         setAddedToCart(true);
-        setCartCount(cartCount + quantity);
+        updateCartCount(cartCount + quantity);
         setTimeout(() => setAddedToCart(false), 3000);
         console.log("Added to cart");
       } catch (err) {

@@ -7,12 +7,14 @@ import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { useEffect, useState } from "react";
 import endpoints from "../../../constants/endpoints";
 import useAnimatedNumber from "../../../hooks/useAnimatedNumber";
+import useCart from "../../../context/CartContext";
 
 const Cart = () => {
   const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
   const [cartItems, setCartItems] = useState([]);
-  const [cartCount, setCartCount] = useState(0);
+  // const [cartCount, setCartCount] = useState(0);
+  const { cartCount, updateCartCount } = useCart();
   // Just a fade in animation
   // const [animateSubtotal, setAnimateSubtotal] = useState(false);
 
@@ -26,7 +28,7 @@ const Cart = () => {
         }, 0);
         setCartItems(data);
         console.log("This the response recieved : ",data);
-        setCartCount(totalQuantity);
+        updateCartCount(totalQuantity);
       } catch (error) {
         console.log(error);
       }
