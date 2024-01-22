@@ -62,11 +62,11 @@ public class User implements UserDetails {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    private List<Address> addresses = new ArrayList<>();
+    private List<Address> addresses;
 
     @OneToMany(mappedBy = "user", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
             CascadeType.REFRESH })
-    private List<Order> orders = new ArrayList<>();
+    private List<Order> orders;
 
     private static final Logger logInfo = Logger.getLogger(User.class.getName());
 
@@ -118,10 +118,14 @@ public class User implements UserDetails {
     }
 
     public void addAddress(Address address) {
+        if (this.addresses == null)
+            this.addresses = new ArrayList<>();
         this.addresses.add(address);
     }
 
     public void addOrder(Order order) {
+        if (this.orders == null)
+            this.orders = new ArrayList<>();
         this.orders.add(order);
         order.setUser(this);
     }
