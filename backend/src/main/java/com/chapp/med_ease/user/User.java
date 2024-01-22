@@ -77,6 +77,10 @@ public class User implements UserDetails {
 
     }
 
+    public String getUserName() {
+        return username;
+    }
+
     @Override
     public String getPassword() {
         logInfo.info("User: " + this.username + " has password: " + this.password);
