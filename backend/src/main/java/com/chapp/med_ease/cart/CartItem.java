@@ -4,6 +4,7 @@ import com.chapp.med_ease.medicine.Medicine;
 
 import jakarta.annotation.Generated;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,6 +30,7 @@ public class CartItem {
 
         @OneToOne()
         @JoinColumn(name = "medicine_id", unique = false)
+        @Column(unique = false)
         private Medicine medicine;
 
         @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
