@@ -20,7 +20,7 @@ function reducer(state, action) {
   }
 }
 
-const CartItem = ({ item, onQuantityChange }) => {
+const CartItem = ({ item, onQuantityChange, disabled }) => {
   const axiosPrivate = useAxiosPrivate();
   const [state, dispatch] = useReducer(reducer, {
     ...initialState,
@@ -72,6 +72,7 @@ const CartItem = ({ item, onQuantityChange }) => {
               className="quantity-selector"
               onChange={(e) => handleQuantityChange(e)}
               value={state.quantity}
+              disabled={disabled}
             >
               {Array.from({ length: 5 }, (_, index) => (
                 <option key={index} value={index}>
@@ -105,7 +106,8 @@ CartItem.propTypes = {
     quantity: PropTypes.number.isRequired,
     totalCost: PropTypes.number.isRequired,
   }).isRequired,
-  onQuantityChange: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+  onQuantityChange: PropTypes.func,
 };
 
 export default CartItem;

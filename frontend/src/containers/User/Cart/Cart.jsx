@@ -39,8 +39,7 @@ const Cart = () => {
   }, []);
 
   const handleCheckout = () => {
-    // navigate("/checkout");
-    console.log("Checkout");
+    navigate("/checkout");
   };
 
   const handleContinueShopping = () => {
