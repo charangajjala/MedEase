@@ -11,6 +11,7 @@ import "./UserDashboard.scss";
 import { useRef } from "react";
 import endpoints from "../../../constants/endpoints";
 import axiosInstance from "../../../api/axios";
+import useCart from "../../../context/CartContext";
 
 // dummyData
 // import dummyData from "../../../constants/dummyData";
@@ -19,7 +20,8 @@ import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 const UserDashboard = () => {
   const [isNavFixed, setIsNavFixed] = useState(false);
   const [navbarHeight, setNavbarHeight] = useState(0);
-  const [cartCount, setCartCount] = useState(0);
+  // const [cartCount, setCartCount] = useState(0);
+  const { cartCount, updateCartCount } = useCart();
   const [showLoginBox, setShowLoginBox] = useState(false);
   const [products, setProducts] = useState([]);
 
@@ -55,12 +57,12 @@ const UserDashboard = () => {
           const totalQuantity = data.reduce((acc, item) => {
             return acc + item.quantity;
           }, 0);
-          setCartCount(totalQuantity);
+          updateCartCount(totalQuantity);
         } catch (err) {
           console.error(err);
         }
       } else {
-        setCartCount(0);
+        updateCartCount(0);
       }
     };
 
@@ -105,7 +107,7 @@ const UserDashboard = () => {
         console.log("You have access to add", product);
         const response = await addToCart(product);
         console.log(response);
-        setCartCount(cartCount + 1);
+        updateCartCount(cartCount + 1);
       } else {
         promptLogin();
       }
