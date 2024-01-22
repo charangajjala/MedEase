@@ -1,0 +1,21 @@
+@import "../../../styles/colors/colors.scss";
+@import "../../../styles/fonts/fonts.scss";
+@import "../../../styles/mixins/userMixins.scss";
+
+.checkout-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-width: max-content;
+  font-family: $font-family, sans-serif;
+
+  &__main {
+    @include main-style;
+    min-height: 87vh;
+  }
+
+  &__content {
+    @include content-style;
+    min-height: 100%;
+  }
+}

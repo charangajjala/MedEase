@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import "./ProductDetails.scss";
 import { Header, Footer, Navbar, LoginBox } from "../../../userComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart as farHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faShareAlt as fasShareAlt } from "@fortawesome/free-solid-svg-icons";
 
 import moov from "../../../assets/moov.jpg";
@@ -37,6 +37,7 @@ const reducer = (state, action) => {
 const Productdetails = () => {
   const location = useLocation();
   const [mainImage, setMainImage] = useState(moov);
+  const [isFavorite, setIsFavorite] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const [showLoginBox, setShowLoginBox] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
@@ -83,6 +84,11 @@ const Productdetails = () => {
 
   const toggleLoginModal = () => {
     setShowLoginBox(!showLoginBox);
+  };
+
+  const toggleFavorite = (e) => {
+    e.stopPropagation();
+    setIsFavorite(!isFavorite);
   };
 
   const handleAddToCart = async () => {
@@ -162,8 +168,11 @@ const Productdetails = () => {
                     <p className="product__seller">Seller</p>
                   </div>
                   <div className="product-page__details-right">
-                    <button>
-                      <FontAwesomeIcon icon={farHeart} />
+                    <button onClick={toggleFavorite}>
+                      <FontAwesomeIcon
+                        icon={faHeart}
+                        color={isFavorite ? "red" : "white"}
+                      />
                     </button>
                     <button>
                       <FontAwesomeIcon icon={fasShareAlt} />
