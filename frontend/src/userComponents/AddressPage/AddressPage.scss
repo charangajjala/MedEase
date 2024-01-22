@@ -3,7 +3,12 @@
 @import "../../styles/mixins/userMixins.scss";
 
 .address-page {
-  padding: 20px 0;
+  padding: 20px;
+
+  h1 {
+    color: $text-color;
+    margin-bottom: 20px;
+  }
 
   &__buttons {
     button {

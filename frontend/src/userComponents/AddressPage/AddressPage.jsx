@@ -44,23 +44,28 @@ const AddressPage = () => {
           </div>
         </>
       ) : (
-        <div className="address-page__addresses">
-          {addresses.map((address, index) => (
-            <div key={index} className="address-card">
-              <h3>{address.addressName}</h3>
-              <p>{address.addressLine1}</p>
-              {address.addressLine2 && <p>{address.addressLine2}</p>}
-              <p>{`${address.city}, ${address.state}`}</p>
-              <p>{address.country}</p>
-              <p>{address.pincode}</p>
-            </div>
-          ))}
-          <div className="add-address-card">
-            <div className="buttons">
-              <button onClick={handleAddAdress}>Add Address</button>
+        <>
+          <div className="address-page__header">
+            <h1>My Addresses</h1>
+          </div>
+          <div className="address-page__addresses">
+            {addresses.map((address, index) => (
+              <div key={index} className="address-card">
+                <h3>{address.addressName}</h3>
+                <p>{address.addressLine1}</p>
+                {address.addressLine2 && <p>{address.addressLine2}</p>}
+                <p>{`${address.city}, ${address.state}`}</p>
+                <p>{address.country}</p>
+                <p>{address.pincode}</p>
+              </div>
+            ))}
+            <div className="add-address-card">
+              <div className="buttons">
+                <button onClick={handleAddAdress}>Add Address</button>
+              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );
