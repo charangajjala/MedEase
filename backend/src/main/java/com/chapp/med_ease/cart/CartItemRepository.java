@@ -12,4 +12,6 @@ public interface CartItemRepository extends JpaRepository<CartItem, Integer> {
 
     Optional<CartItem> findByMedicine(Medicine medicine);
 
+    Optional<CartItem> findByCartAndMedicine(Cart cart, Medicine medicine);
+
 }

@@ -1,13 +1,13 @@
 package com.chapp.med_ease.auth;
 
 import com.chapp.med_ease.exception.exceptions.BadRequestException;
+import com.chapp.med_ease.exception.exceptions.NotAuthenticatedException;
 import com.chapp.med_ease.exception.exceptions.NotFoundException;
 import com.chapp.med_ease.jwt.JwtService;
 import com.chapp.med_ease.user.Role;
 import com.chapp.med_ease.user.User;
 import com.chapp.med_ease.user.UserRepository;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
@@ -85,9 +85,30 @@ public class AuthService {
 
     }
 
-    public LoginResponse refresh(@Valid LoginRequest req) {
+    public LoginResponse refresh(RefreshRequest req) throws BadRequestException, NotAuthenticatedException {
 
-        return null;
+        final String refreshToken = req.getRefreshToken();
+
+        final String email = jwtService.extractUsername(refreshToken);
+
+        final UserDetails userDetails = userRepo.findByEmail(email)
+                .orElseThrow(() -> new BadRequestException("Token is invalid"));
+
+        if (jwtService.isTokenExpired(refreshToken)) {
+            throw new NotAuthenticatedException("Token is expired");
+        }
+
+        else {
+            final String accessToken = jwtService.generateToken(userDetails);
+            final User user = (User) userDetails;
+            final Role role = user.getRole();
+
+            return LoginResponse.builder()
+                    .accessToken(accessToken)
+                    .refreshToken(refreshToken)
+                    .role(role)
+                    .build();
+        }
 
     }
 

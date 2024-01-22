@@ -11,7 +11,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
@@ -31,8 +30,7 @@ public class Cart {
     @Column(name = "id")
     private int id;
 
-    @OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH }, mappedBy = "cart")
+    @OneToOne(mappedBy = "cart")
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")

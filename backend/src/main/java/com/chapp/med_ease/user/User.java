@@ -1,7 +1,9 @@
 package com.chapp.med_ease.user;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -9,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.chapp.med_ease.cart.Cart;
+import com.chapp.med_ease.order.Order;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -19,6 +22,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -55,6 +59,14 @@ public class User implements UserDetails {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cart_id")
     private Cart cart;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private List<Address> addresses = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+            CascadeType.REFRESH })
+    private List<Order> orders = new ArrayList<>();
 
     private static final Logger logInfo = Logger.getLogger(User.class.getName());
 
@@ -99,6 +111,15 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         logInfo.info("User: " + this.username + " has enabled: " + true);
         return true;
+    }
+
+    public void addAddress(Address address) {
+        this.addresses.add(address);
+    }
+
+    public void addOrder(Order order) {
+        this.orders.add(order);
+        order.setUser(this);
     }
 
 }
