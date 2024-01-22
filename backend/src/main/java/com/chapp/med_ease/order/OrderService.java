@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.chapp.med_ease.cart.Cart;
+import com.chapp.med_ease.cart.CartRespository;
 import com.chapp.med_ease.cart.cart_dto.CartItemResponse;
 import com.chapp.med_ease.exception.exceptions.BadRequestException;
 import com.chapp.med_ease.exception.exceptions.NotAuthorizedException;
@@ -30,6 +31,7 @@ public class OrderService {
     private final UserFromToken userFromToken;
     private final UserRepository userRepository;
     private final OrderRespository orderRespository;
+    private final CartRespository cartRespository;
 
     public void createOrder(OrderRequest req) throws BadRequestException {
 
@@ -51,9 +53,10 @@ public class OrderService {
         final Order order = Order.builder().address(address).cart(cart).orderDate(currentFormattedDateTime).build();
 
         user.addOrder(order);
-
+        user.setCart(null);
+        cart.setUser(null);
         userRepository.save(user);
-
+        // cartRespository.save(cart);
         orderRespository.save(order);
 
     }
