@@ -54,7 +54,7 @@ public class OrderService {
 
         userRepository.save(user);
 
-        // orderRespository.save(order);
+        orderRespository.save(order);
 
     }
 
