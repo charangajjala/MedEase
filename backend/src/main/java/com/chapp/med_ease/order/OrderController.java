@@ -10,6 +10,7 @@ import com.chapp.med_ease.order.order_dto.OrderRequest;
 import com.chapp.med_ease.order.order_dto.OrderResponse;
 import com.chapp.med_ease.order.order_dto.OrdersResponse;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +30,7 @@ public class OrderController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public void postOrder(@RequestBody OrderRequest req) throws BadRequestException {
+    public void postOrder(@Valid @RequestBody OrderRequest req) throws BadRequestException {
 
         orderService.createOrder(req);
 
