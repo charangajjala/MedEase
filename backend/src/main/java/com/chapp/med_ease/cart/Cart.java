@@ -50,4 +50,12 @@ public class Cart {
         cartItem.setCart(this);
     }
 
+    public void removeCartItem(CartItem cartItem) {
+        if (cartItems != null) {
+            cartItems.remove(cartItem);
+            this.totalCost -= cartItem.getTotalCost();
+        }
+
+    }
+
 }
