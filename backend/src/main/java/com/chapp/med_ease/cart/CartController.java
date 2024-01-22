@@ -46,12 +46,10 @@ public class CartController {
 
     }
 
-    // @PutMapping("path/{id}")
-    // public SomeEnityData putMethodName(@PathVariable String id, @RequestBody
-    // SomeEnityData entity) {
-    // //TODO: process PUT request
+    @PutMapping("/cartitem/{id}")
+    public void deleteCartItem(@PathVariable int id) throws BadRequestException {
+        cartService.deleteCartItem(id);
 
-    // return entity;
-    // }
+    }
 
 }

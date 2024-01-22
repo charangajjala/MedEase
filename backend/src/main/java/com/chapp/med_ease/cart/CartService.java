@@ -44,7 +44,7 @@ public class CartService {
                     .build();
             user.setCart(newCart);
             cart = newCart;
-            // cartRepository.save(newCart);
+            cartRepository.save(cart);
             userRepository.save(user);
         }
 
@@ -111,6 +111,26 @@ public class CartService {
         }
 
         return res;
+
+    }
+
+    public void deleteCartItem(int id) throws BadRequestException {
+
+        final User user = userFromToken.get();
+
+        final Cart cart = user.getCart();
+
+        if (cart == null)
+            throw new BadRequestException("User doesnt have a cart");
+
+        final CartItem cartItem = cartItemRepository.findByCartAndId(cart, id)
+                .orElseThrow(() -> new BadRequestException("Cart item not found"));
+
+        cart.removeCartItem(cartItem);
+
+        cartRepository.save(cart);
+
+        cartItemRepository.delete(cartItem);
 
     }
 
