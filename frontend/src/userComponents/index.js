@@ -12,6 +12,7 @@ import { default as SearchResult } from "./SearchResult/SearchResult.jsx";
 import { default as AccountPage } from "./AccountPage/AccountPage.jsx";
 import { default as AddressPage } from "./AddressPage/AddressPage.jsx";
 import { default as AddressForm } from "./AddressForm/AddressForm.jsx";
+import { default as OrderPage } from "./OrderPage/OrderPage.jsx";
 
 export {
   Header,
@@ -26,4 +27,5 @@ export {
   SearchResult,
   AddressPage,
   AddressForm,
+  OrderPage,
 };

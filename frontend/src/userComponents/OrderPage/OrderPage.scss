@@ -1,0 +1,31 @@
+@import "./../../styles/colors/colors.scss";
+@import "./../../styles/fonts/fonts.scss";
+@import "./../../styles/mixins/userMixins.scss";
+
+.order-page {
+  padding: 20px;
+
+  h1 {
+    color: $text-color;
+    margin-bottom: 20px;
+  }
+
+  .order-history{
+    margin: 20px;
+    padding: 20px;
+
+    table {
+      width: 100%
+    }
+
+    th,
+    td {
+      padding: 10px;
+      text-align: center;
+    }
+
+    button {
+      @include button-style;
+    }
+  }
+}

@@ -50,9 +50,9 @@ const Checkout = () => {
   const totalCostValue = totalCost();
 
   const handleAddressChange = (event) => {
-    const addressId = event.target.value;
-    console.log(addressId);
-    const address = addresses.find((addr) => addr.addressName === addressId);
+    const addressName = event.target.value;
+    console.log(addressName);
+    const address = addresses.find((addr) => addr.addressName === addressName);
     console.log(address);
     setSelectedAddress(address);
   };
@@ -60,9 +60,10 @@ const Checkout = () => {
   const handlePlaceOrder = async (event) => {
     event.preventDefault();
     try {
+      console.log("The selected address is", selectedAddress);
       const response = await axiosPrivate.post(userEndpoints.PLACE_ORDER, {
         // Id is not being received
-        addressId: selectedAddress._id,
+        addressId: selectedAddress.id,
       });
       const data = await response.data;
       console.log(data);

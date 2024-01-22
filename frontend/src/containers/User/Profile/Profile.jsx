@@ -6,6 +6,7 @@ import {
   AccountPage,
   AddressPage,
   AddressForm,
+  OrderPage,
 } from "../../../userComponents";
 import { Sidebar } from "../../../userComponents";
 import { Routes, Route, useLocation } from "react-router-dom";
@@ -40,7 +41,7 @@ const Profile = () => {
               <Route path="/reviews" element={<AccountPage />} />
               <Route path="/wallet" element={<AccountPage />} />
               <Route path="/offers" element={<AccountPage />} />
-              <Route path="/orders" element={<AccountPage />} />
+              <Route path="/orders" element={<OrderPage />} />
               <Route path="/reports" element={<AccountPage />} />
               <Route path="*" element={<NotFoundPageInd />} />
             </Routes>
