@@ -19,6 +19,7 @@ import { default as Cart } from "./User/Cart/Cart.jsx";
 import { default as Profile } from "./User/Profile/Profile.jsx";
 import { default as SearchResults } from "./User/SearchResults/SearchResults.jsx";
 import { default as Checkout } from "./User/Checkout/Checkout.jsx";
+import { default as OrderSuccess } from "./User/OrderSuccess/OrderSuccess.jsx";
 
 export {
   AdminDashboard,
@@ -42,4 +43,5 @@ export {
   Profile,
   SearchResults,
   Checkout,
+  OrderSuccess,
 };

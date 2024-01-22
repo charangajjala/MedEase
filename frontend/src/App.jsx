@@ -22,6 +22,7 @@ import {
   Profile,
   SearchResults,
   Checkout,
+  OrderSuccess,
 } from "./containers/index.js";
 import WithAuth from "./utils/WithAuth.jsx";
 import { Invoice } from "./components/index.js";
@@ -45,6 +46,7 @@ const InvoiceWithAuth = WithAuth(Invoice);
 const CartWithAuth = WithAuth(Cart);
 const ProfileWithAuth = WithAuth(Profile);
 const CheckoutWithAuth = WithAuth(Checkout);
+const OrderSuccessWithAuth = WithAuth(OrderSuccess);
 
 function App() {
   return (
@@ -58,6 +60,7 @@ function App() {
         <Route path="/search" element={<SearchResults />} />
         <Route path="/cart" element={<CartWithAuth />} />
         <Route path="/checkout" element={<CheckoutWithAuth />} />
+        <Route path="/success" element={<OrderSuccessWithAuth />} />
         <Route path="/admin/dashboard" element={<AdminDashboardWithAuth />} />
         <Route path="/admin/medicine" element={<AddMedicineWithAuth />} />
         <Route

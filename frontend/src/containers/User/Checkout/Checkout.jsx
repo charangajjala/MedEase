@@ -4,13 +4,14 @@ import "./Checkout.scss";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import userEndpoints from "../../../constants/userEndpoints";
 import endpoints from "../../../constants/endpoints";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
   const axiosPrivate = useAxiosPrivate();
   const [addresses, setAddresses] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(null);
-  const [orderPlaced, setOrderPlaced] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAddresses = async () => {
@@ -63,9 +64,9 @@ const Checkout = () => {
         // Id is not being received
         addressId: selectedAddress._id,
       });
-      const data = response.data;
+      const data = await response.data;
       console.log(data);
-      setOrderPlaced(true);
+      navigate("/success");
     } catch (error) {
       console.log(error);
     }
