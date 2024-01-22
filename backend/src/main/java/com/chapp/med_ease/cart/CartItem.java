@@ -27,8 +27,7 @@ public class CartItem {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private int id;
 
-        @OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-                        CascadeType.DETACH, CascadeType.REFRESH })
+        @OneToOne()
         @JoinColumn(name = "medicine_id")
         private Medicine medicine;
 

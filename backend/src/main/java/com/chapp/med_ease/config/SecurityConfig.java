@@ -21,6 +21,8 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class SecurityConfig {
 
         private static final String[] WHITE_LIST_URL = { "/auth/**", "/**" };
+        private static final String[] ADMIN_URL = { "/admin/**" };
+        private static final String[] USER_URL = { "/user/**", "/cart/**" };
         private final JwtAuthFilter jwtAuthFilter;
         private final AuthenticationProvider authenticationProvider;
         private static final Logger logInfo = Logger.getLogger(SecurityConfig.class.getName());
@@ -38,8 +40,8 @@ public class SecurityConfig {
                 http
                                 .csrf(AbstractHttpConfigurer::disable)
                                 .authorizeHttpRequests(req -> req
-                                                .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-                                                .requestMatchers("/cart/**").hasAnyAuthority("ROLE_USER")
+                                                .requestMatchers(ADMIN_URL).hasAuthority("ROLE_ADMIN")
+                                                .requestMatchers(USER_URL).hasAnyAuthority("ROLE_USER")
                                                 .requestMatchers(WHITE_LIST_URL).permitAll())
                                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                                 .authenticationProvider(authenticationProvider)

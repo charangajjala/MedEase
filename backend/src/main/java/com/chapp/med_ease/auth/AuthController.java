@@ -1,6 +1,7 @@
 package com.chapp.med_ease.auth;
 
 import com.chapp.med_ease.exception.exceptions.BadRequestException;
+import com.chapp.med_ease.exception.exceptions.NotAuthenticatedException;
 import com.chapp.med_ease.exception.exceptions.NotFoundException;
 
 import jakarta.validation.Valid;
@@ -57,7 +58,8 @@ public class AuthController {
 
     @PostMapping("/refresh")
     @ResponseStatus(HttpStatus.OK)
-    public LoginResponse postMethodName(@Valid @RequestBody LoginRequest req) {
+    public LoginResponse postMethodName(@Valid @RequestBody RefreshRequest req)
+            throws BadRequestException, NotAuthenticatedException {
 
         LoginResponse res = authService.refresh(req);
         return res;
