@@ -15,6 +15,7 @@ const AddressPage = () => {
       try {
         const response = await axiosPrivate.get(userEndpoints.GET_ADDRESSES);
         const data = response.data;
+        console.log("The Addresses Received are", data);
         setAddresses(data);
       } catch (error) {
         console.log(error);
@@ -44,16 +45,21 @@ const AddressPage = () => {
         </>
       ) : (
         <div className="address-page__addresses">
-          {addresses.map((address) => (
-            <div className="address-page__address" key={address.id}>
-              <h3>{address.name}</h3>
-              <p>{address.address}</p>
-              <p>{address.city}</p>
-              <p>{address.state}</p>
+          {addresses.map((address, index) => (
+            <div key={index} className="address-card">
+              <h3>{address.addressName}</h3>
+              <p>{address.addressLine1}</p>
+              {address.addressLine2 && <p>{address.addressLine2}</p>}
+              <p>{`${address.city}, ${address.state}`}</p>
               <p>{address.country}</p>
-              <p>{address.zipCode}</p>
+              <p>{address.pincode}</p>
             </div>
           ))}
+          <div className="add-address-card">
+            <div className="buttons">
+              <button onClick={handleAddAdress}>Add Address</button>
+            </div>
+          </div>
         </div>
       )}
     </div>
