@@ -1,11 +1,12 @@
 package com.chapp.med_ease.order;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.chapp.med_ease.cart.Cart;
-import com.chapp.med_ease.cart.CartItem;
 import com.chapp.med_ease.cart.cart_dto.CartItemResponse;
 import com.chapp.med_ease.exception.exceptions.BadRequestException;
 import com.chapp.med_ease.exception.exceptions.NotAuthorizedException;
@@ -44,7 +45,10 @@ public class OrderService {
         final Address address = addresses.stream().filter(a -> a.getId() == req.getAddressId()).findFirst()
                 .orElseThrow(() -> new BadRequestException("Address not found"));
 
-        final Order order = Order.builder().address(address).cart(cart).build();
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        String currentFormattedDateTime = currentDateTime.format(DateTimeFormatter.ofPattern("MM-DD-YYYY HH:mm:ss"));
+
+        final Order order = Order.builder().address(address).cart(cart).orderDate(currentFormattedDateTime).build();
 
         user.addOrder(order);
 
