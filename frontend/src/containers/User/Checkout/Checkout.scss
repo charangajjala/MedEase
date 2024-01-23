@@ -60,11 +60,6 @@
 
           select {
             @include input-style;
-            width: 100%;
-            padding: 10px;
-            cursor: pointer;
-            appearance: none;
-            transition: all 0.3s ease;
           }
 
           .selected-address {
@@ -74,7 +69,6 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            transition: all 0.3s ease;
 
             p {
               margin: 5px 0;
@@ -126,5 +120,14 @@
         color: $text-color;
       }
     }
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

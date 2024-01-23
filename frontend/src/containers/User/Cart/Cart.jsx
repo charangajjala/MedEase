@@ -77,7 +77,9 @@ const Cart = () => {
 
   const handleRemoveALL = async () => {
     try {
-      const resposne = await axiosPrivate.delete(endpoints.REMOVE_CART_ITEMS_URL);
+      const resposne = await axiosPrivate.delete(
+        endpoints.REMOVE_CART_ITEMS_URL
+      );
       console.log(resposne);
       window.location.reload();
     } catch (err) {
@@ -134,7 +136,7 @@ const Cart = () => {
           )}
           {cartItems.length !== 0 && (
             <div className="cart__content-left__buttons">
-              <Button name="Remove All" onClick={handleRemoveALL}/>
+              <Button name="Remove All" onClick={handleRemoveALL} />
             </div>
           )}
         </div>

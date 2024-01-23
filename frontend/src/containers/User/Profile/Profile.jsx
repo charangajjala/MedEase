@@ -11,9 +11,11 @@ import {
 import { Sidebar } from "../../../userComponents";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { NotFoundPageInd } from "../../../pages";
+import useCart from "../../../context/CartContext";
 
 const Profile = () => {
   const location = useLocation();
+  const { cartCount } = useCart();
 
   return (
     <>
@@ -22,7 +24,7 @@ const Profile = () => {
           <Header />
         </div>
         <div className="profile-page__navbar">
-          <Navbar />
+          <Navbar cartCount={cartCount} />
         </div>
       </div>
 

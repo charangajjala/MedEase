@@ -134,6 +134,7 @@ const AddressForm = () => {
         country: countries.find((country) => country.code === state.country)
           .name,
         state: states.find((eachState) => eachState.code === state.state).name,
+        city: cities.find((city) => city.code === state.city).name,
       });
       const data = response.data;
       navigate("/profile/addresses");

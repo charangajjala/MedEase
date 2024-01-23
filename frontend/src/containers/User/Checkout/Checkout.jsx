@@ -5,6 +5,7 @@ import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import userEndpoints from "../../../constants/userEndpoints";
 import endpoints from "../../../constants/endpoints";
 import { useNavigate } from "react-router-dom";
+import { SelectField } from "../../../components";
 
 const Checkout = () => {
   const axiosPrivate = useAxiosPrivate();
@@ -91,19 +92,21 @@ const Checkout = () => {
                 <h3>Shipping Address</h3>
 
                 <div className="form-group">
-                  <label htmlFor="address">Address</label>
                   <div className="select-wrapper">
-                    <select
-                      name="address"
+                    <SelectField
                       id="address"
+                      name="address"
                       onChange={handleAddressChange}
-                    >
-                      {addresses.map((address, index) => (
-                        <option key={index} value={address._id}>
-                          {address.addressName}
-                        </option>
-                      ))}
-                    </select>
+                      value={selectedAddress?.addressName}
+                      required
+                      options={
+                        addresses &&
+                        addresses.map((address) => ({
+                          value: address.addressName,
+                          label: address.addressName,
+                        }))
+                      }
+                    />
                     {selectedAddress && (
                       <div className="selected-address">
                         <p>{selectedAddress.addressLine1}</p>
@@ -125,7 +128,7 @@ const Checkout = () => {
                   </div>
                   <div className="cart-items__list">
                     {cartItems.map((item, index) => (
-                      <CartItem key={index} item={item} disabled={true} />
+                      <CartItem key={index} item={item} />
                     ))}
                   </div>
                   <div className="cart-items__total">

@@ -7,6 +7,7 @@ import { default as LoginBox } from "./LoginBox/LoginBox.jsx";
 import { default as CartItem } from "./CartItem/CartItem.jsx";
 import { default as Sidebar } from "./Sidebar/Sidebar.jsx";
 import { default as SearchResult } from "./SearchResult/SearchResult.jsx";
+import { default as CheckoutItem } from "./CheckoutItem/CheckoutItem.jsx";
 
 // Profile Components
 import { default as AccountPage } from "./AccountPage/AccountPage.jsx";
@@ -28,4 +29,5 @@ export {
   AddressPage,
   AddressForm,
   OrderPage,
+  CheckoutItem,
 };
