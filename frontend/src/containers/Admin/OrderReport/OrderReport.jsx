@@ -11,10 +11,12 @@ import { links } from "../../../constants/links.js";
 import logo from "../../../assets/logo.png";
 
 import { useLocation } from "react-router";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import "./OrderReport.scss";
 import { useNavigate } from "react-router-dom";
+import endpoints from "../../../constants/endpoints.js";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate.jsx";
 
 const OrderReport = () => {
   const {
@@ -25,13 +27,31 @@ const OrderReport = () => {
     dropdownRef,
   } = useVisibilityToggle();
 
+  const [orderDetails, setOrderDetails] = useState([]);
   const location = useLocation();
   const tableRef = useRef();
   const { order } = location.state;
-  console.log("This is the order that is passed",order);
-  const { customerMobile, customerName, orderDate, orderId, totalSum, orders } =
-    order;
+  const { username, orderDate, id, totalAmount } = order;
   const navigate = useNavigate();
+  const axiosPrivate = useAxiosPrivate();
+
+  useEffect(() => {
+    const fetchOrderDetails = async () => {
+      try {
+        const response = await axiosPrivate.get(
+          endpoints.GET_ADMIN_ORDER_URL.replace("{id}", id)
+        );
+        const data = await response.data;
+        console.log(data);
+        setOrderDetails(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchOrderDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -74,21 +94,21 @@ const OrderReport = () => {
                   <tbody>
                     <tr>
                       <td>Order ID</td>
-                      <td>{orderId}</td>
+                      <td>{id}</td>
                       <td>Order Date</td>
                       <td>{orderDate}</td>
                     </tr>
                     <tr>
                       <td>Customer Name</td>
-                      <td>{customerName}</td>
+                      <td>{username}</td>
                       <td>Customer Mobile</td>
-                      <td>{customerMobile}</td>
+                      <td>9121042757</td>
                     </tr>
                     <tr>
                       <td>Order Status</td>
                       <td>Paid</td>
                       <td>Total Amount</td>
-                      <td>{totalSum}</td>
+                      <td>{totalAmount}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -111,18 +131,18 @@ const OrderReport = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {orders.map((item) => (
+                    {orderDetails.products.map((item) => (
                       <tr key={item.id}>
                         <td>{item.id}</td>
-                        <td>{item.productName}</td>
-                        <td>{item.totalUnits}</td>
-                        <td>{item.pricePerUnit}</td>
+                        <td>{item.cartItem.productTitle}</td>
+                        <td>{item.quantity}</td>
+                        <td>{item.cartItem.costPerMonth}</td>
                         <td>{item.totalCost}</td>
                       </tr>
                     ))}
                     <tr className="total-row">
                       <td colSpan="4">Total</td>
-                      <td>{totalSum}</td>
+                      <td>{totalAmount}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -135,7 +155,7 @@ const OrderReport = () => {
               type="submit"
               onClick={() => {
                 navigate("/admin/invoice", {
-                  state: { order, orders, totalSum },
+                  state: { order, orderDetails, totalAmount },
                 });
               }}
             />

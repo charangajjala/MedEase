@@ -3,3 +3,4 @@
 backend/src/main/resources/application.yml
 backend/src/main/resources/application.yml
 swagger.yml
+frontend/src/constants/keys.js

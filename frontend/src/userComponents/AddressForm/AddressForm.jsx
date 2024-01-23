@@ -6,15 +6,16 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
+import keys from "../../constants/keys";
 
 const initialState = {
-  addressName: "string",
-  addressLine1: "string",
-  addressLine2: "string",
-  city: "string",
-  state: "string",
-  country: "string",
-  pincode: "string",
+  addressName: "",
+  addressLine1: "",
+  addressLine2: "",
+  city: "",
+  state: "",
+  country: "",
+  pincode: "",
 };
 
 const reducer = (state, action) => {
@@ -42,41 +43,105 @@ const AddressForm = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const axiosPrivate = useAxiosPrivate();
   const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
   const navigate = useNavigate();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axiosPrivate.post(
-        userEndpoints.ADD_ADDRESS,
-        state
-      );
-      const data = response.data;
-      navigate("/profile/addresses");
-      console.log(data);
-      // console.log(state);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const fetchCountries = async () => {
     try {
-      const response = await axios.get("https://restcountries.com/v3.1/all");
+      const response = await axios.get(
+        "https://api.countrystatecity.in/v1/countries",
+        {
+          headers: {
+            "X-CSCAPI-KEY": keys.COUNTRY_STATE_API_KEY,
+          },
+        }
+      );
       const data = await response.data;
       const formattedCountries = data.map((country) => ({
-        code: country.name.common,
-        name: country.name.common,
+        code: country.iso2,
+        name: country.name,
       }));
       setCountries(formattedCountries);
     } catch (error) {
       console.error("Error fetching countries:", error);
     }
   };
- 
+
+  const fetchStates = async (countryCode) => {
+    try {
+      const response = await axios.get(
+        `https://api.countrystatecity.in/v1/countries/${countryCode}/states`,
+        {
+          headers: {
+            "X-CSCAPI-KEY": keys.COUNTRY_STATE_API_KEY,
+          },
+        }
+      );
+      const data = await response.data;
+      const formattedStates = data.map((state) => ({
+        code: state.iso2,
+        name: state.name,
+      }));
+      setStates(formattedStates);
+    } catch (error) {
+      console.error("Error fetching states:", error);
+    }
+  };
+
+  const fetchCities = async (countryCode, stateCode) => {
+    try {
+      const response = await axios.get(
+        `https://api.countrystatecity.in/v1/countries/${countryCode}/states/${stateCode}/cities`,
+        {
+          headers: {
+            "X-CSCAPI-KEY": keys.COUNTRY_STATE_API_KEY,
+          },
+        }
+      );
+      const data = await response.data;
+      const formattedCities = data.map((city) => ({
+        code: String(city.id),
+        name: city.name,
+      }));
+      setCities(formattedCities);
+    } catch (error) {
+      console.error("Error fetching cities:", error);
+    }
+  };
+
   useEffect(() => {
     fetchCountries();
   }, []);
+
+  const handleCountryChange = (e) => {
+    const selectedCountry = e.target.value;
+    dispatch({ type: "SET_COUNTRY", payload: selectedCountry });
+    fetchStates(selectedCountry);
+  };
+
+  const handleStateChange = (e) => {
+    const selectedState = e.target.value;
+    dispatch({ type: "SET_STATE", payload: selectedState });
+    fetchCities(state.country, selectedState);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axiosPrivate.post(userEndpoints.ADD_ADDRESS, {
+        ...state,
+        country: countries.find((country) => country.code === state.country)
+          .name,
+        state: states.find((eachState) => eachState.code === state.state).name,
+      });
+      const data = response.data;
+      navigate("/profile/addresses");
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="address-form">
@@ -88,8 +153,8 @@ const AddressForm = () => {
           type="text"
           name="name"
           id="name"
-          label="Name"
-          placeholder="Enter your name"
+          label="Address Type"
+          placeholder="Enter address type"
           onChange={(e) =>
             dispatch({ type: "SET_ADDRESS_NAME", payload: e.target.value })
           }
@@ -121,9 +186,7 @@ const AddressForm = () => {
           label="Country"
           name="country"
           id="country"
-          onChange={(e) =>
-            dispatch({ type: "SET_COUNTRY", payload: e.target.value })
-          }
+          onChange={handleCountryChange}
           options={countries.map((country) => ({
             value: country.code,
             label: country.name,
@@ -135,12 +198,10 @@ const AddressForm = () => {
           label="State"
           name="state"
           id="state"
-          onChange={(e) =>
-            dispatch({ type: "SET_STATE", payload: e.target.value })
-          }
-          options={countries.map((country) => ({
-            value: country.code,
-            label: country.name,
+          onChange={handleStateChange}
+          options={states.map((state) => ({
+            value: state.code,
+            label: state.name,
           }))}
           required
         />
@@ -152,9 +213,9 @@ const AddressForm = () => {
           onChange={(e) =>
             dispatch({ type: "SET_CITY", payload: e.target.value })
           }
-          options={countries.map((country) => ({
-            value: country.code,
-            label: country.name,
+          options={cities.map((city) => ({
+            value: city.code,
+            label: city.name,
           }))}
           required
         />

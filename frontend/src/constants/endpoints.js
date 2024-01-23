@@ -8,6 +8,7 @@ const Endpoints = {
 
   // Admin Orders
   ADMIN_ORDERS_URL: "/api/admin/order",
+  GET_ADMIN_ORDER_URL: "/api/admin/order/{id}",
 
   // User Dashboard Products
   GET_PRODUCTS_URL: "/api/medicine",
