@@ -2,6 +2,7 @@ import { createContext, useState, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import endpoints from "../constants/endpoints";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import useAuth from "../hooks/useAuth";
 
 const CartContext = createContext();
 
@@ -10,30 +11,33 @@ const useCart = () => useContext(CartContext);
 export const CartProvider = ({ children }) => {
   const [cartCount, setCartCount] = useState(0);
   const axiosInstance = useAxiosPrivate();
+  const { user } = useAuth();
 
   useEffect(() => {
-    let isMounted = true;
+    if (user) {
+      let isMounted = true;
 
-    const fetchCartItems = async () => {
-      try {
-        const response = await axiosInstance.get(endpoints.GET_CART_URL);
-        if (isMounted) {
-          const totalQuantity = response.data.reduce(
-            (acc, item) => acc + item.quantity,
-            0
-          );
-          setCartCount(totalQuantity);
+      const fetchCartItems = async () => {
+        try {
+          const response = await axiosInstance.get(endpoints.GET_CART_URL);
+          if (isMounted) {
+            const totalQuantity = response.data.reduce(
+              (acc, item) => acc + item.quantity,
+              0
+            );
+            setCartCount(totalQuantity);
+          }
+        } catch (error) {
+          console.log(error);
         }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+      };
 
-    fetchCartItems();
+      fetchCartItems();
 
-    return () => {
-      isMounted = false;
-    };
+      return () => {
+        isMounted = false;
+      };
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -5,7 +5,7 @@ import endpoints from "../constants/endpoints";
 const useRefreshToken = () => {
   const { setAuth } = useAuth();
   const refresh = async () => {
-    const response = await axios.get(endpoints.REFRESH_URL, {
+    const response = await axios.post(endpoints.REFRESH_URL, {
       withCredentials: true,
     });
 

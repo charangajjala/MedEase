@@ -7,10 +7,14 @@ import {
   faLocation,
 } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../api/axios";
 import endpoints from "../../constants/endpoints";
+import { useState } from "react";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import userEndpoints from "../../constants/userEndpoints";
+import useAuth from "../../hooks/useAuth";
 
 const initialState = {
   category: "All Categories",
@@ -30,8 +34,35 @@ function reducer(state, action) {
 
 const Navbar = ({ cartCount }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [address, setAddress] = useState("");
+  const axiosPrivate = useAxiosPrivate();
   const { category, searchContent } = state;
   const navigate = useNavigate();
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      const fetchAddresses = async () => {
+        try {
+          const response = await axiosPrivate.get(userEndpoints.GET_ADDRESSES);
+          const data = response.data;
+          console.log("The Addresses Received are", data);
+          setAddress(data[0]);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchAddresses();
+    } else {
+      setAddress("Login to view addresses");
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleLocation = () => {
+    navigate("/profile/addresses");
+  };
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -50,7 +81,7 @@ const Navbar = ({ cartCount }) => {
           }
         );
         const data = await response.data;
-        navigate("/search", { state: { data } })
+        navigate("/search", { state: { data } });
         console.log(data);
       } catch (err) {
         console.log(err.name);
@@ -64,12 +95,24 @@ const Navbar = ({ cartCount }) => {
   return (
     <nav className="navbar-container">
       <div className="navbar-container__location">
-        <button className="navbar-container__location-button">
+        <button
+          className="navbar-container__location-button"
+          onClick={handleLocation}
+        >
           <FontAwesomeIcon icon={faLocation} />
         </button>
         <div className="navbar-container__location-text">
-          <span>19-4-3A/7, STV Nagar</span>
-          <span>Venkat Reddy Colony Tirupati</span>
+          {address.addressName ? (
+            <>
+              <span>{address?.addressLine1}</span>
+              <span>
+                {address?.city}, {address?.state}, {address?.country} -{" "}
+                {address?.pincode}
+              </span>
+            </>
+          ) : (
+            <span>{address}</span>
+          )}
         </div>
       </div>
       <div className="navbar-container__search">
