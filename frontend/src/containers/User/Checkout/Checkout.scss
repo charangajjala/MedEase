@@ -91,6 +91,12 @@
   flex-direction: column;
   gap: 10px;
 
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(300px, 1fr));
+    gap: 10px;
+  }
+
   &__total {
     display: flex;
     justify-content: space-between;

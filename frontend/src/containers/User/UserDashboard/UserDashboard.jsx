@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Header,
   Footer,
@@ -16,6 +16,7 @@ import useCart from "../../../context/CartContext";
 // dummyData
 // import dummyData from "../../../constants/dummyData";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import AuthContext from "../../../context/AuthProvider";
 
 const UserDashboard = () => {
   const [isNavFixed, setIsNavFixed] = useState(false);
@@ -24,14 +25,15 @@ const UserDashboard = () => {
   const { cartCount, updateCartCount } = useCart();
   const [showLoginBox, setShowLoginBox] = useState(false);
   const [products, setProducts] = useState([]);
+  const { auth } = useContext(AuthContext);
 
   const navbarRef = useRef(null);
   const axiosPrivate = useAxiosPrivate();
 
-  const isAuthenticated = () => {
-    const auth = JSON.parse(localStorage.getItem("auth"));
-    return auth && auth.accessToken;
-  };
+  // const isAuthenticated = () => {
+  //   const auth = JSON.parse(localStorage.getItem("auth"));
+  //   return auth && auth.accessToken;
+  // };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -50,7 +52,7 @@ const UserDashboard = () => {
     };
 
     const fetchCartLength = async () => {
-      if (isAuthenticated()) {
+      if (auth?.accessToken) {
         try {
           const response = await axiosPrivate.get(endpoints.GET_CART_URL);
           const data = await response.data;
@@ -103,7 +105,7 @@ const UserDashboard = () => {
   //  Adding to cart functionality
   const handleAddToCart = async (product) => {
     try {
-      if (isAuthenticated()) {
+      if (auth?.accessToken) {
         console.log("You have access to add", product);
         const response = await addToCart(product);
         console.log(response);

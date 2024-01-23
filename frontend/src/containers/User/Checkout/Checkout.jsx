@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Footer, Header, CartItem } from "../../../userComponents";
+import { Footer, Header, CheckoutItem } from "../../../userComponents";
 import "./Checkout.scss";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import userEndpoints from "../../../constants/userEndpoints";
@@ -58,6 +58,14 @@ const Checkout = () => {
     setSelectedAddress(address);
   };
 
+  const handleQuantityChange = (itemId, newQuantity) => {
+    setCartItems((currentItems) =>
+      currentItems.map((item) =>
+        item.id === itemId ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
   const handlePlaceOrder = async (event) => {
     event.preventDefault();
     try {
@@ -72,6 +80,12 @@ const Checkout = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleRemove = async (itemId) => {
+    setCartItems((currentItems) =>
+      currentItems.filter((item) => item.id !== itemId)
+    );
   };
 
   return (
@@ -128,7 +142,12 @@ const Checkout = () => {
                   </div>
                   <div className="cart-items__list">
                     {cartItems.map((item, index) => (
-                      <CartItem key={index} item={item} />
+                      <CheckoutItem
+                        item={item}
+                        key={index}
+                        onQuantityChange={handleQuantityChange}
+                        onRemove={handleRemove}
+                      />
                     ))}
                   </div>
                   <div className="cart-items__total">

@@ -1,3 +1,36 @@
 @import "../../styles/colors/colors.scss";
 @import "../../styles/fonts/fonts.scss";
 @import "../../styles/mixins/userMixins.scss";
+
+.checkout-item {
+  display: flex;
+  align-items: center;
+  border: 1px solid $table-border;
+  padding: 10px;
+  border-radius: 10px;
+
+  &__details {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__image {
+    flex-shrink: 0;
+    width: 180px;
+    height: 180px;
+    margin-right: 16px;
+    border: 1px solid $table-border;
+    border-radius: 10px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}

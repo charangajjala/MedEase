@@ -75,6 +75,16 @@ const Cart = () => {
     );
   };
 
+  const handleRemove = async (itemId) => {
+    setCartItems((currentItems) => {
+      const updatedItems = currentItems.filter((item) => item.id !== itemId);
+      updateCartCount(
+        updatedItems.reduce((acc, item) => acc + item.quantity, 0)
+      );
+      return updatedItems;
+    });
+  };
+
   const handleRemoveALL = async () => {
     try {
       const resposne = await axiosPrivate.delete(
@@ -130,6 +140,7 @@ const Cart = () => {
                   key={index}
                   item={item}
                   onQuantityChange={handleQuantityChange}
+                  onRemove={handleRemove}
                 />
               ))}
             </div>

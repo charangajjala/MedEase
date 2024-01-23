@@ -4,8 +4,9 @@ import "./CartItem.scss";
 import { Button } from "../../components";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import endpoints from "../../constants/endpoints";
-import { useReducer } from "react";
+import { useContext, useReducer } from "react";
 import useAnimatedNumber from "../../hooks/useAnimatedNumber";
+import AuthContext from "../../context/AuthProvider";
 
 const initialState = {
   quantity: 1,
@@ -20,24 +21,25 @@ function reducer(state, action) {
   }
 }
 
-const CartItem = ({ item, onQuantityChange, disabled }) => {
+const CartItem = ({ item, onQuantityChange, onRemove }) => {
   const axiosPrivate = useAxiosPrivate();
   const [state, dispatch] = useReducer(reducer, {
     ...initialState,
     quantity: item.quantity,
   });
+  const { auth } = useContext(AuthContext);
 
-  const isAuthenticated = () => {
-    const auth = JSON.parse(localStorage.getItem("auth"));
-    return auth && auth.accessToken;
-  };
+  // const isAuthenticated = () => {
+  //   const auth = JSON.parse(localStorage.getItem("auth"));
+  //   return auth && auth.accessToken;
+  // };
 
   const handleQuantityChange = async (e) => {
     const newQuantity = Number(e.target.value);
     dispatch({ type: "SET_QUANTITY", payload: newQuantity });
     console.log(item);
     try {
-      if (isAuthenticated()) {
+      if (auth?.accessToken) {
         const response = await axiosPrivate.post(endpoints.ADD_TO_CART_URL, {
           medicineId: item.cartProduct.id,
           quantity: newQuantity,
@@ -55,14 +57,15 @@ const CartItem = ({ item, onQuantityChange, disabled }) => {
   const totalValue = item.cartProduct.costPerMonth * item.quantity;
   const animatedTotalValue = useAnimatedNumber(totalValue);
 
-  const handleRemove = async () => {
+  const handleRemove = async (e) => {
+    e.preventDefault();
     try {
-      if (isAuthenticated()) {
+      if (auth?.accessToken) {
         const response = await axiosPrivate.put(
           endpoints.UPDATE_CART_ITEM_URL.replace("{id}", item.id)
         );
         console.log(response);
-        window.location.reload();
+        onRemove(item.id);
       }
     } catch (err) {
       console.log("Error in handleRemove:", err);
@@ -86,7 +89,6 @@ const CartItem = ({ item, onQuantityChange, disabled }) => {
               className="quantity-selector"
               onChange={(e) => handleQuantityChange(e)}
               value={state.quantity}
-              disabled={disabled}
             >
               {Array.from({ length: 5 }, (_, index) => (
                 <option key={index} value={index}>
@@ -98,7 +100,7 @@ const CartItem = ({ item, onQuantityChange, disabled }) => {
           <Button
             className="remove-button"
             name="Remove"
-            onClick={handleRemove}
+            onClick={(e) => handleRemove(e)}
           />
           <Button className="save-button" name="Save for later" />
         </div>
@@ -124,8 +126,8 @@ CartItem.propTypes = {
     quantity: PropTypes.number.isRequired,
     totalCost: PropTypes.number.isRequired,
   }).isRequired,
-  disabled: PropTypes.bool,
   onQuantityChange: PropTypes.func,
+  onRemove: PropTypes.func,
 };
 
 export default CartItem;

@@ -7,14 +7,14 @@ import {
   faLocation,
 } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
-import { useEffect, useReducer } from "react";
+import { useContext, useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../api/axios";
 import endpoints from "../../constants/endpoints";
 import { useState } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import userEndpoints from "../../constants/userEndpoints";
-import useAuth from "../../hooks/useAuth";
+import AuthContext from "../../context/AuthProvider";
 
 const initialState = {
   category: "All Categories",
@@ -38,10 +38,10 @@ const Navbar = ({ cartCount }) => {
   const axiosPrivate = useAxiosPrivate();
   const { category, searchContent } = state;
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { auth } = useContext(AuthContext);
 
   useEffect(() => {
-    if (user) {
+    if (auth?.accessToken) {
       const fetchAddresses = async () => {
         try {
           const response = await axiosPrivate.get(userEndpoints.GET_ADDRESSES);

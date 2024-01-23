@@ -7,11 +7,12 @@ import { faShareAlt as fasShareAlt } from "@fortawesome/free-solid-svg-icons";
 
 import moov from "../../../assets/moov.jpg";
 import moov2 from "../../../assets/moov2.jpg";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import endpoints from "../../../constants/endpoints";
 import { useReducer } from "react";
 import useCart from "../../../context/CartContext";
+import AuthContext from "../../../context/AuthProvider";
 
 const inititalState = {
   quantity: 1,
@@ -47,15 +48,16 @@ const Productdetails = () => {
   const imageGallery = [moov, moov2, moov, moov, moov];
   const data = location.state.data;
   const axiosPrivate = useAxiosPrivate();
+  const { auth } = useContext(AuthContext);
 
-  const isAuthenticated = () => {
-    const auth = JSON.parse(localStorage.getItem("auth"));
-    return auth && auth.accessToken;
-  };
+  // const isAuthenticated = () => {
+  //   const auth = JSON.parse(localStorage.getItem("auth"));
+  //   return auth && auth.accessToken;
+  // };
 
   useEffect(() => {
     const fetchCartLength = async () => {
-      if (isAuthenticated()) {
+      if (auth?.accessToken) {
         try {
           const response = await axiosPrivate.get(endpoints.GET_CART_URL);
           const data = await response.data;
@@ -96,7 +98,7 @@ const Productdetails = () => {
   const handleAddToCart = async () => {
     const { id, costPerMonth } = data;
     const { quantity } = state;
-    if (isAuthenticated()) {
+    if (auth?.accessToken) {
       try {
         const response = await axiosPrivate.post(endpoints.ADD_TO_CART_URL, {
           medicineId: id,
