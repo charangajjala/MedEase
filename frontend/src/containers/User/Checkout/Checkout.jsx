@@ -6,7 +6,7 @@ import userEndpoints from "../../../constants/userEndpoints";
 import endpoints from "../../../constants/endpoints";
 import { useNavigate } from "react-router-dom";
 import { SelectField } from "../../../components";
-
+import noitems from '../../../assets/empty-cart2.svg'
 const Checkout = () => {
   const axiosPrivate = useAxiosPrivate();
   const [addresses, setAddresses] = useState([]);
@@ -88,6 +88,10 @@ const Checkout = () => {
     );
   };
 
+  const handleNoCartItems = () => {
+    navigate("/dashboard");
+  };
+
   return (
     <>
       <div className="checkout-page">
@@ -102,38 +106,46 @@ const Checkout = () => {
                 Checkout <hr />
               </h2>
 
-              <div className="form-section">
-                <h3>Shipping Address</h3>
+              {cartItems && cartItems.length === 0 && (
+                <div className="no-items">
+                  <img src={noitems} alt="empty-cart" />
+                </div>
+              )}
 
-                <div className="form-group">
-                  <div className="select-wrapper">
-                    <SelectField
-                      id="address"
-                      name="address"
-                      onChange={handleAddressChange}
-                      value={selectedAddress?.addressName}
-                      required
-                      options={
-                        addresses &&
-                        addresses.map((address) => ({
-                          value: address.addressName,
-                          label: address.addressName,
-                        }))
-                      }
-                    />
-                    {selectedAddress && (
-                      <div className="selected-address">
-                        <p>{selectedAddress.addressLine1}</p>
-                        <p>{selectedAddress.address}</p>
-                        <p>{selectedAddress.city}</p>
-                        <p>{selectedAddress.state}</p>
-                        <p>{selectedAddress.pincode}</p>
-                        <p>{selectedAddress.country}</p>
-                      </div>
-                    )}
+              {cartItems && cartItems.length !== 0 && (
+                <div className="form-section">
+                  <h3>Shipping Address</h3>
+
+                  <div className="form-group">
+                    <div className="select-wrapper">
+                      <SelectField
+                        id="address"
+                        name="address"
+                        onChange={handleAddressChange}
+                        value={selectedAddress?.addressName}
+                        required
+                        options={
+                          addresses &&
+                          addresses.map((address) => ({
+                            value: address.addressName,
+                            label: address.addressName,
+                          }))
+                        }
+                      />
+                      {selectedAddress && (
+                        <div className="selected-address">
+                          <p>{selectedAddress.addressLine1}</p>
+                          <p>{selectedAddress.address}</p>
+                          <p>{selectedAddress.city}</p>
+                          <p>{selectedAddress.state}</p>
+                          <p>{selectedAddress.pincode}</p>
+                          <p>{selectedAddress.country}</p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
 
               {selectedAddress && (
                 <div className="cart-items">
@@ -161,14 +173,25 @@ const Checkout = () => {
                 </div>
               )}
 
+              {cartItems && cartItems.length !== 0 && (
+                <button
+                  type="submit"
+                  className="submit-button"
+                  onClick={handlePlaceOrder}
+                >
+                  Place Order
+                </button>
+              )}
+            </form>
+            {cartItems && cartItems.length === 0 && (
               <button
                 type="submit"
-                className="submit-button"
-                onClick={handlePlaceOrder}
+                className="redirect-button"
+                onClick={handleNoCartItems}
               >
-                Place Order
+                Add Items to cart
               </button>
-            </form>
+            )}
           </div>
         </main>
 

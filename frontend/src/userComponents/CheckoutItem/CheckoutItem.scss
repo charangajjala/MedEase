@@ -16,6 +16,71 @@
     justify-content: space-between;
     align-items: center;
     gap: 10px;
+
+    &-left {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .meta {
+        color: $success-color;
+      }
+
+      .quantity-container {
+        display: flex;
+        align-items: center;
+        border-radius: 8px;
+
+        .quantity-div {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          border: 1px solid $table-border;
+          padding: 3px;
+          border-radius: 10px;
+
+          p {
+            font-size: 0.875rem;
+            color: $text-color;
+          }
+        }
+
+        .quantity-selector {
+          border: none;
+          padding: 3px;
+          background-color: white;
+
+          &:focus {
+            outline: none;
+            border-color: $black;
+          }
+
+          option {
+            padding: 5px;
+          }
+        }
+      }
+
+      h3 {
+        font-size: 1.2em;
+      }
+    }
+
+    &-right {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+
+      .original-price {
+        color: $text-color;
+        font-size: $font-size-large;
+      }
+
+      button {
+        @include button-style;
+      }
+    }
   }
 
   &__image {

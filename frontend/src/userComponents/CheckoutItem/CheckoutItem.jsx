@@ -71,9 +71,7 @@ const CheckoutItem = ({ item, onQuantityChange, onRemove }) => {
       <div className="checkout-item__details">
         <div className="checkout-item__details-left">
           <h3 className="title">{item.cartProduct.productTitle}</h3>
-          <p className="meta">Company Name</p>
           <p className="meta">In stock</p>
-          <p className="price">${item.cartProduct.costPerMonth}</p>
           <div className="quantity-container">
             <div className="quantity-div">
               <p className="quantity-label">Qty</p>
@@ -89,17 +87,15 @@ const CheckoutItem = ({ item, onQuantityChange, onRemove }) => {
                 ))}
               </select>
             </div>
-            <Button
-              className="remove-button"
-              name="Remove"
-              onClick={(e) => handleRemove(e)}
-            />
           </div>
         </div>
         <div className="checkout-item__details-right">
-          <p className="sale-price">${item.totalCost}</p>
           <p className="original-price">${item.cartProduct.costPerMonth}</p>
-          <p className="discount-tag">20% off</p>
+          <Button
+            className="remove-button"
+            name="Remove"
+            onClick={(e) => handleRemove(e)}
+          />
         </div>
       </div>
     </div>
