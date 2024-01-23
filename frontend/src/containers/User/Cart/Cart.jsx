@@ -85,13 +85,14 @@ const Cart = () => {
     });
   };
 
-  const handleRemoveALL = async () => {
+  const handleRemoveALL = async (e) => {
+    e.preventDefault();
     try {
       const resposne = await axiosPrivate.delete(
         endpoints.REMOVE_CART_ITEMS_URL
       );
-      console.log(resposne);
-      window.location.reload();
+      setCartItems([]);
+      updateCartCount(0);
     } catch (err) {
       console.log("Error in handleRemoveALL:", err);
     }
@@ -147,7 +148,7 @@ const Cart = () => {
           )}
           {cartItems.length !== 0 && (
             <div className="cart__content-left__buttons">
-              <Button name="Remove All" onClick={handleRemoveALL} />
+              <Button name="Remove All" onClick={(e) => handleRemoveALL(e)} />
             </div>
           )}
         </div>
