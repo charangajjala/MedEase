@@ -28,6 +28,7 @@ const OrderReport = () => {
   const location = useLocation();
   const tableRef = useRef();
   const { order } = location.state;
+  console.log("This is the order that is passed",order);
   const { customerMobile, customerName, orderDate, orderId, totalSum, orders } =
     order;
   const navigate = useNavigate();
@@ -133,7 +134,9 @@ const OrderReport = () => {
               name="Download Invoice"
               type="submit"
               onClick={() => {
-                navigate("/admin/invoice", { state: { order, orders, totalSum } });
+                navigate("/admin/invoice", {
+                  state: { order, orders, totalSum },
+                });
               }}
             />
             <Button

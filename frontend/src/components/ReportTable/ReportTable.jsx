@@ -1,5 +1,22 @@
-import PropTypes from 'prop-types';
-import './ReportTable.scss';
+import PropTypes from "prop-types";
+import "./ReportTable.scss";
+
+const formatedDate = (dateString) => {
+  const [datePart, timePart] = dateString.split(" ");
+  const [month, day, year] = datePart
+    .split("-")
+    .map((num) => parseInt(num, 10));
+  const formattedDateString = `${month}/${day}/${year} ${timePart}`;
+
+  const newDate = new Date(formattedDateString);
+  const formattedDate = newDate.toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
+  return formattedDate;
+};
 
 const ReportTable = ({ data, columnHeaders, renderRowActions }) => {
   return (
@@ -7,23 +24,23 @@ const ReportTable = ({ data, columnHeaders, renderRowActions }) => {
       <table>
         <thead>
           <tr>
-            {columnHeaders.map(header => (
+            {columnHeaders.map((header) => (
               <th key={header.key}>{header.label}</th>
             ))}
             {renderRowActions && <th>Actions</th>}
           </tr>
         </thead>
         <tbody>
-          {data.map(item => (
-            <tr key={item.orderId || item.id}>
-              {columnHeaders.map(header => (
-                <td key={header.key}>{item[header.key]}</td>
-              ))}
-              {renderRowActions && (
-                <td>
-                  {renderRowActions(item)}
+          {data.map((item) => (
+            <tr key={item.id}>
+              {columnHeaders.map((header) => (
+                <td key={header.key}>
+                  {header.key === "orderDate"
+                    ? formatedDate(item[header.key])
+                    : item[header.key]}
                 </td>
-              )}
+              ))}
+              {renderRowActions && <td>{renderRowActions(item)}</td>}
             </tr>
           ))}
         </tbody>

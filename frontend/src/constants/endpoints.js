@@ -6,6 +6,9 @@ const Endpoints = {
   PRODUCT_REPORTS_URL: "/api/admin/medicine",
   UPDATE_PRODUCTS_URL: "/api/admin/medicine",
 
+  // Admin Orders
+  ADMIN_ORDERS_URL: "/api/admin/order",
+
   // User Dashboard Products
   GET_PRODUCTS_URL: "/api/medicine",
 

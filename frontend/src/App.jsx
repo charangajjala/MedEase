@@ -4,13 +4,13 @@ import {
   Login,
   AdminDashboard,
   AddMedicine,
-  SellsDashboard,
+  // SellsDashboard,
   OrderReports,
   OrderReport,
   CompanyReport,
   AddCategory,
   Logout,
-  SellsDashboardExt,
+  // SellsDashboardExt,
   AddCompany,
   UpdateCompany,
   ProductReports,
@@ -33,8 +33,8 @@ import { NotFoundPage } from "./pages/index.js";
 const AdminDashboardWithAuth = WithAuth(AdminDashboard);
 const AddMedicineWithAuth = WithAuth(AddMedicine);
 const UpdateMedicineWithAuth = WithAuth(UpdateMedicine);
-const StartSellWithAuth = WithAuth(SellsDashboard);
-const SellsDashboardExtWithAuth = WithAuth(SellsDashboardExt);
+// const StartSellWithAuth = WithAuth(SellsDashboard);
+// const SellsDashboardExtWithAuth = WithAuth(SellsDashboardExt);
 const OrderReportsWithAuth = WithAuth(OrderReports);
 const OrderReportWithAuth = WithAuth(OrderReport);
 const ProductReportsWithAuth = WithAuth(ProductReports);
@@ -67,8 +67,8 @@ function App() {
           path="/admin/medicineUpdate"
           element={<UpdateMedicineWithAuth />}
         />
-        <Route path="/admin/sells" element={<StartSellWithAuth />} />
-        <Route path="/admin/sellsExt" element={<SellsDashboardExtWithAuth />} />
+        {/* <Route path="/admin/sells" element={<StartSellWithAuth />} /> */}
+        {/* <Route path="/admin/sellsExt" element={<SellsDashboardExtWithAuth />} /> */}
         <Route path="/admin/report" element={<OrderReportsWithAuth />} />
         <Route path="/admin/reportExt" element={<OrderReportWithAuth />} />
         <Route path="/admin/products" element={<ProductReportsWithAuth />} />

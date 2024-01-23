@@ -1,6 +1,6 @@
 import {
   faTachometerAlt,
-  faShoppingCart,
+  // faShoppingCart,
   faClipboardList,
   faBoxOpen,
   faBuilding,
@@ -12,7 +12,7 @@ import {
 
 export const links = {
   dashboard: { name: "Dashboard", href: "/admin/dashboard", icon: faTachometerAlt },
-  startSell: { name: "Start Sell", href: "/admin/sells", icon: faShoppingCart },
+  // startSell: { name: "Start Sell", href: "/admin/sells", icon: faShoppingCart },
   orderReport: { name: "Order Report", href: "/admin/report", icon: faClipboardList },
   productReport: { name: "Product Report", href: "/admin/products", icon: faBoxOpen },
   addMedicine: { name: "Add Product", href: "/admin/medicine", icon: faCapsules },
