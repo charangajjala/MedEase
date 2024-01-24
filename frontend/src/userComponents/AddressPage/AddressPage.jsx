@@ -4,13 +4,16 @@ import userEndpoints from "../../constants/userEndpoints";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import loader from "../../assets/loader.svg";
 
 const AddressPage = () => {
   const axiosPrivate = useAxiosPrivate();
   const [addresses, setAddresses] = useState([]);
+  const [isAddressLoading, setIsAddressLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
+    setIsAddressLoading(true);
     const fetchAddresses = async () => {
       try {
         const response = await axiosPrivate.get(userEndpoints.GET_ADDRESSES);
@@ -19,6 +22,8 @@ const AddressPage = () => {
         setAddresses(data);
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsAddressLoading(false);
       }
     };
 
@@ -30,6 +35,15 @@ const AddressPage = () => {
     // Navigate to address form Internally
     navigate("/profile/address-form");
   };
+
+  if (isAddressLoading) {
+    return (
+      <div className="loading-page">
+        <img src={loader} alt="" />
+        <p>Loading Addresses...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="address-page">

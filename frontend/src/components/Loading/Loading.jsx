@@ -1,10 +1,11 @@
 import "./Loading.scss";
 import PropTypes from "prop-types";
+import loader from "../../assets/main-loader.svg";
 
 const Loading = ({ message }) => {
   return (
     <div className="loading-container">
-      <div className="loader"></div>
+      <img src={loader} alt="Loading" />
       {message && <p className="loading-message">{message}</p>}
     </div>
   );

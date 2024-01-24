@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import "./AccountPage.scss";
 import userEndpoints from "../../constants/userEndpoints";
+import loading from "../../assets/loader.svg";
 
 const AccountPage = () => {
   const [userProfile, setUserProfile] = useState({});
+  const [isProfileLoading, setIsProfileLoading] = useState(false);
 
   // const userProfile = {
   //   name: "John Doe",
@@ -15,6 +17,7 @@ const AccountPage = () => {
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
+    setIsProfileLoading(true);
     const fetchUserDetails = async () => {
       try {
         const response = await axiosPrivate.get(userEndpoints.GET_USER);
@@ -23,12 +26,23 @@ const AccountPage = () => {
         console.log(data);
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsProfileLoading(false);
       }
     };
 
     fetchUserDetails();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (isProfileLoading) {
+    return (
+      <div className="loading-page">
+        <img src={loading} alt="" />
+        <p>Loading Profile...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="account-page">

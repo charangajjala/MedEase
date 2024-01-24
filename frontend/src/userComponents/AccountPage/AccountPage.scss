@@ -35,3 +35,7 @@
   }
 
 }
+
+.loading-page {
+  @include profile-loading-style;
+}

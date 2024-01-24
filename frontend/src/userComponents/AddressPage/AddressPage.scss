@@ -21,7 +21,8 @@
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px;
 
-    .address-card, .add-address-card {
+    .address-card,
+    .add-address-card {
       min-height: 200px;
     }
 
@@ -108,4 +109,8 @@
       outline: none;
     }
   }
+}
+
+.loading-page {
+  @include profile-loading-style;
 }

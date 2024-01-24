@@ -3,13 +3,16 @@ import userEndpoints from "../../constants/userEndpoints";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import loading from "../../assets/loader.svg";
 
 const OrderPage = () => {
   const [orders, setOrders] = useState();
+  const [isOrdersLoading, setIsOrdersLoading] = useState(false);
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
 
   useEffect(() => {
+    setIsOrdersLoading(true);
     const fetchOrders = async () => {
       try {
         const response = await axiosPrivate.get(userEndpoints.GET_ORDERS);
@@ -17,6 +20,8 @@ const OrderPage = () => {
         setOrders(data);
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsOrdersLoading(false);
       }
     };
 
@@ -37,6 +42,15 @@ const OrderPage = () => {
 
     return formatedDate;
   };
+
+  if (isOrdersLoading) {
+    return (
+      <div className="loading-page">
+        <img src={loading} alt="Loading" />
+        <p>Loading Orders...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="order-page">

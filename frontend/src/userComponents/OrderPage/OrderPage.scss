@@ -10,12 +10,12 @@
     margin-bottom: 20px;
   }
 
-  .order-history{
+  .order-history {
     margin: 20px;
     padding: 20px;
 
     table {
-      width: 100%
+      width: 100%;
     }
 
     th,
@@ -28,4 +28,8 @@
       @include button-style;
     }
   }
+}
+
+.loading-page {
+  @include profile-loading-style;
 }
