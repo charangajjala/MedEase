@@ -7,6 +7,7 @@ import {
   AddressPage,
   AddressForm,
   OrderPage,
+  OrderDetail,
 } from "../../../userComponents";
 import { Sidebar } from "../../../userComponents";
 import { Routes, Route, useLocation } from "react-router-dom";
@@ -31,7 +32,12 @@ const Profile = () => {
       <main className="profile-page__main">
         <div className="profile-page__grid">
           <div className="profile-page__links">
-            <Sidebar />
+            <div className="profile-page__sidebar">
+              <Sidebar />
+            </div>
+            <div className="extra">
+              {/* Add Additional Stuff if necessary */}
+            </div>
           </div>
 
           <div className="profile-page__content" key={location.pathname}>
@@ -45,6 +51,7 @@ const Profile = () => {
               <Route path="/offers" element={<AccountPage />} />
               <Route path="/orders" element={<OrderPage />} />
               <Route path="/reports" element={<AccountPage />} />
+              <Route path="/orderDetails" element={<OrderDetail />} />
               <Route path="*" element={<NotFoundPageInd />} />
             </Routes>
           </div>

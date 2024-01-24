@@ -19,6 +19,7 @@ import {
 } from "./containers/index.js";
 import WithAuth from "./utils/WithAuth.jsx";
 import { Invoice } from "./components/index.js";
+import { Invoice as InvoiceUser } from "./userComponents/index.js";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { NotFoundPage } from "./pages/index.js";
@@ -37,6 +38,7 @@ const AddCompanyWithAuth = WithAuth(AddCompany);
 const UpdateCompanyWithAuth = WithAuth(UpdateCompany);
 const AddCategoryWithAuth = WithAuth(AddCategory);
 const InvoiceWithAuth = WithAuth(Invoice);
+const InvoiceUserWithAuth = WithAuth(InvoiceUser);
 
 function App() {
   return (
@@ -45,6 +47,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/invoice" element={<InvoiceUserWithAuth />} />
 
         {/* User Routes */}
         <Route path="/*" element={<UserRoutes />} />

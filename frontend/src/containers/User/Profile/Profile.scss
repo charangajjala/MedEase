@@ -18,7 +18,9 @@
   }
 
   &__links {
-    @include content-style;
+    .profile-page__sidebar {
+      @include content-style;
+    }
   }
 }
 

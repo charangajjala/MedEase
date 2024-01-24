@@ -15,6 +15,7 @@ const userEndpoints = {
   // Order Links
   PLACE_ORDER: "/api/order",
   GET_ORDERS: "/api/order",
+  GET_ORDER: "/api/order/{id}",
 };
 
 export default userEndpoints;

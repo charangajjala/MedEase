@@ -12,12 +12,11 @@
     grid-template-columns: auto 1fr;
     align-items: center;
     color: $text-color;
+    gap: 1em;
 
     &-button {
       @include button-style;
       transition: transform 0.3s ease-in-out;
-      border-top-right-radius: 0px;
-      border-bottom-right-radius: 0px;
     }
 
     &-text {
@@ -25,8 +24,6 @@
       grid-template-rows: auto auto;
       @include input-style;
       padding: 0.3rem;
-      border-top-left-radius: 0px ;
-      border-bottom-left-radius: 0px ;
 
       span {
         font-size: clamp(0.525rem, 1vw, 0.675rem);

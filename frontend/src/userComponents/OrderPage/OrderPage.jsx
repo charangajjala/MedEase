@@ -2,10 +2,12 @@ import "./OrderPage.scss";
 import userEndpoints from "../../constants/userEndpoints";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const OrderPage = () => {
   const [orders, setOrders] = useState();
   const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -21,6 +23,10 @@ const OrderPage = () => {
     fetchOrders();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleViewDetails = (order) => {
+    navigate("/profile/orderDetails", { state: { order } });
+  };
 
   const formatedOrderDate = (date) => {
     const formatedDate = new Date(date).toLocaleDateString("en-US", {
@@ -53,7 +59,9 @@ const OrderPage = () => {
                 <td>{formatedOrderDate(order.orderDate)}</td>
                 <td>{order.totalAmount}</td>
                 <td>
-                  <button>View Details</button>
+                  <button onClick={() => handleViewDetails(order)}>
+                    View Details
+                  </button>
                 </td>
               </tr>
             ))}

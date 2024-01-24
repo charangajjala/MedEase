@@ -1,0 +1,66 @@
+@import "./../../styles/colors/colors.scss";
+@import "./../../styles/fonts/fonts.scss";
+@import "./../../styles/mixins/userMixins.scss";
+
+.order-detail {
+  padding: 20px;
+  border-radius: 8px;
+
+  h2 {
+    color: $text-color;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+  }
+
+  .order-header,
+  .order-address,
+  .order-products {
+    margin-bottom: 20px;
+    padding: 15px;
+
+    span,
+    p {
+      margin-bottom: 10px;
+    }
+  }
+
+  .order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    span {
+      font-size: 1.2em;
+    }
+  }
+
+  .order-address h3,
+  .order-products h3 {
+    margin-bottom: 10px;
+    font-size: 1.3em;
+  }
+
+  .order-products {
+    .product {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid $border-color;
+
+      span {
+        font-size: 1em;
+      }
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    button {
+      @include button-style;
+    }
+  }
+}

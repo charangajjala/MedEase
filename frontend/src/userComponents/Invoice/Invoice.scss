@@ -1,0 +1,135 @@
+.invoice-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  border: 1px solid #d1d1d1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+
+  &__header {
+    text-align: center;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    background: linear-gradient(145deg, #e6f0fa, #ffffff);
+    border-bottom: 2px solid black;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+
+    h1 {
+      font-size: 2.5em;
+      color: black;
+      margin: 10px 0;
+      font-weight: 600;
+    }
+
+    img {
+      max-width: 120px;
+      height: auto;
+    }
+  }
+
+  .customer-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+
+    &__left, &__right {
+      flex: 1;
+      min-width: 280px;
+      padding: 0 15px;
+
+      p {
+        margin: 5px 0;
+        font-size: 1em;
+
+        strong {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  .order-details {
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+
+      thead {
+        tr {
+          background-color: #e7f2fa;
+        }
+
+        th {
+          text-align: left;
+          padding: 15px;
+          border-bottom: 1px solid #ddd;
+          font-size: 0.95em;
+          font-weight: 600;
+          color: #333;
+        }
+      }
+
+      tbody {
+        tr {
+          &:nth-child(odd) {
+            background-color: #f9f9f9;
+          }
+        }
+
+        td {
+          padding: 15px;
+          border-bottom: 1px solid #eee;
+          font-size: 0.9em;
+        }
+      }
+    }
+  }
+
+  .total-amount {
+    p {
+      font-size: 1.4em;
+      text-align: right;
+      margin: 0;
+      padding: 10px;
+      background: linear-gradient(145deg, #ffffff, #e6f0fa);
+      border-radius: 5px;
+
+      strong {
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .invoice-container, .invoice-container * {
+    visibility: visible;
+  }
+
+  .invoice-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+    box-shadow: none;
+    width: 100%;
+    border-radius: 0;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+}

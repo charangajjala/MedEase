@@ -14,6 +14,8 @@ import { default as AccountPage } from "./AccountPage/AccountPage.jsx";
 import { default as AddressPage } from "./AddressPage/AddressPage.jsx";
 import { default as AddressForm } from "./AddressForm/AddressForm.jsx";
 import { default as OrderPage } from "./OrderPage/OrderPage.jsx";
+import { default as OrderDetail } from "./OrderDetail/OrderDetail.jsx";
+import { default as Invoice } from "./Invoice/Invoice.jsx";
 
 export {
   Header,
@@ -30,4 +32,6 @@ export {
   AddressForm,
   OrderPage,
   CheckoutItem,
+  OrderDetail,
+  Invoice,
 };
