@@ -58,45 +58,72 @@ const AdminDashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
     const fetchProducts = async () => {
       try {
-        const response = await axiosPrivate.get(endpoints.PRODUCT_REPORTS_URL);
+        const response = await axiosPrivate.get(endpoints.PRODUCT_REPORTS_URL, {
+          signal,
+        });
         const data = await response.data;
         setProducts(data);
-      } catch (err) {
-        console.error(err);
+      } catch (error) {
+        if (error.name == "CanceledError") {
+          console.log("Request cancelled");
+        } else {
+          console.log(error);
+        }
       }
     };
 
     const fetchCompanies = async () => {
       try {
-        const response = await axiosPrivate.get(endpoints.COMPANY_REPORTS_URL);
+        const response = await axiosPrivate.get(endpoints.COMPANY_REPORTS_URL, {
+          signal,
+        });
         const data = await response.data;
         setCompanies(data);
-      } catch (err) {
-        console.error(err);
+      } catch (error) {
+        if (error.name == "CanceledError") {
+          console.log("Request cancelled");
+        } else {
+          console.log(error);
+        }
       }
     };
 
     const fetchProductTypes = async () => {
       try {
-        const response = await axiosPrivate.get(endpoints.GET_CATERGORY_URL);
+        const response = await axiosPrivate.get(endpoints.GET_CATERGORY_URL, {
+          signal,
+        });
         const data = await response.data;
         setProductTypes(data);
       } catch (err) {
-        console.error(err);
-      } finally {
-        setIsLoading(false);
+        if (err.name == "CanceledError") {
+          console.log("Request cancelled");
+        } else {
+          console.log(err);
+        }
       }
     };
 
     const fetchOrders = async () => {
       try {
-        const response = await axiosPrivate.get(endpoints.ADMIN_ORDERS_URL);
+        const response = await axiosPrivate.get(endpoints.ADMIN_ORDERS_URL, {
+          signal,
+        });
         const data = await response.data;
         setOrders(data);
       } catch (err) {
-        console.error(err);
+        if (err.name == "CanceledError") {
+          console.log("Request cancelled");
+        } else {
+          console.log(err);
+        }
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -104,10 +131,12 @@ const AdminDashboard = () => {
     fetchProducts();
     fetchCompanies();
     fetchProductTypes();
+
+    return () => {
+      controller.abort();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  console.log("Orders:", orders);
 
   function formatDate(dateString) {
     const date = new Date(dateString);

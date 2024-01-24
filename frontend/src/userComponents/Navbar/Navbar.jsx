@@ -15,6 +15,7 @@ import { useState } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import userEndpoints from "../../constants/userEndpoints";
 import AuthContext from "../../context/AuthProvider";
+import { Loading } from "../../components";
 // import React from "react";
 
 const initialState = {
@@ -53,6 +54,7 @@ function reducer(state, action) {
 const Navbar = ({ cartCount }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [address, setAddress] = useState("");
+  const [isAddressLoading, setIsAddressLoading] = useState(false);
   const axiosPrivate = useAxiosPrivate();
   const { category, searchContent } = state;
   const navigate = useNavigate();
@@ -60,6 +62,7 @@ const Navbar = ({ cartCount }) => {
 
   useEffect(() => {
     if (auth?.accessToken) {
+      setIsAddressLoading(true);
       const fetchAddresses = async () => {
         try {
           const response = await axiosPrivate.get(userEndpoints.GET_ADDRESSES);
@@ -68,6 +71,8 @@ const Navbar = ({ cartCount }) => {
           setAddress(data[0]);
         } catch (error) {
           console.log(error);
+        } finally {
+          setIsAddressLoading(false);
         }
       };
       fetchAddresses();
@@ -109,6 +114,10 @@ const Navbar = ({ cartCount }) => {
     searchResults();
     // navigate(`/medicine?${queryParams.toString()}`);
   };
+
+  if (isAddressLoading) {
+    return <Loading message={"Fetching Addresses..."} />;
+  }
 
   return (
     <nav className="navbar-container">

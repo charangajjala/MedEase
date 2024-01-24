@@ -17,6 +17,7 @@ import useCart from "../../../context/CartContext";
 // import dummyData from "../../../constants/dummyData";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import AuthContext from "../../../context/AuthProvider";
+import { Loading } from "../../../components";
 
 const UserDashboard = () => {
   const [isNavFixed, setIsNavFixed] = useState(false);
@@ -24,6 +25,9 @@ const UserDashboard = () => {
   // const [cartCount, setCartCount] = useState(0);
   const { cartCount, updateCartCount } = useCart();
   const [showLoginBox, setShowLoginBox] = useState(false);
+  const [isProductsLoading, setIsProductsLoading] = useState(false);
+  const [isCartLoading, setIsCartLoading] = useState(false);
+  const [addingToCart, setAddingToCart] = useState({});
   const [products, setProducts] = useState([]);
   const { auth } = useContext(AuthContext);
 
@@ -35,41 +39,55 @@ const UserDashboard = () => {
   //   return auth && auth.accessToken;
   // };
 
-  useEffect(() => {
-    const fetchProducts = async () => {
+  const fetchCartLength = async () => {
+    setIsCartLoading(true);
+    if (auth?.accessToken) {
       try {
-        const queryParams = new URLSearchParams();
-        queryParams.append("categoryName", "All Categories");
-        queryParams.append("keyword", "");
-        const response = await axiosInstance.get(
-          `${endpoints.GET_PRODUCTS_URL}?${queryParams.toString()}`
-        );
+        const response = await axiosPrivate.get(endpoints.GET_CART_URL);
         const data = await response.data;
-        setProducts(data);
+        const totalQuantity = data.reduce((acc, item) => {
+          return acc + item.quantity;
+        }, 0);
+        updateCartCount(totalQuantity);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsCartLoading(false);
+      }
+    } else {
+      updateCartCount(0);
+    }
+  };
+
+  const fetchProducts = async () => {
+    setIsProductsLoading(true);
+    try {
+      const queryParams = new URLSearchParams();
+      queryParams.append("categoryName", "All Categories");
+      queryParams.append("keyword", "");
+      const response = await axiosInstance.get(
+        `${endpoints.GET_PRODUCTS_URL}?${queryParams.toString()}`
+      );
+      const data = await response.data;
+      setProducts(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsProductsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await fetchProducts();
+        await fetchCartLength();
       } catch (err) {
         console.error(err);
       }
     };
 
-    const fetchCartLength = async () => {
-      if (auth?.accessToken) {
-        try {
-          const response = await axiosPrivate.get(endpoints.GET_CART_URL);
-          const data = await response.data;
-          const totalQuantity = data.reduce((acc, item) => {
-            return acc + item.quantity;
-          }, 0);
-          updateCartCount(totalQuantity);
-        } catch (err) {
-          console.error(err);
-        }
-      } else {
-        updateCartCount(0);
-      }
-    };
-
-    fetchProducts();
-    fetchCartLength();
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -104,6 +122,7 @@ const UserDashboard = () => {
 
   //  Adding to cart functionality
   const handleAddToCart = async (product) => {
+    setAddingToCart((prevState) => ({ ...prevState, [product.id]: true }));
     try {
       if (auth?.accessToken) {
         console.log("You have access to add", product);
@@ -115,6 +134,8 @@ const UserDashboard = () => {
       }
     } catch (err) {
       console.error("Error adding product to cart:", err);
+    } finally {
+      setAddingToCart((prevState) => ({ ...prevState, [product.id]: false }));
     }
   };
 
@@ -133,6 +154,14 @@ const UserDashboard = () => {
       throw err;
     }
   };
+
+  if (isProductsLoading) {
+    return <Loading message="Loading Products..." />;
+  }
+
+  if (isCartLoading) {
+    return <Loading message="Updating Cart..." />;
+  }
 
   return (
     <>
@@ -180,6 +209,7 @@ const UserDashboard = () => {
                     key={data.id}
                     onAddToCart={() => handleAddToCart(data)}
                     data={data}
+                    addingToCart={addingToCart[data.id]}
                   />
                 ))}
               </div>

@@ -17,6 +17,7 @@ const Invoice = () => {
     return () => {
       navigate("/admin/report");
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const formatOrderDate = (date) => {

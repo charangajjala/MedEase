@@ -6,7 +6,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
-const ProductCard = ({ onAddToCart, data }) => {
+const ProductCard = ({ onAddToCart, data, addingToCart }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const navigate = useNavigate();
 
@@ -22,9 +22,12 @@ const ProductCard = ({ onAddToCart, data }) => {
   const handleNavigation = () => {
     navigate("/product", { state: { data: data } });
   };
+  const cardClasses = addingToCart
+    ? "product-card product-card__blurred"
+    : "product-card";
 
   return (
-    <div className="product-card">
+    <div className={cardClasses}>
       <div className="product-card__image">
         <img
           src={moov}
@@ -70,8 +73,8 @@ const ProductCard = ({ onAddToCart, data }) => {
 
 ProductCard.propTypes = {
   onAddToCart: PropTypes.func,
-  onClick: PropTypes.func,
   data: PropTypes.object,
+  addingToCart: PropTypes.objectOf(PropTypes.bool),
 };
 
 export default ProductCard;
