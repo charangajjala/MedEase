@@ -4,6 +4,7 @@ import { useReducer, useMemo } from "react";
 import { SelectField } from "../../../components";
 import { useLocation } from "react-router-dom";
 import useCart from "../../../context/CartContext";
+import nodata from "../../../assets/nodata.jpg";
 
 const initialState = {
   price: 0,
@@ -55,7 +56,7 @@ const SearchResults = () => {
 
   const handleApplyFilters = () => {
     console.log("Filtered products:", filteredProducts);
-  }
+  };
 
   return (
     <>
@@ -150,9 +151,26 @@ const SearchResults = () => {
               <hr />
             </div>
             <div className="search-result__content">
-              {products.map((product) => (
-                <SearchResult key={product.id} product={product} />
-              ))}
+              {products.length > 0 ? (
+                products.map((product) => (
+                  <SearchResult key={product.id} product={product} />
+                ))
+              ) : (
+                <>
+                  <div className="no-data-container">
+                    <div className="image">
+                      <img src={nodata} alt="nodata" />
+                    </div>
+
+                    <div className="no-data__text">
+                      <p>
+                        We couldn&apos;t find any results matching your search.
+                        Please try again.
+                      </p>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>

@@ -45,7 +45,7 @@ const Productdetails = () => {
   const [showLoginBox, setShowLoginBox] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
   const [state, dispatch] = useReducer(reducer, inititalState);
-  const imageGallery = [moov, moov2, moov, moov, moov];
+  const imageGallery = [moov, moov2, moov, moov2, moov];
   const data = location.state.data;
   const axiosPrivate = useAxiosPrivate();
   const { auth } = useContext(AuthContext);
@@ -173,16 +173,18 @@ const Productdetails = () => {
                 <div className="product-page__main-image">
                   <img src={mainImage} alt="Main Product" />
                 </div>
-                <div className="product-page__thumbnail-container">
-                  {imageGallery.map((image, index) => (
-                    <img
-                      key={index}
-                      src={image}
-                      alt={`Product Thumbnail ${index + 1}`}
-                      onClick={() => setMainImage(image)}
-                      className="product-page__thumbnail"
-                    />
-                  ))}
+                <div className="product-page__thumbnails">
+                  <div className="product-page__thumbnails-container">
+                    {imageGallery.map((image, index) => (
+                      <img
+                        key={index}
+                        src={image}
+                        alt={`Product Thumbnail ${index + 1}`}
+                        onClick={() => setMainImage(image)}
+                        className="product-page__thumbnail"
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
 

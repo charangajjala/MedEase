@@ -236,6 +236,9 @@ $breakpoint-tablet: 1024px;
 }
 
 .product-page__image {
+  display: flex;
+  flex-direction: column;
+
   .product-page__main-image {
     img {
       width: 100%;
@@ -245,23 +248,51 @@ $breakpoint-tablet: 1024px;
     }
   }
 
-  .product-page__thumbnail-container {
+  .product-page__thumbnails {
     display: flex;
-    overflow-x: auto;
-    gap: 10px;
+    justify-content: center;
     padding: 10px 0;
+    overflow: hidden;
+    max-width: inherit;
 
-    .product-page__thumbnail {
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: border 0.3s ease;
+    &-container::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
 
-      &:hover {
-        border: 2px solid #0056b3;
-      }
+    &-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
 
-      &.active {
-        border: 2px solid #0056b3;
+    &-container::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 10px;
+    }
+
+    &-container::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+
+    &-container {
+      display: flex;
+      gap: 10px;
+      max-width: 100%;
+
+      .product-page__thumbnail {
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: border 0.3s ease;
+        height: 70px;
+        width: auto;
+
+        &:hover {
+          border: 2px solid #0056b3;
+        }
+
+        &.active {
+          border: 2px solid #0056b3;
+        }
       }
     }
   }
@@ -300,7 +331,8 @@ $breakpoint-tablet: 1024px;
     width: 100%;
     border-collapse: collapse;
 
-    th, td {
+    th,
+    td {
       border: 1px solid $text-color;
       padding: 8px;
       text-align: left;
@@ -322,7 +354,8 @@ $breakpoint-tablet: 1024px;
     .seller-row {
       margin-bottom: 15px;
 
-      .seller-key, .seller-value {
+      .seller-key,
+      .seller-value {
         padding: 5px 10px;
       }
 
@@ -335,7 +368,6 @@ $breakpoint-tablet: 1024px;
 }
 
 .product-page__seller__products {
-
   .product__seller-title {
     color: $text-color;
     font-size: 1.5em;
@@ -371,7 +403,13 @@ $breakpoint-tablet: 1024px;
   text-align: center;
 
   @keyframes fadeInOut {
-    0%, 100% { opacity: 0; }
-    10%, 90% { opacity: 1; }
+    0%,
+    100% {
+      opacity: 0;
+    }
+    10%,
+    90% {
+      opacity: 1;
+    }
   }
 }

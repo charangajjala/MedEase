@@ -15,7 +15,7 @@ import { useState } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import userEndpoints from "../../constants/userEndpoints";
 import AuthContext from "../../context/AuthProvider";
-import React from 'react';
+// import React from "react";
 
 const initialState = {
   category: "All Categories",
@@ -33,22 +33,22 @@ function reducer(state, action) {
   }
 }
 
-function splitIntoLines(str, maxChars) {
-  const words = str.split(" ");
-  let lines = [];
-  let currentLine = words[0];
+// function splitIntoLines(str, maxChars) {
+//   const words = str.split(" ");
+//   let lines = [];
+//   let currentLine = words[0];
 
-  for (let i = 1; i < words.length; i++) {
-    if (currentLine.length + words[i].length + 1 <= maxChars) {
-      currentLine += " " + words[i];
-    } else {
-      lines.push(currentLine);
-      currentLine = words[i];
-    }
-  }
-  lines.push(currentLine);
-  return lines;
-}
+//   for (let i = 1; i < words.length; i++) {
+//     if (currentLine.length + words[i].length + 1 <= maxChars) {
+//       currentLine += " " + words[i];
+//     } else {
+//       lines.push(currentLine);
+//       currentLine = words[i];
+//     }
+//   }
+//   lines.push(currentLine);
+//   return lines;
+// }
 
 const Navbar = ({ cartCount }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -110,13 +110,6 @@ const Navbar = ({ cartCount }) => {
     // navigate(`/medicine?${queryParams.toString()}`);
   };
 
-  const handleKeyPress = (e) => {
-    e.preventDefault();
-    if (e.key === "Enter") {
-      handleSearch(e);
-    }
-  };
-
   return (
     <nav className="navbar-container">
       <div className="navbar-container__location">
@@ -129,16 +122,10 @@ const Navbar = ({ cartCount }) => {
         <div className="navbar-container__location-text">
           {address.addressName ? (
             <>
-                            <span>
-                              {splitIntoLines(address?.addressLine1, 50).map(
-                                (line, index) => (
-                                  <React.Fragment key={index}>
-                                    {line}
-                                    <br />
-                                  </React.Fragment>
-                                )
-                              )}
-                            </span>
+              <span>
+                {address.addressName} - {address?.addressLine1} -{" "}
+                {address?.addressLine2}
+              </span>
               <span>
                 {address?.city}, {address?.state}, {address?.country} -{" "}
                 {address?.pincode}
@@ -150,7 +137,7 @@ const Navbar = ({ cartCount }) => {
         </div>
       </div>
       <div className="navbar-container__search">
-        <select
+        {/* <select
           id="categories"
           name="Categories"
           className="navbar-container__search__cat-search"
@@ -160,15 +147,19 @@ const Navbar = ({ cartCount }) => {
           }
         >
           <option value="All Categories">All Categories</option>
-        </select>
+        </select> */}
         <input
           type="text"
           placeholder="Search here..."
-          value={searchContent}
+          value={state.searchContent}
           onChange={(e) =>
             dispatch({ type: "SET_SEARCH_CONTENT", payload: e.target.value })
           }
-          onKeyDown={(e) => handleKeyPress(e)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSearch(e);
+            }
+          }}
         />
         <button
           className="navbar-container__search-button"

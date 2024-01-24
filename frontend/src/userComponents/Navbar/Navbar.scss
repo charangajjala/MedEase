@@ -35,15 +35,15 @@
 
   &__search {
     display: grid;
-    grid-template-columns: 1fr 3fr auto;
+    grid-template-columns: auto 1fr;
     align-items: center;
     // gap: 1em;
 
     &__cat-search {
       @include input-style;
       transition: border-color 0.3s ease;
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
+      // border-top-right-radius: 0;
+      // border-bottom-right-radius: 0;
       &:focus {
         border-color: $focus-border-color;
       }
@@ -51,9 +51,10 @@
 
     input[type="text"] {
       @include input-style;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
+      // border-top-left-radius: 0;
+      // border-bottom-left-radius: 0;
       transition: border-color 0.3s ease;
+      width: 400px;
 
       &:focus {
         border-color: $focus-border-color;
