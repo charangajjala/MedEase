@@ -15,6 +15,7 @@ import { useState } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import userEndpoints from "../../constants/userEndpoints";
 import AuthContext from "../../context/AuthProvider";
+import React from 'react';
 
 const initialState = {
   category: "All Categories",
@@ -30,6 +31,23 @@ function reducer(state, action) {
     default:
       throw new Error();
   }
+}
+
+function splitIntoLines(str, maxChars) {
+  const words = str.split(" ");
+  let lines = [];
+  let currentLine = words[0];
+
+  for (let i = 1; i < words.length; i++) {
+    if (currentLine.length + words[i].length + 1 <= maxChars) {
+      currentLine += " " + words[i];
+    } else {
+      lines.push(currentLine);
+      currentLine = words[i];
+    }
+  }
+  lines.push(currentLine);
+  return lines;
 }
 
 const Navbar = ({ cartCount }) => {
@@ -92,6 +110,13 @@ const Navbar = ({ cartCount }) => {
     // navigate(`/medicine?${queryParams.toString()}`);
   };
 
+  const handleKeyPress = (e) => {
+    e.preventDefault();
+    if (e.key === "Enter") {
+      handleSearch(e);
+    }
+  };
+
   return (
     <nav className="navbar-container">
       <div className="navbar-container__location">
@@ -104,7 +129,16 @@ const Navbar = ({ cartCount }) => {
         <div className="navbar-container__location-text">
           {address.addressName ? (
             <>
-              <span>{address?.addressLine1}</span>
+                            <span>
+                              {splitIntoLines(address?.addressLine1, 50).map(
+                                (line, index) => (
+                                  <React.Fragment key={index}>
+                                    {line}
+                                    <br />
+                                  </React.Fragment>
+                                )
+                              )}
+                            </span>
               <span>
                 {address?.city}, {address?.state}, {address?.country} -{" "}
                 {address?.pincode}
@@ -134,6 +168,7 @@ const Navbar = ({ cartCount }) => {
           onChange={(e) =>
             dispatch({ type: "SET_SEARCH_CONTENT", payload: e.target.value })
           }
+          onKeyDown={(e) => handleKeyPress(e)}
         />
         <button
           className="navbar-container__search-button"

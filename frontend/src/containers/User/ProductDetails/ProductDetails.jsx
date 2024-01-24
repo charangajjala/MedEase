@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./ProductDetails.scss";
 import { Header, Footer, Navbar, LoginBox } from "../../../userComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -49,6 +49,7 @@ const Productdetails = () => {
   const data = location.state.data;
   const axiosPrivate = useAxiosPrivate();
   const { auth } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   // const isAuthenticated = () => {
   //   const auth = JSON.parse(localStorage.getItem("auth"));
@@ -110,6 +111,28 @@ const Productdetails = () => {
         updateCartCount(cartCount + quantity);
         setTimeout(() => setAddedToCart(false), 3000);
         console.log("Added to cart");
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      promptLogin();
+    }
+  };
+
+  const handleBuyNow = async () => {
+    const { id, costPerMonth } = data;
+    const { quantity } = state;
+    if (auth?.accessToken) {
+      try {
+        const response = await axiosPrivate.post(endpoints.ADD_TO_CART_URL, {
+          medicineId: id,
+          quantity,
+          costPerMonth,
+        });
+        // Response Ideality 200 or 201
+        setAddedToCart(true);
+        updateCartCount(cartCount + quantity);
+        navigate("/checkout");
       } catch (err) {
         console.error(err);
       }
@@ -277,7 +300,12 @@ const Productdetails = () => {
                     >
                       Add to cart
                     </button>
-                    <button className="product__cart-button">Buy Now</button>
+                    <button
+                      className="product__cart-button"
+                      onClick={handleBuyNow}
+                    >
+                      Buy Now
+                    </button>
                   </div>
                 </div>
               </div>

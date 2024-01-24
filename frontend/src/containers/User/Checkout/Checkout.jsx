@@ -121,6 +121,7 @@ const Checkout = () => {
                       <SelectField
                         id="address"
                         name="address"
+                        label=""
                         onChange={handleAddressChange}
                         value={selectedAddress?.addressName}
                         required
