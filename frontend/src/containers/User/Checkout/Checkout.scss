@@ -145,6 +145,10 @@
   }
 }
 
+.loading-page {
+  @include profile-loading-style;
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0;

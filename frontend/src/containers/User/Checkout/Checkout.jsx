@@ -5,16 +5,20 @@ import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import userEndpoints from "../../../constants/userEndpoints";
 import endpoints from "../../../constants/endpoints";
 import { useNavigate } from "react-router-dom";
-import { SelectField } from "../../../components";
-import noitems from '../../../assets/empty-cart2.svg'
+import { Loading, SelectField } from "../../../components";
+import noitems from "../../../assets/empty-cart2.svg";
+
 const Checkout = () => {
   const axiosPrivate = useAxiosPrivate();
   const [addresses, setAddresses] = useState([]);
   const [cartItems, setCartItems] = useState([]);
+  const [loadingAddress, setLoadingAddress] = useState(false);
+  const [loadingCartItems, setLoadingCartItems] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
+    setLoadingAddress(true);
     const fetchAddresses = async () => {
       try {
         const response = await axiosPrivate.get(userEndpoints.GET_ADDRESSES);
@@ -23,10 +27,13 @@ const Checkout = () => {
         setAddresses(data);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoadingAddress(false);
       }
     };
 
     const fetchCartItems = async () => {
+      setLoadingCartItems(true);
       try {
         const response = await axiosPrivate.get(endpoints.GET_CART_URL);
         const data = response.data;
@@ -34,6 +41,8 @@ const Checkout = () => {
         console.log("This the response recieved : ", data);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoadingCartItems(false);
       }
     };
 
@@ -91,6 +100,14 @@ const Checkout = () => {
   const handleNoCartItems = () => {
     navigate("/dashboard");
   };
+
+  if (loadingAddress) {
+    return <Loading message={"Loading Addresses..."} />;
+  }
+
+  if (loadingCartItems) {
+    return <Loading message={"Loading Cart Items..."} />;
+  }
 
   return (
     <>
