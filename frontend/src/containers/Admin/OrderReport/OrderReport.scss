@@ -6,6 +6,41 @@
   min-height: 100vh;
   font-family: $font-family;
 
+  &__shipping-details {
+    background-color: $white;
+    color: $text-color;
+    border-radius: 8px;
+
+    &__content {
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        margin-top: 1em;
+
+        tr {
+          &:nth-child(odd) {
+            background-color: $table-first-child;
+          }
+
+          &:nth-child(even) {
+            background-color: $table-last-child;
+          }
+        }
+
+        td {
+          padding: 10px;
+          border: 1px solid $table-border;
+          &:first-child {
+            font-weight: bold;
+            color: $text-color;
+          }
+        }
+      }
+    }
+  }
+
   &__main {
     width: 100%;
     background-color: $body-bg;

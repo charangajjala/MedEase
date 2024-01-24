@@ -5,6 +5,7 @@
   padding: 20px;
   background-color: #fff;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  line-height: 1.5;
 
   &__header {
     text-align: center;
@@ -13,8 +14,9 @@
     margin-bottom: 20px;
 
     h1 {
-      font-size: 2em;
+      font-size: 2.5em;
       margin: 0 0 10px;
+      font-family: 'Arial Black', Gadget, sans-serif;
     }
 
     img {
@@ -24,11 +26,24 @@
   }
 
   .customer-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
     margin-bottom: 20px;
-    p {
-      margin: 5px 0;
-      strong {
-        font-weight: bold;
+    flex-wrap: wrap;
+
+    &__left, &__right {
+      flex: 1;
+      min-width: 280px; // Minimum width for each section
+      padding: 0 15px;
+
+      p {
+        margin: 5px 0;
+        font-size: 0.9em;
+
+        strong {
+          font-weight: bold;
+        }
       }
     }
   }
@@ -43,10 +58,12 @@
         tr {
           background-color: #f2f2f2;
         }
+
         th {
           text-align: left;
-          padding: 10px;
+          padding: 15px;
           border-bottom: 1px solid #ddd;
+          font-size: 0.9em;
         }
       }
 
@@ -55,10 +72,16 @@
           &:nth-child(odd) {
             background-color: #f9f9f9;
           }
+
+          &:hover {
+            background-color: #e9e9e9;
+          }
         }
+
         td {
-          padding: 10px;
+          padding: 15px;
           border-bottom: 1px solid #eee;
+          font-size: 0.9em;
         }
       }
     }
@@ -66,8 +89,9 @@
 
   .total-amount {
     p {
-      font-size: 1.2em;
+      font-size: 1.3em;
       text-align: right;
+
       strong {
         font-weight: bold;
       }

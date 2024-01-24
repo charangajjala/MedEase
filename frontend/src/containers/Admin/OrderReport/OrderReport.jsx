@@ -28,6 +28,8 @@ const OrderReport = () => {
   } = useVisibilityToggle();
 
   const [orderDetails, setOrderDetails] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [address, setAddress] = useState([]);
   const location = useLocation();
   const tableRef = useRef();
   const { order } = location.state;
@@ -42,8 +44,9 @@ const OrderReport = () => {
           endpoints.GET_ADMIN_ORDER_URL.replace("{id}", id)
         );
         const data = await response.data;
-        console.log(data);
         setOrderDetails(data);
+        setProducts(data.products);
+        setAddress(data.address);
       } catch (error) {
         console.log(error);
       }
@@ -52,6 +55,15 @@ const OrderReport = () => {
     fetchOrderDetails();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const formatOrderDate = (date) => {
+    const orderDate = new Date(date);
+    return orderDate.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
 
   return (
     <>
@@ -96,19 +108,50 @@ const OrderReport = () => {
                       <td>Order ID</td>
                       <td>{id}</td>
                       <td>Order Date</td>
-                      <td>{orderDate}</td>
+                      <td>{formatOrderDate(orderDate)}</td>
                     </tr>
                     <tr>
-                      <td>Customer Name</td>
+                      <td>Username</td>
                       <td>{username}</td>
-                      <td>Customer Mobile</td>
-                      <td>9121042757</td>
+                      <td>Email ID</td>
+                      <td>{orderDetails.email}</td>
                     </tr>
                     <tr>
-                      <td>Order Status</td>
-                      <td>Paid</td>
                       <td>Total Amount</td>
-                      <td>{totalAmount}</td>
+                      <td>${totalAmount}</td>
+                      <td>Payment Status</td>
+                      <td>Paid</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div className="order-report__shipping-details">
+              <div className="order-report__shipping-details__heading">
+                <h2>Shipped to</h2>
+                <hr />
+              </div>
+              <div className="order-report__shipping-details__content">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>Address</td>
+                      <td>
+                        {address.addressLine1} {address?.addressLine2}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>City</td>
+                      <td>{address.city}</td>
+                    </tr>
+                    <tr>
+                      <td>State</td>
+                      <td>{address.state}</td>
+                    </tr>
+                    <tr>
+                      <td>Pincode</td>
+                      <td>{address.pincode}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -131,18 +174,18 @@ const OrderReport = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {orderDetails.products.map((item) => (
+                    {products.map((item) => (
                       <tr key={item.id}>
                         <td>{item.id}</td>
-                        <td>{item.cartItem.productTitle}</td>
+                        <td>{item.cartProduct.productTitle}</td>
                         <td>{item.quantity}</td>
-                        <td>{item.cartItem.costPerMonth}</td>
-                        <td>{item.totalCost}</td>
+                        <td>${item.cartProduct.costPerMonth}</td>
+                        <td>${item.totalCost}</td>
                       </tr>
                     ))}
                     <tr className="total-row">
                       <td colSpan="4">Total</td>
-                      <td>{totalAmount}</td>
+                      <td>${totalAmount}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -155,7 +198,7 @@ const OrderReport = () => {
               type="submit"
               onClick={() => {
                 navigate("/admin/invoice", {
-                  state: { order, orderDetails, totalAmount },
+                  state: { order, orders: products, totalSum: totalAmount, address },
                 });
               }}
             />
