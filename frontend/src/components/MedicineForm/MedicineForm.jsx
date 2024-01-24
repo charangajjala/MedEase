@@ -362,6 +362,7 @@ const MedicineForm = ({ button_name, productData }) => {
         name="manufacture-date"
         onChange={(e) => {
           dispatch({ type: "SET_MANUFACTURE_DATE", payload: e.target.value });
+          setDateError(false);
         }}
         required={true}
       />
@@ -406,7 +407,7 @@ const MedicineForm = ({ button_name, productData }) => {
               <button
                 type="button"
                 onClick={() => {
-                  navigate('/admin/products');
+                  navigate("/admin/products");
                 }}
               >
                 Return to Products
