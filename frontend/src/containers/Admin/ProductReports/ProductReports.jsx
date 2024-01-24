@@ -67,13 +67,14 @@ const ProductReports = () => {
   }, []);
 
   const navigate = useNavigate();
-  const handleClick = (product) => {
+  
+  const handleUpdate = (product) => {
     navigate("/admin/medicineUpdate", { state: product });
   };
 
-  const handleUpdate = (product) => {
-    navigate("/admin/medicineUpdate", { state: product })
-  }
+  const handleDelete = () => {
+    console.log("Delete");
+  };
 
   if (isLoading) {
     return <Loading />;
@@ -124,12 +125,9 @@ const ProductReports = () => {
                     className="action-button view"
                     onClick={() => handleUpdate(product)}
                   >
-                    Update
+                    View/Update
                   </button>
-                  <button
-                    className="action-button view"
-                    onClick={() => handleClick(product)}
-                  >
+                  <button className="action-button view" onClick={handleDelete}>
                     Delete
                   </button>
                 </>

@@ -14,7 +14,7 @@ import useVisibilityToggle from "../../../hooks/useVisibilityToggle.jsx";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate.jsx";
 import endpoints from "../../../constants/endpoints.js";
-import orders from "../../../constants/orders.js";
+// import orders from "../../../constants/orders.js";
 
 import { Bar, Line } from "react-chartjs-2";
 import {
@@ -54,6 +54,7 @@ const AdminDashboard = () => {
   const [products, setProducts] = useState([]);
   const [companies, setCompanies] = useState([]);
   const [productTypes, setProductTypes] = useState([]);
+  const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -89,11 +90,24 @@ const AdminDashboard = () => {
       }
     };
 
+    const fetchOrders = async () => {
+      try {
+        const response = await axiosPrivate.get(endpoints.ADMIN_ORDERS_URL);
+        const data = await response.data;
+        setOrders(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchOrders();
     fetchProducts();
     fetchCompanies();
     fetchProductTypes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  console.log("Orders:", orders);
 
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -106,7 +120,7 @@ const AdminDashboard = () => {
   orders.forEach((order) => {
     const formattedDate = formatDate(order.orderDate);
     revenueByDate[formattedDate] =
-      (revenueByDate[formattedDate] || 0) + parseFloat(order.totalSum);
+      (revenueByDate[formattedDate] || 0) + parseFloat(order.totalAmount);
   });
 
   const orderBarChartData = {

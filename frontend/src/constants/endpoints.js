@@ -4,7 +4,7 @@ const Endpoints = {
 
   // Product Related URLs
   PRODUCT_REPORTS_URL: "/api/admin/medicine",
-  UPDATE_PRODUCTS_URL: "/api/admin/medicine",
+  UPDATE_PRODUCTS_URL: "/api/admin/medicine/medicine",
 
   // Admin Orders
   ADMIN_ORDERS_URL: "/api/admin/order",

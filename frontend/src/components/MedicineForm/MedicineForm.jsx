@@ -8,6 +8,7 @@ import "./MedicineForm.scss";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
 import endpoints from "../../constants/endpoints.js";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   productType: "",
@@ -51,6 +52,7 @@ function reducer(state, action) {
 const MedicineForm = ({ button_name, productData }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
 
   const [productTypes, setProductTypes] = useState([]);
   const [companyNames, setCompanyNames] = useState([]);
@@ -193,9 +195,22 @@ const MedicineForm = ({ button_name, productData }) => {
 
     if (button_name === "Update") {
       try {
+        const productType = productTypes.find(
+          (object) => object.value === state.productType
+        );
+
+        const companyName = companyNames.find(
+          (object) => object.value === state.companyName
+        );
+
         const productAddStatus = await axiosPrivate.put(
           endpoints.UPDATE_PRODUCTS_URL,
-          { ...state, id }
+          {
+            ...state,
+            id,
+            productType: productType.label,
+            companyName: companyName.label,
+          }
         );
         if (productAddStatus.status === 200) {
           setFormIsValid(false);
@@ -327,7 +342,7 @@ const MedicineForm = ({ button_name, productData }) => {
         required={true}
       />
       <FormInput
-        label="Cost Per Month"
+        label="Cost Per Unit"
         type="number"
         // disabled={button_name === "Update" ? true : false}
         value={String(state.costPerMonth)}
@@ -387,16 +402,27 @@ const MedicineForm = ({ button_name, productData }) => {
             <p>{sucessMessage}</p>
           </div>
           <div className="form-reset">
-            <button
-              onClick={() => {
-                dispatch({
-                  type: "RESET_FORM",
-                });
-                setSucessMessage("");
-              }}
-            >
-              Add Another Product
-            </button>
+            {button_name === "Update" && (
+              <button
+                type="button"
+                onClick={() => {
+                  navigate('/admin/products');
+                }}
+              >
+                Return to Products
+              </button>
+            )}
+            {button_name === "Submit" && (
+              <button
+                type="button"
+                onClick={() => {
+                  dispatch({ type: "RESET_FORM" });
+                  setSucessMessage("");
+                }}
+              >
+                Reset
+              </button>
+            )}
           </div>
         </>
       )}
