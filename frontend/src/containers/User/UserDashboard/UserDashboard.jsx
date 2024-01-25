@@ -18,6 +18,7 @@ import useCart from "../../../context/CartContext";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import AuthContext from "../../../context/AuthProvider";
 import { Loading } from "../../../components";
+import toast, { Toaster } from "react-hot-toast";
 
 const UserDashboard = () => {
   const [isNavFixed, setIsNavFixed] = useState(false);
@@ -33,6 +34,7 @@ const UserDashboard = () => {
 
   const navbarRef = useRef(null);
   const axiosPrivate = useAxiosPrivate();
+  const notify = () => toast.success("Added to cart");
 
   // const isAuthenticated = () => {
   //   const auth = JSON.parse(localStorage.getItem("auth"));
@@ -40,8 +42,8 @@ const UserDashboard = () => {
   // };
 
   const fetchCartLength = async () => {
-    setIsCartLoading(true);
-    if (auth?.accessToken) {
+    if (auth?.accessToken !== null) {
+      setIsCartLoading(true);
       try {
         const response = await axiosPrivate.get(endpoints.GET_CART_URL);
         const data = await response.data;
@@ -125,9 +127,7 @@ const UserDashboard = () => {
     setAddingToCart((prevState) => ({ ...prevState, [product.id]: true }));
     try {
       if (auth?.accessToken) {
-        console.log("You have access to add", product);
-        const response = await addToCart(product);
-        console.log(response);
+        await addToCart(product);
         updateCartCount(cartCount + 1);
       } else {
         promptLogin();
@@ -136,6 +136,7 @@ const UserDashboard = () => {
       console.error("Error adding product to cart:", err);
     } finally {
       setAddingToCart((prevState) => ({ ...prevState, [product.id]: false }));
+      notify();
     }
   };
 
@@ -147,7 +148,6 @@ const UserDashboard = () => {
         costPerMonth: product.costPerMonth,
       });
       const data = await response.data;
-      console.log(data);
       return data;
     } catch (err) {
       console.error("Error in addToCart:", err);
@@ -176,6 +176,7 @@ const UserDashboard = () => {
       )}
 
       <div className={`user-dashboard ${showLoginBox ? "is-blurred" : ""}`}>
+        <Toaster position="bottom-right" reverseOrder={false} />
         <div className="user-dahboard__header">
           <Header />
         </div>

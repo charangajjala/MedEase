@@ -101,7 +101,7 @@ const Productdetails = () => {
     const { quantity } = state;
     if (auth?.accessToken) {
       try {
-        const response = await axiosPrivate.post(endpoints.ADD_TO_CART_URL, {
+        await axiosPrivate.post(endpoints.ADD_TO_CART_URL, {
           medicineId: id,
           quantity,
           costPerMonth,
@@ -124,7 +124,7 @@ const Productdetails = () => {
     const { quantity } = state;
     if (auth?.accessToken) {
       try {
-        const response = await axiosPrivate.post(endpoints.ADD_TO_CART_URL, {
+        await axiosPrivate.post(endpoints.ADD_TO_CART_URL, {
           medicineId: id,
           quantity,
           costPerMonth,

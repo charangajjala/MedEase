@@ -88,9 +88,7 @@ const Cart = () => {
   const handleRemoveALL = async (e) => {
     e.preventDefault();
     try {
-      const resposne = await axiosPrivate.delete(
-        endpoints.REMOVE_CART_ITEMS_URL
-      );
+      await axiosPrivate.delete(endpoints.REMOVE_CART_ITEMS_URL);
       setCartItems([]);
       updateCartCount(0);
     } catch (err) {
