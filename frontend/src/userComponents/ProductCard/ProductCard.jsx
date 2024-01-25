@@ -5,6 +5,7 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const ProductCard = ({ onAddToCart, data, addingToCart }) => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -17,6 +18,11 @@ const ProductCard = ({ onAddToCart, data, addingToCart }) => {
   const toggleFavorite = (e) => {
     e.stopPropagation();
     setIsFavorite(!isFavorite);
+    if (isFavorite == false) {
+      toast.success("Added to favorites");
+    } else {
+      toast.success("Removed from favorites");
+    }
   };
 
   const handleNavigation = () => {

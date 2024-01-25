@@ -95,6 +95,11 @@ const Productdetails = () => {
   const toggleFavorite = (e) => {
     e.stopPropagation();
     setIsFavorite(!isFavorite);
+    if (isFavorite === false) {
+      toast.success("Added to your wishlist");
+    } else {
+      toast.success("Removed from your wishlist");
+    }
   };
 
   const handleAddToCart = async () => {
