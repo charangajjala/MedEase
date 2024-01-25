@@ -14,7 +14,7 @@ export const CartProvider = ({ children }) => {
   const { auth } = useAuth();
 
   useEffect(() => {
-    if (!auth?.accessToken) {
+    if (auth?.accessToken) {
       let isMounted = true;
 
       const fetchCartItems = async () => {

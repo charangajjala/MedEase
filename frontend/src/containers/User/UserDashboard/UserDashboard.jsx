@@ -41,7 +41,7 @@ const UserDashboard = () => {
   // };
 
   const fetchCartLength = async () => {
-    if (!auth?.accessToken) {
+    if (auth?.accessToken) {
       setIsCartLoading(true);
       try {
         const response = await axiosPrivate.get(endpoints.GET_CART_URL);
