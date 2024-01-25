@@ -1,4 +1,4 @@
-import { useRef, useEffect, useContext, useReducer } from "react";
+import { useRef, useEffect, useContext, useReducer, useState } from "react";
 
 import AuthContext from "../../context/AuthProvider.jsx";
 import axios from "../../api/axios.jsx";
@@ -10,6 +10,7 @@ import {
   Button,
   Footer,
   FormInput,
+  Loading,
   PasswordInput,
 } from "../../components/index.js";
 import endpoints from "../../constants/endpoints.js";
@@ -41,6 +42,8 @@ function loginReducer(state, action) {
 const Login = () => {
   const navigate = useNavigate();
   const { setAuth } = useContext(AuthContext);
+  const [loggingIn, setLoggingIn] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
   const userRef = useRef();
 
   const [{ email, errMsg, password, success }, dispatch] = useReducer(
@@ -54,7 +57,7 @@ const Login = () => {
 
   useEffect(() => {
     const authObj = JSON.parse(localStorage.getItem("auth"));
-    console.log(Boolean(authObj.accessToken) && Boolean(authObj.refreshToken));
+    setRedirecting(true);
     if (Boolean(authObj.accessToken) && Boolean(authObj.refreshToken)) {
       // navigate("/admin/dashboard");
       if (authObj.role === "ADMIN") {
@@ -65,6 +68,7 @@ const Login = () => {
     } else {
       navigate("/");
     }
+    setRedirecting(false);
   }, [navigate]);
 
   useEffect(() => {
@@ -74,7 +78,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     console.log("Login: handleLogin");
-
+    setLoggingIn(true);
     try {
       const response = await axios.post(
         endpoints.LOGIN_URL,
@@ -126,6 +130,8 @@ const Login = () => {
         dispatch({ type: "SET_ERR_MSG", payload: "Something went wrong" });
       }
       dispatch({ type: "SET_SUCCESS", payload: false });
+    } finally {
+      setLoggingIn(false);
     }
   };
 
@@ -133,6 +139,14 @@ const Login = () => {
     console.log("register");
     navigate("/register");
   };
+
+  if (loggingIn) {
+    return <Loading message={"Logging in..."} />;
+  }
+
+  if (redirecting) {
+    return <Loading message={"Redirecting..."} />;
+  }
 
   return (
     <>
