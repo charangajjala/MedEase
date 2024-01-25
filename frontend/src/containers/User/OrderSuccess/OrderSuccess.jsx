@@ -10,6 +10,10 @@ const OrderSuccess = () => {
     navigate("/dashboard");
   };
 
+  const handleViewOrder = () => {
+    navigate("/profile/orders");
+  };
+
   return (
     <div className="order-success">
       <div className="order-success__header">
@@ -26,6 +30,7 @@ const OrderSuccess = () => {
           </div>
           <div className="order-success__buttons">
             <button onClick={handleContinueShopping}>Continue Shopping</button>
+            <button onClick={handleViewOrder}>View Order</button>
           </div>
         </div>
       </main>

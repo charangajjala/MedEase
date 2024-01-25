@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import useCart from "../../context/CartContext";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import endpoints from "../../constants/endpoints";
+import toast from "react-hot-toast";
 
 const SearchResult = ({ product }) => {
   const currentDate = new Date();
@@ -44,11 +45,12 @@ const SearchResult = ({ product }) => {
 
   const handleAddToCart = async (product) => {
     try {
-      const response = await addToCart(product);
-      console.log(response);
+      await addToCart(product);
+      toast.success("Added to cart");
       updateCartCount(cartCount + 1);
     } catch (err) {
       console.error("Error adding product to cart:", err);
+      toast.error("Error adding product to cart");
     }
   };
 

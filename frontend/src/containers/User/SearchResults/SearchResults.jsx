@@ -5,6 +5,7 @@ import { SelectField } from "../../../components";
 import { useLocation } from "react-router-dom";
 import useCart from "../../../context/CartContext";
 import nodata from "../../../assets/nodata.jpg";
+import { Toaster } from "react-hot-toast";
 
 const initialState = {
   price: 0,
@@ -61,6 +62,7 @@ const SearchResults = () => {
   return (
     <>
       <div className="search-results">
+        <Toaster position="bottom-right" reverseOrder={false} />
         <div className="search-results__header">
           <Header />
         </div>
