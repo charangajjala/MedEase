@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import endpoints from "../../../constants/endpoints";
 import useAnimatedNumber from "../../../hooks/useAnimatedNumber";
 import useCart from "../../../context/CartContext";
+import toast, { Toaster } from "react-hot-toast";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -73,6 +74,7 @@ const Cart = () => {
         item.id === itemId ? { ...item, quantity: newQuantity } : item
       )
     );
+    toast.success("Quantity updated");
   };
 
   const handleRemove = async (itemId) => {
@@ -81,6 +83,7 @@ const Cart = () => {
       updateCartCount(
         updatedItems.reduce((acc, item) => acc + item.quantity, 0)
       );
+      toast.success("Item removed from cart");
       return updatedItems;
     });
   };
@@ -90,14 +93,17 @@ const Cart = () => {
     try {
       await axiosPrivate.delete(endpoints.REMOVE_CART_ITEMS_URL);
       setCartItems([]);
+      toast.success("All items were removed from cart");
       updateCartCount(0);
     } catch (err) {
       console.log("Error in handleRemoveALL:", err);
+      toast.error("Error in removing all items from cart");
     }
   };
 
   return (
     <div className="cart">
+      <Toaster position="bottom-right" reverseOrder={false} />
       <div className="cart__header">
         <Header />
       </div>

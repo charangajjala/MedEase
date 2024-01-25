@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import keys from "../../constants/keys";
+import toast from "react-hot-toast";
 
 const initialState = {
   addressName: "",
@@ -112,6 +113,7 @@ const AddressForm = () => {
 
   useEffect(() => {
     fetchCountries();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCountryChange = (e) => {
@@ -136,11 +138,13 @@ const AddressForm = () => {
         state: states.find((eachState) => eachState.code === state.state).name,
         city: cities.find((city) => city.code === state.city).name,
       });
+      toast.success("Address added successfully");
       const data = response.data;
       navigate("/profile/addresses");
       console.log(data);
     } catch (error) {
       console.log(error);
+      toast.error("Error adding address");
     }
   };
 

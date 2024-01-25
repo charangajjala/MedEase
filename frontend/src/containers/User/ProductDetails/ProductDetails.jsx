@@ -13,6 +13,7 @@ import endpoints from "../../../constants/endpoints";
 import { useReducer } from "react";
 import useCart from "../../../context/CartContext";
 import AuthContext from "../../../context/AuthProvider";
+import toast, { Toaster } from "react-hot-toast";
 
 const inititalState = {
   quantity: 1,
@@ -43,7 +44,7 @@ const Productdetails = () => {
   // const [cartCount, setCartCount] = useState(0);
   const { cartCount, updateCartCount } = useCart();
   const [showLoginBox, setShowLoginBox] = useState(false);
-  const [addedToCart, setAddedToCart] = useState(false);
+  // const [addedToCart, setAddedToCart] = useState(false);
   const [state, dispatch] = useReducer(reducer, inititalState);
   const imageGallery = [moov, moov2, moov, moov2, moov];
   const data = location.state.data;
@@ -106,13 +107,13 @@ const Productdetails = () => {
           quantity,
           costPerMonth,
         });
-        // Response Ideality 200 or 201
-        setAddedToCart(true);
+        // setAddedToCart(true);
         updateCartCount(cartCount + quantity);
-        setTimeout(() => setAddedToCart(false), 3000);
-        console.log("Added to cart");
+        toast.success("Added to cart!");
+        // setTimeout(() => setAddedToCart(false), 3000);
       } catch (err) {
         console.error(err);
+        toast.error("Error adding to cart");
       }
     } else {
       promptLogin();
@@ -130,7 +131,7 @@ const Productdetails = () => {
           costPerMonth,
         });
         // Response Ideality 200 or 201
-        setAddedToCart(true);
+        // setAddedToCart(true);
         updateCartCount(cartCount + quantity);
         navigate("/checkout");
       } catch (err) {
@@ -153,6 +154,7 @@ const Productdetails = () => {
         </div>
       )}
       <div className="product-page">
+        <Toaster position="bottom-right" reverseOrder={false} />
         <div className="product-page__header">
           <Header />
         </div>
@@ -252,7 +254,7 @@ const Productdetails = () => {
                 <div className="product-page__cart-container">
                   <div className="product-page__cart-quantity">
                     <div className="quantity_selector">
-                      <p className="product__quantity-label">Qty</p>
+                      <p className="product__quantity-label">Quantity</p>
                       <select
                         className="product__quantity-selector"
                         onChange={(e) => {
@@ -270,7 +272,7 @@ const Productdetails = () => {
                       </select>
                     </div>
                     <div className="product-page__cart-location">
-                      <div className="location_selector">
+                      {/* <div className="location_selector">
                         <p className="product__pincode-label">Pincode</p>
                         <input
                           className="product__pincode-input"
@@ -285,15 +287,15 @@ const Productdetails = () => {
                           }}
                           required
                         />
-                      </div>
+                      </div> */}
                     </div>
                   </div>
 
-                  {addedToCart && (
+                  {/* {addedToCart && (
                     <div className="add-to-cart-notification">
                       Product added to cart!
                     </div>
-                  )}
+                  )} */}
 
                   <div className="product-page__cart-buttons">
                     <button

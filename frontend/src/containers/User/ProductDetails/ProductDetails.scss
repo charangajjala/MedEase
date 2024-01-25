@@ -159,6 +159,7 @@ $breakpoint-tablet: 1024px;
         flex-direction: row;
         align-items: center;
         gap: 10px;
+        min-width: 30%;
 
         select {
           @include input-style;

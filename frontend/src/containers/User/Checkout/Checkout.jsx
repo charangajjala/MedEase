@@ -7,6 +7,7 @@ import endpoints from "../../../constants/endpoints";
 import { useNavigate } from "react-router-dom";
 import { Loading, SelectField } from "../../../components";
 import noitems from "../../../assets/empty-cart2.svg";
+import toast, { Toaster } from "react-hot-toast";
 
 const Checkout = () => {
   const axiosPrivate = useAxiosPrivate();
@@ -65,6 +66,7 @@ const Checkout = () => {
     const address = addresses.find((addr) => addr.addressName === addressName);
     console.log(address);
     setSelectedAddress(address);
+    toast.success(`Selected ${addressName} as shipping address`);
   };
 
   const handleQuantityChange = (itemId, newQuantity) => {
@@ -73,6 +75,7 @@ const Checkout = () => {
         item.id === itemId ? { ...item, quantity: newQuantity } : item
       )
     );
+    toast.success("Quantity updated");
   };
 
   const handlePlaceOrder = async (event) => {
@@ -80,7 +83,6 @@ const Checkout = () => {
     try {
       console.log("The selected address is", selectedAddress);
       const response = await axiosPrivate.post(userEndpoints.PLACE_ORDER, {
-        // Id is not being received
         addressId: selectedAddress.id,
       });
       const data = await response.data;
@@ -95,6 +97,7 @@ const Checkout = () => {
     setCartItems((currentItems) =>
       currentItems.filter((item) => item.id !== itemId)
     );
+    toast.success("Item removed from cart");
   };
 
   const handleNoCartItems = () => {
@@ -112,6 +115,7 @@ const Checkout = () => {
   return (
     <>
       <div className="checkout-page">
+        <Toaster position="bottom-right" reverseOrder={false} />
         <div className="checkout-page__header">
           <Header />
         </div>

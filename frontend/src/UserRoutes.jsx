@@ -10,6 +10,7 @@ import {
   Checkout,
   OrderSuccess,
 } from "./containers";
+import { NotFoundPage } from "./pages/index.js";
 
 const CartWithAuth = WithAuth(Cart);
 const ProfileWithAuth = WithAuth(Profile);
@@ -27,6 +28,7 @@ const UserRoutes = () => {
         <Route path="/checkout" element={<CheckoutWithAuth />} />
         <Route path="/success" element={<OrderSuccessWithAuth />} />
         <Route path="/profile/*" element={<ProfileWithAuth />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </CartProvider>
   );

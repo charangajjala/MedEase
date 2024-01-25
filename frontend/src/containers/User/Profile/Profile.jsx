@@ -13,6 +13,7 @@ import { Sidebar } from "../../../userComponents";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { NotFoundPageInd } from "../../../pages";
 import useCart from "../../../context/CartContext";
+import { Toaster } from "react-hot-toast";
 
 const Profile = () => {
   const location = useLocation();
@@ -21,6 +22,7 @@ const Profile = () => {
   return (
     <>
       <div className="profile-page">
+        <Toaster position="bottom-right" reverseOrder={false} />
         <div className="profile-page__header">
           <Header />
         </div>
