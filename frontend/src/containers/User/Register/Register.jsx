@@ -4,6 +4,8 @@ import "./Register.scss";
 import { useNavigate } from "react-router-dom";
 import { axiosPrivate } from "../../../api/axios";
 import endpoints from "../../../constants/endpoints";
+import toast, { Toaster } from "react-hot-toast";
+import RedirectToast from "../../../utils/RedirectToast";
 
 const initialState = {
   username: "",
@@ -13,6 +15,7 @@ const initialState = {
   role: "USER",
   errMsg: "",
   success: false,
+  isSubmitting: false,
 };
 
 function reducer(state, action) {
@@ -29,29 +32,46 @@ function reducer(state, action) {
       return { ...state, confirmPassword: action.payload };
     case "SET_SUCCESS":
       return { ...state, success: action.payload };
+    case "SET_IS_SUBMITTING":
+      return { ...state, isSubmitting: action.payload };
     default:
       return state;
   }
 }
 
 const Register = () => {
-  const [
-    { username, password, confirmPassword, email, role, errMsg },
-    dispatch,
-  ] = useReducer(reducer, initialState);
+  const [{ username, password, confirmPassword, email, isSubmitting }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
   const navigate = useNavigate();
+  const redirectDuration = 4000;
+
+  const handleRedirect = () => {
+    toast(() => <RedirectToast duration={4000} />, {
+      duration: 4000,
+    });
+
+    setTimeout(() => {
+      navigate("/");
+    }, redirectDuration);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!username || !email || !password || !confirmPassword) {
-      dispatch({ type: "SET_ERR_MSG", payload: "Please fill in all fields." });
+      const message = "Please fill in all fields.";
+      dispatch({ type: "SET_ERR_MSG", payload: message });
+      toast.error(message);
       return;
     }
 
     if (password !== confirmPassword) {
-      dispatch({ type: "SET_ERR_MSG", payload: "Passwords do not match!" });
-      console.log("Passwords do not match!");
+      const message = "Passwords do not match!";
+      dispatch({ type: "SET_ERR_MSG", payload: message });
+      toast.error(message);
+      return;
     }
 
     try {
@@ -61,25 +81,33 @@ const Register = () => {
         password,
       });
 
-      if (response.data.success) {
+      if (response.status === 201) {
+        dispatch({ type: "SET_IS_SUBMITTING", payload: true });
+        handleRedirect();
         dispatch({ type: "SET_SUCCESS", payload: true });
-        navigate("/dashboard");
       } else {
-        dispatch({ type: "SET_ERR_MSG", payload: response.data.message });
+        dispatch({ type: "SET_IS_SUBMITTING", payload: false });
+        const message = response.data.message || "Registration failed";
+        dispatch({ type: "SET_ERR_MSG", payload: message });
+        toast.error(message);
       }
-
-      navigate("/dashboard");
     } catch (error) {
+      dispatch({ type: "SET_IS_SUBMITTING", payload: false });
+      const message =
+        error.response?.data?.message ||
+        "Registration failed. Please try again.";
       dispatch({
         type: "SET_ERR_MSG",
-        payload: "Registration failed. Please try again.",
+        payload: message,
       });
+      toast.error(message);
     }
   };
 
   return (
     <>
       <div className="register-layout">
+        <Toaster position="bottom-right" reverseOrder={false} />
         <div className="register-layout__content">
           <div className="register-layout__content__header">
             <h1>Register</h1>
@@ -98,6 +126,7 @@ const Register = () => {
               }
               required={true}
               autoComplete="off"
+              disabled={isSubmitting}
             />
             <FormInput
               label="Email"
@@ -109,6 +138,7 @@ const Register = () => {
               }
               required={true}
               autoComplete="off"
+              disabled={isSubmitting}
             />
             <PasswordInput
               id="password"
@@ -118,6 +148,7 @@ const Register = () => {
               }
               required={true}
               autoComplete="off"
+              disabled={isSubmitting}
             />
             <PasswordInput
               id="confirm-password"
@@ -127,13 +158,14 @@ const Register = () => {
               }
               required={true}
               autoComplete="off"
+              disabled={isSubmitting}
             />
           </form>
           <div className="register-layout__content__button">
             <Button type="submit" name="Register" onClick={handleSubmit} />
           </div>
         </div>
-        {errMsg && <span className="error-message">{errMsg}</span>}
+        {/* {errMsg && <span className="error-message">{errMsg}</span>} */}
       </div>
       <Footer />
     </>

@@ -11,10 +11,10 @@ const useCart = () => useContext(CartContext);
 export const CartProvider = ({ children }) => {
   const [cartCount, setCartCount] = useState(0);
   const axiosInstance = useAxiosPrivate();
-  const { user } = useAuth();
+  const { auth } = useAuth();
 
   useEffect(() => {
-    if (user) {
+    if (!auth?.accessToken) {
       let isMounted = true;
 
       const fetchCartItems = async () => {

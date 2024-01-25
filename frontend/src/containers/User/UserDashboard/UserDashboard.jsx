@@ -34,7 +34,6 @@ const UserDashboard = () => {
 
   const navbarRef = useRef(null);
   const axiosPrivate = useAxiosPrivate();
-  const notify = () => toast.success("Added to cart");
 
   // const isAuthenticated = () => {
   //   const auth = JSON.parse(localStorage.getItem("auth"));
@@ -42,7 +41,7 @@ const UserDashboard = () => {
   // };
 
   const fetchCartLength = async () => {
-    if (auth?.accessToken !== null) {
+    if (!auth?.accessToken) {
       setIsCartLoading(true);
       try {
         const response = await axiosPrivate.get(endpoints.GET_CART_URL);
@@ -100,7 +99,7 @@ const UserDashboard = () => {
 
   const handleLoginSucess = () => {
     setShowLoginBox(false);
-    console.log("Login Success");
+    toast.success("Login Successful");
   };
 
   const toggleLoginModal = () => {
@@ -129,14 +128,15 @@ const UserDashboard = () => {
       if (auth?.accessToken) {
         await addToCart(product);
         updateCartCount(cartCount + 1);
+        toast.success("Added to cart");
       } else {
         promptLogin();
       }
     } catch (err) {
       console.error("Error adding product to cart:", err);
+      toast.error("Error adding product to cart");
     } finally {
       setAddingToCart((prevState) => ({ ...prevState, [product.id]: false }));
-      notify();
     }
   };
 

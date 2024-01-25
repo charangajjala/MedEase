@@ -74,7 +74,7 @@ const ProductCard = ({ onAddToCart, data, addingToCart }) => {
 ProductCard.propTypes = {
   onAddToCart: PropTypes.func,
   data: PropTypes.object,
-  addingToCart: PropTypes.objectOf(PropTypes.bool),
+  addingToCart: PropTypes.bool,
 };
 
 export default ProductCard;
