@@ -54,24 +54,33 @@ const AddCategory = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!state.categoryName.trim()) {
+      toast.error('Category name is required');
+      return;
+    }
+    if (!state.description.trim()) {
+      toast.error('Description is required');
+      return;
+    }
+
     try {
       const response = await axiosPrivate.post(
         endpoints.ADD_CATEGORY_URL,
         state
       );
       if (response.status === 201) {
-        toast.success("Category added successfully");
-        dispatch({
-          type: "RESET_FORM",
-        });
+        toast.success('Category added successfully');
+        dispatch({ type: 'RESET_FORM' });
       } else {
-        toast.error("Something went wrong");
+        toast.error('Something went wrong');
       }
     } catch (err) {
       console.log(err);
-      toast.error("Something went wrong");
+      toast.error('Something went wrong');
     }
   };
+
 
   return (
     <>

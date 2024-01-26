@@ -13,6 +13,7 @@ import { useLocation } from "react-router";
 
 import logo from "../../../assets/logo.png";
 import "./UpdateCompany.scss";
+import { Toaster } from "react-hot-toast";
 
 const UpdateCompany = () => {
   const {
@@ -29,6 +30,7 @@ const UpdateCompany = () => {
   return (
     <>
       <div className="update-company-form">
+        <Toaster position="bottom-right" reverseOrder={false} />
         <ToggleButton
           toggleSidebar={toggleSidebar}
           isSidebarVisible={isSidebarVisible}

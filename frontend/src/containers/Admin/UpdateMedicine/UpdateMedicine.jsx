@@ -9,6 +9,7 @@ import {
 } from "../../../components/index.js";
 
 import { links } from "../../../constants/links.js";
+import { Toaster } from "react-hot-toast";
 
 import "./UpdateMedicine.scss";
 import logo from "../../../assets/logo.png";
@@ -63,6 +64,7 @@ const AddMedicine = () => {
   return (
     <>
       <div className="update-product-form">
+        <Toaster position="bottom-right" reverseOrder={false} />
         <ToggleButton
           toggleSidebar={toggleSidebar}
           isSidebarVisible={isSidebarVisible}

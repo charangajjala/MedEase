@@ -7,6 +7,7 @@ import endpoints from "../../constants/endpoints.js";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import RedirectToast from "../../utils/RedirectToast.jsx";
 
 const CompanyForm = ({ method, companyData }) => {
   const initialState = {
@@ -31,9 +32,11 @@ const CompanyForm = ({ method, companyData }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const companyNameRef = useRef();
   const axiosPrivate = useAxiosPrivate();
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  // const [successMessage, setSuccessMessage] = useState("");
+  // const [errorMessage, setErrorMessage] = useState("");
+  const [isRedirecting, setIsRedirecting] = useState(false);
   const navigate = useNavigate();
+  const redirectDuration = 4000;
 
   useEffect(() => {
     companyNameRef.current.focus();
@@ -54,10 +57,26 @@ const CompanyForm = ({ method, companyData }) => {
     }
   }, [companyData]);
 
+  const handleRedirection = (message) => {
+    setIsRedirecting(true);
+    toast(
+      () => <RedirectToast duration={redirectDuration} message={message} />,
+      {
+        duration: redirectDuration,
+      }
+    );
+    setTimeout(() => {
+      navigate("/admin/companies");
+    }, redirectDuration);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSuccessMessage("");
-    setErrorMessage("");
+
+    if (!state.companyName || !state.description) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
 
     if (method === "Add") {
       try {
@@ -66,34 +85,28 @@ const CompanyForm = ({ method, companyData }) => {
           state
         );
         if (response.status === 201) {
-          setSuccessMessage("Company added successfully");
-          toast.success("Company added successfully");
-          navigate("/admin/companies");
+          handleRedirection("Company added successfully");
         } else {
-          toast.error("Something went wrong");
-          setErrorMessage("An error occurred");
+          toast.error("Failed to add company");
         }
       } catch (err) {
-        toast.error("Something went wrong");
-        setErrorMessage("An Unknown Error has occured error occurred");
+        toast.error(`Error adding company: ${err.message || "Unknown error"}`);
       }
-    }
-
-    if (method === "Update") {
+    } else if (method === "Update") {
       try {
-        console.log(state);
         const response = await axiosPrivate.put(
           endpoints.UPDATE_COMPANY_URL,
           state
         );
         if (response.status === 200) {
-          toast.success("Company updated successfully");
-          setSuccessMessage("Company updated successfully");
-          navigate("/admin/companies");
+          handleRedirection("Company updated successfully");
+        } else {
+          toast.error("Failed to update company");
         }
       } catch (err) {
-        toast.error("Something went wrong");
-        setErrorMessage("An error occurred");
+        toast.error(
+          `Error updating company: ${err.message || "Unknown error"}`
+        );
       }
     }
   };
@@ -113,6 +126,7 @@ const CompanyForm = ({ method, companyData }) => {
               payload: e.target.value,
             })
           }
+          disabled={isRedirecting}
           label="Company Name"
           ref={companyNameRef}
         />
@@ -127,16 +141,21 @@ const CompanyForm = ({ method, companyData }) => {
               payload: e.target.value,
             })
           }
+          disabled={isRedirecting}
           label="Description"
         />
-        {successMessage && (
+        {/* {successMessage && (
           <div className="company-form__success-message">{successMessage}</div>
         )}
         {errorMessage && (
           <div className="company-form__error-message">{errorMessage}</div>
-        )}
+        )} */}
         <div className="company-form__button-container">
-          <button className="company-form__button" type="submit">
+          <button
+            className="company-form__button"
+            type="submit"
+            disabled={isRedirecting}
+          >
             {method} Company
           </button>
           <button
@@ -144,6 +163,7 @@ const CompanyForm = ({ method, companyData }) => {
             onClick={() => {
               navigate("/admin/companies");
             }}
+            disabled={isRedirecting}
           >
             Return to Companies
           </button>

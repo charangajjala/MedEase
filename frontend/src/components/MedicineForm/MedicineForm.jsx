@@ -10,7 +10,6 @@ import endpoints from "../../constants/endpoints.js";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import RedirectToast from "../../utils/RedirectToast.jsx";
 
 const initialState = {
   productType: "",
@@ -178,6 +177,46 @@ const MedicineForm = ({ button_name, productData }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const formValidation = () => {
+    if (!state.productType.trim()) {
+      toast.error("Product type is required");
+      return false;
+    }
+    if (!state.productCode.trim()) {
+      toast.error("Product code is required");
+      return false;
+    }
+    if (!state.productTitle.trim()) {
+      toast.error("Product title is required");
+      return false;
+    }
+    if (!state.totalStock.trim()) {
+      toast.error("Total stock is required");
+      return false;
+    }
+    if (!state.companyName.trim()) {
+      toast.error("Company name is required");
+      return false;
+    }
+    if (!state.costPerMonth.trim()) {
+      toast.error("Cost per month is required");
+      return false;
+    }
+    if (!state.manufactureDate.trim()) {
+      toast.error("Manufacture date is required");
+      return false;
+    }
+    if (!state.expiryDate.trim()) {
+      toast.error("Expiry date is required");
+      return false;
+    }
+    if (!state.description.trim()) {
+      toast.error("Description is required");
+      return false;
+    }
+    return true;
+  };
+
   const isNumeric = (str) => {
     if (typeof str !== "string") return false;
     return !isNaN(str) && !isNaN(parseFloat(str));
@@ -185,6 +224,11 @@ const MedicineForm = ({ button_name, productData }) => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+
+    if (!formValidation()) {
+      return;
+    }
+
     if (button_name === "Submit") {
       try {
         const productAddStatus = await axiosPrivate.post(
