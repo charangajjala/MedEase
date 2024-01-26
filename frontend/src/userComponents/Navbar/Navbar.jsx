@@ -15,7 +15,6 @@ import { useState } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import userEndpoints from "../../constants/userEndpoints";
 import AuthContext from "../../context/AuthProvider";
-import { Loading } from "../../components";
 // import React from "react";
 
 const initialState = {
@@ -115,10 +114,6 @@ const Navbar = ({ cartCount }) => {
     // navigate(`/medicine?${queryParams.toString()}`);
   };
 
-  if (isAddressLoading) {
-    return <Loading message={"Fetching Addresses..."} />;
-  }
-
   return (
     <nav className="navbar-container">
       <div className="navbar-container__location">
@@ -129,7 +124,9 @@ const Navbar = ({ cartCount }) => {
           <FontAwesomeIcon icon={faLocation} />
         </button>
         <div className="navbar-container__location-text">
-          {address.addressName ? (
+          {isAddressLoading ? (
+            <div className="spinner"></div>
+          ) : address.addressName ? (
             <>
               <span>
                 {address.addressName} - {address?.addressLine1} -{" "}
