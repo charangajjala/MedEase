@@ -40,17 +40,22 @@ function reducer(state, action) {
 }
 
 const Register = () => {
-  const [{ username, password, confirmPassword, email, isSubmitting }, dispatch] = useReducer(
-    reducer,
-    initialState
-  );
+  const [
+    { username, password, confirmPassword, email, isSubmitting },
+    dispatch,
+  ] = useReducer(reducer, initialState);
   const navigate = useNavigate();
   const redirectDuration = 4000;
 
   const handleRedirect = () => {
-    toast(() => <RedirectToast duration={4000} />, {
-      duration: 4000,
-    });
+    toast(
+      () => (
+        <RedirectToast duration={redirectDuration} message="Succesful Login! Redirecting" />
+      ),
+      {
+        duration: redirectDuration,
+      }
+    );
 
     setTimeout(() => {
       navigate("/");

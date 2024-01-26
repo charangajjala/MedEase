@@ -7,6 +7,7 @@ import {
   Header,
   MedicineForm,
 } from "../../../components/index.js";
+import { Toaster } from "react-hot-toast";
 
 import { links } from "../../../constants/links.js";
 
@@ -32,6 +33,7 @@ const AddMedicine = () => {
   return (
     <>
       <div className="add-product-form">
+        <Toaster position="bottom-right" reverseOrder={false} />
         <ToggleButton
           toggleSidebar={toggleSidebar}
           isSidebarVisible={isSidebarVisible}

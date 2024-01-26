@@ -6,6 +6,7 @@ import {
   CompanyForm,
 } from "../../../components/index.js";
 import useVisibilityToggle from "../../../hooks/useVisibilityToggle.jsx";
+import { Toaster } from "react-hot-toast";
 
 import { links } from "../../../constants/links.js";
 
@@ -24,6 +25,7 @@ const AddCompany = () => {
   return (
     <>
       <div className="add-company-form">
+        <Toaster position="bottom-right" reverseOrder={false} />
         <ToggleButton
           toggleSidebar={toggleSidebar}
           isSidebarVisible={isSidebarVisible}

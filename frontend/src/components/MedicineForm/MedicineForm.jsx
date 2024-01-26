@@ -9,6 +9,8 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
 import endpoints from "../../constants/endpoints.js";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import RedirectToast from "../../utils/RedirectToast.jsx";
 
 const initialState = {
   productType: "",
@@ -176,6 +178,11 @@ const MedicineForm = ({ button_name, productData }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const isNumeric = (str) => {
+    if (typeof str !== "string") return false;
+    return !isNaN(str) && !isNaN(parseFloat(str));
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (button_name === "Submit") {
@@ -185,39 +192,57 @@ const MedicineForm = ({ button_name, productData }) => {
           state
         );
         if (productAddStatus.status === 201) {
+          toast.success("Product added successfully");
           setFormIsValid(false);
           setSucessMessage("Product added successfully");
         }
       } catch (error) {
         console.log(error);
+        toast.error("Something went wrong");
       }
     }
 
     if (button_name === "Update") {
       try {
-        const productType = productTypes.find(
-          (object) => object.value === state.productType
-        );
+        let productTypeLabel = state.productType;
+        let companyNameLabel = state.companyName;
 
-        const companyName = companyNames.find(
-          (object) => object.value === state.companyName
-        );
+        if (isNumeric(state.companyName) && companyNames) {
+          const companyNameObj = companyNames.find(
+            (object) => object.value === state.companyName
+          );
+          companyNameLabel = companyNameObj
+            ? companyNameObj.label
+            : state.companyName;
+        }
+
+        if (isNumeric(state.productType) && productTypes) {
+          const productTypeObj = productTypes.find(
+            (object) => object.value === state.productType
+          );
+          productTypeLabel = productTypeObj
+            ? productTypeObj.label
+            : state.productType;
+        }
 
         const productAddStatus = await axiosPrivate.put(
           endpoints.UPDATE_PRODUCTS_URL,
           {
             ...state,
             id,
-            productType: productType.label,
-            companyName: companyName.label,
+            productType: productTypeLabel,
+            companyName: companyNameLabel,
           }
         );
+
         if (productAddStatus.status === 200) {
+          toast.success("Product updated successfully");
           setFormIsValid(false);
           setSucessMessage("Product updated successfully");
         }
       } catch (error) {
         console.log(error);
+        toast.error("Something went wrong");
       }
     }
   };

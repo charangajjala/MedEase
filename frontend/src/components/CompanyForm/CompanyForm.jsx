@@ -6,6 +6,7 @@ import "./CompanyForm.scss";
 import endpoints from "../../constants/endpoints.js";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const CompanyForm = ({ method, companyData }) => {
   const initialState = {
@@ -66,11 +67,14 @@ const CompanyForm = ({ method, companyData }) => {
         );
         if (response.status === 201) {
           setSuccessMessage("Company added successfully");
+          toast.success("Company added successfully");
           navigate("/admin/companies");
         } else {
+          toast.error("Something went wrong");
           setErrorMessage("An error occurred");
         }
       } catch (err) {
+        toast.error("Something went wrong");
         setErrorMessage("An Unknown Error has occured error occurred");
       }
     }
@@ -83,10 +87,12 @@ const CompanyForm = ({ method, companyData }) => {
           state
         );
         if (response.status === 200) {
+          toast.success("Company updated successfully");
           setSuccessMessage("Company updated successfully");
           navigate("/admin/companies");
         }
       } catch (err) {
+        toast.error("Something went wrong");
         setErrorMessage("An error occurred");
       }
     }

@@ -15,6 +15,7 @@ import logo from "../../../assets/logo.png";
 import "./AddCategory.scss";
 import { useReducer, useEffect, useRef } from "react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate.jsx";
+import toast, { Toaster } from "react-hot-toast";
 
 const initialState = {
   categoryName: "",
@@ -59,20 +60,23 @@ const AddCategory = () => {
         state
       );
       if (response.status === 201) {
+        toast.success("Category added successfully");
         dispatch({
           type: "RESET_FORM",
         });
       } else {
-        alert("Something went wrong");
+        toast.error("Something went wrong");
       }
     } catch (err) {
       console.log(err);
+      toast.error("Something went wrong");
     }
   };
 
   return (
     <>
       <div className="add-category-form">
+        <Toaster position="bottom-right" reverseOrder={false} />
         <ToggleButton
           toggleSidebar={toggleSidebar}
           isSidebarVisible={isSidebarVisible}
