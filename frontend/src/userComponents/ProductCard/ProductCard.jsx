@@ -9,11 +9,16 @@ import toast from "react-hot-toast";
 
 const ProductCard = ({ onAddToCart, data, addingToCart }) => {
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   if (!data) {
     return null;
   }
+
+  const handleImageLoaded = () => {
+    setIsLoading(false);
+  };
 
   const toggleFavorite = (e) => {
     e.stopPropagation();
@@ -35,10 +40,16 @@ const ProductCard = ({ onAddToCart, data, addingToCart }) => {
   return (
     <div className={cardClasses}>
       <div className="product-card__image">
+        {isLoading && (
+          <div className="spinner-container">
+            <div className="spinner"></div>
+          </div>
+        )}
         <img
           src={moov}
           alt="Moov Fast Pain Relief Spray"
           onClick={handleNavigation}
+          onLoad={handleImageLoaded}
         />
         <button className="product-card__favorite" onClick={toggleFavorite}>
           <FontAwesomeIcon icon={faHeart} color={isFavorite ? "red" : "gray"} />
