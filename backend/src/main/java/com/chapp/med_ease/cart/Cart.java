@@ -42,11 +42,8 @@ public class Cart {
     public void addCartItem(CartItem cartItem) {
         if (cartItems == null) {
             cartItems = new ArrayList<>();
-        } else {
-            cartItems.add(cartItem);
-            this.totalCost += cartItem.getTotalCost();
         }
-
+        cartItems.add(cartItem);
         cartItem.setCart(this);
     }
 

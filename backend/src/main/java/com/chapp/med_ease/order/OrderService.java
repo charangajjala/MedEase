@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.chapp.med_ease.cart.Cart;
-import com.chapp.med_ease.cart.CartRespository;
+import com.chapp.med_ease.cart.CartItem;
 import com.chapp.med_ease.cart.cart_dto.CartItemResponse;
 import com.chapp.med_ease.exception.exceptions.BadRequestException;
 import com.chapp.med_ease.exception.exceptions.NotAuthorizedException;
@@ -31,7 +31,6 @@ public class OrderService {
     private final UserFromToken userFromToken;
     private final UserRepository userRepository;
     private final OrderRespository orderRespository;
-    private final CartRespository cartRespository;
 
     public void createOrder(OrderRequest req) throws BadRequestException {
 
@@ -46,6 +45,19 @@ public class OrderService {
 
         final Address address = addresses.stream().filter(a -> a.getId() == req.getAddressId()).findFirst()
                 .orElseThrow(() -> new BadRequestException("Address not found"));
+
+        final List<CartItem> cartItems = cart.getCartItems();
+
+        if (cartItems == null || cartItems.isEmpty())
+            throw new BadRequestException("Cart is empty");
+
+        for (CartItem cartItem : cartItems) {
+            if (cartItem.getQuantity() > cartItem.getMedicine().getTotalStock())
+                throw new BadRequestException(
+                        "Medicine " + cartItem.getMedicine().getProductTitle() + " is out of stock");
+
+            cartItem.getMedicine().setTotalStock(cartItem.getMedicine().getTotalStock() - cartItem.getQuantity());
+        }
 
         LocalDateTime currentDateTime = LocalDateTime.now();
         String currentFormattedDateTime = currentDateTime.format(DateTimeFormatter.ofPattern("MM-DD-YYYY HH:mm:ss"));
