@@ -68,6 +68,10 @@ const Navbar = ({ cartCount }) => {
           const data = response.data;
           console.log("The Addresses Received are", data);
           setAddress(data[0]);
+
+          if (data.length === 0) {
+            setAddress("No addresses found");
+          }
         } catch (error) {
           console.log(error);
         } finally {
@@ -126,7 +130,7 @@ const Navbar = ({ cartCount }) => {
         <div className="navbar-container__location-text">
           {isAddressLoading ? (
             <div className="spinner"></div>
-          ) : address.addressName ? (
+          ) : address?.addressName ? (
             <>
               <span>
                 {address.addressName} - {address?.addressLine1} -{" "}
