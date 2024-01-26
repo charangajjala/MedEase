@@ -1,6 +1,5 @@
 package com.chapp.med_ease.cart.cart_dto;
 
-import com.chapp.med_ease.cart.Cart;
 import com.chapp.med_ease.cart.CartItem;
 import com.chapp.med_ease.medicine.Medicine;
 
