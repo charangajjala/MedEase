@@ -5,6 +5,7 @@ import axios from "../../api/axios.jsx";
 import "./Login.scss";
 import store from "../../assets/store.jpg";
 import { useNavigate } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 import {
   Button,
@@ -151,6 +152,7 @@ const Login = () => {
   return (
     <>
       <div className="login-layout">
+        <Toaster position="bottom-right" reverseOrder={false} />
         <div className="login-layout__container">
           <div className="login-layout__container-left">
             <h1>Store Login</h1>

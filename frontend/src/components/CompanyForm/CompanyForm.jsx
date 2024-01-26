@@ -59,10 +59,22 @@ const CompanyForm = ({ method, companyData }) => {
 
   const handleRedirection = (message) => {
     setIsRedirecting(true);
-    toast(
-      () => <RedirectToast duration={redirectDuration} message={message} />,
+    // toast(
+    //   () => <RedirectToast duration={redirectDuration} message={message} />,
+    //   {
+    //     duration: redirectDuration,
+    //   }
+    // );
+    toast.custom(
+      (t) => (
+        <RedirectToast
+          duration={t.duration}
+          message={message}
+        />
+      ),
       {
-        duration: redirectDuration,
+        duration: 4000,
+        id: "logout-toast",
       }
     );
     setTimeout(() => {
