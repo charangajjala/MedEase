@@ -48,18 +48,24 @@ const Register = () => {
   const redirectDuration = 4000;
 
   const handleRedirect = () => {
-    toast(
-      () => (
-        <RedirectToast duration={redirectDuration} message="Succesful Login! Redirecting" />
-      ),
-      {
-        duration: redirectDuration,
-      }
-    );
+    // toast(
+    //   () => (
+    //     <RedirectToast duration={redirectDuration} message="Succesful Login! Redirecting" />
+    //   ),
+    //   {
+    //     duration: redirectDuration,
+    //   }
+    // );
 
-    setTimeout(() => {
-      navigate("/");
-    }, redirectDuration);
+    toast.custom((t) => (
+      <RedirectToast
+        toast={t}
+        duration={redirectDuration}
+        message="User registered successfully!"
+      />
+    ));
+
+    navigate("/");
   };
 
   const handleSubmit = async (e) => {

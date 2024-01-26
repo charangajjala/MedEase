@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import './RedirectToast.scss'; // Import the SCSS file
+import './RedirectToast.scss';
 
 const RedirectToast = ({ duration, message }) => {
   const [progress, setProgress] = useState(100);
