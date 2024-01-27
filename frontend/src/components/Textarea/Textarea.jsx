@@ -7,7 +7,7 @@ const Textarea = React.forwardRef(function Textarea(
   ref
 ) {
   return (
-    <div className="text-area">
+    <div className="grid-item">
       <label htmlFor={id}>{label}</label>
       <textarea
         id={id}

@@ -3,6 +3,7 @@ import Textarea from "../Textarea/Textarea.jsx";
 import PropTypes from "prop-types";
 import { useEffect, useReducer } from "react";
 import FormInput from "../FormInput/FormInput.jsx";
+import ImageInput from "../ImageInput/ImageInput.jsx";
 // import { companyNames } from "../../constants/companyNames.js";
 import "./MedicineForm.scss";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
@@ -20,6 +21,7 @@ const initialState = {
   costPerMonth: "",
   expiryDate: "",
   manufactureDate: "",
+  image: "",
   description: "",
 };
 
@@ -41,6 +43,8 @@ function reducer(state, action) {
       return { ...state, expiryDate: action.payload };
     case "SET_MANUFACTURE_DATE":
       return { ...state, manufactureDate: action.payload };
+    case "SET_IMAGE":
+      return { ...state, image: action.payload };
     case "SET_DESCRIPTION":
       return { ...state, description: action.payload };
     case "RESET_FORM":
@@ -447,6 +451,15 @@ const MedicineForm = ({ button_name, productData }) => {
         }}
         required={true}
         error={dateError ? errorMessage : ""}
+      />
+      <ImageInput
+        label="Upload Image"
+        id="medicine-image"
+        name="medicine-image"
+        onChange={(e) =>
+          dispatch({ type: "SET_IMAGE", payload: e.target.value })
+        }
+        required={true}
       />
       <div className="full-width">
         <Textarea

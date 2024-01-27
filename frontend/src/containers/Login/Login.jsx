@@ -159,10 +159,10 @@ const Login = () => {
             <form className="login-layout__container-left__form">
               <div className="login-layout__container-left__form__input">
                 <FormInput
-                  label="Username"
+                  label="Email"
                   type="text"
-                  id="username"
-                  name="username"
+                  id="email"
+                  name="email"
                   value={email}
                   onChange={(e) =>
                     dispatch({ type: "SET_USER", payload: e.target.value })

@@ -13,6 +13,7 @@ import { default as Loading } from "./Loading/Loading.jsx";
 import { default as Navbar } from "./Navbar/Navbar.jsx";
 import { default as Invoice } from "./Invoice/Invoice.jsx";
 import { default as PasswordInput } from "./PasswordInput/PasswordInput.jsx";
+import { default as ImageInput } from "./ImageInput/ImageInput.jsx";
 
 export {
   Button,
@@ -30,4 +31,5 @@ export {
   Navbar,
   Invoice,
   PasswordInput,
+  ImageInput,
 };
