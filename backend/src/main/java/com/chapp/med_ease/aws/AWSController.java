@@ -3,9 +3,11 @@ package com.chapp.med_ease.aws;
 import com.amazonaws.services.s3.model.Bucket;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -20,5 +22,10 @@ public class AWSController {
         var buckets = awsService.listBuckets();
         var names = buckets.stream().map(Bucket::getName).toList();
         return String.join(", ", names);
+    }
+
+    @GetMapping("/{bucket}")
+    public List<String> listObjects(@PathVariable String bucket) {
+        return awsService.listObjects(bucket);
     }
 }
