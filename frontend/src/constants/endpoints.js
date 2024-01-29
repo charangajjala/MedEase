@@ -10,6 +10,9 @@ const Endpoints = {
   ADMIN_ORDERS_URL: "/api/admin/order",
   GET_ADMIN_ORDER_URL: "/api/admin/order/{id}",
 
+  //Bucket Related URLs
+  LIST_BUCKETS_URL: "/api/aws/listBuckets",
+
   // User Dashboard Products
   GET_PRODUCTS_URL: "/api/medicine",
 

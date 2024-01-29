@@ -1,34 +1,24 @@
 package com.chapp.med_ease.aws;
 
 import com.amazonaws.services.s3.model.Bucket;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/aws/")
+@RequestMapping("/aws")
+@RequiredArgsConstructor
 public class AWSController {
 
-    @Autowired
-    private AWSService awsService;
-
-    @PostMapping("/createBucket")
-    public ResponseEntity<Bucket> createBucket(String bucketName) {
-        try{
-            Bucket bucket = awsService.createBucket(bucketName);
-            return ResponseEntity.ok(bucket);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
+    private final AWSService awsService;
 
     @GetMapping("/listBuckets")
-    public ResponseEntity<List<Bucket>> listBuckets() {
-        return ResponseEntity.ok(awsService.listBuckets());
+    public String listBuckets() {
+        var buckets = awsService.listBuckets();
+        var names = buckets.stream().map(Bucket::getName).toList();
+        return String.join(", ", names);
     }
 }
