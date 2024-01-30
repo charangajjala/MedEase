@@ -5,8 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faShareAlt as fasShareAlt } from "@fortawesome/free-solid-svg-icons";
 
-import moov from "../../../assets/moov.jpg";
-import moov2 from "../../../assets/moov2.jpg";
 import { useContext, useEffect, useState } from "react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import endpoints from "../../../constants/endpoints";
@@ -14,6 +12,10 @@ import { useReducer } from "react";
 import useCart from "../../../context/CartContext";
 import AuthContext from "../../../context/AuthProvider";
 import toast, { Toaster } from "react-hot-toast";
+import generateS3ImageUrl from "../../../utils/s3Utils";
+
+const noimg =
+  "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/noimg.jpg";
 
 const inititalState = {
   quantity: 1,
@@ -39,14 +41,14 @@ const reducer = (state, action) => {
 
 const Productdetails = () => {
   const { id } = useParams();
-  const [mainImage, setMainImage] = useState(moov);
+  const [mainImage, setMainImage] = useState(noimg);
   const [isFavorite, setIsFavorite] = useState(false);
   // const [cartCount, setCartCount] = useState(0);
   const { cartCount, updateCartCount } = useCart();
   const [showLoginBox, setShowLoginBox] = useState(false);
   // const [addedToCart, setAddedToCart] = useState(false);
   const [state, dispatch] = useReducer(reducer, inititalState);
-  const imageGallery = [moov, moov2, moov, moov2, moov];
+  const [imageGallery, setImageGallery] = useState([]);
   const [data, setData] = useState({});
   const axiosPrivate = useAxiosPrivate();
   const { auth } = useContext(AuthContext);
@@ -81,6 +83,9 @@ const Productdetails = () => {
           endpoints.GET_PRODUCT_URL.replace("{id}", id)
         );
         const data = await response.data;
+        const imageUrl = generateS3ImageUrl(data.imageKey);
+        setImageGallery([imageUrl]);
+        setMainImage(imageUrl);
         setData(data);
       } catch (err) {
         console.error(err);

@@ -23,11 +23,14 @@ public class CartItemResponse {
 
     private int totalCost;
 
+    private String imageKey;
+
     public CartItemResponse(CartItem cartItem, Medicine medicine) {
         this.id = cartItem.getId();
         this.cartProduct = new CartProduct(medicine);
         this.quantity = cartItem.getQuantity();
         this.totalCost = cartItem.getTotalCost();
+        this.imageKey = medicine.getImageKey();
     }
 
 }

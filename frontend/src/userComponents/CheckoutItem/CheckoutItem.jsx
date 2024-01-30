@@ -1,11 +1,11 @@
 import "./CheckoutItem.scss";
-import moov from "../../assets/moov.jpg";
 import PropTypes from "prop-types";
 import { Button } from "../../components";
 import { useContext, useReducer } from "react";
 import AuthContext from "../../context/AuthProvider";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import endpoints from "../../constants/endpoints";
+import generateS3ImageUrl from "../../utils/s3Utils";
 
 const initialState = {
   quantity: 1,
@@ -27,6 +27,7 @@ const CheckoutItem = ({ item, onQuantityChange, onRemove }) => {
   });
   const { auth } = useContext(AuthContext);
   const axiosPrivate = useAxiosPrivate();
+  const image = generateS3ImageUrl(item.imageKey);
 
   const handleRemove = async (e) => {
     e.preventDefault();
@@ -66,7 +67,7 @@ const CheckoutItem = ({ item, onQuantityChange, onRemove }) => {
   return (
     <div className="checkout-item">
       <div className="checkout-item__image">
-        <img src={moov} alt="Product Image" />
+        <img src={image} alt="Product Image" />
       </div>
       <div className="checkout-item__details">
         <div className="checkout-item__details-left">
@@ -111,6 +112,7 @@ CheckoutItem.propTypes = {
       costPerMonth: PropTypes.number.isRequired,
       totalStock: PropTypes.number.isRequired,
     }).isRequired,
+    imageKey: PropTypes.string,
     quantity: PropTypes.number.isRequired,
     totalCost: PropTypes.number.isRequired,
   }).isRequired,

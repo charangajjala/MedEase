@@ -1,11 +1,11 @@
 import "./SearchResult.scss";
-import moov from "../../assets/moov.jpg";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import useCart from "../../context/CartContext";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import endpoints from "../../constants/endpoints";
 import toast from "react-hot-toast";
+import generateS3ImageUrl from "../../utils/s3Utils";
 
 const SearchResult = ({ product }) => {
   const currentDate = new Date();
@@ -20,6 +20,7 @@ const SearchResult = ({ product }) => {
 
   let expiryClass = "";
   let expiryText = "Expired";
+  const image = generateS3ImageUrl(product.imageKey);
 
   if (daysLeft > 0) {
     if (daysLeft > 365) {
@@ -74,7 +75,7 @@ const SearchResult = ({ product }) => {
   return (
     <div className="results">
       <div className="results__image" onClick={handleNavigate}>
-        <img src={moov} alt={product.productTitle} />
+        <img src={image} alt={product.productTitle} />
       </div>
       <div className="results__info">
         <div className="results__info-details" onClick={handleNavigate}>

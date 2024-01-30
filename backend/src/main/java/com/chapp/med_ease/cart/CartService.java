@@ -109,6 +109,7 @@ public class CartService {
                     .quantity(cartItem.getQuantity())
                     .totalCost(cartItem.getTotalCost())
                     .cartProduct(cartProduct)
+                    .imageKey(medicine.getImageKey())
                     .build();
 
             res.add(cartItemResponse);

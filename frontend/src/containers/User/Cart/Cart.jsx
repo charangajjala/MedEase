@@ -31,7 +31,6 @@ const Cart = () => {
           return acc + item.quantity;
         }, 0);
         setCartItems(data);
-        console.log("This the response recieved : ", data);
         updateCartCount(totalQuantity);
       } catch (error) {
         console.log(error);

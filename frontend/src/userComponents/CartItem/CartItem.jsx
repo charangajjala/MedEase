@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import image from "../../assets/moov.jpg";
 import "./CartItem.scss";
 import { Button } from "../../components";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
@@ -7,6 +6,7 @@ import endpoints from "../../constants/endpoints";
 import { useContext, useReducer } from "react";
 import useAnimatedNumber from "../../hooks/useAnimatedNumber";
 import AuthContext from "../../context/AuthProvider";
+import generateS3ImageUrl from "../../utils/s3Utils";
 
 const initialState = {
   quantity: 1,
@@ -28,6 +28,7 @@ const CartItem = ({ item, onQuantityChange, onRemove }) => {
     quantity: item.quantity,
   });
   const { auth } = useContext(AuthContext);
+  const image = generateS3ImageUrl(item.imageKey);
 
   // const isAuthenticated = () => {
   //   const auth = JSON.parse(localStorage.getItem("auth"));
@@ -123,6 +124,7 @@ CartItem.propTypes = {
       costPerMonth: PropTypes.number.isRequired,
       totalStock: PropTypes.number.isRequired,
     }).isRequired,
+    imageKey: PropTypes.string,
     quantity: PropTypes.number.isRequired,
     totalCost: PropTypes.number.isRequired,
   }).isRequired,
