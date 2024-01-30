@@ -8,6 +8,7 @@ import {
   faPlusCircle,
   faSignOutAlt,
   faCapsules,
+  faBarsProgress,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const links = {
@@ -19,5 +20,6 @@ export const links = {
   companyReport: { name: "Company Report", href: "/admin/companies", icon: faSitemap },
   addCompany: { name: "Add Company", href: "/admin/companyAdd", icon: faBuilding },
   addCategory: { name: "Add Category", href: "/admin/category", icon: faPlusCircle },
+  CategoryReport: { name: "Category Report", href: "/admin/categories", icon: faBarsProgress },
   logout: { name: "Logout", href: "/logout", icon: faSignOutAlt },
 };

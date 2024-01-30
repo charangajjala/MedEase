@@ -8,6 +8,7 @@ import {
   OrderReports,
   OrderReport,
   CompanyReport,
+  CategoryReport,
   AddCategory,
   Logout,
   // SellsDashboardExt,
@@ -39,6 +40,7 @@ const UpdateCompanyWithAuth = WithAuth(UpdateCompany);
 const AddCategoryWithAuth = WithAuth(AddCategory);
 const InvoiceWithAuth = WithAuth(Invoice);
 const InvoiceUserWithAuth = WithAuth(InvoiceUser);
+const CategoryReportWithAuth = WithAuth(CategoryReport);
 
 function App() {
   return (
@@ -59,6 +61,7 @@ function App() {
           path="/admin/medicineUpdate"
           element={<UpdateMedicineWithAuth />}
         />
+        <Route path="/admin/categories" element={<CategoryReportWithAuth />} />
         {/* <Route path="/admin/sells" element={<StartSellWithAuth />} /> */}
         {/* <Route path="/admin/sellsExt" element={<SellsDashboardExtWithAuth />} /> */}
         <Route path="/admin/report" element={<OrderReportsWithAuth />} />

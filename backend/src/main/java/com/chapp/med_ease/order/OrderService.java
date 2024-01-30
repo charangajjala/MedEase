@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import com.chapp.med_ease.cart.CartItem;
 import org.springframework.stereotype.Service;
 
 import com.chapp.med_ease.cart.Cart;
