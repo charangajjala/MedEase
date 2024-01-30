@@ -22,6 +22,7 @@ import { default as Checkout } from "./User/Checkout/Checkout.jsx";
 import { default as OrderSuccess } from "./User/OrderSuccess/OrderSuccess.jsx";
 import { default as CategoryReport } from "./Admin/CategoryReport/CategoryReport.jsx";
 import { default as ForgotPassword } from "./ForgotPassword/ForgotPassword.jsx";
+import { default as UpdateCategory } from "./Admin/UpdateCategory/UpdateCategory.jsx";
 
 export {
   AdminDashboard,
@@ -48,4 +49,5 @@ export {
   OrderSuccess,
   CategoryReport,
   ForgotPassword,
+  UpdateCategory,
 };

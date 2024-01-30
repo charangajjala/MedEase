@@ -17,6 +17,7 @@ import {
   ProductReports,
   UpdateMedicine,
   Register,
+  UpdateCategory,
 } from "./containers/index.js";
 import WithAuth from "./utils/WithAuth.jsx";
 import { Invoice } from "./components/index.js";
@@ -41,6 +42,7 @@ const AddCategoryWithAuth = WithAuth(AddCategory);
 const InvoiceWithAuth = WithAuth(Invoice);
 const InvoiceUserWithAuth = WithAuth(InvoiceUser);
 const CategoryReportWithAuth = WithAuth(CategoryReport);
+const UpdateCategoryWithAuth = WithAuth(UpdateCategory);
 
 function App() {
   return (
@@ -62,6 +64,10 @@ function App() {
           element={<UpdateMedicineWithAuth />}
         />
         <Route path="/admin/categories" element={<CategoryReportWithAuth />} />
+        <Route
+          path="/admin/categories/:id"
+          element={<UpdateCategoryWithAuth />}
+        />
         {/* <Route path="/admin/sells" element={<StartSellWithAuth />} /> */}
         {/* <Route path="/admin/sellsExt" element={<SellsDashboardExtWithAuth />} /> */}
         <Route path="/admin/report" element={<OrderReportsWithAuth />} />

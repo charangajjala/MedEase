@@ -41,6 +41,22 @@ public class AdminMedicineTypeService {
                 return res;
         }
 
+        public MedicineTypeResponse updateMedicineType(int id, MedicineTypeRequest req) throws NotFoundException {
+                final String categoryName = req.getCategoryName();
+                final String description = req.getDescription();
+
+                MedicineType medicineType = medicineTypeRepository.findById(id).orElseThrow(() -> new NotFoundException("Medicine Type not found"));
+
+                medicineType.setCategoryName(categoryName);
+                medicineType.setDescription(description);
+                medicineTypeRepository.save(medicineType);
+
+                return MedicineTypeResponse.builder().id(medicineType.getId())
+                                .categoryName(medicineType.getCategoryName())
+                                .description(medicineType.getDescription())
+                                .build();
+        }
+
         public List<MedicineTypeResponse> getAllMedicineTypes() {
 
                 return medicineTypeRepository.findAll().stream()
@@ -62,5 +78,4 @@ public class AdminMedicineTypeService {
                                 .build();
 
         }
-
 }

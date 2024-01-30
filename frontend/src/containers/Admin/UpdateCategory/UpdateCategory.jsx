@@ -7,18 +7,15 @@ import {
   Textarea,
 } from "../../../components/index.js";
 import useVisibilityToggle from "../../../hooks/useVisibilityToggle.jsx";
-
+import { useEffect, useReducer, useState } from "react";
+import "./UpdateCategory.scss";
+import { useNavigate, useParams } from "react-router-dom";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { links } from "../../../constants/links.js";
 import endpoints from "../../../constants/endpoints.js";
 
-// import logo from "../../../assets/logo.png";
-import "./AddCategory.scss";
-import { useReducer, useEffect, useRef } from "react";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate.jsx";
-import toast, { Toaster } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-
-const logo = "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/logo.png";
+const logo =
+  "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/logo.png";
 
 const initialState = {
   categoryName: "",
@@ -38,7 +35,10 @@ function reducer(state, action) {
   }
 }
 
-const AddCategory = () => {
+const UpdateCategory = () => {
+  const axiosPrivate = useAxiosPrivate();
+  const { id } = useParams();
+  const [category, setCategory] = useState({});
   const {
     isSidebarVisible,
     toggleSidebar,
@@ -46,51 +46,47 @@ const AddCategory = () => {
     toggleDropdown,
     dropdownRef,
   } = useVisibilityToggle();
-
   const [state, dispatch] = useReducer(reducer, initialState);
-  const categoryNameRef = useRef();
-  const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
 
   useEffect(() => {
-    categoryNameRef.current.focus();
+    const fetchCategory = async () => {
+      try {
+        const response = await axiosPrivate.get(
+          endpoints.GET_ONE_CATEGORY_URL.replace("{id}", id)
+        );
+        const data = await response.data;
+        setCategory(data);
+        dispatch({ type: "SET_CATEGORY_NAME", payload: data.categoryName });
+        dispatch({ type: "SET_DESCRIPTION", payload: data.description });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchCategory();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
 
-    if (!state.categoryName.trim()) {
-      toast.error('Category name is required');
-      return;
-    }
-    if (!state.description.trim()) {
-      toast.error('Description is required');
-      return;
-    }
-
     try {
-      const response = await axiosPrivate.post(
-        endpoints.ADD_CATEGORY_URL,
+      const response = await axiosPrivate.put(
+        endpoints.GET_ONE_CATEGORY_URL.replace("{id}", id),
         state
       );
-      if (response.status === 201) {
-        toast.success('Category added successfully');
-        dispatch({ type: 'RESET_FORM' });
-        navigate('/admin/categories');
-      } else {
-        toast.error('Something went wrong');
+      if (response.status === 200) {
+        navigate("/admin/categories");
       }
     } catch (err) {
       console.log(err);
-      toast.error('Something went wrong');
     }
   };
 
-
   return (
     <>
-      <div className="add-category-form">
-        <Toaster position="bottom-right" reverseOrder={false} />
+      <div className="update-category-form">
         <ToggleButton
           toggleSidebar={toggleSidebar}
           isSidebarVisible={isSidebarVisible}
@@ -101,8 +97,9 @@ const AddCategory = () => {
           links={links}
           isSidebarVisible={isSidebarVisible}
         />
-        <main className="add-category-form__main">
-          <div className="add-category-form__main__header">
+
+        <main className="update-category-form__main">
+          <div className="update-category-form__main__header">
             <Header
               dropdownRef={dropdownRef}
               toggleDropdown={toggleDropdown}
@@ -118,12 +115,12 @@ const AddCategory = () => {
                   link: "/logout",
                 },
               ]}
-              heading={"Add New Category"}
+              heading={"Update Category"}
             />
           </div>
 
-          <div className="add-category-form__content">
-            <form className="add-category-form__inputs">
+          <div className="update-category-form__content">
+            <form className="update-category-form__inputs">
               <FormInput
                 label="Category Name"
                 type="text"
@@ -138,7 +135,6 @@ const AddCategory = () => {
                   })
                 }
                 required={true}
-                ref={categoryNameRef}
               />
               <Textarea
                 label="Description"
@@ -153,23 +149,8 @@ const AddCategory = () => {
                 }
                 required={true}
               />
-              <div className="add-category-form__buttons">
-                <button
-                  className="add-category-form__buttons__cancel"
-                  onClick={handleSubmit}
-                >
-                  Submit
-                </button>
-                <button
-                  className="add-category-form__buttons__save"
-                  onClick={() => {
-                    dispatch({
-                      type: "RESET_FORM",
-                    });
-                  }}
-                >
-                  Reset
-                </button>
+              <div className="update-category-form__buttons">
+                <button onClick={handleUpdate}>Update</button>
               </div>
             </form>
           </div>
@@ -180,4 +161,4 @@ const AddCategory = () => {
   );
 };
 
-export default AddCategory;
+export default UpdateCategory;
