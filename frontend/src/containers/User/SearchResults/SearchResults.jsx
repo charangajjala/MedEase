@@ -1,6 +1,6 @@
 import "./SearchResults.scss";
 import { Header, Navbar, Footer, SearchResult } from "../../../userComponents";
-import { useReducer, useMemo } from "react";
+import { useReducer, useMemo, useState } from "react";
 import { SelectField } from "../../../components";
 import { useLocation } from "react-router-dom";
 import useCart from "../../../context/CartContext";
@@ -17,13 +17,13 @@ const initialState = {
 
 const filterReducer = (state, action) => {
   switch (action.type) {
-    case "SET_PRICE":
-      return { ...state, price: action.payload };
+    // case "SET_PRICE":
+    //   return { ...state, price: action.payload };
     case "SET_CATEGORY":
       return { ...state, selectedCategory: action.payload };
     case "TOGGLE_IN_STOCK":
       return { ...state, inStockOnly: !state.inStockOnly };
-    case "CLEAR_FILTERS":
+    case "CLEAR_ALL":
       return initialState;
     default:
       return state;
@@ -34,6 +34,7 @@ const SearchResults = () => {
   const [filterState, dispatch] = useReducer(filterReducer, initialState);
   const location = useLocation();
   const products = location.state.data;
+  const [productsFiltered, setFilteredProducts] = useState(products);
   const { cartCount } = useCart();
 
   const categoryOptions = Array.from(
@@ -46,19 +47,22 @@ const SearchResults = () => {
   const filteredProducts = useMemo(
     () =>
       products.filter((product) => {
-        return (
-          (filterState.selectedCategory
-            ? product.productType === filterState.selectedCategory
-            : true) &&
-          (filterState.inStockOnly ? product.totalStock > 0 : true) &&
-          product.costPerMonth <= filterState.price
-        );
+        return filterState.selectedCategory
+          ? product.productType === filterState.selectedCategory
+          : true;
       }),
     [products, filterState]
   );
 
   const handleApplyFilters = () => {
-    console.log("Filtered products:", filteredProducts);
+    setFilteredProducts(filteredProducts);
+  };
+
+  const handleClearFilters = () => {
+    dispatch({
+      type: "CLEAR_ALL",
+    });
+    setFilteredProducts(products);
   };
 
   return (
@@ -77,9 +81,11 @@ const SearchResults = () => {
         <div className="search-results__grid">
           {/* Filters */}
           <div className="search-results__grid-item-1">
-            <h3>Filters</h3>
+            <h3>
+              Filters <hr />
+            </h3>
 
-            <div className="filter-category">
+            {/* <div className="filter-category">
               <label htmlFor="priceRange">Price Range</label>
               <input
                 type="range"
@@ -99,7 +105,7 @@ const SearchResults = () => {
                 <span>${filterState.price}</span>
                 <span>$1000</span>
               </div>
-            </div>
+            </div> */}
 
             <div className="filter-category">
               <SelectField
@@ -107,6 +113,7 @@ const SearchResults = () => {
                 name="category"
                 id="category"
                 options={categoryOptions}
+                value={filterState.selectedCategory}
                 onChange={(e) => {
                   dispatch({
                     type: "SET_CATEGORY",
@@ -121,7 +128,9 @@ const SearchResults = () => {
                 <input
                   type="checkbox"
                   name="inStock"
-                  onChange={() => {
+                  id="inStock"
+                  value={filterState.inStockOnly}
+                  onClick={() => {
                     dispatch({
                       type: "TOGGLE_IN_STOCK",
                     });
@@ -135,14 +144,7 @@ const SearchResults = () => {
               <button type="button" onClick={handleApplyFilters}>
                 Apply Filters
               </button>
-              <button
-                type="button"
-                onChange={() => {
-                  dispatch({
-                    type: "CLEAR_FILTERS",
-                  });
-                }}
-              >
+              <button type="button" onClick={handleClearFilters}>
                 Clear All
               </button>
             </div>
@@ -155,8 +157,8 @@ const SearchResults = () => {
               <hr />
             </div>
             <div className="search-result__content">
-              {products.length > 0 ? (
-                products.map((product) => (
+              {productsFiltered.length > 0 ? (
+                productsFiltered.map((product) => (
                   <SearchResult key={product.id} product={product} />
                 ))
               ) : (

@@ -40,7 +40,8 @@ const SearchResult = ({ product }) => {
   }
 
   const handleNavigate = () => {
-    navigate("/product", { state: { data: product } });
+    // navigate("/product", { state: { data: product } });
+    navigate(`/product/${productId}`);
   };
 
   const handleAddToCart = async (product) => {
