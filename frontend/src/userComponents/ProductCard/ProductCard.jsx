@@ -31,7 +31,8 @@ const ProductCard = ({ onAddToCart, data, addingToCart }) => {
   };
 
   const handleNavigation = () => {
-    navigate("/product", { state: { data: data } });
+    // navigate("/product", { state: { data: data } });
+    navigate("/product/{id}".replace("{id}", data.id));
   };
   const cardClasses = addingToCart
     ? "product-card product-card__blurred"

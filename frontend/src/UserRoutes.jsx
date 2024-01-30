@@ -22,7 +22,7 @@ const UserRoutes = () => {
     <CartProvider>
       <Routes>
         <Route path="/dashboard" element={<UserDashboard />} />
-        <Route path="/product" element={<ProductDetails />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/search" element={<SearchResults />} />
         <Route path="/cart" element={<CartWithAuth />} />
         <Route path="/checkout" element={<CheckoutWithAuth />} />

@@ -16,6 +16,7 @@ const Endpoints = {
 
   // User Dashboard Products
   GET_PRODUCTS_URL: "/api/medicine",
+  GET_PRODUCT_URL: "/api/medicine/{id}",
 
   // Cart Links
   ADD_TO_CART_URL: "/api/cart",

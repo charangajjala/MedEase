@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./ProductDetails.scss";
 import { Header, Footer, Navbar, LoginBox } from "../../../userComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -38,7 +38,7 @@ const reducer = (state, action) => {
 };
 
 const Productdetails = () => {
-  const location = useLocation();
+  const { id } = useParams();
   const [mainImage, setMainImage] = useState(moov);
   const [isFavorite, setIsFavorite] = useState(false);
   // const [cartCount, setCartCount] = useState(0);
@@ -47,7 +47,7 @@ const Productdetails = () => {
   // const [addedToCart, setAddedToCart] = useState(false);
   const [state, dispatch] = useReducer(reducer, inititalState);
   const imageGallery = [moov, moov2, moov, moov2, moov];
-  const data = location.state.data;
+  const [data, setData] = useState({});
   const axiosPrivate = useAxiosPrivate();
   const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -74,7 +74,20 @@ const Productdetails = () => {
         updateCartCount(0);
       }
     };
+
+    const fetchProductDetails = async () => {
+      try {
+        const response = await axiosPrivate.get(
+          endpoints.GET_PRODUCT_URL.replace("{id}", id)
+        );
+        const data = await response.data;
+        setData(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
     fetchCartLength();
+    fetchProductDetails();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

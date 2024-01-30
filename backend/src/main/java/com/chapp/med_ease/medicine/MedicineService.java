@@ -40,4 +40,9 @@ public class MedicineService {
 
     }
 
+    public MedicineResponse getMedicine(int id) throws BadRequestException {
+        final Medicine medicine = medicineRepository.findById(id).orElseThrow(() -> new BadRequestException("Medicine with id " + id + " not found"));
+
+        return new MedicineResponse(medicine);
+    }
 }
