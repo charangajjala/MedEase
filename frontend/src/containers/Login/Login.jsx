@@ -3,7 +3,6 @@ import { useRef, useEffect, useContext, useReducer, useState } from "react";
 import AuthContext from "../../context/AuthProvider.jsx";
 import axios from "../../api/axios.jsx";
 import "./Login.scss";
-import store from "../../assets/store.jpg";
 import { useNavigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
@@ -15,6 +14,10 @@ import {
   PasswordInput,
 } from "../../components/index.js";
 import endpoints from "../../constants/endpoints.js";
+
+// S3 Image URL
+const store =
+  "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/store.jpg";
 
 const initialState = {
   email: "",

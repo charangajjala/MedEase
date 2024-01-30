@@ -10,8 +10,10 @@ import { Toaster } from "react-hot-toast";
 
 import { links } from "../../../constants/links.js";
 
-import logo from "../../../assets/logo.png";
+// import logo from "../../../assets/logo.png";
 import "./AddCompany.scss";
+
+const logo = "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/logo.png";
 
 const AddCompany = () => {
   const {

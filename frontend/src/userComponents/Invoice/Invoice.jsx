@@ -1,8 +1,11 @@
 import "./Invoice.scss";
 import PropTypes from "prop-types";
-import invoice_logo from "../../assets/invoice_logo.png";
+// import invoice_logo from "../../assets/invoice_logo.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+
+const invoice_logo =
+  "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/invoice_logo.png";
 
 const Invoice = () => {
   console.log("Invoice");

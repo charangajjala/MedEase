@@ -4,8 +4,10 @@ import { useReducer, useMemo } from "react";
 import { SelectField } from "../../../components";
 import { useLocation } from "react-router-dom";
 import useCart from "../../../context/CartContext";
-import nodata from "../../../assets/nodata.jpg";
 import { Toaster } from "react-hot-toast";
+
+const nodata =
+  "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/nodata.jpg";
 
 const initialState = {
   price: 0,

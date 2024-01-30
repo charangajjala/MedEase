@@ -11,11 +11,14 @@ import useVisibilityToggle from "../../../hooks/useVisibilityToggle.jsx";
 import { links } from "../../../constants/links.js";
 import endpoints from "../../../constants/endpoints.js";
 // import products from "../../constants/products.js";
-import logo from "../../../assets/logo.png";
+// import logo from "../../../assets/logo.png";
 import "./ProductReports.scss";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate.jsx";
+
+const logo =
+  "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/logo.png";
 
 const columnHeaders = [
   { key: "id", label: "ID" },
@@ -67,7 +70,7 @@ const ProductReports = () => {
   }, []);
 
   const navigate = useNavigate();
-  
+
   const handleUpdate = (product) => {
     navigate("/admin/medicineUpdate", { state: product });
   };

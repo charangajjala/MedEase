@@ -1,15 +1,27 @@
 import { useState, useEffect } from "react";
 import "./BannerSlider.scss";
-import slide1 from "../../assets/slide_1.jpg";
-import slide2 from "../../assets/slide_2.jpg";
-import slide3 from "../../assets/slide_3.jpg";
-import slide4 from "../../assets/slide_4.jpg";
 
 const slides = [
-  { image: slide1, info: "Info about slide 1" },
-  { image: slide2, info: "Info about slide 2" },
-  { image: slide3, info: "Info about slide 3" },
-  { image: slide4, info: "Info about slide 4" },
+  {
+    image:
+      "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/slide_1.jpg",
+    info: "Info about slide 1",
+  },
+  {
+    image:
+      "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/slide_2.jpg",
+    info: "Info about slide 2",
+  },
+  {
+    image:
+      "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/slide_3.jpg",
+    info: "Info about slide 3",
+  },
+  {
+    image:
+      "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/slide_4.jpg",
+    info: "Info about slide 4",
+  },
 ];
 
 const BannerSlider = () => {

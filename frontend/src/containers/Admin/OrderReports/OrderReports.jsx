@@ -10,11 +10,14 @@ import useVisibilityToggle from "../../../hooks/useVisibilityToggle.jsx";
 
 import { links } from "../../../constants/links.js";
 // import orders from "../../../constants/orders.js";
-import logo from "../../../assets/logo.png";
+// import logo from "../../../assets/logo.png";
 import "./OrderReports.scss";
 import endpoints from "../../../constants/endpoints.js";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate.jsx";
+
+const logo =
+  "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/logo.png";
 
 const columnHeaders = [
   {

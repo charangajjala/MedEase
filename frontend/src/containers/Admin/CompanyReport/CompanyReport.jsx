@@ -9,12 +9,15 @@ import useVisibilityToggle from "../../../hooks/useVisibilityToggle.jsx";
 
 import { links } from "../../../constants/links.js";
 // import companies from "../../constants/companies.js";
-import logo from "../../../assets/logo.png";
+// import logo from "../../../assets/logo.png";
 import "./CompanyReport.scss";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate.jsx";
 import endpoints from "../../../constants/endpoints.js";
+
+const logo =
+  "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/logo.png";
 
 const columnHeaders = [
   { key: "id", label: "ID" },
@@ -47,7 +50,7 @@ const CompanyReport = () => {
     const fetchCompanies = async () => {
       try {
         const response = await axiosPrivate.get(endpoints.COMPANY_REPORTS_URL);
-        console.log(response.data)
+        console.log(response.data);
         if (isMounted) {
           setCompanies(response.data);
         }
@@ -60,7 +63,7 @@ const CompanyReport = () => {
     return () => {
       isMounted = false;
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -1,7 +1,10 @@
 import "./OrderSucess.scss";
-import orderSucess from "../../../assets/order_placed.gif";
+// import orderSucess from "../../../assets/order_placed.gif";
 import { Footer, Header, Navbar } from "../../../userComponents";
 import { useNavigate } from "react-router-dom";
+
+const orderSucess =
+  "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/order_placed.gif";
 
 const OrderSuccess = () => {
   const navigate = useNavigate();

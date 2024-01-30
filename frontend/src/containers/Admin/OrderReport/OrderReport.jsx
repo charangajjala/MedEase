@@ -8,7 +8,7 @@ import {
 import useVisibilityToggle from "../../../hooks/useVisibilityToggle.jsx";
 
 import { links } from "../../../constants/links.js";
-import logo from "../../../assets/logo.png";
+// import logo from "../../../assets/logo.png";
 
 import { useLocation } from "react-router";
 import { useEffect, useRef, useState } from "react";
@@ -17,6 +17,9 @@ import "./OrderReport.scss";
 import { useNavigate } from "react-router-dom";
 import endpoints from "../../../constants/endpoints.js";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate.jsx";
+
+const logo =
+  "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/logo.png";
 
 const OrderReport = () => {
   const {
@@ -198,7 +201,12 @@ const OrderReport = () => {
               type="submit"
               onClick={() => {
                 navigate("/admin/invoice", {
-                  state: { order, orders: products, totalSum: totalAmount, address },
+                  state: {
+                    order,
+                    orders: products,
+                    totalSum: totalAmount,
+                    address,
+                  },
                 });
               }}
             />

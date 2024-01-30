@@ -12,12 +12,15 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { links } from "../../../constants/links.js";
 import endpoints from "../../../constants/endpoints.js";
-import logo from "../../../assets/logo.png";
+// import logo from "../../../assets/logo.png";
 
 import "./SellsDashboardExt.scss";
 import { useEffect, useReducer } from "react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate.jsx";
 import { useState } from "react";
+
+const logo =
+  "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/logo.png";
 
 const initalState = {
   id: "",

@@ -1,5 +1,5 @@
 import "./AdminDashboard.scss";
-import logo from "../../../assets/logo.png";
+// import logo from "../../../assets/logo.png";
 
 import {
   Sidebar,
@@ -41,6 +41,9 @@ ChartJS.register(
   PointElement,
   LineElement
 );
+
+const logo =
+  "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/logo.png";
 
 const AdminDashboard = () => {
   const {

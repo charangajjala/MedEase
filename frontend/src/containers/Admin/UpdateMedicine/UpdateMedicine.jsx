@@ -12,12 +12,15 @@ import { links } from "../../../constants/links.js";
 import { Toaster } from "react-hot-toast";
 
 import "./UpdateMedicine.scss";
-import logo from "../../../assets/logo.png";
+// import logo from "../../../assets/logo.png";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate.jsx";
 import endpoints from "../../../constants/endpoints.js";
 import { useState } from "react";
+
+const logo =
+  "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/logo.png";
 
 const AddMedicine = () => {
   const {

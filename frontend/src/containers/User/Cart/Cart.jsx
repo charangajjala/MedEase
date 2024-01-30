@@ -1,6 +1,6 @@
 import "./Cart.scss";
 import { Header, Navbar, Footer, CartItem } from "../../../userComponents";
-import emptyCart from "../../../assets/emptycart.svg";
+// import emptyCart from "../../../assets/emptycart.svg";
 import { Button } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
@@ -9,6 +9,9 @@ import endpoints from "../../../constants/endpoints";
 import useAnimatedNumber from "../../../hooks/useAnimatedNumber";
 import useCart from "../../../context/CartContext";
 import toast, { Toaster } from "react-hot-toast";
+
+const emptyCart =
+  "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/emptycart.svg";
 
 const Cart = () => {
   const navigate = useNavigate();

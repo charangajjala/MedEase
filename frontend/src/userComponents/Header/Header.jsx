@@ -1,9 +1,12 @@
 import "./Header.scss";
-import logo from "../../assets/logo.png";
+// import logo from "../../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
+const logo =
+  "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/logo.png";
 
 const Header = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);

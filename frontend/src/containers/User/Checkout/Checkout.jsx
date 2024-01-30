@@ -6,8 +6,11 @@ import userEndpoints from "../../../constants/userEndpoints";
 import endpoints from "../../../constants/endpoints";
 import { useNavigate } from "react-router-dom";
 import { Loading, SelectField } from "../../../components";
-import noitems from "../../../assets/empty-cart2.svg";
+// import noitems from "../../../assets/empty-cart2.svg";
 import toast, { Toaster } from "react-hot-toast";
+
+const noitems =
+  "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/empty-cart2.svg";
 
 const Checkout = () => {
   const axiosPrivate = useAxiosPrivate();

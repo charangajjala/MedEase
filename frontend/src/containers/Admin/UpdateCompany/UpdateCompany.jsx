@@ -11,9 +11,12 @@ import { links } from "../../../constants/links.js";
 
 import { useLocation } from "react-router";
 
-import logo from "../../../assets/logo.png";
+// import logo from "../../../assets/logo.png";
 import "./UpdateCompany.scss";
 import { Toaster } from "react-hot-toast";
+
+const logo =
+  "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/logo.png";
 
 const UpdateCompany = () => {
   const {
