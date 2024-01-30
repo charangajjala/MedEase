@@ -18,7 +18,6 @@ const AddressPage = () => {
       try {
         const response = await axiosPrivate.get(userEndpoints.GET_ADDRESSES);
         const data = response.data;
-        console.log("The Addresses Received are", data);
         setAddresses(data);
       } catch (error) {
         console.log(error);

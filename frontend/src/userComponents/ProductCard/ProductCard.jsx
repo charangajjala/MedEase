@@ -1,4 +1,3 @@
-import moov from "../../assets/moov.jpg";
 import "./ProductCard.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
@@ -6,8 +5,9 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import generateS3ImageUrl from "../../utils/s3Utils";
 
-const ProductCard = ({ onAddToCart, data, addingToCart }) => {
+const ProductCard = ({ onAddToCart, data, addingToCart, imageKey }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
@@ -47,7 +47,7 @@ const ProductCard = ({ onAddToCart, data, addingToCart }) => {
           </div>
         )}
         <img
-          src={moov}
+          src={generateS3ImageUrl(imageKey)}
           alt="Moov Fast Pain Relief Spray"
           onClick={handleNavigation}
           onLoad={handleImageLoaded}
@@ -93,6 +93,7 @@ ProductCard.propTypes = {
   onAddToCart: PropTypes.func,
   data: PropTypes.object,
   addingToCart: PropTypes.bool,
+  imageKey: PropTypes.string,
 };
 
 export default ProductCard;

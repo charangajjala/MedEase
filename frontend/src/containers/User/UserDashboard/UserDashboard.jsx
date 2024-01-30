@@ -70,6 +70,7 @@ const UserDashboard = () => {
         `${endpoints.GET_PRODUCTS_URL}?${queryParams.toString()}`
       );
       const data = await response.data;
+      console.log(data);
       setProducts(data);
     } catch (err) {
       console.error(err);
@@ -211,6 +212,7 @@ const UserDashboard = () => {
                     onAddToCart={() => handleAddToCart(data)}
                     data={data}
                     addingToCart={addingToCart[data.id]}
+                    imageKey={data.imageKey}
                   />
                 ))}
               </div>

@@ -31,6 +31,8 @@ public class MedicineResponse {
 
     private String productCode;
 
+    private String imageKey;
+
     private int totalStock;
 
     public MedicineResponse(Medicine medicine) {
@@ -43,6 +45,7 @@ public class MedicineResponse {
         this.expiryDate = medicine.getExpiryDate();
         this.manufactureDate = medicine.getManufactureDate();
         this.productCode = medicine.getProductCode();
+        this.imageKey = medicine.getImageKey();
         this.totalStock = medicine.getTotalStock();
     }
 

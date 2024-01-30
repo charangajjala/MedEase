@@ -133,7 +133,7 @@ const Navbar = ({ cartCount }) => {
           ) : address?.addressName ? (
             <>
               <span>
-                {address.addressName} - {address?.addressLine1} -{" "}
+                {address?.addressLine1} -{" "}
                 {address?.addressLine2}
               </span>
               <span>
