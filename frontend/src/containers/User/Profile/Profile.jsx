@@ -8,6 +8,7 @@ import {
   AddressForm,
   OrderPage,
   OrderDetail,
+  ForgotPassword,
 } from "../../../userComponents";
 import { Sidebar } from "../../../userComponents";
 import { Routes, Route, useLocation } from "react-router-dom";
@@ -54,6 +55,7 @@ const Profile = () => {
               <Route path="/orders" element={<OrderPage />} />
               <Route path="/reports" element={<AccountPage />} />
               <Route path="/orderDetails/:id" element={<OrderDetail />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="*" element={<NotFoundPageInd />} />
             </Routes>
           </div>

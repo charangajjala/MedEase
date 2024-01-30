@@ -16,6 +16,7 @@ import { default as AddressForm } from "./AddressForm/AddressForm.jsx";
 import { default as OrderPage } from "./OrderPage/OrderPage.jsx";
 import { default as OrderDetail } from "./OrderDetail/OrderDetail.jsx";
 import { default as Invoice } from "./Invoice/Invoice.jsx";
+import { default as ForgotPassword } from "./ForgotPassword/ForgotPassword.jsx";
 
 export {
   Header,
@@ -34,4 +35,5 @@ export {
   CheckoutItem,
   OrderDetail,
   Invoice,
+  ForgotPassword,
 };

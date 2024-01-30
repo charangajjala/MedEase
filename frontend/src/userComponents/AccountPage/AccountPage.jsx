@@ -3,6 +3,7 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import "./AccountPage.scss";
 import userEndpoints from "../../constants/userEndpoints";
 import loading from "../../assets/loader.svg";
+import { useNavigate } from "react-router-dom";
 
 const AccountPage = () => {
   const [userProfile, setUserProfile] = useState({});
@@ -15,6 +16,7 @@ const AccountPage = () => {
   // };
 
   const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsProfileLoading(true);
@@ -44,6 +46,10 @@ const AccountPage = () => {
     );
   }
 
+  const handleChangePassword = () => {
+    navigate("/profile/forgot-password");
+  }
+
   return (
     <div className="account-page">
       <h1>My Account</h1>
@@ -67,7 +73,7 @@ const AccountPage = () => {
       </section>
 
       <div className="account-page__buttons">
-        <button>Change Password</button>
+        <button onClick={handleChangePassword}>Change Password</button>
         <button>Delete Account</button>
       </div>
     </div>
