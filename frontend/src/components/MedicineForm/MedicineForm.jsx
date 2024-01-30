@@ -21,7 +21,7 @@ const initialState = {
   costPerMonth: "",
   expiryDate: "",
   manufactureDate: "",
-  image: "",
+  imageFile: "",
   description: "",
 };
 
@@ -44,7 +44,7 @@ function reducer(state, action) {
     case "SET_MANUFACTURE_DATE":
       return { ...state, manufactureDate: action.payload };
     case "SET_IMAGE":
-      return { ...state, image: action.payload };
+      return { ...state, imageFile: action.payload };
     case "SET_DESCRIPTION":
       return { ...state, description: action.payload };
     case "RESET_FORM":
@@ -65,7 +65,6 @@ const MedicineForm = ({ button_name, productData }) => {
   const [dateError, setDateError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [sucessMessage, setSucessMessage] = useState("");
-  const [selectedFile, setSelectedFile] = useState(null);
 
   const id = productData?.id;
 
@@ -229,7 +228,10 @@ const MedicineForm = ({ button_name, productData }) => {
 
   const handleImageChange = (e) => {
     if (e.target.files[0]) {
-      setSelectedFile(e.target.files[0]);
+      dispatch({
+        type: "SET_IMAGE",
+        payload: e.target.files[0],
+      });
     }
   };
 
@@ -240,26 +242,21 @@ const MedicineForm = ({ button_name, productData }) => {
       return;
     }
 
-    if (selectedFile) {
-      const formData = new FormData();
-      formData.append("file", selectedFile);
-      try {
-        await axiosPrivate.post(endpoints.UPLOAD_FILE_URL, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-      } catch (error) {
-        console.log(error);
-        toast.error("Something went wrong");
-      }
-    }
+    const formData = new FormData();
+    Object.keys(state).forEach((key) => {
+      formData.append(key, state[key]);
+    });
 
     if (button_name === "Submit") {
       try {
         const productAddStatus = await axiosPrivate.post(
           endpoints.ADD_MEDICINE_URL,
-          state
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
         );
         if (productAddStatus.status === 201) {
           toast.success("Product added successfully");

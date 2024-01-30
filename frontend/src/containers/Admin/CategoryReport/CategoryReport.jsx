@@ -23,6 +23,7 @@ const CategoryReport = () => {
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
+      console.log("formData", formData);
 
       try {
         const response = await axiosPrivate.post(

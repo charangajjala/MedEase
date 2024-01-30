@@ -1,8 +1,11 @@
 package com.chapp.med_ease.medicine;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
+import com.chapp.med_ease.aws.AWSService;
 import org.springframework.stereotype.Service;
 
 import com.chapp.med_ease.company.Company;
@@ -27,12 +30,20 @@ public class AdminMedicineService {
 
     private final MedicineTypeRepository medicineTypeRepository;
 
-    public void createMedicine(MedicineRequest req) throws BadRequestException {
+    private final AWSService awsService;
 
-        final Optional<Medicine> medicine = medicineRepository.findByProductTitle(req.getProductTitle());
-
-        if (medicine.isPresent()) {
+    public void createMedicine(MedicineRequest req) throws BadRequestException, IOException {
+        final Optional<Medicine> existingMedicine = medicineRepository.findByProductTitle(req.getProductTitle());
+        if (existingMedicine.isPresent()) {
             throw new BadRequestException("Medicine with product title " + req.getProductTitle() + " already exists");
+        }
+
+        String keyName = UUID.randomUUID().toString();
+
+        try {
+            awsService.uploadObject("medeaseportal-bucket", keyName, req.getImageFile());
+        } catch (Exception e) {
+            throw new BadRequestException("Error uploading image: " + e.getMessage());
         }
 
         final Company company = companyRepository.findByCompanyName(req.getCompanyName())
@@ -41,14 +52,22 @@ public class AdminMedicineService {
         final MedicineType medType = medicineTypeRepository.findByCategoryName(req.getProductType())
                 .orElseThrow(() -> new BadRequestException("Medicine type " + req.getProductType() + " not found"));
 
-        final Medicine newMedicine = Medicine.builder().productTitle(req.getProductTitle())
-                .description(req.getDescription()).medicineType(medType).company(company)
-                .costPerMonth(req.getCostPerMonth()).expiryDate(req.getExpiryDate()).totalStock(req.getTotalStock())
-                .manufactureDate(req.getManufactureDate()).productCode(req.getProductCode()).build();
+        final Medicine newMedicine = Medicine.builder()
+                .productTitle(req.getProductTitle())
+                .description(req.getDescription())
+                .medicineType(medType)
+                .company(company)
+                .costPerMonth(req.getCostPerMonth())
+                .expiryDate(req.getExpiryDate())
+                .totalStock(req.getTotalStock())
+                .manufactureDate(req.getManufactureDate())
+                .productCode(req.getProductCode())
+                .imageKey(keyName)
+                .build();
 
         medicineRepository.save(newMedicine);
-
     }
+
 
     public List<MedicinesResponse> getMedicines() {
 

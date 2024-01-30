@@ -1,8 +1,8 @@
 package com.chapp.med_ease.medicine;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.constraints.NotBlank;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.chapp.med_ease.exception.exceptions.BadRequestException;
 import com.chapp.med_ease.medicine.medicine_dto.MedicineRequest;
@@ -12,16 +12,12 @@ import com.chapp.med_ease.medicine.medicine_dto.UpdateMedicineRequest;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,11 +26,38 @@ public class AdminMedicineController {
 
     private final AdminMedicineService medicineService;
 
-    @PostMapping("")
+    @PostMapping(value = "", consumes = "multipart/form-data")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createMedicine(@Valid @RequestBody MedicineRequest req) throws BadRequestException {
-        medicineService.createMedicine(req);
+    public ResponseEntity<String> createMedicine(
+            @RequestParam("productTitle") @NotBlank(message = "Product title cannot be blank") String productTitle,
+            @RequestParam("description") @NotBlank(message = "Description cannot be blank") String description,
+            @RequestParam("productType") @NotBlank(message = "Product type cannot be blank") String productType,
+            @RequestParam("companyName") @NotBlank(message = "Company name cannot be blank") String companyName,
+            @RequestParam("costPerMonth") int costPerMonth,
+            @RequestParam("expiryDate") String expiryDate,
+            @RequestParam("manufactureDate") String manufactureDate,
+            @RequestParam("productCode") String productCode,
+            @RequestParam("imageFile") MultipartFile imageFile,
+            @RequestParam("totalStock") int totalStock) {
+        try {
+            MedicineRequest req = MedicineRequest.builder()
+                    .productTitle(productTitle)
+                    .description(description)
+                    .productType(productType)
+                    .companyName(companyName)
+                    .costPerMonth(costPerMonth)
+                    .expiryDate(expiryDate)
+                    .manufactureDate(manufactureDate)
+                    .productCode(productCode)
+                    .imageFile(imageFile)
+                    .totalStock(totalStock)
+                    .build();
 
+            medicineService.createMedicine(req);
+            return ResponseEntity.ok("Medicine created successfully");
+        } catch (BadRequestException | IOException e) {
+            return ResponseEntity.status(500).body("Error creating medicine: " + e.getMessage());
+        }
     }
 
     @GetMapping("")

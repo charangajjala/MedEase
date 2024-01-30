@@ -61,4 +61,7 @@ public class Medicine {
         @Column(name = "total_stock")
         private int totalStock;
 
+        @Column(name="image_key")
+        private  String imageKey;
+
 }
