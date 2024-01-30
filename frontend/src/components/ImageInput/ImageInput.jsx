@@ -14,10 +14,12 @@ const ImageInput = React.forwardRef(function ImageInput(
     if (file && file.type.startsWith("image/")) {
       setPreview(URL.createObjectURL(file));
       toast.success("Image uploaded successfully");
+      if (onChange) {
+        onChange(e);
+      }
     } else if (file) {
       toast.error("Please select an image file");
     }
-    onChange(e);
   };
 
   return (

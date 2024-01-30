@@ -65,6 +65,7 @@ const MedicineForm = ({ button_name, productData }) => {
   const [dateError, setDateError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [sucessMessage, setSucessMessage] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const id = productData?.id;
 
@@ -226,11 +227,32 @@ const MedicineForm = ({ button_name, productData }) => {
     return !isNaN(str) && !isNaN(parseFloat(str));
   };
 
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      setSelectedFile(e.target.files[0]);
+    }
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     if (!formValidation()) {
       return;
+    }
+
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+      try {
+        await axiosPrivate.post(endpoints.UPLOAD_FILE_URL, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      } catch (error) {
+        console.log(error);
+        toast.error("Something went wrong");
+      }
     }
 
     if (button_name === "Submit") {
@@ -456,9 +478,7 @@ const MedicineForm = ({ button_name, productData }) => {
         label="Upload Image"
         id="medicine-image"
         name="medicine-image"
-        onChange={(e) =>
-          dispatch({ type: "SET_IMAGE", payload: e.target.value })
-        }
+        onChange={handleImageChange}
         required={true}
       />
       <div className="full-width">

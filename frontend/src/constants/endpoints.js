@@ -12,6 +12,7 @@ const Endpoints = {
 
   //Bucket Related URLs
   LIST_BUCKETS_URL: "/api/aws/listBuckets",
+  UPLOAD_FILE_URL: "/api/aws/medicine/upload",
 
   // User Dashboard Products
   GET_PRODUCTS_URL: "/api/medicine",

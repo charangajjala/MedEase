@@ -13,9 +13,6 @@ import { links } from "../../../constants/links.js";
 
 import "./AddMedicine.scss";
 import logo from "../../../assets/logo.png";
-import { useEffect } from "react";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate.jsx";
-import endpoints from "../../../constants/endpoints.js";
 
 const AddMedicine = () => {
   const {
@@ -32,23 +29,6 @@ const AddMedicine = () => {
   // Once the backend is done convert it to async for post request
   // Upon successful submit clear the form
   // else display error message
-
-  const axiosPrivate = useAxiosPrivate();
-
-  useEffect(() => {
-    try {
-      const fetchBuckets = async () => {
-        const response = await axiosPrivate.get(endpoints.LIST_BUCKETS_URL);
-        const data = response.data;
-        console.log("The buckets are : ", data);
-      };
-      fetchBuckets();
-    } catch (error) {
-      console.log(error);
-    }
-
-    // eslint-disable-next-line
-  }, []);
 
   return (
     <>
