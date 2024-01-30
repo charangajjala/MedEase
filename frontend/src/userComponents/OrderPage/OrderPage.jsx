@@ -30,7 +30,8 @@ const OrderPage = () => {
   }, []);
 
   const handleViewDetails = (order) => {
-    navigate("/profile/orderDetails", { state: { order } });
+    // navigate("/profile/orderDetails", { state: { order } });
+    navigate("/profile/orderDetails/{id}".replace("{id}", order.id));
   };
 
   const formatedOrderDate = (date) => {

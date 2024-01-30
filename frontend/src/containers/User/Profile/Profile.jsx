@@ -53,7 +53,7 @@ const Profile = () => {
               <Route path="/offers" element={<AccountPage />} />
               <Route path="/orders" element={<OrderPage />} />
               <Route path="/reports" element={<AccountPage />} />
-              <Route path="/orderDetails" element={<OrderDetail />} />
+              <Route path="/orderDetails/:id" element={<OrderDetail />} />
               <Route path="*" element={<NotFoundPageInd />} />
             </Routes>
           </div>

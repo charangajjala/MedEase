@@ -11,7 +11,6 @@ const Invoice = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { order, orders, totalSum, address } = location.state;
-  console.log(location.state);
 
   useEffect(() => {
     window.print();

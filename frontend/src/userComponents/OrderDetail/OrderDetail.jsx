@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./OrderDetail.scss";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
@@ -7,15 +7,15 @@ import userEndpoints from "../../constants/userEndpoints";
 userEndpoints;
 
 const OrderDetail = () => {
-  const location = useLocation();
-  const { order } = location.state;
+  // const location = useLocation();
+  // const { order } = location.state;
   const axiosPrivate = useAxiosPrivate();
-  const [orderDetails, setOrderDetails] = useState([]);
   const [products, setProducts] = useState([]);
   const [address, setAddress] = useState([]);
   const navigate = useNavigate();
 
-  const { id } = order;
+  const { id } = useParams();
+  const [order, setOrder] = useState({})
 
   useEffect(() => {
     const fetchOrderDetails = async () => {
@@ -24,7 +24,7 @@ const OrderDetail = () => {
           userEndpoints.GET_ORDER.replace("{id}", id)
         );
         const data = await response.data;
-        setOrderDetails(data);
+        setOrder(data);
         setProducts(data.products);
         setAddress(data.address);
       } catch (error) {
@@ -36,8 +36,6 @@ const OrderDetail = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  console.log(orderDetails);
 
   const formatOrderDate = (date) => {
     const orderDate = new Date(date);
