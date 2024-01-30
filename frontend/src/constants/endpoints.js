@@ -48,6 +48,7 @@ const Endpoints = {
   // Login
   LOGIN_URL: "/api/auth/login",
   LOGOUT_URL: "/api/logout",
+  FORGOT_PASSWORD_URL: "/api/auth/forgotpassword",
 
   // Refresh URL
   REFRESH_URL: "http://localhost:8080/api/auth/refresh",

@@ -4,7 +4,6 @@ import AuthContext from "../../context/AuthProvider.jsx";
 import axios from "../../api/axios.jsx";
 import "./Login.scss";
 import { useNavigate } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
 
 import {
   Button,
@@ -155,7 +154,6 @@ const Login = () => {
   return (
     <>
       <div className="login-layout">
-        <Toaster position="bottom-right" reverseOrder={false} />
         <div className="login-layout__container">
           <div className="login-layout__container-left">
             <h1>Store Login</h1>
@@ -188,12 +186,21 @@ const Login = () => {
                 />
               </div>
               <div className="login-layout__container-left__form__buttons">
-                <Button name="Login" type="submit" onClick={handleLogin} />
-                <Button
-                  name="Register"
-                  type="button"
-                  onClick={hangleRegister}
-                />
+                <div className="login-register">
+                  <Button name="Login" type="submit" onClick={handleLogin} />
+                  <Button
+                    name="Register"
+                    type="button"
+                    onClick={hangleRegister}
+                  />
+                </div>
+                <div className="forgot-password">
+                  <Button
+                    name="Forgot Password?"
+                    type="button"
+                    onClick={() => navigate("/forgot-password")}
+                  />
+                </div>
               </div>
             </form>
             {errMsg && <p className="error-message">{errMsg}</p>}

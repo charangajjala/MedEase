@@ -9,6 +9,7 @@ import {
   Profile,
   Checkout,
   OrderSuccess,
+  ForgotPassword,
 } from "./containers";
 import { NotFoundPage } from "./pages/index.js";
 
@@ -28,6 +29,7 @@ const UserRoutes = () => {
         <Route path="/checkout" element={<CheckoutWithAuth />} />
         <Route path="/success" element={<OrderSuccessWithAuth />} />
         <Route path="/profile/*" element={<ProfileWithAuth />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </CartProvider>

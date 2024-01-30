@@ -18,7 +18,8 @@
     height: 80vh;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
-    &-left, &-right {
+    &-left,
+    &-right {
       transition: transform 0.5s ease-in-out;
     }
 
@@ -58,7 +59,8 @@
             background-color: $form-input-bg-active;
             color: $text-color;
             border-radius: 5px;
-            transition: border 0.3s ease, box-shadow 0.3s ease, background-color 0.4s ease;
+            transition: border 0.3s ease, box-shadow 0.3s ease,
+              background-color 0.4s ease;
 
             &:focus {
               border-color: darken($button-bg, 20%);
@@ -69,19 +71,47 @@
           }
         }
 
-        button {
-          @include button-style;
-          padding: 12px 40px;
-        }
+        // &__buttons {
+        //   display: flex;
+        //   justify-content: space-around;
+        //   gap: 10px;
+        // }
 
         &__buttons {
           display: flex;
-          justify-content: space-around;
+          flex-direction: column;
           gap: 10px;
+
+          .login-register {
+            button {
+              @include button-style;
+              padding: 12px 40px;
+            }
+            display: flex;
+            justify-content: space-between;
+          }
+
+          .forgot-password {
+            display: flex;
+            justify-content: center;
+            button{
+              border: none;
+              background-color: transparent;
+              color: $text-color;
+              font-size: 14px;
+              margin-top: 10px;
+
+              &:hover {
+                color: darken($text-color, 20%);
+                cursor: pointer;
+              }
+            }
+          }
         }
       }
 
-      .error-message, .success-message {
+      .error-message,
+      .success-message {
         margin-bottom: 10px;
         animation: fadeIn 0.5s ease-in-out;
       }
@@ -111,7 +141,8 @@
     &__container {
       flex-direction: column;
 
-      &-left, &-right {
+      &-left,
+      &-right {
         flex: 1;
         transform: none;
         animation: none;

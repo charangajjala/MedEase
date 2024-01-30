@@ -3,6 +3,7 @@ package com.chapp.med_ease.auth;
 import com.chapp.med_ease.exception.exceptions.BadRequestException;
 import com.chapp.med_ease.exception.exceptions.NotAuthenticatedException;
 import com.chapp.med_ease.exception.exceptions.NotFoundException;
+import com.chapp.med_ease.forgotPassword.forgotPasswordRequest;
 import com.chapp.med_ease.jwt.JwtService;
 import com.chapp.med_ease.user.Role;
 import com.chapp.med_ease.user.User;
@@ -59,6 +60,14 @@ public class AuthService {
                 .refreshToken(refreshToken)
                 .role(role)
                 .build();
+    }
+
+    public void changePassword(forgotPasswordRequest changePasswordRequest) {
+        User user = userRepo.findByEmail(changePasswordRequest.getEmail())
+                .orElseThrow(() -> new IllegalStateException("Email not found"));
+        final String encryptedPassword = passwordEncoder.encode(changePasswordRequest.getPassword());
+        user.setPassword(encryptedPassword);
+        userRepo.save(user);
     }
 
     public void register(RegisterRequest req) throws BadRequestException {

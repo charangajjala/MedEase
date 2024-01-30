@@ -1,14 +1,13 @@
 package com.chapp.med_ease.user;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.chapp.med_ease.forgotPassword.forgotPasswordRequest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.chapp.med_ease.exception.exceptions.BadRequestException;
 import com.chapp.med_ease.user.user_dto.UserProfileResponse;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.http.HttpStatus;
 
 @RestController
@@ -24,5 +23,4 @@ public class UserController {
         UserProfileResponse res = userService.getUserProfile();
         return res;
     }
-
 }

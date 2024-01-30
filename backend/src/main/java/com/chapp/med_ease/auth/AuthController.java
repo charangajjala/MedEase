@@ -4,6 +4,7 @@ import com.chapp.med_ease.exception.exceptions.BadRequestException;
 import com.chapp.med_ease.exception.exceptions.NotAuthenticatedException;
 import com.chapp.med_ease.exception.exceptions.NotFoundException;
 
+import com.chapp.med_ease.forgotPassword.forgotPasswordRequest;
 import jakarta.validation.Valid;
 
 import org.slf4j.Logger;
@@ -54,6 +55,16 @@ public class AuthController {
 
         authService.register(req);
 
+    }
+
+    @PostMapping("/forgotpassword")
+    @ResponseStatus(HttpStatus.OK)
+    public void forgotPassword(@RequestBody forgotPasswordRequest forgotPasswordRequest) throws BadRequestException {
+        try {
+            authService.changePassword(forgotPasswordRequest);
+        } catch (IllegalStateException e) {
+            throw new BadRequestException(e.getMessage());
+        }
     }
 
     @PostMapping("/refresh")
