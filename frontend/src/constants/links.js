@@ -9,6 +9,8 @@ import {
   faSignOutAlt,
   faCapsules,
   faBarsProgress,
+  // faCartFlatbedSuitcase,
+  // faBoxes,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const links = {
@@ -20,6 +22,8 @@ export const links = {
   companyReport: { name: "Company Report", href: "/admin/companies", icon: faSitemap },
   addCompany: { name: "Add Company", href: "/admin/companyAdd", icon: faBuilding },
   addCategory: { name: "Add Category", href: "/admin/category", icon: faPlusCircle },
-  CategoryReport: { name: "Category Report", href: "/admin/categories", icon: faBarsProgress },
+  categoryReport: { name: "Category Report", href: "/admin/categories", icon: faBarsProgress },
+  // addSeller: { name: "Add Seller", href: "/admin/seller", icon: faCartFlatbedSuitcase },
+  // sellerReport: { name: "Seller Report", href: "/admin/sellers", icon: faBoxes },
   logout: { name: "Logout", href: "/logout", icon: faSignOutAlt },
 };

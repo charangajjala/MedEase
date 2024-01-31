@@ -14,6 +14,25 @@
     margin: 20px;
     padding: 20px;
 
+    .no-orders {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+
+      &__buttons {
+        button {
+          @include button-style;
+        }
+      }
+    }
+
     table {
       width: 100%;
     }
