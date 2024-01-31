@@ -24,6 +24,8 @@ import { default as CategoryReport } from "./Admin/CategoryReport/CategoryReport
 import { default as ForgotPassword } from "./ForgotPassword/ForgotPassword.jsx";
 import { default as UpdateCategory } from "./Admin/UpdateCategory/UpdateCategory.jsx";
 import { default as AddSeller } from "./Admin/AddSeller/AddSeller.jsx";
+import { default as SellerReports } from "./Admin/SellerReports/SellerReports.jsx";
+import { default as UpdateSeller } from "./Admin/UpdateSeller/UpdateSeller.jsx";
 
 export {
   AdminDashboard,
@@ -52,4 +54,6 @@ export {
   ForgotPassword,
   UpdateCategory,
   AddSeller,
+  SellerReports,
+  UpdateSeller,
 };

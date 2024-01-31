@@ -8,9 +8,10 @@ import {
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate.jsx";
 import endpoints from "../../../constants/endpoints.js";
 import useVisibilityToggle from "../../../hooks/useVisibilityToggle.jsx";
-import "./AddSeller.scss";
-import { useReducer } from "react";
-import toast, { Toaster } from "react-hot-toast";
+// import { useNavigate } from "react-router-dom";
+import { useEffect, useReducer } from "react";
+import "./UpdateSeller.scss";
+import { useNavigate, useParams } from "react-router-dom";
 
 const logo =
   "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/logo.png";
@@ -39,8 +40,7 @@ const reducer = (state, action) => {
   }
 };
 
-const AddSeller = () => {
-  const axiosPrivate = useAxiosPrivate();
+const UpdateSeller = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
     isSidebarVisible,
@@ -49,43 +49,37 @@ const AddSeller = () => {
     toggleDropdown,
     dropdownRef,
   } = useVisibilityToggle();
+  const {id} = useParams();
+  const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
 
-  const validateForm = () => {
-    if (!state.name) {
-      toast.error("Please enter seller name");
-      return false;
+  useEffect(() => {
+    const fetchSeller = async () => {
+      const response = await axiosPrivate.get(endpoints.GET_ONE_SELLER_URL.replace("{id}", id));
+      const data = await response.data;
+      dispatch({ type: "SET_NAME", payload: data.name });
+      dispatch({ type: "SET_EMAIL", payload: data.email });
+      dispatch({ type: "SET_LOCATION", payload: data.location });
+      dispatch({ type: "SET_PHONE", payload: data.phone });
     }
-    if (!state.email) {
-      toast.error("Please enter seller email");
-      return false;
-    }
-    if (!state.location) {
-      toast.error("Please enter seller location");
-      return false;
-    }
-    if (!state.phone) {
-      toast.error("Please enter seller phone");
-      return false;
-    }
-    return true;
-  };
 
-  const handleSubmit = async (e) => {
+    fetchSeller();
+    // eslint-disable-next-line
+  },[])
+
+  const handleUpdate = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
     try {
-      await axiosPrivate.post(endpoints.ADD_SELLER_URL, state);
-      toast.success("Seller added successfully");
-      dispatch({ type: "RESET_FORM" });
+      await axiosPrivate.put(endpoints.UPDATE_SELLER_URL.replace("{id}", id), state);
+      navigate("/admin/sellers");
     } catch (error) {
-      toast.error(error.response.data.message);
+      console.log(error);
     }
-  };
+  }
 
   return (
     <>
-      <div className="add-seller">
-        <Toaster position="bottom-right" reverseOrder="false" />
+      <div className="update-seller">
         <ToggleButton
           toggleSidebar={toggleSidebar}
           isSidebarVisible={isSidebarVisible}
@@ -96,8 +90,8 @@ const AddSeller = () => {
           toggleSidebar={toggleSidebar}
         />
 
-        <main className="add-seller__main">
-          <div className="add-seller__main__header">
+        <main className="update-seller__main">
+          <div className="update-seller__main__header">
             <Header
               dropdownRef={dropdownRef}
               toggleDropdown={toggleDropdown}
@@ -113,16 +107,16 @@ const AddSeller = () => {
                   link: "/logout",
                 },
               ]}
-              heading={"Add Seller"}
+              heading={"Update Seller"}
             />
           </div>
-          <div className="add-seller__content">
-            <form className="add-seller__form">
+          <div className="update-seller__content">
+            <form className="update-seller__form">
               <FormInput
                 label="Seller Name"
-                name="name"
                 id="name"
                 type="text"
+                name="name"
                 value={state.name}
                 onChange={(e) =>
                   dispatch({ type: "SET_NAME", payload: e.target.value })
@@ -132,8 +126,8 @@ const AddSeller = () => {
               />
               <FormInput
                 label="Email"
-                name="email"
                 id="email"
+                name="email"
                 value={state.email}
                 onChange={(e) =>
                   dispatch({ type: "SET_EMAIL", payload: e.target.value })
@@ -144,8 +138,8 @@ const AddSeller = () => {
               />
               <FormInput
                 label="Phone"
-                name="phone"
                 id="phone"
+                name="phone"
                 value={state.phone}
                 onChange={(e) =>
                   dispatch({ type: "SET_PHONE", payload: e.target.value })
@@ -156,8 +150,8 @@ const AddSeller = () => {
               />
               <FormInput
                 label="Address"
-                name="address"
                 id="address"
+                name="address"
                 value={state.location}
                 onChange={(e) =>
                   dispatch({ type: "SET_LOCATION", payload: e.target.value })
@@ -166,15 +160,17 @@ const AddSeller = () => {
                 placeholder="Enter Address"
                 required
               />
-              <div className="add-seller__buttons">
-                <button className="add" onClick={handleSubmit}>
-                  Submit
+              <div className="update-seller__buttons">
+                <button className="update" onClick={handleUpdate}>
+                  Update
                 </button>
                 <button
                   className="reset"
-                  onClick={() => dispatch({ type: "RESET_FORM" })}
+                  onClick={() => {
+                    navigate("/admin/sellers");
+                  }}
                 >
-                  Reset
+                  Back to Sellers
                 </button>
               </div>
             </form>
@@ -186,4 +182,4 @@ const AddSeller = () => {
   );
 };
 
-export default AddSeller;
+export default UpdateSeller;

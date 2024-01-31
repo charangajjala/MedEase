@@ -10,7 +10,7 @@ import {
   faCapsules,
   faBarsProgress,
   faCartFlatbedSuitcase,
-  // faBoxes,
+  faBoxes,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const links = {
@@ -24,6 +24,6 @@ export const links = {
   addCategory: { name: "Add Category", href: "/admin/category", icon: faPlusCircle },
   categoryReport: { name: "Category Report", href: "/admin/categories", icon: faBarsProgress },
   addSeller: { name: "Add Seller", href: "/admin/seller", icon: faCartFlatbedSuitcase },
-  // sellerReport: { name: "Seller Report", href: "/admin/sellers", icon: faBoxes },
+  sellerReport: { name: "Seller Report", href: "/admin/sellers", icon: faBoxes },
   logout: { name: "Logout", href: "/logout", icon: faSignOutAlt },
 };

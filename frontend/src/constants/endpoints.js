@@ -44,6 +44,9 @@ const Endpoints = {
 
   // Seller URLs
   ADD_SELLER_URL: "/api/admin/seller",
+  GET_SELLERS_URL: "/api/admin/seller",
+  GET_ONE_SELLER_URL: "/api/admin/seller/{id}",
+  UPDATE_SELLER_URL: "/api/admin/seller/{id}",
 
   // Order Related URLs
   ORDER_REPORTS_URL: "/api/admin/orders",
