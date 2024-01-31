@@ -53,7 +53,6 @@ const SellerReports = () => {
       try {
         const response = await axiosPrivate.get(endpoints.GET_SELLERS_URL);
         const data = await response.data;
-        console.log(data);
         setSellers(data);
       } catch (error) {
         console.log(error);

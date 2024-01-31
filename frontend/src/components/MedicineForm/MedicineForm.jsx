@@ -13,6 +13,9 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import generateS3Url from "../../utils/s3Utils.js";
 
+import { CompanyReport, SellerReport } from "../../modals/index.js";
+import ReportTable from "../ReportTable/ReportTable.jsx";
+
 const initialState = {
   productType: "",
   productCode: "",
@@ -58,6 +61,19 @@ function reducer(state, action) {
   }
 }
 
+const companyColumnHeaders = [
+  { key: "id", label: "ID" },
+  { key: "companyName", label: "Name" },
+  { key: "description", label: "Description" },
+];
+
+const sellerColumnHeaders = [
+  { key: "id", label: "ID" },
+  { key: "name", label: "Name" },
+  { key: "email", label: "Email" },
+  { key: "phone", label: "Phone" },
+];
+
 const MedicineForm = ({ button_name, productData }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const axiosPrivate = useAxiosPrivate();
@@ -65,12 +81,16 @@ const MedicineForm = ({ button_name, productData }) => {
 
   const [productTypes, setProductTypes] = useState([]);
   const [companyNames, setCompanyNames] = useState([]);
+  const [companyData, setCompanyData] = useState([]);
   const [sellers, setSellers] = useState([]);
+  const [sellersData, setSellersData] = useState([]);
   const [formIsValid, setFormIsValid] = useState(true);
   const [dateError, setDateError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [sucessMessage, setSucessMessage] = useState("");
   const [lastSelectedSeller, setLastSelectedSeller] = useState("");
+  const [isCompanyModalOpen, setIsCompanyModalOpen] = useState(false);
+  const [isSellerModalOpen, setIsSellerModalOpen] = useState(false);
 
   const id = productData?.id;
 
@@ -181,7 +201,9 @@ const MedicineForm = ({ button_name, productData }) => {
         const response = await axiosPrivate.get(endpoints.COMPANY_REPORTS_URL, {
           signal,
         });
-        const formatCompanies = response.data.map((item) => ({
+        const data = await response.data;
+        setCompanyData(data);
+        const formatCompanies = data.map((item) => ({
           value: item.id.toString(),
           label: item.companyName,
         }));
@@ -201,7 +223,9 @@ const MedicineForm = ({ button_name, productData }) => {
         const response = await axiosPrivate.get(endpoints.GET_SELLERS_URL, {
           signal,
         });
-        const formatSellers = response.data.map((item) => ({
+        const data = await response.data;
+        setSellersData(data);        
+        const formatSellers = data.map((item) => ({
           value: item.id.toString(),
           label: item.name,
         }));
@@ -394,8 +418,16 @@ const MedicineForm = ({ button_name, productData }) => {
     }
   }, [state.manufactureDate, state.expiryDate]);
 
+  const handleCompanyViewClick = () => {
+    setIsCompanyModalOpen(true);    
+  };
+
+  const handleSellerViewClick = () => {
+    setIsSellerModalOpen(true);
+  }
+
   return (
-    <form className="form">
+    <div className="form">
       <SelectField
         label="Select Product Type"
         id="product-type"
@@ -512,8 +544,27 @@ const MedicineForm = ({ button_name, productData }) => {
         required={true}
       />
       <div className="buttons__company">
-        <button>View Companies</button>
-        <button>Add Company</button>
+        <button onClick={handleCompanyViewClick}>View Companies</button>
+
+        <CompanyReport
+          isOpen={isCompanyModalOpen}
+          onClose={() => setIsCompanyModalOpen(false)}
+        >
+          <h2>
+            Company Data <hr />
+          </h2>
+          <ReportTable
+            data={companyData}
+            columnHeaders={companyColumnHeaders}
+            renderRowActions={() => (
+              <>
+                <button>Delete</button>
+              </>
+            )}
+          />
+        </CompanyReport>
+
+        <button>Add New Company</button>
       </div>
       <SelectField
         label="Select Sellers"
@@ -524,8 +575,20 @@ const MedicineForm = ({ button_name, productData }) => {
         onChange={handleSelectSeller}
       />
       <div className="buttons__seller">
-        <button>View Sellers</button>
-        <button>Add Seller</button>
+        <button onClick={handleSellerViewClick}>View Sellers</button>
+        <SellerReport
+          isOpen={isSellerModalOpen}
+          onClose={() => setIsSellerModalOpen(false)}
+        >
+          <h2>
+            Seller Data <hr />
+          </h2>
+          <ReportTable
+            data={sellersData}
+            columnHeaders={sellerColumnHeaders}
+          />
+        </SellerReport>
+        <button>Add New Seller</button>
       </div>
       <ImageInput
         label="Upload Image"
@@ -581,7 +644,7 @@ const MedicineForm = ({ button_name, productData }) => {
           </div>
         </>
       )}
-    </form>
+    </div>
   );
 };
 
