@@ -42,6 +42,9 @@ const Endpoints = {
   MEDICINE_REPORTS_URL: "/api/admin/medicines",
   UPDATE_MEDICINE_URL: "/api/admin/medicines",
 
+  // Seller URLs
+  ADD_SELLER_URL: "/api/admin/seller",
+
   // Order Related URLs
   ORDER_REPORTS_URL: "/api/admin/orders",
 

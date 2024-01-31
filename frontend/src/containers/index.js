@@ -23,6 +23,7 @@ import { default as OrderSuccess } from "./User/OrderSuccess/OrderSuccess.jsx";
 import { default as CategoryReport } from "./Admin/CategoryReport/CategoryReport.jsx";
 import { default as ForgotPassword } from "./ForgotPassword/ForgotPassword.jsx";
 import { default as UpdateCategory } from "./Admin/UpdateCategory/UpdateCategory.jsx";
+import { default as AddSeller } from "./Admin/AddSeller/AddSeller.jsx";
 
 export {
   AdminDashboard,
@@ -50,4 +51,5 @@ export {
   CategoryReport,
   ForgotPassword,
   UpdateCategory,
+  AddSeller,
 };
