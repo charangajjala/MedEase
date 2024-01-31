@@ -1,15 +1,13 @@
 package com.chapp.med_ease.seller;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.chapp.med_ease.medicine.Medicine;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @Data
 @Builder
@@ -30,6 +28,14 @@ public class Seller {
 
   @Column(nullable = false)
   private String phone;
+
+  @ManyToMany
+  @JoinTable(
+          name= "seller_medicine",
+          joinColumns = @JoinColumn(name = "seller_id"),
+          inverseJoinColumns = @JoinColumn(name = "medicine_id")
+  )
+  private Set<Medicine> medicines;
 
   @Column()
   private String location;

@@ -37,6 +37,14 @@ public class AWSService {
         s3Client.putObject(bucketName, keyName, file.getInputStream(), metadata);
     }
 
+    public void deleteObject(String bucketName, String keyName) throws IOException {
+        try {
+            s3Client.deleteObject(bucketName, keyName);
+        } catch (Exception e) {
+            throw new IOException("Error deleting object from S3", e);
+        }
+    }
+
     public byte[] getObject(String bucketName, String keyName) throws IOException {
         try {
             S3Object s3Object = s3Client.getObject(bucketName, keyName);

@@ -11,6 +11,7 @@ import endpoints from "../../constants/endpoints.js";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import generateS3Url from "../../utils/s3Utils.js";
 
 const initialState = {
   productType: "",
@@ -23,6 +24,7 @@ const initialState = {
   manufactureDate: "",
   imageFile: "",
   description: "",
+  sellerIds: [],
 };
 
 function reducer(state, action) {
@@ -47,6 +49,8 @@ function reducer(state, action) {
       return { ...state, imageFile: action.payload };
     case "SET_DESCRIPTION":
       return { ...state, description: action.payload };
+    case "SET_SELLER_IDS":
+      return { ...state, sellerIds: action.payload };
     case "RESET_FORM":
       return initialState;
     default:
@@ -61,16 +65,26 @@ const MedicineForm = ({ button_name, productData }) => {
 
   const [productTypes, setProductTypes] = useState([]);
   const [companyNames, setCompanyNames] = useState([]);
+  const [sellers, setSellers] = useState([]);
   const [formIsValid, setFormIsValid] = useState(true);
   const [dateError, setDateError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [sucessMessage, setSucessMessage] = useState("");
+  const [lastSelectedSeller, setLastSelectedSeller] = useState("");
 
   const id = productData?.id;
 
   useEffect(() => {
     if (productData) {
       setFormIsValid(true);
+      if (productData?.imageKey) {
+        const imageURL = generateS3Url(productData?.imageKey);
+        dispatch({
+          type: "SET_IMAGE",
+          payload: imageURL,
+        });
+      }
+
       if (productTypes.length && productData.productType) {
         const productType = productTypes.find(
           (object) => object.label === productData.productType
@@ -81,6 +95,16 @@ const MedicineForm = ({ button_name, productData }) => {
             payload: productType.value,
           });
         }
+      }
+
+      if (productData?.sellerIds) {
+        const selectedSellers = sellers.filter((seller) =>
+          productData.sellerIds.includes(seller.value)
+        );
+        dispatch({
+          type: "SET_SELLER_IDS",
+          payload: selectedSellers.map((seller) => seller.value),
+        });
       }
 
       dispatch({
@@ -172,14 +196,50 @@ const MedicineForm = ({ button_name, productData }) => {
       }
     };
 
+    const fetchSellers = async () => {
+      try {
+        const response = await axiosPrivate.get(endpoints.GET_SELLERS_URL, {
+          signal,
+        });
+        const formatSellers = response.data.map((item) => ({
+          value: item.id.toString(),
+          label: item.name,
+        }));
+        if (response.status === 200) {
+          setFormIsValid(false);
+          setSellers(formatSellers);
+        }
+      } catch (error) {
+        if (error.name == "CanceledError") {
+          console.log("Request cancelled");
+        }
+      }
+    };
+
     fetchCompanies();
     fetchProductTypes();
+    fetchSellers();
 
     return () => {
       controller.abort();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleSelectSeller = (e) => {
+    const selectedOption = sellers.find((object) => {
+      return object.value === e.target.value;
+    });
+    if (selectedOption) {
+      if (!state.sellerIds.includes(selectedOption.value)) {
+        setLastSelectedSeller(selectedOption.value);
+        dispatch({
+          type: "SET_SELLER_IDS",
+          payload: [...state.sellerIds, selectedOption.value],
+        });
+      }
+    }
+  };
 
   const formValidation = () => {
     if (!state.productType.trim()) {
@@ -340,7 +400,6 @@ const MedicineForm = ({ button_name, productData }) => {
         label="Select Product Type"
         id="product-type"
         name="product-type"
-        // disabled={button_name === "Update" ? true : false}
         options={productTypes}
         value={
           productTypes.find((object) => {
@@ -357,19 +416,11 @@ const MedicineForm = ({ button_name, productData }) => {
             payload: selectedOption?.label,
           });
         }}
-        // The below code sends the value of the selected option above sends the label
-        // onChange={(e) => {
-        //   dispatch({
-        //     type: "SET_PRODUCT_TYPE",
-        //     payload: e.target.value,
-        //   });
-        // }}
         required={true}
       />
       <FormInput
         label="Product Code"
         type="text"
-        // disabled={button_name === "Update" ? true : false}
         value={state.productCode}
         id="medicine-expiry"
         name="medicine-expiry"
@@ -382,7 +433,6 @@ const MedicineForm = ({ button_name, productData }) => {
       <FormInput
         label="Product Title"
         type="text"
-        // disabled={button_name === "Update" ? true : false}
         value={state.productTitle}
         id="product-title"
         autoComplete="off"
@@ -393,9 +443,19 @@ const MedicineForm = ({ button_name, productData }) => {
         required={true}
       />
       <FormInput
+        label="Cost Per Unit"
+        type="number"
+        value={String(state.costPerMonth)}
+        id="cost-per-month"
+        name="cost-per-month"
+        onChange={(e) =>
+          dispatch({ type: "SET_COST_PER_MONTH", payload: e.target.value })
+        }
+        required={true}
+      />
+      <FormInput
         label="Total Stock"
         type="text"
-        // disabled={button_name === "Update" ? true : false}
         value={String(state.totalStock)}
         id="total-stock"
         name="total-stock"
@@ -404,10 +464,35 @@ const MedicineForm = ({ button_name, productData }) => {
         }
         required={true}
       />
+      <div className="product-dates">
+        <FormInput
+          label="Manufacture Date"
+          type="date"
+          value={state.manufactureDate}
+          id="manufacture-date"
+          name="manufacture-date"
+          onChange={(e) => {
+            dispatch({ type: "SET_MANUFACTURE_DATE", payload: e.target.value });
+            setDateError(false);
+          }}
+          required={true}
+        />
+        <FormInput
+          label="Expiry Date"
+          type="date"
+          value={state.expiryDate}
+          id="expiry-date"
+          name="expiry-date"
+          onChange={(e) => {
+            dispatch({ type: "SET_EXPIRY_DATE", payload: e.target.value });
+          }}
+          required={true}
+          error={dateError ? errorMessage : ""}
+        />
+      </div>
       <SelectField
         label="Select Company Name"
         id="company-name"
-        // disabled={button_name === "Update" ? true : false}
         value={
           companyNames.find((object) => {
             return object.value === state.companyName;
@@ -424,53 +509,24 @@ const MedicineForm = ({ button_name, productData }) => {
             payload: selectedOption?.label,
           });
         }}
-        // The below code sends the value of the selected option above sends the label
-        // onChange={(e) => {
-        //   dispatch({
-        //     type: "SET_COMPANY_NAME",
-        //     payload: e.target.value,
-        //   });
-        // }}
         required={true}
       />
-      <FormInput
-        label="Cost Per Unit"
-        type="number"
-        // disabled={button_name === "Update" ? true : false}
-        value={String(state.costPerMonth)}
-        id="cost-per-month"
-        name="cost-per-month"
-        onChange={(e) =>
-          dispatch({ type: "SET_COST_PER_MONTH", payload: e.target.value })
-        }
-        required={true}
+      <div className="buttons__company">
+        <button>View Companies</button>
+        <button>Add Company</button>
+      </div>
+      <SelectField
+        label="Select Sellers"
+        id="seller-name"
+        value={lastSelectedSeller}
+        name="seller-name"
+        options={sellers}
+        onChange={handleSelectSeller}
       />
-      <FormInput
-        label="Manufacture Date"
-        type="date"
-        // disabled={button_name === "Update" ? true : false}
-        value={state.manufactureDate}
-        id="manufacture-date"
-        name="manufacture-date"
-        onChange={(e) => {
-          dispatch({ type: "SET_MANUFACTURE_DATE", payload: e.target.value });
-          setDateError(false);
-        }}
-        required={true}
-      />
-      <FormInput
-        label="Expiry Date"
-        type="date"
-        // disabled={button_name === "Update" ? true : false}
-        value={state.expiryDate}
-        id="expiry-date"
-        name="expiry-date"
-        onChange={(e) => {
-          dispatch({ type: "SET_EXPIRY_DATE", payload: e.target.value });
-        }}
-        required={true}
-        error={dateError ? errorMessage : ""}
-      />
+      <div className="buttons__seller">
+        <button>View Sellers</button>
+        <button>Add Seller</button>
+      </div>
       <ImageInput
         label="Upload Image"
         id="medicine-image"
@@ -481,7 +537,6 @@ const MedicineForm = ({ button_name, productData }) => {
       <div className="full-width">
         <Textarea
           label="Description"
-          // disabled={button_name === "Update" ? true : false}
           value={state.description}
           id="medicine-description"
           name="medicine-description"

@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Set;
+
 @Data
 @Builder
 public class MedicineRequest {
@@ -32,5 +34,7 @@ public class MedicineRequest {
     private MultipartFile imageFile;
 
     private int totalStock;
+
+    private Set<Integer> sellerIds;
 
 }

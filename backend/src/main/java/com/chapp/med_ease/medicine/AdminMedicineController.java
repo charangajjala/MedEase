@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +29,7 @@ public class AdminMedicineController {
 
     @PostMapping(value = "", consumes = "multipart/form-data")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> createMedicine(
+    public void createMedicine(
             @RequestParam("productTitle") @NotBlank(message = "Product title cannot be blank") String productTitle,
             @RequestParam("description") @NotBlank(message = "Description cannot be blank") String description,
             @RequestParam("productType") @NotBlank(message = "Product type cannot be blank") String productType,
@@ -38,6 +39,7 @@ public class AdminMedicineController {
             @RequestParam("manufactureDate") String manufactureDate,
             @RequestParam("productCode") String productCode,
             @RequestParam("imageFile") MultipartFile imageFile,
+            @RequestParam("sellerIds") Set<Integer> sellerIds,
             @RequestParam("totalStock") int totalStock) {
         try {
             MedicineRequest req = MedicineRequest.builder()
@@ -51,12 +53,13 @@ public class AdminMedicineController {
                     .productCode(productCode)
                     .imageFile(imageFile)
                     .totalStock(totalStock)
+                    .sellerIds(sellerIds)
                     .build();
 
             medicineService.createMedicine(req);
-            return ResponseEntity.ok("Medicine created successfully");
+
         } catch (BadRequestException | IOException e) {
-            return ResponseEntity.status(500).body("Error creating medicine: " + e.getMessage());
+            throw  new RuntimeException(e);
         }
     }
 

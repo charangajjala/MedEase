@@ -2,10 +2,14 @@ package com.chapp.med_ease.medicine.medicine_dto;
 
 import com.chapp.med_ease.medicine.Medicine;
 
+import com.chapp.med_ease.seller.Seller;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -35,6 +39,8 @@ public class MedicineResponse {
 
     private int totalStock;
 
+    private Set<Integer> sellerIds;
+
     public MedicineResponse(Medicine medicine) {
         this.id = medicine.getId();
         this.productTitle = medicine.getProductTitle();
@@ -47,6 +53,10 @@ public class MedicineResponse {
         this.productCode = medicine.getProductCode();
         this.imageKey = medicine.getImageKey();
         this.totalStock = medicine.getTotalStock();
+        Set<Seller> sellers = medicine.getSellers();
+        for (Seller seller : sellers) {
+            this.sellerIds.add(seller.getId());
+        }
     }
 
 }

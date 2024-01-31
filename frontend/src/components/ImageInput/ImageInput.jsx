@@ -3,11 +3,14 @@ import React, { useState } from "react";
 import "./ImageInput.scss";
 import toast from "react-hot-toast";
 
+const slide_3 =
+  "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/slide_3.jpg";
+
 const ImageInput = React.forwardRef(function ImageInput(
   { label, id, name, onChange, required, error, ...props },
   ref
 ) {
-  const [preview, setPreview] = useState(null);
+  const [preview, setPreview] = useState(slide_3);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];

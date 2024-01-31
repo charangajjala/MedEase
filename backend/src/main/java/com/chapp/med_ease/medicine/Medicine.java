@@ -3,15 +3,9 @@ package com.chapp.med_ease.medicine;
 import com.chapp.med_ease.company.Company;
 import com.chapp.med_ease.medicine_type.MedicineType;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import com.chapp.med_ease.seller.Seller;
+import jakarta.persistence.*;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -45,6 +39,10 @@ public class Medicine {
                         CascadeType.DETACH, CascadeType.REFRESH })
         @JoinColumn(name = "company_id", nullable = false)
         private Company company;
+
+        @ManyToMany(mappedBy = "medicines", cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+                        CascadeType.DETACH, CascadeType.REFRESH })
+        private Set<Seller> sellers;
 
         @Column(name = "cost_per_month")
         private int costPerMonth;

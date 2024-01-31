@@ -1,11 +1,11 @@
 package com.chapp.med_ease.medicine;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import com.chapp.med_ease.aws.AWSService;
+import com.chapp.med_ease.seller.Seller;
+import com.chapp.med_ease.seller.SellerRepository;
 import org.springframework.stereotype.Service;
 
 import com.chapp.med_ease.company.Company;
@@ -19,6 +19,7 @@ import com.chapp.med_ease.medicine_type.MedicineType;
 import com.chapp.med_ease.medicine_type.MedicineTypeRepository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +30,8 @@ public class AdminMedicineService {
     private final CompanyRepository companyRepository;
 
     private final MedicineTypeRepository medicineTypeRepository;
+
+    private final SellerRepository sellerRepository;
 
     private final AWSService awsService;
 
@@ -95,13 +98,26 @@ public class AdminMedicineService {
 
     }
 
+    @Transactional
     public void updateMedicine(UpdateMedicineRequest req) throws BadRequestException {
 
         final Medicine oldMedicine = medicineRepository.findById(req.getId())
                 .orElseThrow(() -> new BadRequestException(
                         "Medicine with product title " + req.getProductTitle() + " not found"));
 
-        if (req.getCompanyName() != oldMedicine.getCompany().getCompanyName()) {
+        if (req.getImageFile() != null) {
+            String keyName = UUID.randomUUID().toString();
+
+            try {
+                awsService.uploadObject("medeaseportal-bucket", keyName, req.getImageFile());
+            } catch (Exception e) {
+                throw new BadRequestException("Error uploading image: " + e.getMessage());
+            }
+
+            oldMedicine.setImageKey(keyName);
+        }
+
+        if (!Objects.equals(req.getCompanyName(), oldMedicine.getCompany().getCompanyName())) {
             final Company company = companyRepository.findByCompanyName(req.getCompanyName())
                     .orElseThrow(
                             () -> new BadRequestException("Company with name " + req.getCompanyName() + " not found"));
@@ -121,15 +137,35 @@ public class AdminMedicineService {
         oldMedicine.setManufactureDate(req.getManufactureDate());
         oldMedicine.setProductCode(req.getProductCode());
         oldMedicine.setTotalStock(req.getTotalStock());
+        updateSellers(oldMedicine, req.getSellerIds());
 
         medicineRepository.save(oldMedicine);
 
+    }
+
+    private void updateSellers(Medicine oldMedicine, Set<Integer> sellerIds) throws BadRequestException {
+        Set<Seller> currentSellers = oldMedicine.getSellers();
+        currentSellers.removeIf(seller -> !sellerIds.contains(seller.getId()));
+        for (Integer sellerId : sellerIds) {
+            if (currentSellers.stream().noneMatch(seller -> seller.getId() == sellerId)) {
+                final Seller seller = sellerRepository.findById(sellerId)
+                        .orElseThrow(() -> new BadRequestException("Seller with id " + sellerId + " not found"));
+                currentSellers.add(seller);
+            }
+        }
+        oldMedicine.setSellers(currentSellers);
     }
 
     public void deleteMedicine(int id) throws BadRequestException {
 
         medicineRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException("Medicine with id " + id + " not found"));
+
+        try {
+            awsService.deleteObject("medeaseportal-bucket", medicineRepository.findById(id).get().getImageKey());
+        } catch (Exception e) {
+            throw new BadRequestException("Error deleting image: " + e.getMessage());
+        }
 
         medicineRepository.deleteById(id);
 

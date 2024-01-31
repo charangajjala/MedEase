@@ -4,6 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Set;
+
 @Data
 @Builder
 public class SellerRequest {
@@ -15,6 +17,8 @@ public class SellerRequest {
 
   @NotBlank(message = "Phone cannot be blank")
   private String phone;
+
+  private Set<Integer> medicineIds;
 
   private String location;
 }
