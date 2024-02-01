@@ -224,7 +224,7 @@ const MedicineForm = ({ button_name, productData }) => {
           signal,
         });
         const data = await response.data;
-        setSellersData(data);        
+        setSellersData(data);
         const formatSellers = data.map((item) => ({
           value: item.id.toString(),
           label: item.name,
@@ -259,7 +259,7 @@ const MedicineForm = ({ button_name, productData }) => {
         setLastSelectedSeller(selectedOption.value);
         dispatch({
           type: "SET_SELLER_IDS",
-          payload: [...state.sellerIds, selectedOption.value],
+          payload: [...state.sellerIds, Number(selectedOption.value)],
         });
       }
     }
@@ -419,12 +419,14 @@ const MedicineForm = ({ button_name, productData }) => {
   }, [state.manufactureDate, state.expiryDate]);
 
   const handleCompanyViewClick = () => {
-    setIsCompanyModalOpen(true);    
+    setIsCompanyModalOpen(true);
   };
 
   const handleSellerViewClick = () => {
     setIsSellerModalOpen(true);
-  }
+  };
+
+  console.log("state", state);
 
   return (
     <div className="form">
@@ -583,10 +585,7 @@ const MedicineForm = ({ button_name, productData }) => {
           <h2>
             Seller Data <hr />
           </h2>
-          <ReportTable
-            data={sellersData}
-            columnHeaders={sellerColumnHeaders}
-          />
+          <ReportTable data={sellersData} columnHeaders={sellerColumnHeaders} />
         </SellerReport>
         <button>Add New Seller</button>
       </div>

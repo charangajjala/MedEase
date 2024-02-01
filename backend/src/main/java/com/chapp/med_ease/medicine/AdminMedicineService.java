@@ -2,6 +2,7 @@ package com.chapp.med_ease.medicine;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Logger;
 
 import com.chapp.med_ease.aws.AWSService;
 import com.chapp.med_ease.seller.Seller;
@@ -35,27 +36,33 @@ public class AdminMedicineService {
 
     private final AWSService awsService;
 
+    private final Logger logger = Logger.getLogger(AdminMedicineService.class.getName());
+
     public void createMedicine(MedicineRequest req) throws BadRequestException, IOException {
-        final Optional<Medicine> existingMedicine = medicineRepository.findByProductTitle(req.getProductTitle());
+        logger.info("Creating new medicine with title: " + req.getProductTitle());
+
+        Optional<Medicine> existingMedicine = medicineRepository.findByProductTitle(req.getProductTitle());
         if (existingMedicine.isPresent()) {
+            logger.warning("Medicine with product title " + req.getProductTitle() + " already exists");
             throw new BadRequestException("Medicine with product title " + req.getProductTitle() + " already exists");
         }
 
         String keyName = UUID.randomUUID().toString();
-
         try {
+            logger.info("Uploading image to AWS S3 with key name: " + keyName);
             awsService.uploadObject("medeaseportal-bucket", keyName, req.getImageFile());
         } catch (Exception e) {
+            logger.severe("Error uploading image: " + e.getMessage());
             throw new BadRequestException("Error uploading image: " + e.getMessage());
         }
 
-        final Company company = companyRepository.findByCompanyName(req.getCompanyName())
+        Company company = companyRepository.findByCompanyName(req.getCompanyName())
                 .orElseThrow(() -> new BadRequestException("Company with name " + req.getCompanyName() + " not found"));
 
-        final MedicineType medType = medicineTypeRepository.findByCategoryName(req.getProductType())
+        MedicineType medType = medicineTypeRepository.findByCategoryName(req.getProductType())
                 .orElseThrow(() -> new BadRequestException("Medicine type " + req.getProductType() + " not found"));
 
-        final Medicine newMedicine = Medicine.builder()
+        Medicine newMedicine = Medicine.builder()
                 .productTitle(req.getProductTitle())
                 .description(req.getDescription())
                 .medicineType(medType)
@@ -69,6 +76,25 @@ public class AdminMedicineService {
                 .build();
 
         medicineRepository.save(newMedicine);
+        logger.info("Saved new medicine to the database");
+
+        if (req.getSellerIds() != null && !req.getSellerIds().isEmpty()) {
+            logger.info("Assigning sellers to the new medicine"+ req.getSellerIds());
+            Set<Seller> sellers = new HashSet<>();
+            for (Integer sellerId : req.getSellerIds()) {
+                Seller seller = sellerRepository.findById(sellerId)
+                        .orElseThrow(() -> new BadRequestException("Seller with ID " + sellerId + " not found"));
+                logger.info("Found seller with ID " + sellerId + seller);
+                sellers.add(seller);
+                logger.info("Adding"+ seller + " to " + seller.getMedicines());
+                seller.getMedicines().add(newMedicine);
+                logger.info("Added medicine to the seller");
+                sellerRepository.save(seller);
+                logger.info("Saved seller");
+            }
+            newMedicine.setSellers(sellers);
+            logger.info("Assigned sellers to the new medicine");
+        }
     }
 
 

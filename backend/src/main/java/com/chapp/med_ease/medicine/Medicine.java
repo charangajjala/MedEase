@@ -40,8 +40,7 @@ public class Medicine {
         @JoinColumn(name = "company_id", nullable = false)
         private Company company;
 
-        @ManyToMany(mappedBy = "medicines", cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-                        CascadeType.DETACH, CascadeType.REFRESH })
+        @ManyToMany(mappedBy = "medicines")
         private Set<Seller> sellers;
 
         @Column(name = "cost_per_month")

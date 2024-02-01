@@ -39,7 +39,7 @@ public class AdminMedicineController {
             @RequestParam("manufactureDate") String manufactureDate,
             @RequestParam("productCode") String productCode,
             @RequestParam("imageFile") MultipartFile imageFile,
-            @RequestParam("sellerIds") Set<Integer> sellerIds,
+            @RequestParam("sellerIds") List<Integer> sellerIds,
             @RequestParam("totalStock") int totalStock) {
         try {
             MedicineRequest req = MedicineRequest.builder()

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -35,6 +36,6 @@ public class MedicineRequest {
 
     private int totalStock;
 
-    private Set<Integer> sellerIds;
+    private List<Integer> sellerIds;
 
 }
