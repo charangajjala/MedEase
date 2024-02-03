@@ -86,10 +86,13 @@ public class AdminMedicineService {
                         .orElseThrow(() -> new BadRequestException("Seller with ID " + sellerId + " not found"));
                 logger.info("Found seller with ID " + sellerId + seller);
                 sellers.add(seller);
+
                 logger.info("Adding"+ seller + " to " + seller.getMedicines());
                 seller.getMedicines().add(newMedicine);
+
                 logger.info("Added medicine to the seller");
                 sellerRepository.save(seller);
+
                 logger.info("Saved seller");
             }
             newMedicine.setSellers(sellers);
