@@ -595,6 +595,7 @@ const MedicineForm = ({ button_name, productData }) => {
         name="medicine-image"
         onChange={handleImageChange}
         required={true}
+        imageFile={state.imageFile}
       />
       <div className="full-width">
         <Textarea

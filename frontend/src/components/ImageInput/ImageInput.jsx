@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ImageInput.scss";
 import toast from "react-hot-toast";
 
@@ -7,10 +7,18 @@ const slide_3 =
   "https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/slide_3.jpg";
 
 const ImageInput = React.forwardRef(function ImageInput(
-  { label, id, name, onChange, required, error, ...props },
+  { label, id, name, onChange, required, error, imageFile, ...props },
   ref
 ) {
-  const [preview, setPreview] = useState(slide_3);
+  const [preview, setPreview] = useState();
+
+  useEffect(() => {
+    if (imageFile) {
+      setPreview(imageFile);
+    } else {
+      setPreview(slide_3);
+    }
+  }, [imageFile]);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -58,6 +66,7 @@ ImageInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   required: PropTypes.bool.isRequired,
   error: PropTypes.string,
+  imageFile: PropTypes.string,
 };
 
 ImageInput.defaultProps = {
