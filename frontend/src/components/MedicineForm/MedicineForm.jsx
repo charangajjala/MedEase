@@ -545,7 +545,7 @@ const MedicineForm = ({ button_name, productData }) => {
         }}
         required={true}
       />
-      <div className="buttons__company">
+      {/* <div className="buttons__company">
         <button onClick={handleCompanyViewClick}>View Companies</button>
 
         <CompanyReport
@@ -567,7 +567,7 @@ const MedicineForm = ({ button_name, productData }) => {
         </CompanyReport>
 
         <button>Add New Company</button>
-      </div>
+      </div> */}
       <SelectField
         label="Select Sellers"
         id="seller-name"
@@ -576,7 +576,7 @@ const MedicineForm = ({ button_name, productData }) => {
         options={sellers}
         onChange={handleSelectSeller}
       />
-      <div className="buttons__seller">
+      {/* <div className="buttons__seller">
         <button onClick={handleSellerViewClick}>View Sellers</button>
         <SellerReport
           isOpen={isSellerModalOpen}
@@ -588,14 +588,14 @@ const MedicineForm = ({ button_name, productData }) => {
           <ReportTable data={sellersData} columnHeaders={sellerColumnHeaders} />
         </SellerReport>
         <button>Add New Seller</button>
-      </div>
+      </div> */}
       <ImageInput
         label="Upload Image"
         id="medicine-image"
         name="medicine-image"
         onChange={handleImageChange}
         required={true}
-        imageFile={state.imageFile}
+        // imageFile={state.imageFile}
       />
       <div className="full-width">
         <Textarea

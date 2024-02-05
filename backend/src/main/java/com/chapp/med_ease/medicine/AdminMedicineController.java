@@ -39,7 +39,7 @@ public class AdminMedicineController {
             @RequestParam("manufactureDate") String manufactureDate,
             @RequestParam("productCode") String productCode,
             @RequestParam("imageFile") MultipartFile imageFile,
-            @RequestParam("sellerIds") List<Integer> sellerIds,
+//            @RequestParam("sellerIds") List<Integer> sellerIds,
             @RequestParam("totalStock") int totalStock) {
         try {
             MedicineRequest req = MedicineRequest.builder()
@@ -53,7 +53,7 @@ public class AdminMedicineController {
                     .productCode(productCode)
                     .imageFile(imageFile)
                     .totalStock(totalStock)
-                    .sellerIds(sellerIds)
+//                    .sellerIds(sellerIds)
                     .build();
 
             medicineService.createMedicine(req);

@@ -79,26 +79,26 @@ public class AdminMedicineService {
         medicineRepository.save(newMedicine);
         logger.info("Saved new medicine to the database");
 
-        if (req.getSellerIds() != null && !req.getSellerIds().isEmpty()) {
-            logger.info("Assigning sellers to the new medicine"+ req.getSellerIds());
-            Set<Seller> sellers = new HashSet<>();
-            for (Integer sellerId : req.getSellerIds()) {
-                Seller seller = sellerRepository.findById(sellerId)
-                        .orElseThrow(() -> new BadRequestException("Seller with ID " + sellerId + " not found"));
-                logger.info("Found seller with ID " + sellerId + seller);
-                sellers.add(seller);
-
-                logger.info("Adding"+ seller + " to " + seller.getMedicines());
-                seller.getMedicines().add(newMedicine);
-
-                logger.info("Added medicine to the seller");
-                sellerRepository.save(seller);
-
-                logger.info("Saved seller");
-            }
-            newMedicine.setSellers(sellers);
-            logger.info("Assigned sellers to the new medicine");
-        }
+//        if (req.getSellerIds() != null && !req.getSellerIds().isEmpty()) {
+//            logger.info("Assigning sellers to the new medicine"+ req.getSellerIds());
+//            Set<Seller> sellers = new HashSet<>();
+//            for (Integer sellerId : req.getSellerIds()) {
+//                Seller seller = sellerRepository.findById(sellerId)
+//                        .orElseThrow(() -> new BadRequestException("Seller with ID " + sellerId + " not found"));
+//                logger.info("Found seller with ID " + sellerId + seller);
+//                sellers.add(seller);
+//
+//                logger.info("Adding"+ seller + " to " + seller.getMedicines());
+//                seller.getMedicines().add(newMedicine);
+//
+//                logger.info("Added medicine to the seller");
+//                sellerRepository.save(seller);
+//
+//                logger.info("Saved seller");
+//            }
+//            newMedicine.setSellers(sellers);
+//            logger.info("Assigned sellers to the new medicine");
+//        }
     }
 
 
@@ -168,24 +168,24 @@ public class AdminMedicineService {
         oldMedicine.setManufactureDate(req.getManufactureDate());
         oldMedicine.setProductCode(req.getProductCode());
         oldMedicine.setTotalStock(req.getTotalStock());
-        updateSellers(oldMedicine, req.getSellerIds());
+//        updateSellers(oldMedicine, req.getSellerIds());
 
         medicineRepository.save(oldMedicine);
 
     }
 
-    private void updateSellers(Medicine oldMedicine, Set<Integer> sellerIds) throws BadRequestException {
-        Set<Seller> currentSellers = oldMedicine.getSellers();
-        currentSellers.removeIf(seller -> !sellerIds.contains(seller.getId()));
-        for (Integer sellerId : sellerIds) {
-            if (currentSellers.stream().noneMatch(seller -> seller.getId() == sellerId)) {
-                final Seller seller = sellerRepository.findById(sellerId)
-                        .orElseThrow(() -> new BadRequestException("Seller with id " + sellerId + " not found"));
-                currentSellers.add(seller);
-            }
-        }
-        oldMedicine.setSellers(currentSellers);
-    }
+//    private void updateSellers(Medicine oldMedicine, Set<Integer> sellerIds) throws BadRequestException {
+////        Set<Seller> currentSellers = oldMedicine.getSellers();
+//        currentSellers.removeIf(seller -> !sellerIds.contains(seller.getId()));
+//        for (Integer sellerId : sellerIds) {
+//            if (currentSellers.stream().noneMatch(seller -> seller.getId() == sellerId)) {
+//                final Seller seller = sellerRepository.findById(sellerId)
+//                        .orElseThrow(() -> new BadRequestException("Seller with id " + sellerId + " not found"));
+//                currentSellers.add(seller);
+//            }
+//        }
+//        oldMedicine.setSellers(currentSellers);
+//    }
 
     public void deleteMedicine(int id) throws BadRequestException {
 

@@ -36,21 +36,21 @@ public class SellerService {
         seller.setLocation(req.getLocation());
         seller.setPhone(req.getPhone());
 
-        if (req.getMedicineIds() != null && !req.getMedicineIds().isEmpty()) {
-            Set<Medicine> medicines = new HashSet<>();
-            for (Integer medicineId : req.getMedicineIds()) {
-                Medicine medicine = medicineRepository.findById(medicineId)
-                        .orElseThrow(() -> new BadRequestException("Medicine with ID " + medicineId + " not found"));
-                medicines.add(medicine);
-                medicine.getSellers().add(seller);
-                medicineRepository.save(medicine);
-            }
-            seller.setMedicines(medicines);
-            logger.info("Medicines assigned to seller: " + medicines.size());
-        }
-
-        sellerRepository.save(seller);
-        logger.info("Seller with email " + req.getEmail() + " created successfully.");
+//        if (req.getMedicineIds() != null && !req.getMedicineIds().isEmpty()) {
+//            Set<Medicine> medicines = new HashSet<>();
+//            for (Integer medicineId : req.getMedicineIds()) {
+//                Medicine medicine = medicineRepository.findById(medicineId)
+//                        .orElseThrow(() -> new BadRequestException("Medicine with ID " + medicineId + " not found"));
+//                medicines.add(medicine);
+////                medicine.getSellers().add(seller);
+//                medicineRepository.save(medicine);
+//            }
+////            seller.setMedicines(medicines);
+////            logger.info("Medicines assigned to seller: " + medicines.size());
+//        }
+//
+//        sellerRepository.save(seller);
+//        logger.info("Seller with email " + req.getEmail() + " created successfully.");
     }
 
     public List<SellerResponse> getAllSellers() {

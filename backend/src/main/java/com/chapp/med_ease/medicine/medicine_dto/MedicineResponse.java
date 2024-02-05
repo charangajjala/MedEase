@@ -53,10 +53,10 @@ public class MedicineResponse {
         this.productCode = medicine.getProductCode();
         this.imageKey = medicine.getImageKey();
         this.totalStock = medicine.getTotalStock();
-        Set<Seller> sellers = medicine.getSellers();
-        for (Seller seller : sellers) {
-            this.sellerIds.add(seller.getId());
-        }
+//        Set<Seller> sellers = medicine.getSellers();
+//        for (Seller seller : sellers) {
+//            this.sellerIds.add(seller.getId());
+//        }
     }
 
 }
