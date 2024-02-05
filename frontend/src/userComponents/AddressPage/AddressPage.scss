@@ -1,0 +1,116 @@
+@import "../../styles/colors/colors.scss";
+@import "../../styles/fonts/fonts.scss";
+@import "../../styles/mixins/userMixins.scss";
+
+.address-page {
+  padding: 20px;
+
+  h1 {
+    color: $text-color;
+    margin-bottom: 20px;
+  }
+
+  &__buttons {
+    button {
+      @include button-style;
+    }
+  }
+
+  .address-page__addresses {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+
+    .address-card,
+    .add-address-card {
+      min-height: 200px;
+    }
+
+    .address-card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+
+      h3 {
+        margin-top: 0;
+        font-size: 1.2em;
+      }
+
+      p {
+        margin: 5px 0;
+        font-size: 0.9em;
+        line-height: 1.4;
+      }
+
+      &:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+    }
+  }
+
+  .content-wrapper {
+    text-align: center;
+
+    img {
+      max-width: 40%;
+      height: auto;
+      margin: auto auto;
+    }
+
+    .message {
+      font-size: 1.2em;
+      color: $text-color;
+      margin: 20px 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .content-wrapper img {
+      max-width: 60%;
+    }
+  }
+}
+
+.add-address-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    height: 100%;
+  }
+
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    cursor: pointer;
+    background: none;
+    transition: background-color 0.3s ease-in-out;
+
+    &:hover {
+      background-color: $text-color;
+      color: #fff;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.loading-page {
+  @include profile-loading-style;
+}

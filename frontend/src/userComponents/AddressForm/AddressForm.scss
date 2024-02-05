@@ -1,0 +1,42 @@
+@import "../../styles/colors/colors.scss";
+@import "../../styles/fonts/fonts.scss";
+@import "../../styles/mixins/userMixins.scss";
+
+.address-form {
+  h1 {
+    padding-bottom: 10px;
+  }
+
+  &__success-message {
+    padding: 10px;
+    color: $success-color;
+    text-align: center;
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  form {
+    .grid-item {
+      display: grid;
+      grid-template-columns: 1fr 4fr;
+      align-items: center;
+    }
+
+    .form-buttons {
+      display: flex;
+      justify-content: space-between;
+
+      .submit-button {
+        button {
+          @include button-style;
+        }
+      }
+    }
+  }
+}
+
+
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

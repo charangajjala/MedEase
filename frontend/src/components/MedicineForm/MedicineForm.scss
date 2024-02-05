@@ -1,0 +1,115 @@
+@import "../../styles/colors/colors.scss";
+@import "../../styles/fonts/fonts.scss";
+@import "../../styles/mixins/adminMixins.scss";
+
+.form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5em;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+
+  .product-dates {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  
+  .buttons{
+    &__company {
+      display: flex;
+      justify-content: space-around;
+
+      button {
+        @include button-style;
+      }
+    }
+
+    &__seller{
+      display: flex;
+      justify-content: space-around;
+
+      button {
+        @include button-style;
+      }
+    }
+  }
+}
+
+.form-button {
+  display: flex;
+  margin-top: 1em;
+
+  button {
+    padding: 0.75em 1.5em;
+    border: none;
+    border-radius: 4px;
+    background-color: $button-bg;
+    color: $button-text;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      background-color: $button-hover;
+      box-shadow: 0 4px 12px rgba($black, 0.2);
+    }
+
+    &:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 8px rgba($black, 0.2);
+    }
+  }
+}
+
+.form-success-message {
+  color: $success-color;
+  padding: 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  border-radius: 4px;
+  border: 1px solid $success-bg-color;
+  font-size: 0.9em;
+  text-align: center;
+  justify-self: center;
+}
+
+.form-reset {
+  display: flex;
+  justify-self: center;
+  align-self: center;
+
+  button {
+    padding: 0.75em 1.5em;
+    border: none;
+    border-radius: 4px;
+    background-color: $button-bg;
+    color: $button-text;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      background-color: $button-hover;
+      box-shadow: 0 4px 12px rgba($black, 0.2);
+    }
+
+    &:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 8px rgba($black, 0.2);
+    }
+  }
+}
+
+.error {
+  color: $error-color;
+  padding: 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  border-radius: 4px;
+  border: 1px solid $error-bg-color;
+  font-size: 0.9em;
+  text-align: left;
+}

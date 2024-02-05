@@ -1,0 +1,126 @@
+@import "../../../styles/colors/colors.scss";
+@import "../../../styles/fonts/fonts.scss";
+@import "../../../styles/mixins/userMixins.scss";
+
+.search-results {
+  &__main {
+    @include main-style;
+  }
+
+  &__grid {
+    min-height: 81vh;
+    display: grid;
+    grid-template-columns: 0.8fr 3fr;
+    gap: 20px;
+
+    .no-data-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .image {
+        display: flex;
+        justify-content: center;
+
+        img {
+          width: 40%;
+          height: auto;
+          object-fit: cover;
+          border-radius: 10px;
+        }
+      }
+    }
+
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr;
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__grid-item-1,
+  &__grid-item-2 {
+    @include content-style;
+  }
+}
+
+.search-result {
+  h2 {
+    font-size: 1.5rem;
+    font-weight: $font-weight-bold;
+    margin-bottom: 1rem;
+    color: $text-color;
+  }
+}
+
+.search-results__grid-item-1 {
+  h3 {
+    font-size: 1.5rem;
+    color: $text-color;
+    font-weight: $font-weight-bold;
+    margin-bottom: 15px;
+  }
+
+  .filter-category {
+    margin-bottom: 25px;
+
+    label {
+      font-weight: $font-weight-bold;
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+
+    .price-range__values {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      color: lighten($text-color, 10%);
+      font-weight: $font-weight-bold;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      cursor: pointer;
+      margin-top: 8px;
+      &:focus {
+        outline: none;
+      }
+    }
+
+    input[type="checkbox"] {
+      margin-right: 10px;
+      cursor: pointer;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .filter-actions {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+
+    button {
+      @include button-style;
+      &:hover,
+      &:focus {
+        background-color: darken($text-color, 10%);
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .filter-actions {
+      flex-direction: column;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 10px;
+    }
+  }
+}

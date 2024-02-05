@@ -1,0 +1,97 @@
+@import "../colors/colors.scss";
+@import "../fonts/fonts.scss";
+
+@mixin button-style {
+  padding: 0.75em 1.5em;
+  border: none;
+  border-radius: 4px;
+  background-color: $button-bg;
+  color: $button-text;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease-in-out;
+  justify-self: center;
+  align-self: center;
+
+  &:hover {
+    background-color: $button-hover;
+    box-shadow: 0 4px 12px rgba($black, 0.2);
+  }
+
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 8px rgba($black, 0.2);
+  }
+}
+
+@mixin input-style {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid $form-input-border;
+  background-color: $form-input-bg-active;
+  color: $text-color;
+  border-radius: 5px;
+
+  &:focus {
+    border-color: darken($button-bg, 20%);
+    box-shadow: 0 0 0 2px rgba($button-bg, 0.2);
+    outline: none;
+  }
+}
+
+@mixin profile-loading-style {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: auto auto;
+  background-color: #fff;
+  font-size: $font-size-large;
+  gap: 10px;
+
+  img {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+    background: none;
+  }
+}
+
+@mixin content-style($bg-color: $white, $padding: 10px, $gap: 1em) {
+  background-color: $bg-color;
+  color: $text-color;
+  border-radius: 8px;
+  padding: $padding;
+  box-shadow: 0 4px 8px rgba($black, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+}
+
+@mixin image-style {
+  width: 100%;
+  object-fit: contain;
+  height: 50px;
+}
+
+@mixin navbar-style {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: $white;
+  color: $text-light;
+  box-shadow: 0 2px 4px rgba($black, 0.1);
+  margin: 10px 0;
+}
+
+@mixin main-style {
+  width: 100%;
+  background-color: $body-bg;
+  color: $text-light;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}

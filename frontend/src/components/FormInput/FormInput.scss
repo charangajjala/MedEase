@@ -13,8 +13,7 @@
   }
 
   input,
-  select,
-  textarea {
+  select {
     padding: 10px;
     border: 1px solid $form-input-border;
     background-color: $form-input-bg-active;
@@ -30,12 +29,33 @@
     }
   }
 
+  input:disabled,
+  select:disabled {
+    background-color: #f5f5f5;
+    color: rgb(0,0,0)
+  }
+
   textarea {
     height: 150px;
     resize: vertical;
   }
+
+  .input-error {
+    border-color: $error-color;
+
+    &:focus {
+      border-color: darken($error-color, 20%);
+      box-shadow: 0 0 0 2px rgba($error-color, 0.2);
+    }
+  }
+
+  .error-message {
+    color: $error-color;
+    font-size: 0.9em;
+    text-align: left;
+  }
 }
 
-.full-width {
-  grid-column: 1 / -1;
-}
+// .full-width {
+//   grid-column: 1 / -1;
+// }

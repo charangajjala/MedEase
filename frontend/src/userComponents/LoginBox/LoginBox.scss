@@ -1,0 +1,71 @@
+@import "../../styles/colors/colors.scss";
+@import "../../styles/fonts/fonts.scss";
+@import "../../styles/mixins/userMixins.scss";
+
+.login-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1050;
+  width: 30vw;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+
+  &__close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1rem;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+
+  h2 {
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .login-box__input-group {
+    margin-bottom: 1rem;
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    input {
+      @include input-style;
+    }
+  }
+
+  .login-box__button {
+    @include button-style;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-around;
+
+    button {
+      @include button-style;
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}

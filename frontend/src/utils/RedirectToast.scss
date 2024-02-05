@@ -1,0 +1,32 @@
+.redirect-toast {
+  display: inline-flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 25px;
+  padding: 5px 10px;
+  font-family: 'Arial', sans-serif;
+
+  .icon-text {
+    display: flex;
+    align-items: center;
+  }
+
+  .circular-progress-indicator {
+    margin-right: 10px;
+    transform: rotate(-90deg);
+  }
+
+  .progress-ring__background {
+    stroke-width: 4;
+  }
+
+  .progress-ring {
+    transition: stroke-dashoffset 1s linear;
+    stroke-width: 4;
+  }
+
+  .toast-text {
+    font-size: 16px;
+    color: #333;
+  }
+}

@@ -1,12 +1,11 @@
 import axios from "axios";
 import useAuth from "./useAuth";
-
-const REFRESH_URL = "http://localhost:3001/refresh";
+import endpoints from "../constants/endpoints";
 
 const useRefreshToken = () => {
   const { setAuth } = useAuth();
   const refresh = async () => {
-    const response = await axios.get(REFRESH_URL, {
+    const response = await axios.post(endpoints.REFRESH_URL, {
       withCredentials: true,
     });
 

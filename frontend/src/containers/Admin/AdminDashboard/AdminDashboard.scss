@@ -1,0 +1,47 @@
+@import "../../../styles/colors/colors.scss";
+@import "../../../styles/fonts/fonts.scss";
+@import "../../../styles/mixins/userMixins.scss";
+
+.admin-dashboard {
+  display: flex;
+  min-height: 100vh;
+  font-family: "Roboto", sans-serif;
+
+  &__main {
+    width: 100%;
+    background-color: $body-bg;
+    color: $text-light;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: start;
+
+    @media (max-width: 768px) {
+      padding: 20px;
+      gap: 15px;
+    }
+  }
+
+  &__content {
+    @include content-style;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(300px, 1fr));
+    gap: 20px;
+    align-items: start;
+
+    .dashboard-section {
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+      padding: 20px;
+      h3 {
+        color: $text-color; 
+        margin-bottom: 15px;
+      }
+      canvas {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+  }
+}

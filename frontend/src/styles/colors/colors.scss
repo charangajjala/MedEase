@@ -12,7 +12,7 @@ $black: #000;
 // Button Colors
 $button-bg: rgb(11, 21, 83);
 $button-text: #fff;
-$button-hover: darken($button-bg, 10%);
+$button-hover: darken($button-bg, 10%); 
 
 // Form Colors
 $form-input-bg-active: rgb(228, 241, 252);
@@ -21,7 +21,36 @@ $form-input-border: rgb(180, 188, 193);
 $error-color: rgb(255, 0, 0);
 $success-color: rgb(0, 255, 0);
 
-// Sidebar
+// Navbar Colors
+$navbar-bg-color: rgba($black, 0.8);
+$shadow-color: $black; 
+
+// Sidebar Colors
 $sidebar-bg: rgb(29, 40, 51);
 
+// Table Colors
+$table-first-child: #f2f2f2;
+$table-last-child: #e9ecef;
+$table-odd: #495057;
+$table-even: #f8f9fa;
+$table-border: #dee2e6;
+$border-color: #dee2e6;
+$focus-border-color: darken($text-color, 10%);
 
+// Loader Colors
+$loader-border: #f3f3f3;
+$loader-border-top: #3498db;
+
+// Success and Error Message Colors
+$success-color: #28a745; 
+$success-bg-color: #daf5e4; 
+
+$error-color: #dc3545; 
+$error-bg-color: #f8d7da; 
+
+// Modal Colors
+$modal-bg-color: rgba($black, 0.5); 
+
+// Additional General Colors
+$grey-light: #f6f6f6; // Light grey for backgrounds or borders
+$grey-dark: #343a40;

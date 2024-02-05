@@ -1,0 +1,71 @@
+@import "../../styles/colors/colors.scss";
+@import "../../styles/fonts/fonts.scss";
+@import "../../styles/mixins/userMixins.scss";
+
+.banner-slider {
+  position: relative;
+  overflow: hidden;
+
+  &__info-bars {
+    display: flex;
+    background-color: $white;
+    justify-content: space-around;
+
+    .info-bar {
+      padding: 10px;
+      transition: all 0.3s ease;
+
+      &.active {
+        font-weight: $font-weight-bold;
+        animation: pulse 1s infinite;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+
+    .slide {
+      flex: 0 0 100%;
+      height: 30vh;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  &__controls {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+
+    div {
+      cursor: pointer;
+      padding: 5px 10px;
+      background-color: rgba(255, 255, 255, 0.7);
+      transition: background-color 0.5s ease-in-out;
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.9);
+      }
+    }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

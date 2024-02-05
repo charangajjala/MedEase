@@ -1,0 +1,63 @@
+@import "../../../styles/colors/colors.scss";
+@import "../../../styles/fonts/fonts.scss";
+
+.update-product-form {
+  display: flex;
+  min-height: 100vh;
+  font-family: $font-family;
+
+  &__main {
+    width: 100%;
+    background-color: $body-bg;
+    color: $text-light;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    justify-content: start;
+  }
+
+  &__content {
+    background-color: $white;
+    color: $text-color;
+    border-radius: 8px;
+    padding: 2em;
+    box-shadow: 0 4px 8px rgba($black, 0.1);
+
+    .form {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5em;
+
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-button {
+      display: flex;
+      margin-top: 1em;
+
+      button {
+        padding: 0.75em 1.5em;
+        border: none;
+        border-radius: 4px;
+        background-color: $button-bg;
+        color: $button-text;
+        cursor: pointer;
+        font-weight: 600; 
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+          background-color: $button-hover;
+          box-shadow: 0 4px 12px rgba($black, 0.2);
+        }
+
+        &:active {
+          transform: translateY(2px);
+          box-shadow: 0 2px 8px rgba($black, 0.2);
+        }
+      }
+    }
+  }
+}

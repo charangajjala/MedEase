@@ -4,8 +4,11 @@ import "./ToggleButton.scss";
 
 const ToggleButton = (props) => {
   return (
-    <button onClick={props.toggleSidebar} className="admin-dashboard__toggle-btn ">
-      {props.isSidebarVisible ? <FaTimes /> : <FaBars />}
+    <button
+      onClick={props.toggleSidebar}
+      className="admin-dashboard__toggle-btn "
+    >
+      <p>{props.isSidebarVisible ? <FaTimes /> : <FaBars />}</p>
     </button>
   );
 };
