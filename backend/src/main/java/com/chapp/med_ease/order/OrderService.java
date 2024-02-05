@@ -49,7 +49,7 @@ public class OrderService {
                 .orElseThrow(() -> new BadRequestException("Address not found"));
 
         LocalDateTime currentDateTime = LocalDateTime.now();
-        String currentFormattedDateTime = currentDateTime.format(DateTimeFormatter.ofPattern("MM-DD-YYYY HH:mm:ss"));
+        String currentFormattedDateTime = currentDateTime.format(DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss"));
 
         final Order order = Order.builder().address(address).cart(cart).orderDate(currentFormattedDateTime).build();
 
