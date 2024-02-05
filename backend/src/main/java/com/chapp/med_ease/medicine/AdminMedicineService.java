@@ -38,6 +38,7 @@ public class AdminMedicineService {
 
     private final Logger logger = Logger.getLogger(AdminMedicineService.class.getName());
 
+    @Transactional
     public void createMedicine(MedicineRequest req) throws BadRequestException, IOException {
         logger.info("Creating new medicine with title: " + req.getProductTitle());
 
@@ -86,10 +87,13 @@ public class AdminMedicineService {
                         .orElseThrow(() -> new BadRequestException("Seller with ID " + sellerId + " not found"));
                 logger.info("Found seller with ID " + sellerId + seller);
                 sellers.add(seller);
+
                 logger.info("Adding"+ seller + " to " + seller.getMedicines());
                 seller.getMedicines().add(newMedicine);
+
                 logger.info("Added medicine to the seller");
                 sellerRepository.save(seller);
+
                 logger.info("Saved seller");
             }
             newMedicine.setSellers(sellers);
@@ -115,12 +119,13 @@ public class AdminMedicineService {
 
         final String companyName = medicine.getCompany().getCompanyName();
         final String productType = medicine.getMedicineType().getCategoryName();
+        final String imageKey = medicine.getImageKey();
 
         return MedicineResponse.builder().id(medicine.getId()).productTitle(medicine.getProductTitle())
                 .description(medicine.getDescription()).productType(productType).companyName(companyName)
                 .costPerMonth(medicine.getCostPerMonth()).expiryDate(medicine.getExpiryDate())
                 .manufactureDate(medicine.getManufactureDate()).productCode(medicine.getProductCode())
-                .totalStock(medicine.getTotalStock()).build();
+                .totalStock(medicine.getTotalStock()).imageKey(imageKey).build();
 
     }
 

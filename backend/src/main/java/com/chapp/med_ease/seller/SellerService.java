@@ -7,7 +7,6 @@ import com.chapp.med_ease.seller.seller_dto.SellerRequest;
 import com.chapp.med_ease.seller.seller_dto.SellerResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -61,8 +60,9 @@ public class SellerService {
 
     public SellerResponse getSellerById(Integer id) {
         Seller seller = sellerRepository.findById(id).orElseThrow();
+        List <Integer> medicineIds = seller.getMedicines().stream().map(Medicine::getId).toList();
         return SellerResponse.builder().id(seller.getId()).name(seller.getName()).email(seller.getEmail())
-                .location(seller.getLocation()).phone(seller.getPhone()).build();
+                .location(seller.getLocation()).phone(seller.getPhone()).medicineIds(medicineIds).build();
     }
 
     public void updateSeller(Integer id, SellerRequest req) {
