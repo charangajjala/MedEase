@@ -163,3 +163,29 @@ Apart from this the application is also planned to be extended to include the fo
 </table>
 
 ## License
+
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+
+## Contact Information
+
+If you wish to contribute to the project or have any queries, please contact us at [Prem](jampuramprem01@gmail.com), [Charan](charangajjala7@gmail.com).
+
+## Acknowledgements
+
+- [Spring Boot](https://spring.io/projects/spring-boot)
+- [React](https://reactjs.org/)
+- [Vite](https://vitejs.dev/)
+- [MySQL](https://www.mysql.com/)
+- [AWS S3](https://aws.amazon.com/s3/)
+- [Chart.js](https://www.chartjs.org/)
+- [React Hot Toast](https://react-hot-toast.com/)
+- [React Icons](https://react-icons.github.io/react-icons/)
+- [Redux](https://redux.js.org/)
+- [React Router Dom](https://reactrouter.com/)
+- [FontAwesome](https://fontawesome.com/)
+- [JSON Web Tokens](https://jwt.io/)
+- [Jakarta XML Bind API](https://eclipse-ee4j.github.io/jaxb-ri/)
+- [JAXB Runtime](https://eclipse-ee4j.github.io/jaxb-ri/)
+- [Axios](https://axios-http.com/)
+- [SCSS](https://sass-lang.com/)
+- [Spring Boot DevTools](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using-boot-devtools)
