@@ -13,8 +13,8 @@ import org.springframework.context.annotation.Configuration;
 public class AWSConfig {
     public AWSCredentials credentials() {
         return new BasicAWSCredentials(
-                "AKIA47CRV5V3WY56GYV6",
-                "y6VD7ijVMj13qN0aSCUoA4y0FiZ8GkCnC5OEZ7wg"
+                "accesskey",
+                "secretkey"
         );
     }
 
