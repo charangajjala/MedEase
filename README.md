@@ -1,9 +1,5 @@
 # Medical Store Website - MedEase
 
-<p align="center"> 
-  <img src="https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/logo.png" alt="MedEase Logo" />
-</p>
-
 ## Description
 
 The project is a comprehensive solution for medical stores to manage their inventory, sales, and customer data. It is a web-based application that can be accessed from anywhere. Built with React and SCSS for a dynamic and responsive user interface with animationation. The backend is powered by Spring Boot, utilizing AWS S3 for secure and scalable storage, and a MySQL database for robust data management.
