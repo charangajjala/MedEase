@@ -1,5 +1,5 @@
 <p align="center"> 
-    <img src="Assets/2024-08-10-18-49-31.png" align="center" height="150"></img>
+    <img src="assets/2024-08-10-18-49-31.png" align="center" height="150"></img>
 </p>
 
 <h1 align="center"> MedEase 🏥🌐</h1> 
