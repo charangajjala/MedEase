@@ -1,8 +1,22 @@
-# Medical Store Website - MedEase
+<p align="center"> 
+    <img src="Assets/2024-08-10-18-49-31.png" align="center" height="150"></img>
+</p>
 
-## Description
+<h1 align="center"> MedEase 🏥🌐</h1> 
+<h3 align="center"> Streamlining medical store operations with efficient inventory, sales, and customer management.</h3>
 
-The project is a comprehensive solution for medical stores to manage their inventory, sales, and customer data. It is a web-based application that can be accessed from anywhere. Built with React and SCSS for a dynamic and responsive user interface with animationation. The backend is powered by Spring Boot, utilizing AWS S3 for secure and scalable storage, and a MySQL database for robust data management.
+<p align="center">
+    <a href="https://reactjs.org/"><img alt="React" src="https://img.shields.io/badge/React-17.0.2-black?style=flat-square&colorA=20232a&colorB=61dafb" /></a>
+    <a href="https://sass-lang.com/"><img alt="SCSS/Sass" src="https://img.shields.io/badge/SCSS/Sass-1.35.1-black?style=flat-square&colorA=20232a&colorB=cc6699" /></a>
+    <a href="https://vitejs.dev/"><img alt="Vite" src="https://img.shields.io/badge/Vite-2.7.10-black?style=flat-square&colorA=646cff&colorB=42b983" /></a>
+    <a href="https://redux.js.org/"><img alt="Redux" src="https://img.shields.io/badge/Redux-4.1.2-black?style=flat-square&colorA=764abc&colorB=764abc" /></a>
+    <a href="https://spring.io/projects/spring-boot"><img alt="Spring Boot" src="https://img.shields.io/badge/Spring_Boot-2.5.6-black?style=flat-square&colorA=6db33f&colorB=3a3a3a" /></a>
+    <a href="https://hibernate.org/"><img alt="Hibernate" src="https://img.shields.io/badge/Hibernate-5.5.7-black?style=flat-square&colorA=59666c&colorB=59666c" /></a>
+    <a href="https://spring.io/projects/spring-data-jpa"><img alt="Spring Data JPA" src="https://img.shields.io/badge/Spring_Data_JPA-2.5.6-black?style=flat-square&colorA=6db33f&colorB=3a3a3a" /></a>
+    <a href="https://dev.mysql.com/doc/connector-j/8.0/en/"><img alt="MySQL Connector/J" src="https://img.shields.io/badge/MySQL_Connector/J-8.0.26-black?style=flat-square&colorA=00758f&colorB=00758f" /></a>
+    <a href="https://jwt.io/"><img alt="JSON Web Tokens (JWT)" src="https://img.shields.io/badge/JSON_Web_Tokens_(JWT)-0.11.2-black?style=flat-square&colorA=f0a500&colorB=f05a28" /></a>
+    <a href="https://aws.amazon.com/sdk-for-java/"><img alt="AWS SDK for Java" src="https://img.shields.io/badge/AWS_SDK_for_Java-1.11.1000-black?style=flat-square&colorA=232f3e&colorB=f0a500" /></a>
+</p>
 
 ## Features
 
