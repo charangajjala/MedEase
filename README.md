@@ -18,7 +18,7 @@
     <a href="https://aws.amazon.com/sdk-for-java/"><img alt="AWS SDK for Java" src="https://img.shields.io/badge/AWS_SDK_for_Java-1.11.1000-black?style=flat-square&colorA=232f3e&colorB=f0a500" /></a>
 </p>
 
-## Features
+## Features 🚀
 
 - **Inventory Management**: Add, update, and delete products from the inventory.
 - **Order Management**: Add, update, and delete orders.
@@ -27,38 +27,38 @@
 - **Customer Management**: Add, update, and delete customer data.
 - **Dashboard**: View sales and inventory statistics.
 
-## Technology Stack
+## Tech Stack 🛠️
 
 ### Frontend Technologies
 
-- **React**: A JavaScript library for building user interfaces, enabling the development of single-page applications with interactive UIs.
-- **SCSS/Sass**: A preprocessor scripting language that is interpreted or compiled into CSS, enhancing the styling process with variables, nested rules, and more.
-- **Vite**: A modern frontend build tool that significantly improves the development experience with fast cold starts and instant hot module replacement (HMR).
-- **Axios**: A promise-based HTTP client for the browser and node.js, used for making API requests.
-- **Chart.js and react-chartjs-2**: JavaScript libraries for displaying interactive charts and graphs.
-- **html2canvas and jspdf**: Libraries used for generating PDFs from web pages, allowing users to download reports or receipts.
-- **React Hot Toast**: Provides lightweight, customizable notifications for React applications.
-- **React Icons**: Includes an assortment of popular icons for easy use in React projects.
-- **Redux and React Redux**: A state management library and its official React bindings, respectively, used for managing application state more efficiently.
-- **React Router Dom**: Enables dynamic routing in React applications, allowing for the development of single-page applications with navigation without page refreshes.
-- **FontAwesome**: A popular icon set and toolkit used for adding vector icons and social logos to the website.
+- **React**: JavaScript library for building interactive single-page applications.
+- **SCSS/Sass**: CSS preprocessor for advanced styling with features like variables and nesting.
+- **Vite**: Fast frontend build tool with instant hot module replacement.
+- **Axios**: HTTP client for API requests.
+- **Chart.js & react-chartjs-2**: Libraries for creating interactive charts.
+- **html2canvas & jspdf**: Generate PDFs from web pages for downloading reports.
+- **React Hot Toast**: Customizable notifications for React apps.
+- **React Icons**: Popular icon sets for React projects.
+- **Redux & React Redux**: State management libraries for efficient app state handling.
+- **React Router Dom**: Enables dynamic routing without page refreshes.
+- **FontAwesome**: Icon toolkit for adding vector icons and logos.
 
 ### Backend Technologies
 
-- **Spring Boot**: Simplifies the development of new Spring applications with convention over configuration, providing a range of out-of-the-box functionalities for web development.
-- **Spring Boot DevTools**: Provides fast application restarts, LiveReload, and configurations for enhanced development experience.
-- **Spring Boot Starter Test**: Supports testing Spring Boot applications with libraries including JUnit, Hamcrest, and Mockito.
-- **Spring Boot Starter Data JPA**: Configures Spring Data JPA to simplify the implementation of data access layers.
-- **Spring Boot Starter Security**: Offers authentication and authorization features to secure Spring applications.
-- **Spring Boot Starter Validation**: Provides support for validating Spring applications using Java Bean Validation APIs.
-- **MySQL Connector/J**: A JDBC driver for MySQL, facilitating database connections and operations.
-- **Lombok**: A Java library that automatically plugs into your editor and build tools, spicing up your java. Never write another getter or equals method again.
-- **JSON Web Tokens (JWT)**: Used for securely transmitting information between parties as a JSON object, with `jjwt-api`, `jjwt-impl`, and `jjwt-jackson` for implementation and integration.
-- **Spring Boot Starter Actuator**: Provides production-ready features to help monitor and manage the application.
-- **AWS Java SDK for S3**: Enables the application to interact with Amazon S3, for operations like uploading and managing files in S3 buckets.
-- **Jakarta XML Bind API and JAXB Runtime**: Libraries used for converting Java objects to XML and vice versa.
+- **Spring Boot**: Framework for rapid Spring app development with built-in configurations.
+- **Spring Boot DevTools**: Enhances development with fast restarts and live reloads.
+- **Spring Boot Starter Test**: Supports testing with libraries like JUnit and Mockito.
+- **Spring Boot Starter Data JPA**: Simplifies data access layers using JPA.
+- **Spring Boot Starter Security**: Provides authentication and authorization for Spring apps.
+- **Spring Boot Starter Validation**: Enables validation with Java Bean Validation APIs.
+- **MySQL Connector/J**: JDBC driver for MySQL database connections.
+- **Lombok**: Automates code generation for Java, such as getters and equals methods.
+- **JWT**: Securely transmits information between parties using JSON Web Tokens.
+- **Spring Boot Starter Actuator**: Adds production-ready monitoring and management features.
+- **AWS Java SDK for S3**: Interacts with Amazon S3 for file management.
+- **Jakarta XML Bind API & JAXB Runtime**: Converts Java objects to XML and vice versa.
 
-## Installation
+## Installation ⚙️
 
 1. Clone the repository
    ```sh
@@ -78,7 +78,7 @@
 7. By default frontend application uses the default backend URL `http://localhost:8080` but it can be altered in the `./frontend/src/api/axios.jsx` file.
 8. After a successful build, we need to make sure the database is up and running. The database schema is provided in the `./backend/src/main/resources` directory. The database configuration can be altered in the `./backend/src/main/resources/application.properties` file.
 
-## Usage
+## Usage 🧑‍💻
 
 The application is designed to be user-friendly and intuitive. Both the admin and user have a common login page. The admin credentials can be added to the database manually. The admin has access to all the features of the application which includes
 
@@ -103,11 +103,11 @@ Other features like loading animations and notifications are also included in th
 
 Apart from this the application is made responsive and can be accessed from any device. But it is recommended to use the application on a desktop for a better experience. The applicatioon is also designed to be secure and the user data is encrypted and stored in the database. The application is also designed to be scalable and can be easily extended to include more features.
 
-## How it works
+## How it works 📝
 
 ### Database Schema
 
-![Database Schema](https://medeaseportal-bucket.s3.us-east-2.amazonaws.com/assets/medease.png)
+![](assets/2024-08-17-22-41-32.png)
 
 This schema is designed to include the seller feature which is under development. This is getting carried on as a part of the future work. Currently the application has the admin and user features.
 
@@ -149,7 +149,7 @@ Apart from this the application is also planned to be extended to include the fo
 
 - Payment Gateway Integration
 
-## Contrbutors
+## Contrbutors <img src="https://raw.githubusercontent.com/TheDudeThatCode/TheDudeThatCode/master/Assets/Developer.gif" width=35 height=25>
 
 <table>
   <tbody>
@@ -158,7 +158,7 @@ Apart from this the application is also planned to be extended to include the fo
         <a href="https://github.com/charangajjala" target="_blank">
           <img src="https://avatars.githubusercontent.com/u/64437927?v=4" width="100px" alt="Charan Gajjala" />
           <br />
-          <sub><b>Charan Gajjala</b></sub>
+          <sub><b>Charan Gajjala Chenchu</b></sub>
         </a>
       </td>
       <td align="center">
@@ -172,15 +172,15 @@ Apart from this the application is also planned to be extended to include the fo
   </tbody>
 </table>
 
-## License
+## License 🎟️
 
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
-## Contact Information
+## Contact Information 🔍
 
 If you wish to contribute to the project or have any queries, please contact us at [Prem](jampuramprem01@gmail.com), [Charan](charangajjala7@gmail.com).
 
-## Acknowledgements
+## Acknowledgements 📜
 
 - [Spring Boot](https://spring.io/projects/spring-boot)
 - [React](https://reactjs.org/)
